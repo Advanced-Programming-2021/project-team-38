@@ -40,8 +40,12 @@ public class User implements Comparable<User>{
     public static String showScoreBoard(){
         StringBuilder scoreBoard = new StringBuilder();
         allUsers.sort(User::compareTo);
+        int counter = 0;
+        User previousUser = null;
         for (User user : allUsers) {
-            scoreBoard.append(user.username + "\n");
+            if(previousUser!= null && user.score != previousUser.score) counter++;
+            scoreBoard.append(counter).append(user.username).append("\n");
+            previousUser = user;
         }
         return scoreBoard.toString();
     }
