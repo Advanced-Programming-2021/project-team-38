@@ -44,7 +44,7 @@ public class User implements Comparable<User>{
         User previousUser = null;
         for (User user : allUsers) {
             if(previousUser!= null && user.score != previousUser.score) counter++;
-            scoreBoard.append(counter).append(user.username).append("\n");
+            scoreBoard.append(counter).append(". ").append(user.username).append("\n");
             previousUser = user;
         }
         return scoreBoard.toString();
