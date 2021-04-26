@@ -3,15 +3,15 @@ package model;
 import java.util.ArrayList;
 
 public class User implements Comparable<User>{
-    private String username;
-    private String password;
-    private String nickName;
+    private final String username;
+    private final String password;
+    private final String nickName;
     private int score;
     private ArrayList<Card> cards;
     private ArrayList<Deck> decks;
-    private int balance;
+    private final int balance;
     private Deck activeDeck;
-    private static ArrayList<User> allUsers;
+    private final static ArrayList<User> allUsers;
 
     static {
         allUsers = new ArrayList<>();
