@@ -9,7 +9,7 @@ public class MenuSwitcher {
 
     }
 
-//    public static void changeMenu(MenuName menuName){
+    public static void changeMenu(MenuName menuName){
 //        switch (menuName){
 //            case DECK:
 //                new DeckMenu().checkMenuCommands();
@@ -32,5 +32,5 @@ public class MenuSwitcher {
 //            case MAIN:
 //                new MainMenu().checkMenuCommands();
 //        }
-//    }
+    }
 }
