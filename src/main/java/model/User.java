@@ -1,6 +1,8 @@
 
     package model;
 
+import model.card.Card;
+
 import java.util.ArrayList;
 
     public class User implements Comparable<model.User>{
