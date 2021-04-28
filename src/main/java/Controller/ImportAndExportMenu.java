@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class ImportAndExportMenu {
-    private ArrayList<Card> allCards;
+    private static ArrayList<Card> allCards;
 
-    {
+    static {
         allCards = new ArrayList<>();
     }
 
