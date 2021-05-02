@@ -1,14 +1,9 @@
-package view;
+package view.Menus;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class Main {
-    private static Scanner scanner;
-
-    static {
-        scanner = new Scanner(System.in);
-    }
+public class MainMenu {
 
     public static void main() {
 

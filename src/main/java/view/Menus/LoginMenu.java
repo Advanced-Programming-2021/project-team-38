@@ -1,11 +1,11 @@
-package view;
+package view.Menus;
 
 public class LoginMenu {
     public static void sendLoginInfo() {
 
     }
 
-    public void checkMenuCommands() {
+    public static void checkMenuCommands(String command) {
 
     }
 }

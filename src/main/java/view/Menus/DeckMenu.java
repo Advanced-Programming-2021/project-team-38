@@ -1,7 +1,7 @@
-package view;
+package view.Menus;
 
 public class DeckMenu {
-    public void checkMenuCommands() {
+    public void checkMenuCommands(String command) {
 
     }
 

@@ -1,8 +1,8 @@
-package view;
+package view.Menus;
 
 public class DuelMenu {
 
-    public void checkMenuCommends() {
+    public static void checkMenuCommands(String command) {
 
     }
 
