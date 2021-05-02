@@ -1,16 +1,36 @@
 package controller;
 
+import exeptions.MenuNavigationError;
 import view.MenuName;
-
-import java.util.ArrayList;
+import view.Print;
 
 public class RelatedToMenuController {
 
-    private ArrayList<MenuName> upperMenus;
     public static MenuName currentMenu;
 
-    {
-        upperMenus = new ArrayList<>();
+    public static void enterMenu(String name) {
+        MenuName newMenu = MenuName.searchForMenuName(name);
+        if (currentMenu == newMenu)
+            new MenuNavigationError();
+        else if (currentMenu == MenuName.LOGIN && newMenu == MenuName.MAIN)
+            currentMenu = newMenu;
+        else if (currentMenu == MenuName.MAIN && newMenu != MenuName.LOGIN)
+            currentMenu = newMenu;
+        else
+            new MenuNavigationError();
+    }
+
+    public static void exitMenu() {
+        if (currentMenu == MenuName.LOGIN) {
+            //TODO endgame
+        } else if (currentMenu == MenuName.MAIN)
+            currentMenu = MenuName.LOGIN;
+        else
+            currentMenu = MenuName.MAIN;
+    }
+
+    public static void showMenu() {
+        Print.print(currentMenu.stringMenu());
     }
 
 

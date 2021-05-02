@@ -2,6 +2,7 @@ package controller.game;
 
 import model.Player;
 import model.card.Card;
+import view.Print;
 
 class ActionsOnRival {
     private Player currentPlayer;
@@ -12,8 +13,14 @@ class ActionsOnRival {
 
     }
 
-    public String showGraveyard() {
-        return null;
+    public void showGraveyard() {
+        int i = 1;
+        for (Card card : otherPlayer.getBoard().getGraveYard().getCardsInGraveYard()) {
+            Print.print(String.format("%d. %s:%s\n", i, card.getName(), card.getDescription()));
+            i++;
+        }
+        if (i==1)
+            Print.print("graveyard empty");
     }
 
     public Card selectedCard() {

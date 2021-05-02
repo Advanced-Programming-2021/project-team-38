@@ -13,7 +13,8 @@ public class Player {
     private ArrayList<Card> unusedCards;
 
     public Player(User user) {
-
+        board = new Board();
+        unusedCards = new ArrayList<>();
     }
 
     public String getName() {
