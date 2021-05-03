@@ -93,14 +93,20 @@ import java.util.ArrayList;
             this.score += increasingAmount;
         }
 
-        public boolean isPasswordCorrect(String password){
+        public boolean isPasswordCorrect(String password) {
             return password.equals(this.password);
+        }
+
+        public void setActiveDeck(Deck deck) {
+            if (this.decks.contains(deck)) {
+                this.activeDeck = deck;
+            }
         }
 
         @Override
         public int compareTo(model.User otherUser) {
-            if(this.score > otherUser.score) return -1;
-            if(this.score < otherUser.score) return 1;
+            if (this.score > otherUser.score) return -1;
+            if (this.score < otherUser.score) return 1;
             return this.username.compareTo(otherUser.username);
         }
-}
+    }
