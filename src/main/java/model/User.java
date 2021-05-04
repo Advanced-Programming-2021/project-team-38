@@ -47,7 +47,7 @@ import java.util.ArrayList;
             model.User previousUser = null;
             for (model.User user : allUsers) {
                 if(previousUser!= null && user.score != previousUser.score) counter++;
-                scoreBoard.append(counter).append(". ").append(user.username).append("\n");
+                scoreBoard.append(counter).append("- ").append(user.username).append("\n");
                 previousUser = user;
             }
             return scoreBoard.toString();
