@@ -4,6 +4,6 @@ import view.PrintError;
 
 public class LoginError {
     public LoginError() {
-        PrintError.print("Username and password didn’t match!");
+        PrintError.print("Username and password didn't match!");
     }
 }
