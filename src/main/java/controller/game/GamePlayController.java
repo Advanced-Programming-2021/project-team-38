@@ -12,8 +12,8 @@ class GamePlayController {
     private Player currentPlayer;
     private Player rival;
     private int round;
-    //    private Card currentPlayerSelectedCard;
-//    private Card rivalSelectedCard;
+    private Card currentPlayerSelectedCard;
+    private Card rivalSelectedCard;
     private Board currentPlayerBoard;
     private Board rivalBoard;
 

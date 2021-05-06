@@ -1,0 +1,9 @@
+package exeptions;
+
+import view.PrintError;
+
+public class NotExisting {
+    public NotExisting(String type, String name) {
+        PrintError.print(String.format("%s with name %s does not exist", type, name));
+    }
+}

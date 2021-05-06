@@ -3,6 +3,7 @@ package model;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Deck {
     private String name;
@@ -63,11 +64,15 @@ public class Deck {
         return false;
     }
 
-    public void addCardToMain(Card card) {
+    public void addCard(String name) {
 
     }
 
-    public void addCardToSide(Card card) {
+//    public void addCardToSide(Card card) {
+//
+//    }
 
+    public boolean equalNames(String name) {
+        return name.equals(this.getName());
     }
 }
