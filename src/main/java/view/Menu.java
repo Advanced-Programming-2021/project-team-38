@@ -12,7 +12,7 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public void checkMenuCommands() {
+    public static void checkMenuCommands() {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));

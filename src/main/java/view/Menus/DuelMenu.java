@@ -6,19 +6,19 @@ public class DuelMenu {
 
     }
 
-    public void startDrawPhase() {
+    public static void startDrawPhase() {
 
     }
 
-    public void startMenuPhase() {
+    public static void startMenuPhase() {
 
     }
 
-    public void startBattlePhase() {
+    public static void startBattlePhase() {
 
     }
 
-    public void startStandByPhase() {
+    public static void startStandByPhase() {
 
     }
 

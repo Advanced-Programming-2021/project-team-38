@@ -51,7 +51,7 @@ import java.util.HashMap;
             model.User previousUser = null;
             for (model.User user : allUsers) {
                 if(previousUser!= null && user.score != previousUser.score) counter++;
-                scoreBoard.append(counter).append(". ").append(user.username).append("\n");
+                scoreBoard.append(counter).append("- ").append(user.username).append("\n");
                 previousUser = user;
             }
             return scoreBoard.toString();
@@ -114,14 +114,21 @@ import java.util.HashMap;
             this.score += increasingAmount;
         }
 
-        public boolean isPasswordCorrect(String password){
+        public boolean isPasswordCorrect(String password) {
             return password.equals(this.password);
         }
+//
+//        public void setActiveDeck(Deck deck) {
+//            if (this.decks.contains(deck)) {
+//                this.activeDeck = deck;
+//            }
+//        }
+        //TODO negar and hasti conflict
 
         @Override
         public int compareTo(model.User otherUser) {
-            if(this.score > otherUser.score) return -1;
-            if(this.score < otherUser.score) return 1;
+            if (this.score > otherUser.score) return -1;
+            if (this.score < otherUser.score) return 1;
             return this.username.compareTo(otherUser.username);
         }
 
@@ -130,3 +137,4 @@ import java.util.HashMap;
             return "deck deleted successfully";
         }
 }
+    }

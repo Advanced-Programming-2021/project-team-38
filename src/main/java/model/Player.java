@@ -11,10 +11,15 @@ public class Player {
     private int lifePoint;
     private Board board;
     private ArrayList<Card> unusedCards;
+    private Hand hand;
 
     public Player(User user) {
-        board = new Board();
-        unusedCards = new ArrayList<>();
+        this.name = user.getNickName();
+        this.deck = user.getActiveDeck();
+        this.lifePoint = 8000;
+        this.hand = new Hand();
+        this.board = new Board();
+        this.unusedCards = new ArrayList<>();
     }
 
     public String getName() {
@@ -41,11 +46,15 @@ public class Player {
         return unusedCards;
     }
 
-    public void increaseLifePoint(int increasingAmount) {
+    public Hand getHand() {
+        return this.hand;
+    }
 
+    public void increaseLifePoint(int increasingAmount) {
+        this.lifePoint += increasingAmount;
     }
 
     public void decreaseLifePoint(int decreasingAmount) {
-
+        this.lifePoint -= decreasingAmount;
     }
 }

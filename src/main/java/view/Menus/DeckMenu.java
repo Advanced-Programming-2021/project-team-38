@@ -1,5 +1,9 @@
 package view.Menus;
 
+import controller.RelatedToMenuController;
+import exeptions.InvalidCommand;
+import view.MenuName;
+
 public class DeckMenu {
     public void checkMenuCommands(String command) {
         final String createDeck = "create ";
@@ -10,6 +14,11 @@ public class DeckMenu {
         final String showDeck = "show ";
         final String showAllCards = "show --cards";
 
+        if (!RelatedToMenuController.isMenuCorrect(MenuName.DECK)) {
+            new InvalidCommand();
+        }
+
+
 //        if (command.startsWith(createDeck))
 //
 //            else if (command.startsWith(deleteDeck))
@@ -17,7 +26,7 @@ public class DeckMenu {
 //                else if (command.startsWith(activeDeck))
     }
 
-    public String scanNameOfCard() {
+    public static String scanNameOfCard() {
 
         return null;
     }
