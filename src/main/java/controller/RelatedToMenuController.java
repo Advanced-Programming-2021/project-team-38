@@ -33,7 +33,7 @@ public class RelatedToMenuController {
         return currentMenu;
     }
 
-    public static boolean isProgramEnded() {
+    public static boolean hasProgramEnded() {
         return programEnded;
     }
 

@@ -4,10 +4,10 @@ import controller.RelatedToMenuController;
 
 public class Main {
     public static void main(String[] args) {
-        boolean isProgramEnded = true;
-        while (isProgramEnded) {
+        boolean hasProgramEnded = false;
+        while (!hasProgramEnded) {
             Menu.checkMenuCommands();
-            isProgramEnded = RelatedToMenuController.isProgramEnded();
+            hasProgramEnded = RelatedToMenuController.hasProgramEnded();
         }
         System.out.println("Good Bye!");
     }

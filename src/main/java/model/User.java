@@ -12,7 +12,7 @@ import java.util.ArrayList;
         private int score;
         private ArrayList<Card> cards;
         private ArrayList<Deck> decks;
-        private final int balance;
+        private int balance;
         private Deck activeDeck;
         private final static ArrayList<model.User> allUsers;
 
@@ -87,6 +87,18 @@ import java.util.ArrayList;
 
         public static ArrayList<model.User> getAllUsers() {
             return allUsers;
+        }
+
+        public void increaseBalance(int increasingAmount) {
+            this.balance += increasingAmount;
+        }
+
+        public void decreaseBalance(int decreasingAmount) {
+            this.balance -= decreasingAmount;
+        }
+
+        public void addCard(Card card) {
+            this.cards.add(card);
         }
 
         public void increaseScore(int increasingAmount) {
