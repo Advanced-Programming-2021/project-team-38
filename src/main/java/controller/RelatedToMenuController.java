@@ -1,28 +1,37 @@
 package controller;
 
+import exeptions.MenuNavigationError;
 import view.MenuName;
-
-import java.util.ArrayList;
+import view.Print;
 
 public class RelatedToMenuController {
 
-    private static ArrayList<MenuName> upperMenus;
-    private static MenuName currentMenu;
+    public static MenuName currentMenu;
     private static boolean programEnded = false;
 
-    static {
-        upperMenus = new ArrayList<>();
-    }
-
-    public static void setCurrentMenu(MenuName menuName) {
-        currentMenu = menuName;
-        upperMenus.add(menuName);
+    public static void enterMenu(String name) {
+        MenuName newMenu = MenuName.searchForMenuName(name);
+        if (currentMenu == newMenu)
+            new MenuNavigationError();
+        else if (currentMenu == MenuName.LOGIN && newMenu == MenuName.MAIN)
+            currentMenu = newMenu;
+        else if (currentMenu == MenuName.MAIN && newMenu != MenuName.LOGIN)
+            currentMenu = newMenu;
+        else
+            new MenuNavigationError();
     }
 
     public static void exitMenu() {
-        if (currentMenu.equals(MenuName.LOGIN)) setProgramEnded(true);
-        upperMenus.remove(currentMenu);
-        currentMenu = null;
+        if (currentMenu == MenuName.LOGIN) {
+            //TODO endgame
+        } else if (currentMenu == MenuName.MAIN)
+            currentMenu = MenuName.LOGIN;
+        else
+            currentMenu = MenuName.MAIN;
+    }
+
+    public static void showMenu() {
+        Print.print(currentMenu.stringMenu());
     }
 
     public static void setProgramEnded(boolean isEnded) {
@@ -33,12 +42,5 @@ public class RelatedToMenuController {
         return currentMenu;
     }
 
-    public static boolean hasProgramEnded() {
-        return programEnded;
-    }
-
-    public static boolean isMenuCorrect(MenuName menuName) {
-        return currentMenu.equals(menuName);
-    }
 
 }

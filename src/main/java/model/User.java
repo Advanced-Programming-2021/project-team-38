@@ -1,16 +1,16 @@
 
     package model;
 
-import model.card.Card;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
     public class User implements Comparable<model.User>{
         private final String username;
         private final String password;
         private final String nickName;
         private int score;
-        private ArrayList<Card> cards;
+        private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
+//        private ArrayList<Card> cards;
         private ArrayList<Deck> decks;
         private int balance;
         private Deck activeDeck;
@@ -20,12 +20,16 @@ import java.util.ArrayList;
             allUsers = new ArrayList<>();
         }
 
+        {
+            cardTreasury = new HashMap<>();
+        }
+
         public User(String username, String password, String nickName) {
             this.username = username;
             this.password = password;
             this.nickName = nickName;
             this.score = 0;
-            this.cards = new ArrayList<>();
+//            this.cards = new ArrayList<>();
             this.decks = new ArrayList<>();
             this.balance = 0;
             allUsers.add(this);
@@ -65,12 +69,29 @@ import java.util.ArrayList;
             return nickName;
         }
 
+        public void setActiveDeck(Deck activeDeck) {
+            this.activeDeck = activeDeck;
+        }
+
         public int getScore() {
             return score;
         }
 
-        public ArrayList<Card> getCards() {
-            return cards;
+//        public ArrayList<Card> getCards() {
+//            return cards;
+//        }
+
+        public HashMap<String, Integer> getCardTreasury() {
+            return cardTreasury;
+        }
+
+        public Deck findDeckByName(String name) {
+            for (Deck deck : decks) {
+                if (deck.equalNames(name))
+                    return deck;
+            }
+
+            return null;
         }
 
         public ArrayList<Deck> getDecks() {
@@ -108,12 +129,13 @@ import java.util.ArrayList;
         public boolean isPasswordCorrect(String password) {
             return password.equals(this.password);
         }
-
-        public void setActiveDeck(Deck deck) {
-            if (this.decks.contains(deck)) {
-                this.activeDeck = deck;
-            }
-        }
+//
+//        public void setActiveDeck(Deck deck) {
+//            if (this.decks.contains(deck)) {
+//                this.activeDeck = deck;
+//            }
+//        }
+        //TODO negar and hasti conflict
 
         @Override
         public int compareTo(model.User otherUser) {
@@ -121,4 +143,10 @@ import java.util.ArrayList;
             if (this.score < otherUser.score) return 1;
             return this.username.compareTo(otherUser.username);
         }
+
+        public String removeDeck(Deck deck) {
+            decks.remove(deck);
+            return "deck deleted successfully";
+        }
+}
     }

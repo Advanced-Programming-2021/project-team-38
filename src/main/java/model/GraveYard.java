@@ -11,6 +11,10 @@ public class GraveYard {
         return cardsInGraveYard;
     }
 
+    {
+        cardsInGraveYard = new ArrayList<>();
+    }
+
     public void addCard(Card card){
 
     }

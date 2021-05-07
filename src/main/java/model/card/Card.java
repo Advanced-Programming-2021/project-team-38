@@ -1,6 +1,7 @@
 package model.card;
 
 import model.Player;
+import model.card.monster.CardAttribute;
 
 import java.util.ArrayList;
 
