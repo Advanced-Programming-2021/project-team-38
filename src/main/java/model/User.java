@@ -1,6 +1,8 @@
 
     package model;
 
+import model.card.Pre;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +12,7 @@ import java.util.HashMap;
         private final String nickName;
         private int score;
         private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
-//        private ArrayList<Card> cards;
+        private ArrayList<Pre> preCards;
         private ArrayList<Deck> decks;
         private int balance;
         private Deck activeDeck;
@@ -29,7 +31,7 @@ import java.util.HashMap;
             this.password = password;
             this.nickName = nickName;
             this.score = 0;
-//            this.cards = new ArrayList<>();
+            this.preCards = new ArrayList<>();
             this.decks = new ArrayList<>();
             this.balance = 0;
             allUsers.add(this);
@@ -47,11 +49,11 @@ import java.util.HashMap;
         public static String showScoreBoard(){
             StringBuilder scoreBoard = new StringBuilder();
             allUsers.sort(model.User::compareTo);
-            int counter = 0;
+            int counter = 1;
             model.User previousUser = null;
             for (model.User user : allUsers) {
                 if(previousUser!= null && user.score != previousUser.score) counter++;
-                scoreBoard.append(counter).append("- ").append(user.username).append("\n");
+                scoreBoard.append(counter).append("- ").append(user.username).append(": ").append(user.getScore()).append("\n");
                 previousUser = user;
             }
             return scoreBoard.toString();
@@ -77,9 +79,9 @@ import java.util.HashMap;
             return score;
         }
 
-//        public ArrayList<Card> getCards() {
-//            return cards;
-//        }
+        public ArrayList<Pre> getPreCards() {
+            return preCards;
+        }
 
         public HashMap<String, Integer> getCardTreasury() {
             return cardTreasury;
@@ -90,7 +92,6 @@ import java.util.HashMap;
                 if (deck.equalNames(name))
                     return deck;
             }
-
             return null;
         }
 
@@ -118,8 +119,8 @@ import java.util.HashMap;
             this.balance -= decreasingAmount;
         }
 
-        public void addCard(Card card) {
-            this.cards.add(card);
+        public void addPreCard(Pre preCard) {
+            this.preCards.add(preCard);
         }
 
         public void increaseScore(int increasingAmount) {
@@ -149,4 +150,3 @@ import java.util.HashMap;
             return "deck deleted successfully";
         }
 }
-    }

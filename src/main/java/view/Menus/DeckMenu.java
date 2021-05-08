@@ -5,7 +5,7 @@ import exeptions.InvalidCommand;
 import view.MenuName;
 
 public class DeckMenu {
-    public void checkMenuCommands(String command) {
+    public static void checkMenuCommands(String command) {
         final String createDeck = "create ";
         final String deleteDeck = "delete ";
         final String activeDeck = "set-activate ";

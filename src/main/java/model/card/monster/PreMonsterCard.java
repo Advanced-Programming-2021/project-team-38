@@ -1,10 +1,12 @@
 package model.card.monster;
 
+import model.card.Card;
 import model.card.CardType;
+import model.card.Pre;
 
 import java.util.HashMap;
 
-public class PreMonsterCard {
+public class PreMonsterCard implements Pre {
     private String name;
     private int level;
     private int defence;
@@ -15,7 +17,16 @@ public class PreMonsterCard {
     private MonsterCardType type;
     private MonsterType monsterType;
     private CardAttribute attribute;
+    private boolean hasEffect;
 
 
+    @Override
+    public Card makeCard() {
+        return new Monster(defence, attack, hasEffect);
+    }
 
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }
