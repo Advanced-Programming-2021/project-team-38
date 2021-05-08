@@ -1,11 +1,10 @@
 package controller;
 
-import com.gilecode.yagson.YaGson;
 import exeptions.AlreadyExistingError;
 import exeptions.NotExisting;
 import model.Deck;
 import model.User;
-import view.Print;
+import view.messageviewing.Print;
 
 import java.util.regex.Matcher;
 

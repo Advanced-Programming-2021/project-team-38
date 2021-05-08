@@ -2,7 +2,7 @@ package controller;
 
 import exeptions.MenuNavigationError;
 import view.MenuName;
-import view.Print;
+import view.messageviewing.Print;
 
 public class RelatedToMenuController {
 

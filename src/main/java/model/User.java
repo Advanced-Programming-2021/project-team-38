@@ -37,22 +37,31 @@ import java.util.HashMap;
             allUsers.add(this);
         }
 
-        public static model.User getUserByName(String username){
+        public static User getUserByName(String username) {
             for (model.User user : allUsers) {
-                if(user.username.equals(username)){
+                if (user.username.equals(username)) {
                     return user;
                 }
             }
             return null;
         }
 
-        public static String showScoreBoard(){
+        public static User getUserByNickName(String nickName) {
+            for (model.User user : allUsers) {
+                if (user.nickName.equals(nickName)) {
+                    return user;
+                }
+            }
+            return null;
+        }
+
+        public static String showScoreBoard() {
             StringBuilder scoreBoard = new StringBuilder();
             allUsers.sort(model.User::compareTo);
             int counter = 1;
             model.User previousUser = null;
             for (model.User user : allUsers) {
-                if(previousUser!= null && user.score != previousUser.score) counter++;
+                if (previousUser != null && user.score != previousUser.score) counter++;
                 scoreBoard.append(counter).append("- ").append(user.username).append(": ").append(user.getScore()).append("\n");
                 previousUser = user;
             }
