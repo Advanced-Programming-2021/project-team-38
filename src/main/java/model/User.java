@@ -1,8 +1,12 @@
 
     package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import model.card.PreCard;
+import view.Print;
+import view.SuccessMessages;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
     public class User implements Comparable<model.User>{
         private final String username;
@@ -10,7 +14,7 @@ import java.util.HashMap;
         private final String nickName;
         private int score;
         private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
-//        private ArrayList<Card> cards;
+        //TODO the hashmap key must be deleted after the value becomes 0
         private ArrayList<Deck> decks;
         private final int balance;
         private Deck activeDeck;
@@ -69,17 +73,11 @@ import java.util.HashMap;
             return nickName;
         }
 
-        public void setActiveDeck(Deck activeDeck) {
-            this.activeDeck = activeDeck;
-        }
 
         public int getScore() {
             return score;
         }
 
-//        public ArrayList<Card> getCards() {
-//            return cards;
-//        }
 
         public HashMap<String, Integer> getCardTreasury() {
             return cardTreasury;
@@ -117,13 +115,12 @@ import java.util.HashMap;
         public boolean isPasswordCorrect(String password) {
             return password.equals(this.password);
         }
-//
-//        public void setActiveDeck(Deck deck) {
-//            if (this.decks.contains(deck)) {
-//                this.activeDeck = deck;
-//            }
-//        }
-        //TODO negar and hasti conflict
+
+        public void setActiveDeck(Deck deck) {
+            if (this.decks.contains(deck)) {    //TODO what if an error happens?
+                this.activeDeck = deck;
+            }
+        }
 
         @Override
         public int compareTo(model.User otherUser) {
@@ -132,9 +129,17 @@ import java.util.HashMap;
             return this.username.compareTo(otherUser.username);
         }
 
-        public String removeDeck(Deck deck) {
+        public void removeDeck(Deck deck) {
             decks.remove(deck);
-            return "deck deleted successfully";
+            Print.print(SuccessMessages.removeDeck);
         }
-}
+
+        public void printMyCards() {
+            ArrayList<String> myCards = new ArrayList<>(getCardTreasury().keySet());
+            Collections.sort(myCards);
+
+            for (String cardName : myCards) {
+                Print.print(Objects.requireNonNull(PreCard.findCard(cardName)).toString());
+            }
+        }
     }

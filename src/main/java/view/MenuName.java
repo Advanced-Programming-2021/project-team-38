@@ -9,14 +9,21 @@ public enum MenuName {
     DUEL,
     MAIN;
 
-    public static MenuName searchForMenuName(String name) {
-        for (MenuName menuName : MenuName.values()) {
-            if (menuName.toString().equals(name))
-                return menuName;
-        }
+//    String name;
 
-        return null;
-    }
+//    public static MenuName searchForMenuName(String name) {
+//        for (MenuName menuName : MenuName.values()) {
+//            if (menuName.toString().equals(name.toUpperCase()))
+//                return menuName;
+//        }
+//
+//        return null;
+//    }
+
+//    MenuName(String name) {
+//        this.name = name;
+//    }
+
 
     public String stringMenu() {
         switch (this) {

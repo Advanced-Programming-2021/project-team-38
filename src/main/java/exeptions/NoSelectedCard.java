@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class NoSelectedCard {
+public class NoSelectedCard extends Exception {
     public NoSelectedCard() {
-        PrintError.print("no card is selected");
+        super("no card is selected");
     }
 }

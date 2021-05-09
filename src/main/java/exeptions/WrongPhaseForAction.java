@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class WrongPhaseForAction {
+public class WrongPhaseForAction extends Exception {
     public WrongPhaseForAction() {
-        PrintError.print("action not allowed in this phase");
+        super("action not allowed in this phase");
     }
 }

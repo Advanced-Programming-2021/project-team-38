@@ -5,11 +5,11 @@ import exeptions.InvalidCommand;
 
 public class ProfileMenu {
 
-    public static void checkMenuCommands(String command) {
+    public static void checkMenuCommands(String command) throws InvalidCommand {
         if (command.startsWith("change "))
             ProfileMenuController.changeCommands(command.substring(7));
         else
-            new InvalidCommand();
+            throw new InvalidCommand();
     }
 
 }

@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class MenuNavigationError {
+public class MenuNavigationError extends Exception {
     public MenuNavigationError() {
-        PrintError.print("menu navigation is not possible");
+        super("menu navigation is not possible");
     }
 }

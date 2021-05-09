@@ -1,6 +1,6 @@
 package view;
 
-import exeptions.InvalidCommand;
+import exeptions.*;
 import view.Menus.*;
 
 import java.util.Scanner;
@@ -12,7 +12,7 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public static void checkMenuCommands() {
+    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, BeingFull, NotExisting {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));
@@ -29,6 +29,6 @@ public class Menu {
         else if (command.startsWith("duel "))
             DuelMenu.checkMenuCommands(command.substring(5));
         else
-            new InvalidCommand();
+            throw new InvalidCommand();
     }
 }

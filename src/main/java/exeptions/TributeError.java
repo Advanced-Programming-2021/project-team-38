@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class TributeError {
+public class TributeError extends Exception {
     public TributeError() {
-        PrintError.print("there are not enough cards for tribute");
+        super("there are not enough cards for tribute");
     }
 }

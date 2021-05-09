@@ -1,11 +1,12 @@
 package view;
 
 import controller.RelatedToMenuController;
+import exeptions.*;
 
 public class Main {
-    public static void main(String[] args) {
-        boolean isProgramEnded = true;
-        while (isProgramEnded) {
+    public static void main(String[] args) throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, NotExisting, BeingFull {
+        boolean isProgramEnded = false;
+        while (!isProgramEnded) {
             Menu.checkMenuCommands();
             isProgramEnded = RelatedToMenuController.isProgramEnded();
         }

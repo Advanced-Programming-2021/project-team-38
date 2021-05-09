@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class InvalidAddress {
+public class InvalidAddress extends Exception {
     public InvalidAddress() {
-        PrintError.print("there no monsters on this address");
+        super("there no monsters on this address");
     }
 }

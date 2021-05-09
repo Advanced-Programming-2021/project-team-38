@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class RelatedToMenu {
 
-    public static void checkMenuCommands(String command) {
+    public static void checkMenuCommands(String command) throws InvalidCommand, MenuNavigationError {
         if (command.startsWith("enter ")) {
             RelatedToMenuController.enterMenu(command.substring(6));
         } else if (command.matches("exit")) {
@@ -17,7 +17,7 @@ public class RelatedToMenu {
         } else if (command.matches("show-current")) {
             RelatedToMenuController.showMenu();
         } else
-            new InvalidCommand();
+            throw new InvalidCommand();
 //        if (command.equals("exit"))
 //            RelatedToMenuController.exitMenu();
 //        else if (command.startsWith("enter ")) {

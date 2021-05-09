@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class InvalidCommand {
+public class InvalidCommand extends Exception {
     public InvalidCommand() {
-        PrintError.print("invalid command");
+        super("invalid command");
     }
 }

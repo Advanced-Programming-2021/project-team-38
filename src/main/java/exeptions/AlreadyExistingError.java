@@ -2,9 +2,9 @@ package exeptions;
 
 import view.PrintError;
 
-public class AlreadyExistingError {
+public class AlreadyExistingError extends Exception{
 
     public AlreadyExistingError(String type, String subType, String name) {
-        PrintError.print(String.format("%s with %s %s already exists", type, subType, name));
+        super(String.format("%s with %s %s already exists", type, subType, name));
     }
 }

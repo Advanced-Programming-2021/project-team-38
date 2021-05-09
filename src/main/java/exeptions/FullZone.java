@@ -2,7 +2,7 @@ package exeptions;
 
 import view.PrintError;
 
-public class FullZone {
+public class FullZone extends Exception{
     public FullZone(Boolean isMonsterZone) {
         if (isMonsterZone) {
             PrintError.print("monster card zone is full");

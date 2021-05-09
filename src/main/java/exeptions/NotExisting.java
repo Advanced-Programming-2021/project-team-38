@@ -2,8 +2,8 @@ package exeptions;
 
 import view.PrintError;
 
-public class NotExisting {
+public class NotExisting extends Exception {
     public NotExisting(String type, String name) {
-        PrintError.print(String.format("%s with name %s does not exist", type, name));
+        super(String.format("%s with name %s does not exist", type, name));
     }
 }
