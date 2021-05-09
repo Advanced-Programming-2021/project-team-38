@@ -16,7 +16,7 @@ public class DeckMenu {
         final String showDeck = "show "; // conflict with upper ones
         final String removeCard = "deck rm-card "; //check to see its side or main deck
 
-        if (!RelatedToMenuController.isMenuCorrect(MenuName.DECK)) {
+        if (RelatedToMenuController.isMenuFalse(MenuName.DECK)) {
             throw new InvalidCommand();
         } else if (command.startsWith(createDeck))
             DeckMenuController.createDeck(command.substring(createDeck.length()));
