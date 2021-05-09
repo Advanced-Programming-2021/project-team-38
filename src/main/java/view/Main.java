@@ -4,7 +4,7 @@ import controller.RelatedToMenuController;
 import exeptions.*;
 
 public class Main {
-    public static void main(String[] args) throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, NotExisting, BeingFull {
+    public static void main(String[] args) throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, NotExisting, BeingFull, LoginError {
         boolean isProgramEnded = false;
         while (!isProgramEnded) {
             Menu.checkMenuCommands();

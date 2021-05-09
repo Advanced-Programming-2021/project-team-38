@@ -2,7 +2,9 @@ package view.Menus;
 
 import controller.LoginMenuController;
 import controller.RelatedToMenuController;
+import exeptions.AlreadyExistingError;
 import exeptions.InvalidCommand;
+import exeptions.LoginError;
 import view.MenuName;
 
 import java.util.regex.Matcher;
@@ -14,20 +16,19 @@ public class LoginMenu {
 
     }
 
-    public static void checkMenuCommands(String command) {
-        if (!RelatedToMenuController.isMenuCorrect(MenuName.LOGIN)) {
-            new InvalidCommand();
-            return;
+    public static void checkMenuCommands(String command) throws InvalidCommand, AlreadyExistingError, LoginError {
+        if (RelatedToMenuController.isMenuFalse(MenuName.LOGIN)) {
+            throw new InvalidCommand(); //TODO why invalid command?
         }
         if (command.startsWith("create ")) {
             createUser(command);
         } else if (command.startsWith("login ")) {
             login(command);
         } else
-            new InvalidCommand();
+            throw new InvalidCommand();
     }
 
-    private static void createUser(String command) {
+    private static void createUser(String command) throws InvalidCommand, AlreadyExistingError {
         Matcher usernameMatcher = getCommandMatcher(command, "--username (<username>\\S+)");
         Matcher passwordMatcher = getCommandMatcher(command, "--password (<password>\\S+)");
         Matcher nickMatcher = getCommandMatcher(command, "--nickname (<nickName>\\S+)");
@@ -36,17 +37,17 @@ public class LoginMenu {
             String password = passwordMatcher.group("password");
             String nickName = nickMatcher.group("nickName");
             LoginMenuController.createUser(username, nickName, password);
-        } else new InvalidCommand();
+        } else throw new InvalidCommand();
     }
 
-    private static void login(String command) {
+    private static void login(String command) throws InvalidCommand, LoginError {
         Matcher usernameMatcher = getCommandMatcher(command, "--username (<username>\\S+)");
         Matcher passwordMatcher = getCommandMatcher(command, "--password (<password>\\S+)");
         if (usernameMatcher.find() && passwordMatcher.find()) {
             String username = usernameMatcher.group("username");
             String password = passwordMatcher.group("password");
             LoginMenuController.login(username, password);
-        } else new InvalidCommand();
+        } else throw new InvalidCommand();
     }
 
 }

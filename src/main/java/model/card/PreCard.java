@@ -10,6 +10,7 @@ public abstract class PreCard {
     protected String name;
     protected CardType cardType;
     protected String description;
+    protected int price;
 
     static {
         allPreCards = new ArrayList<>();
@@ -18,6 +19,10 @@ public abstract class PreCard {
     public PreCard(String name, String type) {
         this.name = name;
         this.cardType = CardType.valueOf(type.toUpperCase());
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public String getName() {

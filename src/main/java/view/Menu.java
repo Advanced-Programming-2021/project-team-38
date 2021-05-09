@@ -14,7 +14,7 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, BeingFull, NotExisting {
+    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, BeingFull, NotExisting, LoginError {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));

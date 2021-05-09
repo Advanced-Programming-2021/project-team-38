@@ -131,7 +131,7 @@ import java.util.HashMap;
             this.balance -= decreasingAmount;
         }
 
-        public void addPreCard(Pre preCard) {
+        public void addPreCard(PreCard preCard) {
             this.preCards.add(preCard);
         }
 
@@ -170,4 +170,3 @@ import java.util.HashMap;
             }
         }
     }
-}

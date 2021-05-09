@@ -5,7 +5,7 @@ import exeptions.NotEnoughMoney;
 import model.User;
 import model.card.Card;
 import model.card.CardType;
-import model.card.Pre;
+import model.card.PreCard;
 
 import java.util.HashMap;
 
@@ -27,7 +27,7 @@ public class ShopMenuController {
         }
     }
 
-    private static void sellCard(Pre preCard) {
+    private static void sellCard(PreCard preCard) {
         if (user.getBalance() < preCard.getPrice()) {
             new NotEnoughMoney();
         } else {
