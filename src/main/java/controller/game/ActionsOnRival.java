@@ -2,7 +2,7 @@ package controller.game;
 
 import model.Player;
 import model.card.Card;
-import view.Print;
+import view.messageviewing.Print;
 
 class ActionsOnRival {
     private Player currentPlayer;

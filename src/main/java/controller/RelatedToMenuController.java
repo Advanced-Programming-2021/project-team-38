@@ -3,7 +3,7 @@ package controller;
 import exeptions.InvalidCommand;
 import exeptions.MenuNavigationError;
 import view.MenuName;
-import view.Print;
+import view.messageviewing.Print;
 
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -57,6 +57,13 @@ public class RelatedToMenuController {
         return currentMenu;
     }
 
+    public static boolean isMenuCorrect(MenuName menuName) {
+        return currentMenu.equals(menuName);
+    }
+
+    public static boolean hasProgramEnded() {
+        return programEnded;
+    }
 
     public static boolean isMenuCorrect(MenuName menu) {
         return menu == currentMenu;

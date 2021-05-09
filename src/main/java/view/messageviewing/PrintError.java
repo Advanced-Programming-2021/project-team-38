@@ -1,4 +1,4 @@
-package view;
+package view.messageviewing;
 
 public class PrintError {
 

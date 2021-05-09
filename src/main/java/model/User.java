@@ -8,6 +8,9 @@ import view.SuccessMessages;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
     public class User implements Comparable<model.User>{
         private final String username;
         private final String password;
@@ -15,8 +18,9 @@ import java.util.stream.Collectors;
         private int score;
         private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
         //TODO the hashmap key must be deleted after the value becomes 0
+        private ArrayList<PreCard> preCards;
         private ArrayList<Deck> decks;
-        private final int balance;
+        private int balance;
         private Deck activeDeck;
         private final static ArrayList<model.User> allUsers;
 
@@ -33,29 +37,38 @@ import java.util.stream.Collectors;
             this.password = password;
             this.nickName = nickName;
             this.score = 0;
-//            this.cards = new ArrayList<>();
+            this.preCards = new ArrayList<>();
             this.decks = new ArrayList<>();
             this.balance = 0;
             allUsers.add(this);
         }
 
-        public static model.User getUserByName(String username){
+        public static User getUserByName(String username) {
             for (model.User user : allUsers) {
-                if(user.username.equals(username)){
+                if (user.username.equals(username)) {
                     return user;
                 }
             }
             return null;
         }
 
-        public static String showScoreBoard(){
+        public static User getUserByNickName(String nickName) {
+            for (model.User user : allUsers) {
+                if (user.nickName.equals(nickName)) {
+                    return user;
+                }
+            }
+            return null;
+        }
+
+        public static String showScoreBoard() {
             StringBuilder scoreBoard = new StringBuilder();
             allUsers.sort(model.User::compareTo);
-            int counter = 0;
+            int counter = 1;
             model.User previousUser = null;
             for (model.User user : allUsers) {
-                if(previousUser!= null && user.score != previousUser.score) counter++;
-                scoreBoard.append(counter).append("- ").append(user.username).append("\n");
+                if (previousUser != null && user.score != previousUser.score) counter++;
+                scoreBoard.append(counter).append("- ").append(user.username).append(": ").append(user.getScore()).append("\n");
                 previousUser = user;
             }
             return scoreBoard.toString();
@@ -73,11 +86,13 @@ import java.util.stream.Collectors;
             return nickName;
         }
 
-
         public int getScore() {
             return score;
         }
 
+        public ArrayList<PreCard> getPreCards() {
+            return preCards;
+        }
 
         public HashMap<String, Integer> getCardTreasury() {
             return cardTreasury;
@@ -106,6 +121,18 @@ import java.util.stream.Collectors;
 
         public static ArrayList<model.User> getAllUsers() {
             return allUsers;
+        }
+
+        public void increaseBalance(int increasingAmount) {
+            this.balance += increasingAmount;
+        }
+
+        public void decreaseBalance(int decreasingAmount) {
+            this.balance -= decreasingAmount;
+        }
+
+        public void addPreCard(Pre preCard) {
+            this.preCards.add(preCard);
         }
 
         public void increaseScore(int increasingAmount) {
@@ -143,3 +170,4 @@ import java.util.stream.Collectors;
             }
         }
     }
+}

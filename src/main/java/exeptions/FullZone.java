@@ -1,6 +1,6 @@
 package exeptions;
 
-import view.PrintError;
+import view.messageviewing.PrintError;
 
 public class FullZone extends Exception{
     public FullZone(Boolean isMonsterZone) {
