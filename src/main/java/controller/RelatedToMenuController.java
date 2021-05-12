@@ -67,8 +67,12 @@ public class RelatedToMenuController {
     public static String getCommandString(String command, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(command);
-        if (matcher.find())
-            return matcher.group(1);
-        return null;
+        if (!matcher.find())
+            return null;
+        else
+            if (matcher.groupCount() == 0)
+                return matcher.group(0);
+            else
+                return matcher.group(1);
     }
 }

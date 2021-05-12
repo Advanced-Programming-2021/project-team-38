@@ -26,7 +26,7 @@ public class LoginMenuController {
         else if (User.getUserByNickName(nickname) != null)
             throw new AlreadyExistingError("user", "nickname", nickname);
         else return true;
-        return false;
+//        return false;
     }
 
     public static void login(String username, String password) throws LoginError {
@@ -44,7 +44,7 @@ public class LoginMenuController {
         else if (user.isPasswordCorrect(password))
             throw new LoginError();
         else return true;
-        return false;
+//        return false;
     }
 
 //    public static String logout(Matcher matcher) {

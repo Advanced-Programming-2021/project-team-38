@@ -6,7 +6,7 @@ import exeptions.*;
 import view.MenuName;
 
 public class DeckMenu {
-    public static void checkMenuCommands(String command) throws InvalidCommand, AlreadyExistingError, NotExisting, BeingFull, OccurrenceException {
+    public static void checkMenuCommands(String command) throws InvalidCommand, AlreadyExistingError, NotExisting, BeingFull, OccurrenceException, WrongMenu {
         final String createDeck = "create ";
         final String deleteDeck = "delete ";
         final String activeDeck = "set-activate ";
@@ -17,7 +17,7 @@ public class DeckMenu {
         final String removeCard = "deck rm-card "; //check to see its side or main deck
 
         if (RelatedToMenuController.isMenuFalse(MenuName.DECK)) {
-            throw new InvalidCommand();
+            throw new WrongMenu();
         } else if (command.startsWith(createDeck))
             DeckMenuController.createDeck(command.substring(createDeck.length()));
         else if (command.startsWith(deleteDeck))

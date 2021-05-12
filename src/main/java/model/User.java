@@ -6,15 +6,14 @@ import view.Print;
 import view.SuccessMessages;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
     public class User implements Comparable<model.User>{
         private final String username;
-        private final String password;
-        private final String nickName;
+        private String password;
+        private String nickName;
         private int score;
         private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
         //TODO the hashmap key must be deleted after the value becomes 0
@@ -119,8 +118,18 @@ import java.util.HashMap;
             return activeDeck;
         }
 
-        public static ArrayList<model.User> getAllUsers() {
+        public static ArrayList<User> getAllUsers() {
             return allUsers;
+        }
+
+        public void changePassword(String newPassword) {
+            this.password = newPassword;
+            Print.print(String.format(SuccessMessages.changingSuccessfully, "password"));
+        }
+
+        public void changeNickname(String newNickname) {
+            this.nickName = newNickname;
+            Print.print(String.format(SuccessMessages.changingSuccessfully, "nickname"));
         }
 
         public void increaseBalance(int increasingAmount) {
@@ -154,6 +163,10 @@ import java.util.HashMap;
             if (this.score > otherUser.score) return -1;
             if (this.score < otherUser.score) return 1;
             return this.username.compareTo(otherUser.username);
+        }
+
+        public void addDeck(Deck deck) {
+            decks.add(deck);
         }
 
         public void removeDeck(Deck deck) {

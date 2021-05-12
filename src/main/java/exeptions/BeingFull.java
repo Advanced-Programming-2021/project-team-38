@@ -1,6 +1,5 @@
 package exeptions;
 
-import view.PrintError;
 
 public class BeingFull extends Exception{
     public BeingFull(String name) {

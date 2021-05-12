@@ -9,14 +9,20 @@ import model.User;
 import model.card.PreCard;
 import view.Print;
 
+import java.util.Objects;
+
 public class DeckMenuController {
     private static User user;
+
+    public static void setUser(User user) {
+        DeckMenuController.user = user;
+    }
 
     public static void createDeck(String deckName) throws AlreadyExistingError {
         if (user.findDeckByName(deckName) != null)
             throw new AlreadyExistingError("deck", "name", deckName);
         else
-            new Deck(deckName, user);
+            user.addDeck(new Deck(deckName, user));
     }
 
     public static void deleteDeck(String deckName) throws NotExisting {
@@ -36,10 +42,10 @@ public class DeckMenuController {
     }
 
     public static void addCardToDeck(String command, boolean side) throws NotExisting, BeingFull, OccurrenceException {   //if it is side deck the boolean should be true
-        String cardName = RelatedToMenuController.
-                getCommandString(command, "--card ([^-]+) ");
-        String deckName = RelatedToMenuController.
-                getCommandString(command, "--deck ([^-]+) ");
+        String cardName = Objects.requireNonNull(RelatedToMenuController.
+                getCommandString(command, "--card ([^-]+)")).trim();
+        String deckName = Objects.requireNonNull(RelatedToMenuController.
+                getCommandString(command, "--deck ([^-]+)")).trim();
         Deck targetDeck = user.findDeckByName(deckName);
         if (!user.getCardTreasury().containsKey(cardName) ||
                 user.getCardTreasury().get(cardName) == 0)
@@ -52,10 +58,10 @@ public class DeckMenuController {
     }
 
     public static void removeCardFromDeck(String command, boolean side) throws NotExisting {
-        String cardName = RelatedToMenuController.
-                getCommandString(command, "--card ([^-]+) ");
-        String deckName = RelatedToMenuController.
-                getCommandString(command, "--deck ([^-]+) ");
+        String cardName = Objects.requireNonNull(RelatedToMenuController.
+                getCommandString(command, "--card ([^-]+)")).trim();
+        String deckName = Objects.requireNonNull(RelatedToMenuController.
+                getCommandString(command, "--deck ([^-]+)")).trim();
         Deck targetDeck = user.findDeckByName(deckName);
         PreCard targetPreCard = PreCard.findCard(cardName);
         if (targetDeck == null)
@@ -83,8 +89,8 @@ public class DeckMenuController {
     }
 
     public static void showDeck(String command, boolean side) throws NotExisting {
-        String deckName = RelatedToMenuController.
-                getCommandString(command, "--deck-name ([^-]+) ");
+        String deckName = Objects.requireNonNull(RelatedToMenuController.
+                getCommandString(command, "--deck-name ([^-]+)")).trim();
         Deck targetDeck = user.findDeckByName(deckName);
         if (targetDeck == null)
             throw new NotExisting("deck", deckName);

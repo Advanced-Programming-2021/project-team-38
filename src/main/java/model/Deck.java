@@ -24,11 +24,10 @@ public class Deck {
 //    private boolean isNumOfCardsValid;
 
     public Deck(String name, User owner) {
+        setOwner(owner);
         this.name = name;
-        this.owner = owner;
         this.mainCards = new ArrayList<>();
         this.sideCards = new ArrayList<>();
-//        isNumOfCardsValid = false;
     }
 
     public String getName() {
