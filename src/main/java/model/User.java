@@ -1,19 +1,19 @@
 
-    package model;
+package model;
 
 import model.card.PreCard;
 import view.Print;
 import view.SuccessMessages;
 
-import java.util.*;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
-    public class User implements Comparable<model.User>{
-        private final String username;
-        private String password;
-        private String nickName;
+public class User implements Comparable<model.User> {
+    private final String username;
+    private String password;
+    private String nickName;
         private int score;
         private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
         //TODO the hashmap key must be deleted after the value becomes 0
@@ -141,6 +141,12 @@ import java.util.HashMap;
         }
 
         public void addPreCard(PreCard preCard) {
+            if (preCard == null) return;
+            if (this.cardTreasury.containsKey(preCard.getName())) {
+                cardTreasury.put(preCard.getName(), cardTreasury.get(preCard.getName()) + 1);
+            } else {
+                this.cardTreasury.put(preCard.getName(), 1);
+            }
             this.preCards.add(preCard);
         }
 

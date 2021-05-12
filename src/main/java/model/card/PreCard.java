@@ -1,9 +1,6 @@
 package model.card;
 
-import model.Deck;
-
 import java.util.ArrayList;
-import java.util.Locale;
 
 public abstract class PreCard {
     private static ArrayList<PreCard> allPreCards;
@@ -19,6 +16,10 @@ public abstract class PreCard {
     public PreCard(String name, String type) {
         this.name = name;
         this.cardType = CardType.valueOf(type.toUpperCase());
+    }
+
+    public static ArrayList<PreCard> getAllPreCards() {
+        return allPreCards;
     }
 
     public int getPrice() {
@@ -51,4 +52,5 @@ public abstract class PreCard {
     public String toString() {
         return getName() + ": " + getDescription();
     }
+
 }

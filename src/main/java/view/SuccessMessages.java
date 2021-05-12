@@ -6,4 +6,5 @@ public class SuccessMessages {
     public static String removeCardFromDeck = "card removed from deck successfully";
     public static String removeDeck = "deck removed successfully";
     public static String changingSuccessfully = "%s changed successfully!";
+    public static String generalSuccess = "%s %s successfully";
 }
