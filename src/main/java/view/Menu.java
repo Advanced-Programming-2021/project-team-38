@@ -1,6 +1,8 @@
 package view;
 
-import exeptions.*;
+import exeptions.InvalidCommand;
+import exeptions.MenuNavigationError;
+import exeptions.WrongMenu;
 import view.Menus.*;
 
 import java.util.Scanner;
@@ -14,7 +16,7 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, BeingFull, NotExisting, LoginError, WrongMenu, WrongPassword, EqualPasswordException {
+    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));
@@ -27,13 +29,14 @@ public class Menu {
         else if (command.startsWith("deck "))
             DeckMenu.checkMenuCommands(command.substring(5));
         else if (command.startsWith("shop "))
-            ShopMenu.checkMenuCommands(command.substring(5));
+            ShopMenu.checkMenuCommands(command.substring(5)); // todo : the commands valid in the duel menu don't only start with "duel"
         else if (command.startsWith("duel "))
             DuelMenu.checkMenuCommands(command.substring(5));
         else if (command.equals("user logout"))
             MainMenu.logout();
         else
             throw new InvalidCommand();
+        //todo : the command "card show <card name>" can be used in duel, shop, and deck menus
     }
 
     public static Matcher getCommandMatcher(String input, String regex) {

@@ -9,8 +9,6 @@ import model.Player;
 import model.card.Card;
 import model.card.monster.Monster;
 
-import javax.management.MalformedObjectNameException;
-
 class MainPhaseController {
     private Card selectedCard = null;
     private Player player;
@@ -27,10 +25,9 @@ class MainPhaseController {
         return null;
     }
 
-    private void summonMonster() {
+    private void summonMonster() throws NoSelectedCard {
         if (selectedCard == null) {
-            new NoSelectedCard();
-            return;
+            throw new NoSelectedCard();
         }
         if (!player.getHand().doesContainCard(selectedCard)
                 || !(selectedCard instanceof Monster)) {

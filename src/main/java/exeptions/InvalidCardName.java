@@ -1,9 +1,7 @@
 package exeptions;
 
-import view.messageviewing.PrintError;
-
-public class InvalidCardName {
+public class InvalidCardName extends Exception {
     public InvalidCardName() {
-        PrintError.print("there is no card with this name");
+        super("there is no card with this name");
     }
 }

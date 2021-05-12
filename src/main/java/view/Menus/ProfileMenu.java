@@ -7,12 +7,16 @@ import view.MenuName;
 
 public class ProfileMenu {
 
-    public static void checkMenuCommands(String command) throws InvalidCommand, WrongMenu, WrongPassword, EqualPasswordException, AlreadyExistingError {
+    public static void checkMenuCommands(String command) throws InvalidCommand, WrongMenu {
         if (RelatedToMenuController.isMenuFalse(MenuName.PROFILE))
             throw new WrongMenu();
-        else if (command.startsWith("change "))
+        else if (command.startsWith("change ")) {
+            try {
                 ProfileMenuController.changeCommands(command.substring(7));
-        else
+            } catch (WrongPassword | EqualPasswordException | AlreadyExistingError exception) {
+                System.out.println(exception.getMessage());
+            }
+        } else
             throw new InvalidCommand();
     }
 

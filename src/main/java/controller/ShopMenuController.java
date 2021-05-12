@@ -15,7 +15,7 @@ public class ShopMenuController {
     private static User user;
 
     public static String showAllCards() {
-        ArrayList<PreCard> allPreCards = PreCard.getAllPreCards(); //todo : it's better to clone it
+        ArrayList<PreCard> allPreCards = PreCard.getAllPreCards();
         ArrayList<String> cards = new ArrayList<>();
         for (PreCard preCard : allPreCards) {
             cards.add(preCard.getName() + ": " + preCard.getDescription());
