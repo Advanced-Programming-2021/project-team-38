@@ -1,25 +1,27 @@
 package model;
 
-import model.card.CardInUse;
+import lombok.Getter;
+import lombok.Setter;
+import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
+@Getter
+@Setter
 public class Board {
     GraveYard graveYard;
-//    private Cell[] monsterZone;
-//    private Cell[] spellAndTrapZone;
 
-    private CardInUse[] monsterZone;
-    private CardInUse[] spellTrapZone;
+    private MonsterCardInUse[] monsterZone;
+    private SpellTrapCardInUse[] spellTrapZone;
     private int additionalAttack;
     private int additionalDefense;
 
     private Phase onPhase;
 
     {
-        this.monsterZone = new CardInUse[5];
-        this.spellTrapZone = new CardInUse[5];
+        this.monsterZone = new MonsterCardInUse[5];
+        this.spellTrapZone = new SpellTrapCardInUse[5];
+        newCells();
     }
 
     public Board() {
@@ -32,8 +34,14 @@ public class Board {
 
     private void newCells() {
         for (int i = 0; i < 5; i++) {
-            monsterZone[i] = new CardInUse();
-            spellTrapZone[i] = new CardInUse();
+            monsterZone[i] = new MonsterCardInUse();
+            spellTrapZone[i] = new SpellTrapCardInUse();
+        }
+    }
+
+    public void addToAllMonsterCellsAttack(int amount) { //amount can be negative too
+        for (MonsterCardInUse monsterCardInUse : monsterZone) {
+            monsterCardInUse.addToAttack(amount);
         }
     }
 
@@ -42,5 +50,17 @@ public class Board {
             if (cardInUse.getThisCard() == null) return false;
         }
         return true;
+    }
+
+    public void addToAdditionalAttack(int amount) {     //maybe not useful
+        additionalAttack += amount;
+    }
+
+    public CardInUse getFirstEmptyCell(CardInUse[] zone) {
+        for (CardInUse cardInUse : zone) {
+            if (cardInUse.isCellEmpty())
+                return cardInUse;
+        }
+        return null;
     }
 }

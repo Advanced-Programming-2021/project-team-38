@@ -1,6 +1,9 @@
 package model.card.monster;
 
+import model.Board;
 import model.card.Card;
+import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.MonsterCardInUse;
 
 public class Monster extends Card {
     protected PreMonsterCard myPreCard;
@@ -9,9 +12,7 @@ public class Monster extends Card {
         return this;
     }
 
-    public void receiveAttack() {
 
-    }
 
     public int getRawAttack() {
         return myPreCard.getAttack();
@@ -21,7 +22,7 @@ public class Monster extends Card {
         return myPreCard.getDefence();
     }
 
-    public void activeEffect() {
+    public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse) {
 
     }
 
@@ -30,6 +31,14 @@ public class Monster extends Card {
     }
 
     public void sendToGraveYard() {
+
+    }
+
+    public boolean canReceiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker) { //TODO complete
+        return true;
+    }
+
+    protected void receiveAttack() {
 
     }
 
