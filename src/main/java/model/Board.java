@@ -1,16 +1,28 @@
 package model;
 
+import model.card.CardInUse;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Board {
     GraveYard graveYard;
-    private Cell[] monsterZone;
-    private Cell[] spellAndTrapZone;
+//    private Cell[] monsterZone;
+//    private Cell[] spellAndTrapZone;
+
+    private CardInUse[] monsterZone;
+    private CardInUse[] spellTrapZone;
+    private int additionalAttack;
+    private int additionalDefense;
+
+    private Phase onPhase;
+
+    {
+        this.monsterZone = new CardInUse[5];
+        this.spellTrapZone = new CardInUse[5];
+    }
 
     public Board() {
-        this.spellAndTrapZone = new Cell[5];
-        this.monsterZone = new Cell[5];
         graveYard = new GraveYard();
     }
 
@@ -18,9 +30,16 @@ public class Board {
         return graveYard;
     }
 
+    private void newCells() {
+        for (int i = 0; i < 5; i++) {
+            monsterZone[i] = new CardInUse();
+            spellTrapZone[i] = new CardInUse();
+        }
+    }
+
     public boolean isMonsterZoneFull() {
-        for (Cell cell : monsterZone) {
-            if (cell.getCard() == null) return false;
+        for (CardInUse cardInUse : monsterZone) {
+            if (cardInUse.getThisCard() == null) return false;
         }
         return true;
     }

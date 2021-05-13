@@ -8,7 +8,7 @@ import java.util.Locale;
 public abstract class PreCard {
     private static ArrayList<PreCard> allPreCards;
     protected String name;
-    protected CardType cardType;
+    protected CardType cardType;    // monster or trap or spell
     protected String description;
     protected int price;
 

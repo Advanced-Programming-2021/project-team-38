@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 public class PreSpellTrapCard extends PreCard {
     private static final ArrayList<PreSpellTrapCard> allSpellTrapCards;
-//    private CardType cardType;
-    private int price;
-    private CardStatus status;
+    private CardStatus status;  //limit
     private CardIcon icon;
 
     static {
