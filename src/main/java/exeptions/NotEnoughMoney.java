@@ -1,9 +1,7 @@
 package exeptions;
 
-import view.messageviewing.PrintError;
-
-public class NotEnoughMoney {
+public class NotEnoughMoney extends Exception {
     public NotEnoughMoney() {
-        PrintError.print("not enough money\n");
+        super("you don't have enough money!");
     }
 }

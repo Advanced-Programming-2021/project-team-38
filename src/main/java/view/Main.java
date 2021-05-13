@@ -1,13 +1,19 @@
 package view;
 
 import controller.RelatedToMenuController;
-import exeptions.*;
+import exeptions.InvalidCommand;
+import exeptions.MenuNavigationError;
+import exeptions.WrongMenu;
 
 public class Main {
-    public static void main(String[] args) throws InvalidCommand, MenuNavigationError, AlreadyExistingError, OccurrenceException, NotExisting, BeingFull, LoginError, WrongPassword, EqualPasswordException, WrongMenu {
+    public static void main(String[] args) {
         boolean isProgramEnded = false;
         while (!isProgramEnded) {
-            Menu.checkMenuCommands();
+            try {
+                Menu.checkMenuCommands();
+            } catch (InvalidCommand | MenuNavigationError | WrongMenu exception) {
+                System.out.println(exception.getMessage());
+            }
             isProgramEnded = RelatedToMenuController.isProgramEnded();
         }
         System.out.println("Good Bye!");

@@ -1,39 +1,48 @@
 package controller;
 
-import exeptions.InvalidCardName;
 import exeptions.NotEnoughMoney;
+import exeptions.NotExisting;
 import model.User;
-import model.card.Card;
-import model.card.CardType;
 import model.card.PreCard;
+import view.messageviewing.SuccessfulAction;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ShopMenuController {
-    private static HashMap<String, Integer> allCards;
+    private static HashMap<String, Integer> allCards; //todo:  Why did we need this? (I'm negar!)
     private static User user;
 
     public static String showAllCards() {
-        return null;
+        ArrayList<PreCard> allPreCards = PreCard.getAllPreCards();
+        ArrayList<String> cards = new ArrayList<>();
+        for (PreCard preCard : allPreCards) {
+            cards.add(preCard.getName() + ": " + preCard.getDescription());
+        }
+        Collections.sort(cards);
+        StringBuilder cardsToShow = new StringBuilder();
+        for (String card : cards) {
+            cardsToShow.append(card).append("\n");
+        }
+        return cardsToShow.toString();
     }
 
-    public static void buy(String cardName) {
-        try {
-            CardType cardType = CardType.valueOf(cardName);
-            Card cardToSell = new Card(); //todo : we should make the card based on the name
-//            sellCard(cardToSell);
-        } catch (Exception e) {
-            new InvalidCardName();
-        }
+    public static void checkBuying(String cardName) throws NotExisting, NotEnoughMoney {
+        PreCard preCard = PreCard.findCard(cardName);
+        if (preCard == null) throw new NotExisting("card", cardName);
+        user = LoginMenuController.getCurrentUser();
+        if (!user.getCardTreasury().containsKey(cardName) &&
+                preCard.getPrice() > user.getBalance()) throw new NotEnoughMoney();
+        sellCard(preCard);
     }
 
     private static void sellCard(PreCard preCard) {
-        if (user.getBalance() < preCard.getPrice()) {
-            new NotEnoughMoney();
-        } else {
-            user.decreaseBalance(preCard.getPrice());
-            user.addPreCard(preCard);
-            System.out.println("Card purchase was successful!");
-        }
+        int price;
+        if (user.getCardTreasury().containsKey(preCard.getName())) price = 0;
+        else price = preCard.getPrice();
+        user.decreaseBalance(price);
+        user.addPreCard(preCard);
+        new SuccessfulAction("card " + preCard.getName(), "is sold");
     }
 }

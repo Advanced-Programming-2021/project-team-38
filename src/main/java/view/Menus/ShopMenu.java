@@ -1,15 +1,23 @@
 package view.Menus;
 
 import controller.ShopMenuController;
-import exeptions.InvalidCardName;
-import model.card.CardType;
+import exeptions.InvalidCommand;
+import exeptions.NotEnoughMoney;
+import exeptions.NotExisting;
+import view.messageviewing.Print;
 
 public class ShopMenu {
-    public static void checkMenuCommands(String command) {
+    public static void checkMenuCommands(String command) throws InvalidCommand {
         if (command.startsWith("buy ")) {
             String cardName = command.substring(4);
-            ShopMenuController.buy(cardName);
-        }
+            try {
+                ShopMenuController.checkBuying(cardName);
+            } catch (NotExisting | NotEnoughMoney exception) {
+                System.out.println(exception.getMessage());
+            }
+        } else if (command.equals("show --all")) {
+            Print.print(ShopMenuController.showAllCards());
+        } else throw new InvalidCommand();
     }
 
 }
