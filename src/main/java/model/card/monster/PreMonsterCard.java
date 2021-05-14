@@ -6,6 +6,7 @@ import model.card.CardType;
 import model.card.PreCard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Getter
 public class PreMonsterCard extends PreCard {
@@ -18,6 +19,7 @@ public class PreMonsterCard extends PreCard {
 
     public PreMonsterCard(String[] cardData) {
         //Name,Level,Attribute, Monster Type , Card Type ,Atk,Def,Description,Price
+        System.out.println(Arrays.toString(cardData));
         name = cardData[0];
         level = Integer.parseInt(cardData[1]);
         attribute = CardAttribute.valueOf(cardData[2].toUpperCase());

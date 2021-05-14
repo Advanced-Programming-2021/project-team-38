@@ -18,5 +18,6 @@ public class test1 {
     @DisplayName("load cards")
     public void load() {
         CardLoader.loadCsv();
+        CardLoader.setCards();
     }
 }
