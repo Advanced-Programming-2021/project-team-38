@@ -18,5 +18,6 @@ public class ScoreBoardTest {
     @DisplayName("load cards")
     public void load() {
         CardLoader.loadCsv();
+        CardLoader.setCards();
     }
 }
