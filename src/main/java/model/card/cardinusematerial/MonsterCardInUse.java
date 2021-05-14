@@ -3,22 +3,19 @@ package model.card.cardinusematerial;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
-import model.card.PreCard;
-import model.card.cardinusematerial.CardInUse;
 import model.card.monster.PreMonsterCard;
 
 @Getter
 @Setter
 public class MonsterCardInUse extends CardInUse {
     private int attack, defense;
-    private boolean hasAttackedInThisTurn;
+    private boolean hasBeenAttacker; //if it has attacked another card in this turn
     private boolean isAttacked; //if it has been attacked in this phase
-    private boolean isAttacking;    //if it has attacked a rival card in this turn
+    private boolean isAttacking;    //if it has attacked a rival card in this phase
+    private boolean cameOnThisTurn; //if it was drawn in this phase
 
     {
-        isAttacked = false;
-        isAttacking = false;
-        hasAttackedInThisTurn = false;
+        resetCell();
         defense = 0;
         attack = 0;
     }
@@ -34,6 +31,14 @@ public class MonsterCardInUse extends CardInUse {
     }
 
     public void setACardInThisCell(PreMonsterCard preMonsterCard) { //TODO
+        resetCell();
+        //continue
+    }
 
+    private void resetCell() {
+        cameOnThisTurn = false;
+        isAttacked = false;
+        isAttacking = false;
+        hasBeenAttacker = false;
     }
 }

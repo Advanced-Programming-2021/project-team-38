@@ -1,17 +1,10 @@
 package model.card;
 
 import lombok.Getter;
-import model.Player;
-import model.card.monster.CardAttribute;
-import model.card.monster.PreMonsterCard;
-
-import java.util.ArrayList;
 
 @Getter
 public abstract class Card {
     protected String name;
-//    protected int cardNumber;
-//    protected Player owner;
     protected Card instance;
     protected PreCard preCardInGeneral;
 
@@ -45,35 +38,5 @@ public abstract class Card {
     public static Card getCardByName(String cardName) {
         return null;
     }
-
-
-
-//    public int getPrice() {
-//        return price;
-//    }
-//
-//    public CardAttribute getAttribute() {
-//        return attribute;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public int getCardNumber() {
-//        return cardNumber;
-//    }
-//
-//    public String getType() {
-//        return type;
-//    }
-//
-//    public Player getOwner() {
-//        return owner;
-//    }
-//
-//    protected void receiveAttack(Card attackerCard) {
-//
-//    }
 
 }

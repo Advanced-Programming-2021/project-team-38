@@ -8,10 +8,12 @@ import model.card.cardinusematerial.MonsterCardInUse;
 
 public class Monster extends Card {
     protected PreMonsterCard myPreCard;
+    protected boolean canBeNormalSummoned;
 
     public Monster(PreCard preCard) {
         super(preCard);
         myPreCard = (PreMonsterCard) preCard;
+        //TODO set canBeNormalSummoned
     }
 
     public Monster setUpMonster() {    //after instance creation it will fill the fields

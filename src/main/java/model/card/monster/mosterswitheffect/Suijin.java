@@ -16,12 +16,6 @@ public class Suijin extends Monster {
         setName("Suijin");
     }
 
-    @Override
-    public Monster setUpMonster() {
-        instance = this;
-        return this;
-    }
-
 
     @Override
     public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {
