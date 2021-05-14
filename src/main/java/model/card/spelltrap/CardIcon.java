@@ -7,5 +7,9 @@ public enum CardIcon {
     FIELD,
     QUICK_PLAY,
     CONTINUOUS,
-    COUNTER
+    COUNTER;
+
+    public static CardIcon getEnum(String name) {
+        return CardIcon.valueOf(name.replaceAll("-", "_").toUpperCase());
+    }
 }

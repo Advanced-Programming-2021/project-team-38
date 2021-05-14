@@ -155,7 +155,7 @@ public class Deck {
 
     private int findLimitOfCard(String nameOfCard) {
         int limit = 1; // for when card is limited
-        PreSpellTrapCard preSTCard = PreSpellTrapCard.findSTCard(nameOfCard);
+        PreSpellTrapCard preSTCard = (PreSpellTrapCard) PreCard.findCard(nameOfCard);
         if (preSTCard == null || preSTCard.getStatus() == CardStatus.UNLIMITED)
             limit = 3;
 

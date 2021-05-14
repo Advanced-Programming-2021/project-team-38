@@ -13,4 +13,8 @@ public enum CardStatus {
     public int getLimit() {
         return limit;
     }
+
+    public static CardStatus getEnum(String name) {
+        return CardStatus.valueOf(name.replaceAll(" ", "_").toUpperCase());
+    }
 }

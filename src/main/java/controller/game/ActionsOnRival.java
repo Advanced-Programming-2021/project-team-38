@@ -16,7 +16,7 @@ class ActionsOnRival {
     public void showGraveyard() {
         int i = 1;
         for (Card card : otherPlayer.getBoard().getGraveYard().getCardsInGraveYard()) {
-            Print.print(String.format("%d. %s:%s\n", i, card.getName(), card.getDescription()));
+            Print.print(String.format("%d. %s", i, card.getPreCardInGeneral()));
             i++;
         }
         if (i==1)

@@ -15,5 +15,11 @@ public enum MonsterType {
     INSECT,
     CYBERSE,
     FAIRY,
-    SEA_SERPENT
+    SEA_SERPENT;
+
+
+    public static MonsterType getEnum(String name) {
+        return MonsterType.valueOf(name.replaceAll(" ", "_")
+                .replaceAll("-","_").toUpperCase());
+    }
 }

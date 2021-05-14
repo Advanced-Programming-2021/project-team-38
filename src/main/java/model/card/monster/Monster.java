@@ -2,11 +2,29 @@ package model.card.monster;
 
 import model.Board;
 import model.card.Card;
+import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 
 public class Monster extends Card {
     protected PreMonsterCard myPreCard;
+
+    public Monster(PreCard preCard) {
+        super(preCard);
+        myPreCard = (PreMonsterCard) preCard;
+    }
+
+    public Monster setUpMonster() {    //after instance creation it will fill the fields
+        setName(myPreCard.getName());
+        instance = this;
+        return this;
+    }
+
+    @Override
+    public void setName(String name) {
+        if (getName() == null)
+            super.setName(name);
+    }
 
     public Monster getCard() {
         return this;
@@ -19,10 +37,10 @@ public class Monster extends Card {
     }
 
     public int getRawDefense() {
-        return myPreCard.getDefence();
+        return myPreCard.getDefense();
     }
 
-    public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse) {
+    public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {
 
     }
 
@@ -34,12 +52,17 @@ public class Monster extends Card {
 
     }
 
-    public boolean canReceiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker) { //TODO complete
+    public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) { //TODO complete
         return true;
     }
 
-    protected void receiveAttack() {
+    protected void receiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker, CardInUse thisCard) {
 
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Monster(preCardInGeneral);
     }
 
 //
