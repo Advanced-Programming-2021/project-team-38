@@ -3,18 +3,21 @@ package controller.game;
 
 import exeptions.AlreadyDoneAction;
 import exeptions.NotEnoughTributes;
+import model.Board;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
+import view.messageviewing.Print;
 
 import java.util.ArrayList;
 
 public class SummonController {
-    private PreMonsterCard preMonster;
-    private SummonType summonType;
+    private final PreMonsterCard preMonster;
+    private final SummonType summonType;
     private int numOfNormalSummons;
-    private GamePlayController controller;
+    private final GamePlayController controller;
     private MonsterCardInUse monsterCardInUse;
+    private Board board;
 
     public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, SummonType summonType, GamePlayController controller) {
         this.summonType = summonType;
@@ -22,6 +25,7 @@ public class SummonController {
         this.numOfNormalSummons = 0;
         this.controller = controller;
         this.monsterCardInUse = monsterCardInUse;
+        this.board = controller.getCurrentPlayerBoard();
     }
 
     public void run() throws AlreadyDoneAction, NotEnoughTributes {
@@ -62,18 +66,26 @@ public class SummonController {
 
     private void tributeSummon(Monster monster) throws NotEnoughTributes {
         int tributesNeeded = findNumOfTributes(monster);
-//        if (controller.getCurrentPlayerBoard().getNumOfAvailableTributes() < tributesNeeded) {
-//            throw new NotEnoughTributes();
-//        }//todo
-        ArrayList<String> tributeAddresses = new ArrayList<>();
-        for (int i = 0; i < tributesNeeded; i++) {
-            String address = DuelMenuController.askQuestion("Enter the address of a card to tribute:");
-//            try{
-//                int index = Integer.parseInt(address);
-//            }
+        if (board.getNumOfAvailableTributes() < tributesNeeded) {
+            throw new NotEnoughTributes();
         }
-//        tribute(tributeAddresses);
-//        monster.setManner();
+        ArrayList<Integer> tributeIndexes = new ArrayList<>();
+        for (int i = 0; i < tributesNeeded; i++) {
+            String address = DuelMenuController.askQuestion("Enter the index of a card to tribute:");
+            try {
+                int index = Integer.parseInt(address);
+                tributeIndexes.add(index);
+            } catch (Exception e) {
+                Print.print("Invalid Address");
+                i--;
+            }
+        }
+        tribute(tributeIndexes);
+        monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
+        monsterCardInUse.setAttackPosition(true);
+        monsterCardInUse.setFaceUp(true);
+        monsterCardInUse.setThisCard(monster);
+
     }
 
     private int findNumOfTributes(Monster monster) {
@@ -81,5 +93,12 @@ public class SummonController {
         if (preMonster.getLevel() <= 6) return 1;
         return 2;
         //todo: some cards need more tributes
+    }
+
+    private void tribute(ArrayList<Integer> tributeIndexes) {
+        for (Integer index : tributeIndexes) {
+            Monster tributeMonster = (Monster) board.getMonsterZone()[index].getThisCard();
+            tributeMonster.sendToGraveYard();
+        }
     }
 }

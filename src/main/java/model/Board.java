@@ -67,4 +67,12 @@ public class Board {
         }
         return null;
     }
+
+    public int getNumOfAvailableTributes() {
+        int counter = 0;
+        for (MonsterCardInUse monsterCardInUse : this.monsterZone) {
+            if (monsterCardInUse.getThisCard() != null) counter++;
+        }
+        return counter;
+    }
 }
