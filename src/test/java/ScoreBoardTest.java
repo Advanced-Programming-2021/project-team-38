@@ -3,7 +3,7 @@ import model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class test1 {
+public class ScoreBoardTest {
     @Test
     public void scoreBoardTest() {
         new User("negar", " 123", "bsh");
