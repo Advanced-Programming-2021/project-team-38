@@ -2,7 +2,6 @@ package model;
 
 import exeptions.BeingFull;
 import exeptions.OccurrenceException;
-import model.card.Card;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.spelltrap.CardStatus;
@@ -155,7 +154,7 @@ public class Deck {
 
     private int findLimitOfCard(String nameOfCard) {
         int limit = 1; // for when card is limited
-        PreSpellTrapCard preSTCard = PreSpellTrapCard.findSTCard(nameOfCard);
+        PreSpellTrapCard preSTCard = (PreSpellTrapCard) PreCard.findCard(nameOfCard);
         if (preSTCard == null || preSTCard.getStatus() == CardStatus.UNLIMITED)
             limit = 3;
 

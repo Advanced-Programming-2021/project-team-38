@@ -2,9 +2,9 @@ package controller.game;
 
 
 import exeptions.*;
-import model.Cell;
 import model.Player;
 import model.card.PreCard;
+import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.PreMonsterCard;
 
 class MainPhaseController {
@@ -29,8 +29,8 @@ class MainPhaseController {
         if (player.getBoard().isMonsterZoneFull()) {
             throw new FullZone(true);
         } else {
-            Cell cellToSummon = player.getBoard().getFirstEmptyCell(true);
-            SummonController summonController = new SummonController(cellToSummon, selectedCard, summonType, controller);
+            MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
+            SummonController summonController = new SummonController(monsterCardInUse, (PreMonsterCard) selectedCard, summonType, controller);
             summonController.run();
         }
 
@@ -41,7 +41,7 @@ class MainPhaseController {
 
     }
 
-    private void flipSummon(Cell cell) {
+    private void flipSummon() {
 
     }
 
@@ -49,7 +49,7 @@ class MainPhaseController {
 
     }
 
-    private void setTrapOrSpell(Cell cell) {
+    private void setTrapOrSpell() {
 
     }
 

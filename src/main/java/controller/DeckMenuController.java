@@ -29,8 +29,12 @@ public class DeckMenuController {
         Deck targetDeck = user.findDeckByName(deckName);
         if (targetDeck == null)
             throw new NotExisting("deck", deckName);
-        else
+        else {
+            if (user.getActiveDeck() == targetDeck)
+                user.setActiveDeck(null);
+
             user.removeDeck(targetDeck);
+        }
     }
 
     public static void chooseActiveDeck(String deckName) throws NotExisting {

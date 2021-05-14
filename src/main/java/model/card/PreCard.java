@@ -1,56 +1,29 @@
 package model.card;
 
-import java.util.ArrayList;
+import lombok.Getter;
 
+import java.util.HashMap;
+
+@Getter
 public abstract class PreCard {
-    private static ArrayList<PreCard> allPreCards;
+    protected static HashMap<PreCard, Card> allPreCardsInstances;
     protected String name;
-    protected CardType cardType;
+    protected CardType cardType;    // monster or trap or spell
     protected String description;
     protected int price;
-    private int level;
 
     static {
-        allPreCards = new ArrayList<>();
+        allPreCardsInstances = new HashMap<>();
     }
 
-    protected PreCard(String name, String type) {
-        this.name = name;
-        this.cardType = CardType.valueOf(type.toUpperCase());
+    public static HashMap<PreCard, Card> getAllPreCardsInstances() {
+        return allPreCardsInstances;
     }
 
-    public static ArrayList<PreCard> getAllPreCards() {
-        return allPreCards;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CardType getCardType() {
-        return cardType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public abstract Card newCard(String name);
+    protected abstract Card newCard();
 
     public static PreCard findCard(String name) {
-        for (PreCard preCard : allPreCards) {
+        for (PreCard preCard : allPreCardsInstances.keySet()) {
             if (preCard.getName().equals(name))
                 return preCard;
         }

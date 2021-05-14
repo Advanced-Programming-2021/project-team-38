@@ -1,13 +1,30 @@
 package model;
 
+import lombok.Getter;
+import lombok.Setter;
+import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
+
+@Getter
+@Setter
 public class Board {
     GraveYard graveYard;
-    private Cell[] monsterZone;
-    private Cell[] spellAndTrapZone;
+
+    private MonsterCardInUse[] monsterZone;
+    private SpellTrapCardInUse[] spellTrapZone;
+    private int additionalAttack;
+    private int additionalDefense;
+
+    private Phase onPhase;
+
+    {
+        this.monsterZone = new MonsterCardInUse[5];
+        this.spellTrapZone = new SpellTrapCardInUse[5];
+        newCells();
+    }
 
     public Board() {
-        this.spellAndTrapZone = new Cell[5];
-        this.monsterZone = new Cell[5];
         graveYard = new GraveYard();
     }
 
@@ -15,32 +32,39 @@ public class Board {
         return graveYard;
     }
 
+    private void newCells() {
+        for (int i = 0; i < 5; i++) {
+            monsterZone[i] = new MonsterCardInUse();
+            spellTrapZone[i] = new SpellTrapCardInUse();
+        }
+    }
+
+    public void addToAllMonsterCellsAttack(int amount) { //amount can be negative too
+        for (MonsterCardInUse monsterCardInUse : monsterZone) {
+            monsterCardInUse.addToAttack(amount);
+        }
+    }
+
     public boolean isMonsterZoneFull() {
-        return getFirstEmptyCell(true) == null;
+        return getFirstEmptyCardInUse(true) == null;
     }
 
     public boolean isSpellTrapZoneFull() {
-        return getFirstEmptyCell(false) == null;
+        return getFirstEmptyCardInUse(false) == null;
     }
 
-    public Cell getFirstEmptyCell(boolean isMonster) {
-        if (isMonster) {
-            for (Cell cell : monsterZone) {
-                if (cell.getCard() == null) return cell;
-            }
-        } else {
-            for (Cell cell : spellAndTrapZone) {
-                if (cell.getCard() == null) return cell;
-            }
+    public void addToAdditionalAttack(int amount) {     //maybe not useful
+        additionalAttack += amount;
+    }
+
+    public CardInUse getFirstEmptyCardInUse(boolean isMonster) {
+        CardInUse[] zone;
+        if (isMonster) zone = this.monsterZone;
+        else zone = this.spellTrapZone;
+        for (CardInUse cardInUse : zone) {
+            if (cardInUse.isCellEmpty())
+                return cardInUse;
         }
         return null;
     }
-
-    public int getNumOfAvailableTributes() {
-        int tributes = 0;
-        for (Cell cell : monsterZone) {
-            if (cell.getCard() != null) tributes++;
-        }
-        return tributes;
-    } //todo: Any monster can be tribute and spells and traps can't be tribute. Right?
 }
