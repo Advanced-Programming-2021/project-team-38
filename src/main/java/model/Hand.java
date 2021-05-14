@@ -1,30 +1,30 @@
 package model;
 
-import model.card.Card;
+import model.card.PreCard;
 
 import java.util.ArrayList;
 
 public class Hand {
-    private ArrayList<Card> cardsInHand;
+    private ArrayList<PreCard> cardsInHand;
 
     public Hand() {
         this.cardsInHand = new ArrayList<>();
     }
 
-    public ArrayList<Card> getCardsInHand() {
+    public ArrayList<PreCard> getCardsInHand() {
         return cardsInHand;
     }
 
-    public boolean doesContainCard(Card card) {
-        return cardsInHand.contains(card);
+    public boolean doesContainCard(PreCard preCard) {
+        return cardsInHand.contains(preCard);
     }
 
-    public void addCard(Card card) {
-
+    public void addCard(PreCard preCard) {
+        this.cardsInHand.add(preCard);
     }
 
-    public void removeCard(Card card) {
-
+    public void removeCard(PreCard preCard) {
+        this.cardsInHand.remove(preCard);
     }
 
     @Override

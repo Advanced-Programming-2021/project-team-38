@@ -4,7 +4,7 @@ import model.Board;
 import model.Deck;
 import model.Player;
 import model.User;
-import model.card.Card;
+import model.card.PreCard;
 
 import java.util.regex.Matcher;
 
@@ -15,8 +15,8 @@ class GamePlayController {
     private Player currentPlayer;
     private Player rival;
     private int round;
-    private Card currentPlayerSelectedCard;
-    private Card rivalSelectedCard;
+    private PreCard currentPlayerSelectedCard;
+    private PreCard rivalSelectedCard;
     private Board currentPlayerBoard;
     private Board rivalBoard;
     private PhaseName currentPhase;
@@ -66,11 +66,11 @@ class GamePlayController {
         this.currentPhase = currentPhase; //todo: we should order the phases and here we should set the phase to the next phase
     }
 
-    public Card getCurrentPlayerSelectedCard() {
+    public PreCard getCurrentPlayerSelectedCard() {
         return currentPlayerSelectedCard;
     }
 
-    public Card getRivalSelectedCard() {
+    public PreCard getRivalSelectedCard() {
         return rivalSelectedCard;
     }
 

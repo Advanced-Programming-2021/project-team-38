@@ -8,12 +8,13 @@ public abstract class PreCard {
     protected CardType cardType;
     protected String description;
     protected int price;
+    private int level;
 
     static {
         allPreCards = new ArrayList<>();
     }
 
-    public PreCard(String name, String type) {
+    protected PreCard(String name, String type) {
         this.name = name;
         this.cardType = CardType.valueOf(type.toUpperCase());
     }
@@ -24,6 +25,10 @@ public abstract class PreCard {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public String getName() {
@@ -38,7 +43,11 @@ public abstract class PreCard {
         return description;
     }
 
-    protected abstract Card newCard(String name);
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public abstract Card newCard(String name);
 
     public static PreCard findCard(String name) {
         for (PreCard preCard : allPreCards) {

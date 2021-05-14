@@ -3,46 +3,46 @@
 package controller.game;
 
 public class DuelMenuController {
-    private PhaseName currentPhase;
+    private static PhaseName currentPhase;
 
-    public void summonMonster(boolean isFlip) {
-
-    }
-
-    public void setCard() {
+    public static void summonMonster(boolean isFlip) {
 
     }
 
-    public void setPosition(String cardManner) {
+    public static void setCard() {
+
+    }
+
+    public static void setPosition(String cardManner) {
 // if it's Monster manner or spell trap manner we should understand it! and give it to the gameplay(it  passes to the main phase)
     }
 
 
-    public void attack(int number) {
+    public static void attack(int number) {
 
     }
 
-    public void attackDirect() {
+    public static void attackDirect() {
 
     }
 
-    public void activateEffect() {
+    public static void activateEffect() {
 
     }
 
-    public void selectCard(String cardAddress) {
+    public static void selectCard(String cardAddress) {
 
     }
 
-    public void deselectCard() {
+    public static void deselectCard() {
 
     }
 
-    public void showGraveYard(boolean ofCurrentPlayer) {
+    public static void showGraveYard(boolean ofCurrentPlayer) {
 
     }
 
-    public String askQuestion(String questionToAsk) {
+    public static String askQuestion(String questionToAsk) {
         return null;
     }
 

@@ -1,9 +1,7 @@
 package exeptions;
 
-import view.messageviewing.PrintError;
-
 public class WrongPhaseForAction extends Exception {
     public WrongPhaseForAction() {
-        super("action not allowed in this phase");
+        super("you can’t do this action in this phase");
     }
 }

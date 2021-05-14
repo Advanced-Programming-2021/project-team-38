@@ -13,7 +13,9 @@ public class Card {
     protected int cardNumber;
     protected String type;
     protected Player owner;
+    protected int level;
     protected static ArrayList<Card> allCards;
+
 
     public static Card getCardByName(String cardName) {
         return null;
