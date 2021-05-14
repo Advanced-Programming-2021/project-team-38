@@ -46,21 +46,33 @@ public class Board {
     }
 
     public boolean isMonsterZoneFull() {
-        for (CardInUse cardInUse : monsterZone) {
-            if (cardInUse.getThisCard() == null) return false;
-        }
-        return true;
+        return getFirstEmptyCardInUse(true) == null;
+    }
+
+    public boolean isSpellTrapZoneFull() {
+        return getFirstEmptyCardInUse(false) == null;
     }
 
     public void addToAdditionalAttack(int amount) {     //maybe not useful
         additionalAttack += amount;
     }
 
-    public CardInUse getFirstEmptyCell(CardInUse[] zone) {
+    public CardInUse getFirstEmptyCardInUse(boolean isMonster) {
+        CardInUse[] zone;
+        if (isMonster) zone = this.monsterZone;
+        else zone = this.spellTrapZone;
         for (CardInUse cardInUse : zone) {
             if (cardInUse.isCellEmpty())
                 return cardInUse;
         }
         return null;
+    }
+
+    public int getNumOfAvailableTributes() {
+        int counter = 0;
+        for (MonsterCardInUse monsterCardInUse : this.monsterZone) {
+            if (monsterCardInUse.getThisCard() != null) counter++;
+        }
+        return counter;
     }
 }

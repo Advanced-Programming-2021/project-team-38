@@ -20,7 +20,7 @@ public abstract class PreCard {
         return allPreCardsInstances;
     }
 
-    protected abstract Card newCard(String name);
+    protected abstract Card newCard();
 
     public static PreCard findCard(String name) {
         for (PreCard preCard : allPreCardsInstances.keySet()) {

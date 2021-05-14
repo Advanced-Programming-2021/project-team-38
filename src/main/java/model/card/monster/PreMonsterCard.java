@@ -5,9 +5,6 @@ import model.card.Card;
 import model.card.CardType;
 import model.card.PreCard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 @Getter
 public class PreMonsterCard extends PreCard {
     private int level;  //for number of tributes when summoned,
@@ -19,7 +16,6 @@ public class PreMonsterCard extends PreCard {
 
     public PreMonsterCard(String[] cardData) {
         //Name,Level,Attribute, Monster Type , Card Type ,Atk,Def,Description,Price
-        System.out.println(Arrays.toString(cardData));
         name = cardData[0];
         level = Integer.parseInt(cardData[1]);
         attribute = CardAttribute.valueOf(cardData[2].toUpperCase());
@@ -40,7 +36,7 @@ public class PreMonsterCard extends PreCard {
 
 
     @Override
-    public Card newCard(String name) {
+    public Card newCard() {
         return null;
     }
 }

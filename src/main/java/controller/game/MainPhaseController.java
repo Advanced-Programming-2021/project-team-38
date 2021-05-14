@@ -1,68 +1,60 @@
 package controller.game;
 
 
-import exeptions.FullZone;
-import exeptions.NoSelectedCard;
-import exeptions.UnableToSummonMonster;
-import model.Cell;
+import exeptions.*;
 import model.Player;
-import model.card.Card;
-import model.card.monster.Monster;
+import model.card.PreCard;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.monster.PreMonsterCard;
 
 class MainPhaseController {
-    private Card selectedCard = null;
     private Player player;
+    private GamePlayController controller;
 
-    public MainPhaseController(Player player) {
+    public MainPhaseController(Player player, GamePlayController controller) {
         this.player = player;
+        this.controller = controller;
     }
 
-    public void setSelectedCard(Card card) {
-        this.selectedCard = card;
-    }
 
-    public String run() {
-        return null;
-    }
-
-    private void summonMonster() throws NoSelectedCard {
+    private void summonMonster(SummonType summonType) throws NoSelectedCard, UnableToSummonMonster, FullZone, AlreadyDoneAction, NotEnoughTributes {
+        PreCard selectedCard = this.controller.getCurrentPlayerSelectedCard();
         if (selectedCard == null) {
             throw new NoSelectedCard();
         }
         if (!player.getHand().doesContainCard(selectedCard)
-                || !(selectedCard instanceof Monster)) {
-            new UnableToSummonMonster();
-            return;
+                || !(selectedCard instanceof PreMonsterCard)) {
+            throw new UnableToSummonMonster();
         }
         if (player.getBoard().isMonsterZoneFull()) {
-            new FullZone(true);
-            return;
+            throw new FullZone(true);
+        } else {
+            MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
+            SummonController summonController = new SummonController(monsterCardInUse, (PreMonsterCard) selectedCard, summonType, controller);
+            summonController.run();
         }
 
     }
 
-    private String setMonster() {
-        return null;
+
+    private void changePosition() {
+
     }
 
-    private String changePosition() {
-        return null;
+    private void flipSummon() {
+
     }
 
-    private String flipSummon(Cell cell) {
-        return null;
+    private void activeEffect() {
+
     }
 
-    private String activeEffect() {
-        return null;
+    private void setTrapOrSpell() {
+
     }
 
-    private String setTrapOrSpell(Cell cell) {
-        return null;
-    }
+    private void tributeCard() {
 
-    private String tributeCard() {
-        return null;
     }
 
     public void activateTrap() {

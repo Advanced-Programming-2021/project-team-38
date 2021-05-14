@@ -1,7 +1,10 @@
 package controller.game;
 
-import model.*;
-import model.card.*;
+import model.Board;
+import model.Deck;
+import model.Player;
+import model.User;
+import model.card.PreCard;
 
 import java.util.regex.Matcher;
 
@@ -12,10 +15,12 @@ class GamePlayController {
     private Player currentPlayer;
     private Player rival;
     private int round;
-    private Card currentPlayerSelectedCard;
-    private Card rivalSelectedCard;
+    private PreCard currentPlayerSelectedCard;
+    private PreCard rivalSelectedCard;
     private Board currentPlayerBoard;
     private Board rivalBoard;
+    private PhaseName currentPhase;
+
 
     public GamePlayController(User firstUser, User secondUser) {
 
@@ -26,6 +31,8 @@ class GamePlayController {
         currentPlayer = new Player(firstUser);
         rival = new Player(secondUser);
     }
+//    ---------------------------------------- getters and setters and stuff  -------------------------------------------------
+
 
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -55,14 +62,32 @@ class GamePlayController {
         return rivalBoard;
     }
 
+    public void setCurrentPhase(PhaseName currentPhase) {
+        this.currentPhase = currentPhase; //todo: we should order the phases and here we should set the phase to the next phase
+    }
+
+    public PreCard getCurrentPlayerSelectedCard() {
+        return currentPlayerSelectedCard;
+    }
+
+    public PreCard getRivalSelectedCard() {
+        return rivalSelectedCard;
+    }
+
+    public PhaseName getCurrentPhase() {
+        return currentPhase;
+    }
+
     public void increaseRound() {
         round++;
     }
 
 
+//    ---------------------------------------- static methods for initializing the game -------------------------------------
+
     private static boolean areUsersValid(Matcher matcher) {
         return true;
-    }
+    } //todo : why here!?
 
     public static boolean isGameValid(String firstUsername, String secondUsername) {
         return true;
@@ -72,37 +97,37 @@ class GamePlayController {
         return true;
     }
 
-    public String runDuel() {
-        return null;
+
+//    ---------------------------------------- general actions (in any phase) -------------------------------------------------
+
+    public void showBoard() {
 
     }
 
-    public String showBoard() {
-        return null;
+    public void selectCard(String cardAddress) {
+
+        //currentPlayerBoard.getCardByAddress(cardAddress);
     }
 
-    public Card selectCard(String cardAddress) {
-        return null;
-        //return currentPlayerBoard.getCardByAddress(cardAddress);
+    public void deselectedCard() {
     }
 
-    public String playOneTurn(Player player) {
-        return null;
+    public void showGraveYard() {
+        //currentPlayerBoard.getGraveYard().showGraveYard();
     }
 
-    public String showGraveYard() {
-        return null;
-        //return currentPlayerBoard.getGraveYard().showGraveYard();
+    public void surrender(Player player) {
     }
 
 
-    public String surrender(Player player) {
-        return null;
+//    ------------------------------------------- the main part, the game  ----------------------------------------------------
+
+    public void playOneTurn(Player player) {
     }
 
-    public Card deselectedCard(String cardAddress) {
-        return null;
-    }
 
+    public void runDuel() {
+
+    }
 
 }

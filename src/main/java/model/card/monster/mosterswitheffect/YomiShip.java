@@ -35,7 +35,7 @@ public class YomiShip extends Monster {
     @Override
     public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
         return super.canReceiveAttack(attackerBoard, myBoard, attacker, thisCard) &&
-                myBoard.getFirstEmptyCell(myBoard.getMonsterZone()) == null;
+                myBoard.getFirstEmptyCardInUse(true) == null;//todo: check with hasti
     }
 
     @Override

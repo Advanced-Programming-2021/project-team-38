@@ -1,5 +1,6 @@
 package model.card.cardinusematerial;
 
-public class SpellTrapCardInUse {
+
+public class SpellTrapCardInUse extends CardInUse {
 
 }

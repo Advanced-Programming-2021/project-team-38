@@ -4,7 +4,6 @@ import lombok.Getter;
 import model.card.Card;
 import model.card.CardType;
 import model.card.PreCard;
-import java.util.ArrayList;
 
 @Getter
 public class PreSpellTrapCard extends PreCard {
@@ -25,7 +24,7 @@ public class PreSpellTrapCard extends PreCard {
     }
 
     @Override
-    public Card newCard(String name) {
+    public Card newCard() {
         return null;
     }
 }

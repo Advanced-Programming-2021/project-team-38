@@ -1,11 +1,15 @@
 package model.card.monster;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.Board;
 import model.card.Card;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 
+@Getter
+@Setter
 public class Monster extends Card {
     protected PreMonsterCard myPreCard;
     protected boolean canBeNormalSummoned;
@@ -31,7 +35,6 @@ public class Monster extends Card {
     public Monster getCard() {
         return this;
     }
-
 
 
     public int getRawAttack() {

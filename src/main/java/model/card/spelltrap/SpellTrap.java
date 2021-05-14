@@ -1,9 +1,7 @@
 package model.card.spelltrap;
 
 import model.card.Card;
-import model.card.CardType;
 import model.card.PreCard;
-import model.card.monster.Monster;
 
 public class SpellTrap extends Card {
     protected PreSpellTrapCard myPreCard;

@@ -20,6 +20,6 @@ public enum MonsterType {
 
     public static MonsterType getEnum(String name) {
         return MonsterType.valueOf(name.replaceAll(" ", "_")
-                .replaceAll("-","_").toUpperCase());
+                .replaceAll("-", "_").toUpperCase());
     }
 }
