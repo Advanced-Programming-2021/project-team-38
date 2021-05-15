@@ -3,10 +3,14 @@ package controller.game;
 
 import exeptions.*;
 import model.Player;
+import model.card.Card;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
+import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
+import model.card.spelltrap.PreSpellTrapCard;
 import view.messageviewing.SuccessfulAction;
 
 import java.util.ArrayList;
@@ -42,14 +46,14 @@ class MainPhaseController {
 
 
     /* this function doesn't handle flip summon */
-    private void summonMonster() throws NoSelectedCard, UnableToSummonMonster, FullZone, AlreadyDoneAction, NotEnoughTributes {
+    private void summonMonster() throws NoSelectedCard, CantDoActionWithCard, AlreadyDoneAction, NotEnoughTributes, BeingFull {
         PreCard selectedCard = getSelectedPreCard();
         /* checking the errors */
         if (!player.getHand().doesContainCard(selectedCard)
                 || !(selectedCard instanceof PreMonsterCard)) {
-            throw new UnableToSummonMonster(" ");
+            throw new CantDoActionWithCard("summon");
         }
-        if (player.getBoard().isMonsterZoneFull()) throw new FullZone(true);
+        if (player.getBoard().isMonsterZoneFull()) throw new BeingFull("monster card zone");
 
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
         SummonController summonController = new SummonController(monsterCardInUse, (PreMonsterCard) selectedCard, controller, summonedInThisPhase);
@@ -74,13 +78,13 @@ class MainPhaseController {
     }
 
 
-    public void flipSummon() throws NoSelectedCard, UnableToChangePosition, UnableToSummonMonster {
+    public void flipSummon() throws NoSelectedCard, UnableToChangePosition, CantDoActionWithCard {
         PreCard selectedCard = getSelectedPreCard();
         MonsterCardInUse monsterCardInUse = getSelectedMonsterZoneCardInUse(selectedCard);
         if (summonedInThisPhase.contains(monsterCardInUse))
-            throw new UnableToSummonMonster("flip ");
+            throw new CantDoActionWithCard("flip summon");
         if (monsterCardInUse.isFaceUp() || monsterCardInUse.isInAttackMode())
-            throw new UnableToSummonMonster("flip ");
+            throw new CantDoActionWithCard("flip summon");
 
         monsterCardInUse.setFaceUp(false);
         monsterCardInUse.setAttacking(false);
@@ -88,20 +92,34 @@ class MainPhaseController {
     }
 
 
-    public void setSelected() {
-
+    public void setCard() throws NoSelectedCard, CantDoActionWithCard, BeingFull, AlreadyDoneAction {
+        PreCard selectedCard = getSelectedPreCard();
+        if (!player.getHand().doesContainCard(selectedCard)) throw new CantDoActionWithCard("set");
+        if (selectedCard instanceof PreMonsterCard) setMonster((PreMonsterCard) selectedCard);
+        if (selectedCard instanceof PreSpellTrapCard) setSpell((PreSpellTrapCard) selectedCard);
     }
 
-    private void setTrap() {
+    private void setMonster(PreMonsterCard selectedCard) throws BeingFull, AlreadyDoneAction {
+        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
+        if (monsterCardInUse == null) throw new BeingFull("monster card zone");
+        if (!summonedInThisPhase.isEmpty()) throw new AlreadyDoneAction("summoned/set");//todo: fine?( in tests )
 
+        Monster monster = (Monster) selectedCard.newCard();
+        monsterCardInUse.setThisCard(monster);
+        monsterCardInUse.setFaceUp(false);
+        monsterCardInUse.setInAttackMode(false);
+        new SuccessfulAction("", "set");
     }
 
-    private void setSpell() {
+    //todo: is set trap different?
+    private void setSpell(PreSpellTrapCard selectedCard) throws BeingFull {
+        SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
+        if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
-    }
-
-    private void setMonster() {
-
+        Card card = selectedCard.newCard();
+        spellTrapCardInUse.setThisCard(card);
+        new SuccessfulAction("", "set");
+        //todo: the spell card in use should be face down. there wasn't any field for it. will it be needed?
     }
 
     public void activateEffect() {

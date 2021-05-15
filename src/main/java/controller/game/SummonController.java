@@ -41,7 +41,7 @@ public class SummonController {
 
     private void normal(Monster monster) throws AlreadyDoneAction, NotEnoughTributes {
         if (numOfNormalSummons != 0) {
-            throw new AlreadyDoneAction("summoned");
+            throw new AlreadyDoneAction("summoned/set");
         } else if (preMonster.getLevel() >= 5) tributeSummon(monster);
         else {
             putMonsterInUse(monster);
@@ -70,6 +70,7 @@ public class SummonController {
                 int index = Integer.parseInt(address);
                 tribute(index);
             } catch (InvalidAddress invalidAddress) {
+                if (address.equals("cancel")) return;
                 Print.print(invalidAddress.getMessage());
                 i--;
             }
