@@ -99,7 +99,7 @@ public class Monster extends Card {
 //    }
 //
 //    public int getDefensePoint() {
-//        return defensePoint; //todo : handle the additional power
+//        return defensePoint;
 //    }
 //
 //    public int getAttackPoint() {
@@ -168,7 +168,7 @@ public class Monster extends Card {
 //    }
 //
 //    public void summon() {
-//        //todo : what should be the input?
+
 //    }
 //
 //    @Override

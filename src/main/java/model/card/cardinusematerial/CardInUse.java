@@ -9,7 +9,7 @@ import model.card.PreCard;
 @Setter
 public abstract class CardInUse {
     protected Card thisCard;
-    protected boolean isPositionChanged;  //if card manner was changed in a round ->true then ->false
+    protected boolean isPositionChanged;  //if card manner was changed in a round ->true then ->false //todo: in the beginning of any turn we should change it to false
     protected boolean isFaceUp;
 
 
@@ -39,7 +39,7 @@ public abstract class CardInUse {
     public abstract void putInGraveYard();
 
     public void changePosition() {
-        isPositionChanged = true;
+        isPositionChanged = true; //todo : check with hasti. change position isn't only for face up ( I'm not sure if it's even important for face up change).
         isFaceUp = !isFaceUp;
     }
 }

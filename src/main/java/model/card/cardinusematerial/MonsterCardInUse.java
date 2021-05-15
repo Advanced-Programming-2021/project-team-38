@@ -23,6 +23,8 @@ public class MonsterCardInUse extends CardInUse {
         resetCell();
         defense = 0;
         attack = 0;
+        isInAttackMode = true; //it's needed for the first use of "setInAttackMode"
+        //todo: if the monster is flip summoned, should we be able to change its attackMode after that?
     }
 
 
@@ -32,7 +34,14 @@ public class MonsterCardInUse extends CardInUse {
 
     @Override
     public Card getThisCard() {
-        return ((Monster)super.getThisCard());
+        return ((Monster) super.getThisCard());
+    }
+
+    public void setInAttackMode(boolean inAttackMode) {
+        if (isInAttackMode != inAttackMode) {
+            isInAttackMode = inAttackMode;
+            this.isPositionChanged = true;
+        }
     }
 
     public void setAttack(Board playerBoard, int monsterCardAttack) {
