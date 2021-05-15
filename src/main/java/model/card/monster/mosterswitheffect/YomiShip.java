@@ -1,5 +1,4 @@
-//just copied
-//change clone and setname for eachCard and fill setupmonster
+//completed
 
 package model.card.monster.mosterswitheffect;
 
@@ -18,29 +17,12 @@ public class YomiShip extends Monster {
     }
 
     @Override
-    public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {
-        if (canActiveEffect(playerBoard, rivalBoard, monsterCardInUse))
-            playerBoard.addToAllMonsterCellsAttack(400);
-    }
-
-    private boolean canActiveEffect(Board playerBoard, Board rivalBoard, CardInUse cardInUse) {
-        return cardInUse.isFaceUp() && cardInUse.isPositionChanged();
-    }
-
-    @Override
-    protected void receiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker, CardInUse thisCard) {
-
-    }
-
-    @Override
-    public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
-        return super.canReceiveAttack(attackerBoard, myBoard, attacker, thisCard) &&
-                myBoard.getFirstEmptyCardInUse(true) == null;//todo: check with hasti
-    }
-
-    @Override
-    public Monster getCard() {
-        return this;
+    public void destroyThis(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard, int LPDamage) {
+        if (attacker != null && thisCard.isAttacked()) {
+            ((Monster) attacker.getThisCard()).destroyThis(
+                    null, attackerBoard, null, attacker, 0);
+        }
+        super.destroyThis(attackerBoard, myBoard, attacker, thisCard, 0);
     }
 
     @Override

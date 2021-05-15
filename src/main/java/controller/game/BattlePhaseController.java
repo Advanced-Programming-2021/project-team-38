@@ -10,8 +10,8 @@ class BattlePhaseController {
     private ArrayList<Card> chain;
 
 
-    private void attack(Card attackReciever) {
-
+    private void battleMade() {
+        //new a BattleController and ...
     }
 
     public String run() {

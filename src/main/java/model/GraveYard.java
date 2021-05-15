@@ -1,22 +1,24 @@
 package model;
 
 import model.card.Card;
+import model.card.PreCard;
 
 import java.util.ArrayList;
 
 public class GraveYard {
-    private ArrayList<Card> cardsInGraveYard;
+    private ArrayList<PreCard> preCardsInGraveYard;
 
-    public ArrayList<Card> getCardsInGraveYard() {
-        return cardsInGraveYard;
+    public ArrayList<PreCard> getCardsInGraveYard() {
+        return preCardsInGraveYard;
     }
 
     {
-        cardsInGraveYard = new ArrayList<>();
+        preCardsInGraveYard = new ArrayList<>();
     }
 
-    public void addCard(Card card){
-
+    public void addCard(PreCard preCard){
+        if (preCard != null)
+            preCardsInGraveYard.add(preCard);
     }
 
     public void removeCard(Card card){

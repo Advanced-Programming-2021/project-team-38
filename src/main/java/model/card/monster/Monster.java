@@ -57,17 +57,30 @@ public class Monster extends Card {
 
     }
 
+    //during battle
+    public void destroyThis(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard, int LPDamage) {
+        //can be null every thing except thisCard and myBoard
+        thisCard.putInGraveYard();
+        myBoard.getOwner().decreaseLifePoint(LPDamage);
+    }
+
     public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) { //TODO complete
         return true;
     }
 
-    protected void receiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker, CardInUse thisCard) {
+    //returns
+    protected void receiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
 
     }
+    // end during battle
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return new Monster(preCardInGeneral);
+    }
+
+    public void spinCard() {
+
     }
 
 //

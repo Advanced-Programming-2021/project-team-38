@@ -7,7 +7,7 @@ import model.card.PreCard;
 
 @Getter
 @Setter
-public class CardInUse {
+public abstract class CardInUse {
     protected Card thisCard;
     protected boolean isPositionChanged;  //if card manner was changed in a round ->true then ->false
     protected boolean isFaceUp;
@@ -34,5 +34,12 @@ public class CardInUse {
 
     public void setACardInThisCell(PreCard preCard) { //TODO
 
+    }
+
+    public abstract void putInGraveYard();
+
+    public void changePosition() {
+        isPositionChanged = true;
+        isFaceUp = !isFaceUp;
     }
 }

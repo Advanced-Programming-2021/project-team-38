@@ -2,6 +2,7 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
+import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -15,6 +16,7 @@ public class Board {
     private SpellTrapCardInUse[] spellTrapZone;
     private int additionalAttack;
     private int additionalDefense;
+    private Player owner;
 
     private Phase onPhase;
 

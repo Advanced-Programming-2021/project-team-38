@@ -1,4 +1,4 @@
-//use receive attack - doesn't have deactive effect
+//doesn't have deactive effect
 
 package model.card.monster.mosterswitheffect;
 
@@ -23,25 +23,16 @@ public class CommandKnight extends Monster {
             playerBoard.addToAllMonsterCellsAttack(400);
     }
 
-    private boolean canActiveEffect(Board playerBoard, Board rivalBoard, CardInUse cardInUse) {
-        return cardInUse.isFaceUp() && cardInUse.isPositionChanged();
-    }
-
-    @Override
-    protected void receiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker, CardInUse thisCard) {
-
+    private boolean canActiveEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse thisCard) {
+        return thisCard.isFaceUp() && thisCard.isPositionChanged();
     }
 
     @Override
     public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
         return super.canReceiveAttack(attackerBoard, myBoard, attacker, thisCard) &&
-                myBoard.getFirstEmptyCardInUse(true) == null; //todo: check with hasti
+                myBoard.getFirstEmptyCardInUse(true) == null;
     }
 
-    @Override
-    public Monster getCard() {
-        return this;
-    }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {

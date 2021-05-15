@@ -29,7 +29,7 @@ public class Suijin extends Monster {
     }
 
     @Override
-    protected void receiveAttack(Board attackerBoard, Board myBoard, CardInUse attacker, CardInUse thisCard) {
+    protected void receiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
 
     }
 

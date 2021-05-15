@@ -2,6 +2,7 @@ package controller.game;
 
 import model.Player;
 import model.card.Card;
+import model.card.PreCard;
 import view.messageviewing.Print;
 
 class ActionsOnRival {
@@ -15,8 +16,8 @@ class ActionsOnRival {
 
     public void showGraveyard() {
         int i = 1;
-        for (Card card : otherPlayer.getBoard().getGraveYard().getCardsInGraveYard()) {
-            Print.print(String.format("%d. %s", i, card.getPreCardInGeneral()));
+        for (PreCard preCard : otherPlayer.getBoard().getGraveYard().getCardsInGraveYard()) {
+            Print.print(String.format("%d. %s", i, preCard));
             i++;
         }
         if (i==1)
