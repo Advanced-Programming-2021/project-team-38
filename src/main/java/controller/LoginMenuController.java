@@ -1,7 +1,7 @@
 package controller;
 
-import exeptions.AlreadyExistingError;
-import exeptions.LoginError;
+import exceptions.AlreadyExistingError;
+import exceptions.LoginError;
 import model.User;
 import view.messageviewing.SuccessfulAction;
 

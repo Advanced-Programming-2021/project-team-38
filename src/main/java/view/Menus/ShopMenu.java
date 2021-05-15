@@ -1,9 +1,9 @@
 package view.Menus;
 
 import controller.ShopMenuController;
-import exeptions.InvalidCommand;
-import exeptions.NotEnoughMoney;
-import exeptions.NotExisting;
+import exceptions.InvalidCommand;
+import exceptions.NotEnoughMoney;
+import exceptions.NotExisting;
 import view.messageviewing.Print;
 
 public class ShopMenu {

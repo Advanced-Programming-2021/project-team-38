@@ -1,8 +1,8 @@
 package view;
 
-import exeptions.InvalidCommand;
-import exeptions.MenuNavigationError;
-import exeptions.WrongMenu;
+import exceptions.InvalidCommand;
+import exceptions.MenuNavigationError;
+import exceptions.WrongMenu;
 import view.Menus.*;
 
 import java.util.Scanner;
@@ -29,9 +29,9 @@ public class Menu {
         else if (command.startsWith("deck "))
             DeckMenu.checkMenuCommands(command.substring(5));
         else if (command.startsWith("shop "))
-            ShopMenu.checkMenuCommands(command.substring(5)); // todo : the commands valid in the duel menu don't only start with "duel"
-        else if (command.startsWith("duel "))
-            DuelMenu.checkMenuCommands(command.substring(5));
+            ShopMenu.checkMenuCommands(command.substring(5));
+        else if (DuelMenu.supportsCommand(command))
+            DuelMenu.checkMenuCommands(command);
         else if (command.equals("user logout"))
             MainMenu.logout();
         else

@@ -1,4 +1,4 @@
-package exeptions;
+package exceptions;
 
 public class InvalidCardName extends Exception {
     public InvalidCardName() {

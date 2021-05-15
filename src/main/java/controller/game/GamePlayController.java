@@ -2,6 +2,7 @@ package controller.game;
 
 import model.Board;
 import model.Deck;
+import model.Enums.Phase;
 import model.Player;
 import model.User;
 import model.card.PreCard;
@@ -19,12 +20,10 @@ class GamePlayController {
     private PreCard rivalSelectedCard;
     private Board currentPlayerBoard;
     private Board rivalBoard;
-    private PhaseName currentPhase;
+    private Phase currentPhase;
 
 
     public GamePlayController(User firstUser, User secondUser) {
-
-        //secondUser =new User(secondUser);
 
         currentPlayerBoard = new Board();
         rivalBoard = new Board();
@@ -62,8 +61,8 @@ class GamePlayController {
         return rivalBoard;
     }
 
-    public void setCurrentPhase(PhaseName currentPhase) {
-        this.currentPhase = currentPhase; //todo: we should order the phases and here we should set the phase to the next phase
+    public void setNextPhase() {
+        this.currentPhase = currentPhase.goToNextPhase();
     }
 
     public PreCard getCurrentPlayerSelectedCard() {
@@ -74,7 +73,7 @@ class GamePlayController {
         return rivalSelectedCard;
     }
 
-    public PhaseName getCurrentPhase() {
+    public Phase getCurrentPhase() {
         return currentPhase;
     }
 
@@ -123,6 +122,7 @@ class GamePlayController {
 //    ------------------------------------------- the main part, the game  ----------------------------------------------------
 
     public void playOneTurn(Player player) {
+
     }
 
 

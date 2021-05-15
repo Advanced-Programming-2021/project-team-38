@@ -1,6 +1,4 @@
-package exeptions;
-
-import view.messageviewing.PrintError;
+package exceptions;
 
 public class NotExisting extends Exception {
     public NotExisting(String type, String name) {

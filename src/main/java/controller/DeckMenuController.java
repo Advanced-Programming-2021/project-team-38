@@ -1,9 +1,9 @@
 package controller;
 
-import exeptions.AlreadyExistingError;
-import exeptions.BeingFull;
-import exeptions.NotExisting;
-import exeptions.OccurrenceException;
+import exceptions.AlreadyExistingError;
+import exceptions.BeingFull;
+import exceptions.NotExisting;
+import exceptions.OccurrenceException;
 import model.Deck;
 import model.User;
 import model.card.PreCard;

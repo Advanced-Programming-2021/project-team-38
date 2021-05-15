@@ -2,10 +2,10 @@ package view.Menus;
 
 import controller.LoginMenuController;
 import controller.RelatedToMenuController;
-import exeptions.AlreadyExistingError;
-import exeptions.InvalidCommand;
-import exeptions.LoginError;
-import exeptions.WrongMenu;
+import exceptions.AlreadyExistingError;
+import exceptions.InvalidCommand;
+import exceptions.LoginError;
+import exceptions.WrongMenu;
 import view.MenuName;
 
 import java.util.regex.Matcher;

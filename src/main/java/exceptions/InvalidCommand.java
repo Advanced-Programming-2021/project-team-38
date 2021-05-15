@@ -1,6 +1,4 @@
-package exeptions;
-
-import view.messageviewing.PrintError;
+package exceptions;
 
 public class InvalidCommand extends Exception {
     public InvalidCommand() {

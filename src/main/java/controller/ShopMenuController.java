@@ -1,7 +1,7 @@
 package controller;
 
-import exeptions.NotEnoughMoney;
-import exeptions.NotExisting;
+import exceptions.NotEnoughMoney;
+import exceptions.NotExisting;
 import model.User;
 import model.card.PreCard;
 import view.messageviewing.SuccessfulAction;

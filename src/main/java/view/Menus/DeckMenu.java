@@ -2,7 +2,7 @@ package view.Menus;
 
 import controller.DeckMenuController;
 import controller.RelatedToMenuController;
-import exeptions.*;
+import exceptions.*;
 import view.MenuName;
 
 public class DeckMenu {

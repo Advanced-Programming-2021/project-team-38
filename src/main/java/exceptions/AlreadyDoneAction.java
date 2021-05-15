@@ -1,4 +1,4 @@
-package exeptions;
+package exceptions;
 
 public class AlreadyDoneAction extends Exception {
     public AlreadyDoneAction(String action) {

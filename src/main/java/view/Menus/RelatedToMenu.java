@@ -1,8 +1,8 @@
 package view.Menus;
 
 import controller.RelatedToMenuController;
-import exeptions.InvalidCommand;
-import exeptions.MenuNavigationError;
+import exceptions.InvalidCommand;
+import exceptions.MenuNavigationError;
 
 public class RelatedToMenu {
 

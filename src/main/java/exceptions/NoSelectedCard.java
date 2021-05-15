@@ -1,6 +1,4 @@
-package exeptions;
-
-import view.messageviewing.PrintError;
+package exceptions;
 
 public class NoSelectedCard extends Exception {
     public NoSelectedCard() {

@@ -1,7 +1,7 @@
 package view.Menus;
 
 import controller.ScoreBoardMenuController;
-import exeptions.InvalidCommand;
+import exceptions.InvalidCommand;
 
 public class ScoreboardMenu {
     public static void checkMenuCommands(String command) throws InvalidCommand {

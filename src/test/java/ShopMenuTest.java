@@ -1,7 +1,7 @@
 import controller.ShopMenuController;
-import exeptions.InvalidCardName;
-import exeptions.NotEnoughMoney;
-import exeptions.NotExisting;
+import exceptions.InvalidCardName;
+import exceptions.NotEnoughMoney;
+import exceptions.NotExisting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;

@@ -1,9 +1,9 @@
 package view;
 
 import controller.RelatedToMenuController;
-import exeptions.InvalidCommand;
-import exeptions.MenuNavigationError;
-import exeptions.WrongMenu;
+import exceptions.InvalidCommand;
+import exceptions.MenuNavigationError;
+import exceptions.WrongMenu;
 
 public class Main {
     public static void main(String[] args) {

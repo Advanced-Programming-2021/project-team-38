@@ -1,4 +1,4 @@
-package exeptions;
+package exceptions;
 
 public class CantDoActionWithCard extends Exception {
     public CantDoActionWithCard(String action) {

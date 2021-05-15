@@ -1,4 +1,4 @@
-package exeptions;
+package exceptions;
 
 public class UnableToChangePosition extends Exception {
     public UnableToChangePosition() {

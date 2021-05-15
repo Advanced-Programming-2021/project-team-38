@@ -1,7 +1,8 @@
 //3 methods of deck menu controller tested
+
 import controller.DeckMenuController;
-import controller.ProfileMenuController;
-import exeptions.*;
+import exceptions.AlreadyExistingError;
+import exceptions.NotExisting;
 import model.Deck;
 import model.User;
 import org.junit.jupiter.api.Assertions;

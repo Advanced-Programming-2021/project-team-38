@@ -1,7 +1,7 @@
 package model;
 
-import exeptions.BeingFull;
-import exeptions.OccurrenceException;
+import exceptions.BeingFull;
+import exceptions.OccurrenceException;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.spelltrap.CardStatus;

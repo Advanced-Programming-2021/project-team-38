@@ -1,7 +1,7 @@
 package controller.game;
 
 
-import exeptions.*;
+import exceptions.*;
 import model.Player;
 import model.card.Card;
 import model.card.PreCard;
@@ -24,9 +24,9 @@ class MainPhaseController {
         summonedInThisPhase = new ArrayList<>();
     }
 
-    public MainPhaseController(Player player, GamePlayController controller) {
-        this.player = player;
+    public MainPhaseController(GamePlayController controller) {
         this.controller = controller;
+        this.player = controller.getCurrentPlayer();
     }
 
     private PreCard getSelectedPreCard() throws NoSelectedCard {
@@ -119,7 +119,7 @@ class MainPhaseController {
         Card card = selectedCard.newCard();
         spellTrapCardInUse.setThisCard(card);
         new SuccessfulAction("", "set");
-        //todo: the spell card in use should be face down. there wasn't any field for it. will it be needed?
+        //todo: the spell or trap card in use should be face down. there wasn't any field for it. will it be needed?
     }
 
     public void activateEffect() {

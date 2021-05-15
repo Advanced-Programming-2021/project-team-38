@@ -8,10 +8,11 @@ import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
 
-public class Scanner extends Monster {
+
+public class ScannerMonster extends Monster {
     private MonsterCardInUse occupiedCard;
 
-    public Scanner(PreCard preCard) {
+    public ScannerMonster(PreCard preCard) {
         super(preCard);
         setName("Scanner");
     }
@@ -50,6 +51,6 @@ public class Scanner extends Monster {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {    //shouldn't be used actually
-        return new Scanner(preCardInGeneral);
+        return new ScannerMonster(preCardInGeneral);
     }
 }

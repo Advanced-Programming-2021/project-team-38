@@ -1,9 +1,9 @@
 package controller.game;
 
 
-import exeptions.AlreadyDoneAction;
-import exeptions.InvalidAddress;
-import exeptions.NotEnoughTributes;
+import exceptions.AlreadyDoneAction;
+import exceptions.InvalidAddress;
+import exceptions.NotEnoughTributes;
 import model.Board;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;

@@ -1,4 +1,4 @@
-package exeptions;
+package exceptions;
 
 public class WrongMenu extends Exception{
     public WrongMenu() {

@@ -1,11 +1,9 @@
 package controller;
 
-import exeptions.*;
+import exceptions.*;
 import model.User;
-import view.MenuName;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
 
 public class ProfileMenuController {
     private static User user;
