@@ -4,6 +4,7 @@ package controller.game;
 import exceptions.*;
 import model.Player;
 import model.card.Card;
+import model.card.CardType;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
@@ -46,7 +47,7 @@ class MainPhaseController {
 
 
     /* this function doesn't handle flip summon */
-    private void summonMonster() throws NoSelectedCard, CantDoActionWithCard, AlreadyDoneAction, NotEnoughTributes, BeingFull {
+    public void summonMonster() throws NoSelectedCard, CantDoActionWithCard, AlreadyDoneAction, NotEnoughTributes, BeingFull {
         PreCard selectedCard = getSelectedPreCard();
         /* checking the errors */
         if (!player.getHand().doesContainCard(selectedCard)
@@ -62,7 +63,7 @@ class MainPhaseController {
     }
 
 
-    private void changePosition(boolean isToBeAttackMode) throws NoSelectedCard, UnableToChangePosition, AlreadyDoneAction, AlreadyInWantedPosition {
+    public void changePosition(boolean isToBeAttackMode) throws NoSelectedCard, UnableToChangePosition, AlreadyDoneAction, AlreadyInWantedPosition {
         PreCard selectedCard = getSelectedPreCard();
         MonsterCardInUse monsterCardInUse = getSelectedMonsterZoneCardInUse(selectedCard);
 
@@ -122,7 +123,18 @@ class MainPhaseController {
         //todo: the spell or trap card in use should be face down. there wasn't any field for it. will it be needed?
     }
 
-    public void activateEffect() {
+    public void activateEffect() throws NoSelectedCard, ActivateEffectNotSpell, CantDoActionWithCard, BeingFull, SpellPreparation, AlreadyActivatedEffect {
+        PreCard selectedCard = getSelectedPreCard();
+        if (!selectedCard.getCardType().equals(CardType.SPELL)) throw new ActivateEffectNotSpell();
+        PreSpellTrapCard preSpell = (PreSpellTrapCard) selectedCard;
+
+//        if(preSpell.isActivated()) throw new AlreadyActivatedEffect();
+        //todo: some spells may not need to be in the field for activating! we should handle them here
+        if (!player.getHand().doesContainCard(preSpell)) throw new CantDoActionWithCard("activate effect of");
+        if (player.getBoard().getFirstEmptyCardInUse(false) == null) throw new BeingFull("spell card zone");
+        if (!preSpell.canActivate()) throw new SpellPreparation();
+
+//        else
 
     }
 }
