@@ -51,4 +51,34 @@ public enum Phase {
                 return null;
         }
     }
+
+    public Phase goToNextGamePhase() {
+        switch ((this.phaseId + 1) % 6) {
+            case 0:
+                return DRAW;
+            case 1:
+                return STANDBY;
+            case 2:
+                return MAIN_1;
+            case 3:
+                return BATTLE;
+            case 4:
+                return MAIN_2;
+            case 5:
+                return END;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (this.name().equals("MAIN_1")) {
+            return "main phase 1";
+        } else if (this.name().equals("MAIN_2")) {
+            return "main phase 2";
+        }
+
+        return this.name().toLowerCase() + " phase";
+    }
 }

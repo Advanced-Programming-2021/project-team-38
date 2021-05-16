@@ -18,9 +18,7 @@ public class DuelMenuController {
     private GamePlayController gamePlayController;
 
     {
-        drawPhaseController = new DrawPhaseController();
         currentPhase = Phase.DRAW;
-
     }
 
     public void setPhases(MainPhaseController main, BattlePhaseController battle,
@@ -91,20 +89,20 @@ public class DuelMenuController {
 
     public void nextPhase() {
         this.currentPhase = currentPhase.goToNextPhase();
-        switch (Objects.requireNonNull(currentPhase)) {
-            case DRAW:
-                break;
-            case STANDBY:
-                this.standByPhaseController = new StandByPhaseController();
-                break;
-            case MAIN_1:
-            case MAIN_2:
-                this.mainPhaseController = new MainPhaseController(gamePlayController);
-                break;
-            case BATTLE:
-                this.battlePhaseController = new BattlePhaseController();
-                break;
-        }
+//        switch (Objects.requireNonNull(currentPhase)) {
+//            case DRAW:
+//                break;
+//            case STANDBY:
+//                this.standByPhaseController = new StandByPhaseController();
+//                break;
+//            case MAIN_1:
+//            case MAIN_2:
+//                this.mainPhaseController = new MainPhaseController(gamePlayController);
+//                break;
+//            case BATTLE:
+//                this.battlePhaseController = new BattlePhaseController();
+//                break;
+//        } TODO check with negar
         Print.print("phase: " + currentPhase.toString());
     }
 

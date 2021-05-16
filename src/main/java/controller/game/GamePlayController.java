@@ -12,6 +12,7 @@ import model.card.cardinusematerial.CardInUse;
 import java.util.regex.Matcher;
 
 @Getter
+public
 class GamePlayController {
 
 //    private User firstUser;
@@ -59,7 +60,7 @@ class GamePlayController {
     }
 
     public void setNextPhase() {
-        this.currentPhase = currentPhase.goToNextPhase();
+        this.currentPhase = currentPhase.goToNextGamePhase();
     }
 
     public PreCard getCurrentPlayerSelectedCard() {
