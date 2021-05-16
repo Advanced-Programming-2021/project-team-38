@@ -11,7 +11,10 @@ import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
+import model.card.spelltrap.CardIcon;
 import model.card.spelltrap.PreSpellTrapCard;
+import model.card.spelltrap.SpellTrap;
+import view.Print;
 import view.messageviewing.SuccessfulAction;
 
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ class MainPhaseController {
         return selectedCard;
     }
 
+    /* only used for changing the position of a monster card in the monster zone */
     private MonsterCardInUse getSelectedMonsterZoneCardInUse(PreCard selectedCard) throws UnableToChangePosition {
         if (!(selectedCard instanceof PreMonsterCard)) throw new UnableToChangePosition();
         MonsterCardInUse[] zone = player.getBoard().getMonsterZone();
@@ -78,7 +82,6 @@ class MainPhaseController {
         }
     }
 
-
     public void flipSummon() throws NoSelectedCard, UnableToChangePosition, CantDoActionWithCard {
         PreCard selectedCard = getSelectedPreCard();
         MonsterCardInUse monsterCardInUse = getSelectedMonsterZoneCardInUse(selectedCard);
@@ -92,12 +95,11 @@ class MainPhaseController {
         new SuccessfulAction("", "flip summoned");
     }
 
-
     public void setCard() throws NoSelectedCard, CantDoActionWithCard, BeingFull, AlreadyDoneAction {
         PreCard selectedCard = getSelectedPreCard();
         if (!player.getHand().doesContainCard(selectedCard)) throw new CantDoActionWithCard("set");
         if (selectedCard instanceof PreMonsterCard) setMonster((PreMonsterCard) selectedCard);
-        if (selectedCard instanceof PreSpellTrapCard) setSpell((PreSpellTrapCard) selectedCard);
+        if (selectedCard instanceof PreSpellTrapCard) setSpellTrap((PreSpellTrapCard) selectedCard);
     }
 
     private void setMonster(PreMonsterCard selectedCard) throws BeingFull, AlreadyDoneAction {
@@ -112,8 +114,7 @@ class MainPhaseController {
         new SuccessfulAction("", "set");
     }
 
-    //todo: is set trap different?
-    private void setSpell(PreSpellTrapCard selectedCard) throws BeingFull {
+    private void setSpellTrap(PreSpellTrapCard selectedCard) throws BeingFull {
         SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
@@ -123,18 +124,50 @@ class MainPhaseController {
         //todo: the spell or trap card in use should be face down. there wasn't any field for it. will it be needed?
     }
 
+    private SpellTrapCardInUse getSelectedSpellCardInUse(PreCard selectedCard) throws NoSelectedCard {
+        if (selectedCard == null) throw new NoSelectedCard();
+        SpellTrapCardInUse[] spellZone = player.getBoard().getSpellTrapZone();
+        for (SpellTrapCardInUse spellTrapCardInUse : spellZone) {
+            if (spellTrapCardInUse.getThisCard().getPreCardInGeneral().equals(selectedCard)) return spellTrapCardInUse;
+        }
+        return null;
+    }
+
     public void activateEffect() throws NoSelectedCard, ActivateEffectNotSpell, CantDoActionWithCard, BeingFull, SpellPreparation, AlreadyActivatedEffect {
         PreCard selectedCard = getSelectedPreCard();
         if (!selectedCard.getCardType().equals(CardType.SPELL)) throw new ActivateEffectNotSpell();
         PreSpellTrapCard preSpell = (PreSpellTrapCard) selectedCard;
+        SpellTrapCardInUse spellInUse = getSelectedSpellCardInUse(selectedCard);
 
-//        if(preSpell.isActivated()) throw new AlreadyActivatedEffect();
-        //todo: some spells may not need to be in the field for activating! we should handle them here
-        if (!player.getHand().doesContainCard(preSpell)) throw new CantDoActionWithCard("activate effect of");
-        if (player.getBoard().getFirstEmptyCardInUse(false) == null) throw new BeingFull("spell card zone");
-        if (!preSpell.canActivate()) throw new SpellPreparation();
 
-//        else
+//        //checking if the spell is in hand
+        if (player.getHand().doesContainCard(preSpell)) {
+            if (!preSpell.getIcon().equals(CardIcon.FIELD)) {
+                //the card is in the hand. it goes to the board and gets activated
+                if (player.getBoard().getFirstEmptyCardInUse(false) == null) throw new BeingFull("spell card zone");
+                //todo : does the such a spell need any special preparation?
 
+                SpellTrapCardInUse spellInUseToPutCard = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
+                spellInUseToPutCard.setThisCard(preSpell.newCard());
+
+
+                Print.print("spell activated");
+            } else {
+                //its the field spell. we should handle it!
+            }
+        } else if (spellInUse != null) {
+            //means the spell is in the board
+            SpellTrap spellCard = (SpellTrap) spellInUse.getThisCard();
+            if (spellCard.isActivated()) throw new AlreadyActivatedEffect();
+            if (!spellCard.areEffectPreparationsDone()) {
+                throw new SpellPreparation();
+            }
+        } else throw new CantDoActionWithCard("activate effect of");
+
+
+    }
+
+    private boolean shouldGoToBoard(PreSpellTrapCard preSpell) {
+        return true;//todo
     }
 }

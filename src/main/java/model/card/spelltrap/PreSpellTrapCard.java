@@ -23,11 +23,6 @@ public class PreSpellTrapCard extends PreCard {
         allPreCardsInstances.put(this, null);
     }
 
-    public boolean canActivate() {
-        return true; //todo
-    }
-
-
     @Override
     public Card newCard() {
         return null;
