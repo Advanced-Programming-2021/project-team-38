@@ -2,6 +2,9 @@ package controller.game;
 
 class DrawPhaseController {
 
+    public DrawPhaseController(GamePlayController gamePlay) {
+
+    }
 
     public String addCardFromDeckToHand() {
         return null;

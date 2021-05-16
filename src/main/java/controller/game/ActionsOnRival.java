@@ -3,25 +3,30 @@ package controller.game;
 import model.Player;
 import model.card.Card;
 import model.card.PreCard;
+import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.MonsterCardInUse;
 import view.messageviewing.Print;
 
 class ActionsOnRival {
-    private Player currentPlayer;
-    private Player otherPlayer;
+    private GamePlayController gamePlay;
+    private CardInUse selectedCellRival;
 
-
-    ActionsOnRival(Player currentPlayer, Player otherPlayer) {
-
+    public ActionsOnRival(GamePlayController gamePlay) {
+        this.gamePlay = gamePlay;
     }
 
     public void showGraveyard() {
         int i = 1;
-        for (PreCard preCard : otherPlayer.getBoard().getGraveYard().getCardsInGraveYard()) {
+        for (PreCard preCard : gamePlay.getRival().getBoard().getGraveYard().getCardsInGraveYard()) {
             Print.print(String.format("%d. %s", i, preCard));
             i++;
         }
         if (i==1)
             Print.print("graveyard empty");
+    }
+
+    public MonsterCardInUse getRivalMonsterCell(int cellNo) {
+        return gamePlay.getRivalBoard().getMonsterZone()[cellNo];
     }
 
     public Card selectedCard() {

@@ -23,6 +23,14 @@ public class DuelMenuController {
 
     }
 
+    public void setPhases(MainPhaseController main, BattlePhaseController battle,
+                          StandByPhaseController standBy, DrawPhaseController draw) {
+        this.mainPhaseController = main;
+        this.battlePhaseController = battle;
+        this.standByPhaseController = standBy;
+        this.drawPhaseController = draw;
+    }
+
     public static DuelMenuController newDuel() {
         return null;//todo: create the game play controller inside the duel menu controller(by having the users)
     }
@@ -99,6 +107,8 @@ public class DuelMenuController {
         }
         Print.print("phase: " + currentPhase.toString());
     }
+
+    //from gameplay to duel menu controller
 
 
 }
