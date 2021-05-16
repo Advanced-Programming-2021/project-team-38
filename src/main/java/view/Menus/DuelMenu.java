@@ -4,7 +4,6 @@ import controller.RelatedToMenuController;
 import controller.game.DuelMenuController;
 import exceptions.InvalidCommand;
 import exceptions.WrongMenu;
-import exceptions.WrongPhaseForAction;
 import view.Menu;
 import view.MenuName;
 import view.messageviewing.Print;
@@ -46,7 +45,7 @@ public class DuelMenu {
                     else if (command.equals("set"))
                         duelMenuController.setCard();
                     else if (command.startsWith("set -- position "))
-                        duelMenuController.setPosition(command.substring(16).equals("attack"));
+                        duelMenuController.changePosition(command.substring(16).equals("attack"));
                     else if (command.equals("flip-summon"))
                         duelMenuController.summonMonster(true);
                     else if (command.equals("attack direct"))
@@ -68,7 +67,7 @@ public class DuelMenu {
                     //todo: duel menu controller is null. what is the error?
                 }
             }
-        } catch (WrongPhaseForAction exception) {
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
     }

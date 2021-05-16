@@ -5,3 +5,4 @@ public class CardAttackedBeforeExeption extends Exception {
         super("this card already attacked");
     }
 }
+
