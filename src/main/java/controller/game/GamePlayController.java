@@ -36,7 +36,7 @@ class GamePlayController {
         mainPhase = new MainPhaseController(this);  //** if it can get no input is better
         battlePhase = new BattlePhaseController(this);
         standByPhase = new StandByPhaseController(this);
-        drawPhase = new DrawPhaseController(this);
+        drawPhase = new DrawPhaseController(this, true);
         actionsOnRival = new ActionsOnRival(this);
     }
 
@@ -121,6 +121,10 @@ class GamePlayController {
 
 
     public void runDuel() {
+
+    }
+
+    public void announceWinner(boolean isCurrentPlayerLoser) {
 
     }
 
