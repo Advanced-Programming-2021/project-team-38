@@ -4,10 +4,13 @@ package controller.game;
 
 import exceptions.*;
 import model.Enums.Phase;
+import model.Enums.ZoneName;
+import view.Menu;
 import view.Menus.DuelMenu;
 import view.Print;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
 
 public class DuelMenuController {
     private Phase currentPhase;
@@ -70,8 +73,47 @@ public class DuelMenuController {
         mainPhaseController.activateEffect();
     }
 
-    public void selectCard(String cardAddress) {
+    public void selectCard(String cardAddress) throws InvalidTributeAddress, InvalidSelection, NoCardFound {
+        cardAddress = cardAddress.concat(" ");
+        boolean isOpponent = false;
+        ZoneName zoneName = null;
+        Matcher flagMatcher = Menu.getCommandMatcher(cardAddress, "--(<field>\\S+) ");
+        while (flagMatcher.find()) {
+            String field = flagMatcher.group("field");
+            if (field.equals("opponent")) {
+                if (!isOpponent) isOpponent = true;
+                else throw new InvalidSelection();
+            } else {
+                if (zoneName != null) throw new InvalidSelection();
+                switch (field) {
+                    case "hand":
+                        zoneName = ZoneName.HAND;
+                        break;
+                    case "monster":
+                        zoneName = ZoneName.MONSTER;
+                        break;
+                    case "spell":
+                        zoneName = ZoneName.SPELL;
+                        break;
+                    case "field":
+                        zoneName = ZoneName.FIELD;
+                        break;
+                    default:
+                        throw new InvalidSelection();
+                }
+            }
+        }
 
+        if (zoneName == null) throw new InvalidSelection();
+        int cardIndex;
+        try {
+            cardIndex = Integer.parseInt(cardAddress);
+        } catch (Exception e) {
+            if (!zoneName.equals(ZoneName.FIELD))
+                throw new InvalidSelection();
+            cardIndex = -1;
+        }
+        gamePlayController.selectCard(zoneName, isOpponent, cardIndex);
     }
 
     public void deselectCard() {
@@ -107,6 +149,5 @@ public class DuelMenuController {
     }
 
     //from gameplay to duel menu controller
-
 
 }

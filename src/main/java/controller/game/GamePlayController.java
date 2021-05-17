@@ -1,13 +1,17 @@
 package controller.game;
 
+import exceptions.InvalidSelection;
+import exceptions.NoCardFound;
 import lombok.Getter;
 import model.Board;
 import model.Deck;
 import model.Enums.Phase;
+import model.Enums.ZoneName;
 import model.Player;
 import model.User;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
+import view.Print;
 
 import java.util.regex.Matcher;
 
@@ -88,8 +92,32 @@ class GamePlayController {
 
     }
 
-    public void selectCard(String cardAddress) {
+    public void selectCard(ZoneName zoneName, boolean isForOpponent, int cardIndex) throws InvalidSelection, NoCardFound {
+        switch (zoneName) {
 
+            case HAND:
+                if (isForOpponent) throw new InvalidSelection();
+                this.selectedCardInUse = null;
+                this.selectedPreCard = currentPlayer.getHand().getCardWithNumber(cardIndex);
+                break;
+            case MONSTER:
+                this.selectedPreCard = null;
+                this.selectedCardInUse = currentPlayer.getBoard().getCardInUse(cardIndex, true);
+                break;
+            case SPELL:
+                this.selectedPreCard = null;
+                this.selectedCardInUse = currentPlayer.getBoard().getCardInUse(cardIndex, false);
+                break;
+            case FIELD:
+                this.selectedCardInUse = null;
+                PreCard fieldCard = currentPlayer.getBoard().getFieldCard();
+                if (fieldCard == null) throw new NoCardFound();
+                this.selectedPreCard = currentPlayer.getBoard().getFieldCard();
+                break;
+            default:
+                throw new InvalidSelection();
+        }
+        Print.print("card selected");
     }
 
     public void deselectedCard() {

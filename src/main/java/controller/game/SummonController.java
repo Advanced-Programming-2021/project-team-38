@@ -2,7 +2,7 @@ package controller.game;
 
 
 import exceptions.AlreadyDoneAction;
-import exceptions.InvalidAddress;
+import exceptions.InvalidTributeAddress;
 import exceptions.NotEnoughTributes;
 import model.Board;
 import model.card.cardinusematerial.CardInUse;
@@ -69,7 +69,7 @@ public class SummonController {
             try {
                 int index = Integer.parseInt(address);
                 tribute(index);
-            } catch (InvalidAddress invalidAddress) {
+            } catch (InvalidTributeAddress invalidAddress) {
                 if (address.equals("cancel")) return;
                 Print.print(invalidAddress.getMessage());
                 i--;
@@ -96,10 +96,10 @@ public class SummonController {
         //todo: some cards need more tributes
     }
 
-    private void tribute(int tributeIndex) throws InvalidAddress {
-        if (tributeIndex < 1 || tributeIndex > 5) throw new InvalidAddress();
+    private void tribute(int tributeIndex) throws InvalidTributeAddress {
+        if (tributeIndex < 1 || tributeIndex > 5) throw new InvalidTributeAddress();
         Monster tributeMonster = (Monster) board.getMonsterZone()[tributeIndex].getThisCard();
-        if (tributeMonster == null) throw new InvalidAddress();
+        if (tributeMonster == null) throw new InvalidTributeAddress();
         tributeMonster.sendToGraveYard();
     }
 }

@@ -30,8 +30,10 @@ public class ScannerMonster extends Monster {
     public boolean canActiveEffect(Board rivalBoard, Board myBoard, MonsterCardInUse rivalCard, MonsterCardInUse thisCard) {
         //check to see we are in phase draw phase or draw rival phase
         if (myBoard.getMyPhase() == Phase.DRAW)
-            setOccupiedCard(); //TODO complete -> choose a card of graveyard
+//            setOccupiedCard(); //TODO complete -> choose a card of graveyard
             return super.canActiveEffect(rivalBoard, myBoard, rivalCard, thisCard);
+        //todo: I'm negar! I just returned something before the bug is fixed
+        return false;
     }
 
     @Override
