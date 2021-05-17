@@ -114,4 +114,8 @@ class GamePlayController {
 
     }
 
+    public void announceWinner(boolean isCurrentPlayerLoser) {
+
+    }
+
 }

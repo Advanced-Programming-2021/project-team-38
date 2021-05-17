@@ -7,8 +7,6 @@ import model.Enums.Phase;
 import view.Menus.DuelMenu;
 import view.Print;
 
-import java.util.Objects;
-
 public class DuelMenuController {
     private Phase currentPhase;
     private MainPhaseController mainPhaseController;
@@ -58,7 +56,7 @@ public class DuelMenuController {
 
     }
 
-    public void attackDirect() throws WrongPhaseForAction {
+    public void attackDirect() throws WrongPhaseForAction, CardAttackedBeforeExeption, CardCantAttack, CantAttackDirectlyException, NoSelectedCard {
         if (!currentPhase.equals(Phase.BATTLE))
             throw new WrongPhaseForAction();
         battlePhaseController.attackToLifePoint();
