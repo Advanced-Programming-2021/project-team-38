@@ -30,11 +30,10 @@ public class GraveYard {
     }
 
     @Override
-    public String toString()
-    {
-        String showGraveyard=new String();
+    public String toString() {
+        String showGraveyard = new String();
         for (PreCard preCard : preCardsInGraveYard) {
-            showGraveyard.concat(preCard.toString()) ;
+            showGraveyard.concat(preCard.toString());
         }
         return showGraveyard;
     }

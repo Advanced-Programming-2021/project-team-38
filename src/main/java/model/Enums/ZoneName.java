@@ -1,7 +1,8 @@
 package model.Enums;
 
 public enum ZoneName {
-    FIELD,
+    HAND,
     MONSTER,
-    SPELLANDTRAP
+    SPELL,
+    FIELD
 }

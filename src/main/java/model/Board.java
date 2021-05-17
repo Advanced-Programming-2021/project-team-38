@@ -1,8 +1,11 @@
 package model;
 
+import exceptions.InvalidSelection;
+import exceptions.NoCardFound;
 import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;
+import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -14,6 +17,7 @@ public class Board {
 
     private MonsterCardInUse[] monsterZone;
     private SpellTrapCardInUse[] spellTrapZone;
+    private PreCard fieldCard;
     private int additionalAttack;
     private int additionalDefense;
     private Player owner;
@@ -25,11 +29,9 @@ public class Board {
         this.monsterZone = new MonsterCardInUse[5];
         this.spellTrapZone = new SpellTrapCardInUse[5];
         newCells();
-    }
-
-    public Board() {
         graveYard = new GraveYard();
     }
+
 
     public GraveYard getGraveYard() {
         return graveYard;
@@ -77,5 +79,15 @@ public class Board {
             if (monsterCardInUse.getThisCard() != null) counter++;
         }
         return counter;
+    }
+
+    /* used for selecting cards*/
+    public CardInUse getCardInUse(int index, boolean isMonster) throws NoCardFound, InvalidSelection {
+        if (index < 1 || index > 5) throw new InvalidSelection();
+        CardInUse cardInUse;
+        if (isMonster) cardInUse = monsterZone[index - 1];
+        else cardInUse = spellTrapZone[index - 1];
+        if (cardInUse == null) throw new NoCardFound();
+        else return cardInUse;
     }
 }
