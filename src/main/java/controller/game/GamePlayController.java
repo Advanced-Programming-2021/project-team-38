@@ -20,34 +20,32 @@ class GamePlayController {
     private Player currentPlayer;
     private Player rival;
     private int round;
-    private PreCard currentPlayerSelectedCard;
-    private PreCard rivalSelectedCard;
+    private PreCard selectedCard;
+//    private PreCard rivalSelectedCard;
 //    private Board currentPlayerBoard;
 //    private Board rivalBoard;             if they were needed use player
-    private Phase currentPhase; //TODO eshkal: halat haye rival toosh ghalat mishe
-    private MainPhaseController mainPhase;
-    private BattlePhaseController battlePhase;
-    private StandByPhaseController standByPhase;
-    private DrawPhaseController drawPhase;
+    private Phase currentPhase;
+//    private MainPhaseController mainPhase;
+//    private BattlePhaseController battlePhase;
+//    private StandByPhaseController standByPhase;
+//    private DrawPhaseController drawPhase;
     private ActionsOnRival actionsOnRival;
     private CardInUse selectedCardInUse;
 
     {
-        mainPhase = new MainPhaseController(this);  //** if it can get no input is better
-        battlePhase = new BattlePhaseController(this);
-        standByPhase = new StandByPhaseController(this);
-        drawPhase = new DrawPhaseController(this);
+//        mainPhase = new MainPhaseController(this);
+//        battlePhase = new BattlePhaseController(this);
+//        standByPhase = new StandByPhaseController(this);
+//        drawPhase = new DrawPhaseController(this);
         actionsOnRival = new ActionsOnRival(this);
     }
 
 
     public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu) {
-//
-//        currentPlayerBoard = new Board();
-//        rivalBoard = new Board();
         currentPlayer = new Player(firstUser);
         rival = new Player(secondUser);
-        duelMenu.setPhases(mainPhase, battlePhase, standByPhase, drawPhase);
+        currentPhase = Phase.DRAW;
+        duelMenu.setDrawPhase(new DrawPhaseController(this), currentPhase);
     }
 //    ---------------------------------------- getters and setters and stuff  -------------------------------------------------
 
@@ -59,16 +57,8 @@ class GamePlayController {
         return rival.getBoard();
     }
 
-    public void setNextPhase() {
-        this.currentPhase = currentPhase.goToNextGamePhase();
-    }
-
     public PreCard getCurrentPlayerSelectedCard() {
-        return currentPlayerSelectedCard;
-    }
-
-    public PreCard getRivalSelectedCard() {
-        return rivalSelectedCard;
+        return selectedCard;
     }
 
     public void increaseRound() {

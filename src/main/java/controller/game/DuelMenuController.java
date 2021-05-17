@@ -17,18 +17,10 @@ public class DuelMenuController {
     private DrawPhaseController drawPhaseController;
     private GamePlayController gamePlayController;
 
-    {
-//        drawPhaseController = new DrawPhaseController(gamePlayController);todo: I think it should be done in the newDuel function.
-        currentPhase = Phase.DRAW;
 
-    }
-
-    public void setPhases(MainPhaseController main, BattlePhaseController battle,
-                          StandByPhaseController standBy, DrawPhaseController draw) {
-        this.mainPhaseController = main;
-        this.battlePhaseController = battle;
-        this.standByPhaseController = standBy;
+    public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
         this.drawPhaseController = draw;
+        currentPhase = gamePhase;
     }
 
     public static DuelMenuController newDuel() {
@@ -96,21 +88,21 @@ public class DuelMenuController {
 
 
     public void nextPhase() {
-        this.currentPhase = currentPhase.goToNextPhase();
-//        switch (Objects.requireNonNull(currentPhase)) {
-//            case DRAW:
-//                break;
-//            case STANDBY:
-//                this.standByPhaseController = new StandByPhaseController();
-//                break;
-//            case MAIN_1:
-//            case MAIN_2:
-//                this.mainPhaseController = new MainPhaseController(gamePlayController);
-//                break;
-//            case BATTLE:
-//                this.battlePhaseController = new BattlePhaseController();
-//                break;
-//        } TODO check with negar
+        this.currentPhase = currentPhase.goToNextGamePhase();
+        switch (Objects.requireNonNull(currentPhase)) {
+            case DRAW:
+                break;
+            case STANDBY:
+                this.standByPhaseController = new StandByPhaseController(gamePlayController);
+                break;
+            case MAIN_1:
+            case MAIN_2:
+                this.mainPhaseController = new MainPhaseController(gamePlayController);
+                break;
+            case BATTLE:
+                this.battlePhaseController = new BattlePhaseController(gamePlayController);
+                break;
+        }
         Print.print("phase: " + currentPhase.toString());
     }
 
