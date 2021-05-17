@@ -17,7 +17,7 @@ class BattlePhaseController {
         this.gamePlay = gamePlay;
     }
 
-    private void battleAnnounced(int cellOfCard) throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, NoCardToAttack, CardAttackedBeforeExeption {
+    public void battleAnnounced(int cellOfCard) throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, NoCardToAttack, CardAttackedBeforeExeption {
         MonsterCardInUse preyCard;
         MonsterCardInUse attacker;
         if (gamePlay.getSelectedCardInUse().isCellEmpty())
