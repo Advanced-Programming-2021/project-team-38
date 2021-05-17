@@ -22,24 +22,20 @@ public class GraveYard {
     }
 
     public void removeCard(Card card){
-
+        preCardsInGraveYard.remove(card);
     }
 
     public void showMonsters(){
 
     }
 
-    public void selectCard(String cardAddress){
-
-    }
-
-    public void deselectCard(String cardAddress){
-
-    }
-
     @Override
     public String toString() {
-        return "GraveYard{}";
+        String showGraveyard = new String();
+        for (PreCard preCard : preCardsInGraveYard) {
+            showGraveyard.concat(preCard.toString());
+        }
+        return showGraveyard;
     }
 }
 
