@@ -20,7 +20,6 @@ class GamePlayController {
     private Player currentPlayer;
     private Player rival;
     private int round;
-    private PreCard selectedCard;
 //    private PreCard rivalSelectedCard;
 //    private Board currentPlayerBoard;
 //    private Board rivalBoard;             if they were needed use player
@@ -31,6 +30,7 @@ class GamePlayController {
 //    private DrawPhaseController drawPhase;
     private ActionsOnRival actionsOnRival;
     private CardInUse selectedCardInUse;
+    private PreCard selectedPreCard;
 
     {
 //        mainPhase = new MainPhaseController(this);
@@ -45,9 +45,13 @@ class GamePlayController {
         currentPlayer = new Player(firstUser);
         rival = new Player(secondUser);
         currentPhase = Phase.DRAW;
-        duelMenu.setDrawPhase(new DrawPhaseController(this), currentPhase);
+        duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
     }
 //    ---------------------------------------- getters and setters and stuff  -------------------------------------------------
+
+    public boolean isAnyCardSelected() {
+        return !(this.selectedPreCard == null && this.selectedCardInUse == null);
+    }
 
     public Board getCurrentPlayerBoard() {
         return currentPlayer.getBoard();
@@ -57,9 +61,6 @@ class GamePlayController {
         return rival.getBoard();
     }
 
-    public PreCard getCurrentPlayerSelectedCard() {
-        return selectedCard;
-    }
 
     public void increaseRound() {
         round++;
@@ -89,7 +90,6 @@ class GamePlayController {
 
     public void selectCard(String cardAddress) {
 
-        //currentPlayerBoard.getCardByAddress(cardAddress);
     }
 
     public void deselectedCard() {

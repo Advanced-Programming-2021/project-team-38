@@ -32,7 +32,6 @@ public class DuelMenu {
             if (command.startsWith("duel new ")) {
                 if (duelMenuController == null) {
                     duelMenuController = DuelMenuController.newDuel(); //todo the regex stuff. the input shouldn't be empty
-                    //todo: sout the draw phase name?
                 }
             } else {
                 if (duelMenuController != null) {

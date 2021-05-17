@@ -7,6 +7,8 @@ import model.Enums.Phase;
 import view.Menus.DuelMenu;
 import view.Print;
 
+import java.util.Objects;
+
 public class DuelMenuController {
     private Phase currentPhase;
     private MainPhaseController mainPhaseController;
@@ -42,7 +44,7 @@ public class DuelMenuController {
         mainPhaseController.setCard();
     }
 
-    public void changePosition(boolean isToBeAttackMode) throws WrongPhaseForAction, AlreadyDoneAction, UnableToChangePosition, AlreadyInWantedPosition, NoSelectedCard {
+    public void changePosition(boolean isToBeAttackMode) throws WrongPhaseForAction, AlreadyDoneAction, UnableToChangePosition, AlreadyInWantedPosition, NoSelectedCard, CantDoActionWithCard {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
         mainPhaseController.changePosition(isToBeAttackMode);
