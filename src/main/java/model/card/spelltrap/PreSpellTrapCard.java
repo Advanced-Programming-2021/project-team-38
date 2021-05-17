@@ -27,4 +27,13 @@ public class PreSpellTrapCard extends PreCard {
     public Card newCard() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "PreSpellTrapCard{" +
+                "status=" + status +
+                ", icon=" + icon +
+                '}';
+    }
+
 }
