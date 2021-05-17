@@ -1,0 +1,60 @@
+package model;
+
+import model.card.Card;
+
+import java.util.ArrayList;
+
+public class Player {
+    private String name;
+    private int gameScore;
+    private Deck deck;
+    private int lifePoint;
+    private Board board;
+    private ArrayList<Card> unusedCards;
+    private Hand hand;
+
+    public Player(User user) {
+        this.name = user.getNickName();
+        this.deck = user.getActiveDeck();
+        this.lifePoint = 8000;
+        this.hand = new Hand();
+        this.board = new Board();
+        this.unusedCards = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGameScore() {
+        return gameScore;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public int getLifePoint() {
+        return lifePoint;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public ArrayList<Card> getUnusedCards() {
+        return unusedCards;
+    }
+
+    public Hand getHand() {
+        return this.hand;
+    }
+
+    public void increaseLifePoint(int increasingAmount) {
+        this.lifePoint += increasingAmount;
+    }
+
+    public void decreaseLifePoint(int decreasingAmount) {
+        this.lifePoint -= decreasingAmount;
+    }
+}
