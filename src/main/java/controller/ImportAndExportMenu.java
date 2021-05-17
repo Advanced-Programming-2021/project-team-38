@@ -16,42 +16,41 @@ import java.util.regex.Matcher;
 public class ImportAndExportMenu {
 
 
-    public void importCard(String cardName) throws InvalidCardName,IOException {
+    public void importCard(String cardName) throws InvalidCardName, IOException {
 
-       PreCard preCard = PreCard.findCard(cardName);
-       if(preCard==null) throw new InvalidCardName();
+        PreCard preCard = PreCard.findCard(cardName);
+        if (preCard == null) throw new InvalidCardName();
 
-       if(preCard.getCardType() == CardType.MONSTER) {
+        if (preCard.getCardType() == CardType.MONSTER) {
 
-           PreMonsterCard preMonsterCard = (PreMonsterCard) preCard;
-           try {
-               FileWriter fileWriter = new FileWriter("../../resources/cards/monster/" + cardName + ".json");
-               fileWriter.write(new Gson().toJson(preMonsterCard));
-               fileWriter.close();
-           } catch (IOException e) {
-               throw e;
-           }
+            PreMonsterCard preMonsterCard = (PreMonsterCard) preCard;
+            try {
+                FileWriter fileWriter = new FileWriter("../../resources/cards/monster/" + cardName + ".json");
+                fileWriter.write(new Gson().toJson(preMonsterCard));
+                fileWriter.close();
+            } catch (IOException e) {
+                throw e;
+            }
 
-       }
-        else{
-           PreSpellTrapCard preSpellTrapCard =(PreSpellTrapCard) preCard;
-           try {
-               FileWriter fileWriter = new FileWriter("../../resources/cards/spell-trap/" + cardName + ".json");
-               fileWriter.write(new Gson().toJson(preSpellTrapCard));
-               fileWriter.close();
-           } catch (IOException e) {
-               throw e;
-           }
-       }
+        } else {
+            PreSpellTrapCard preSpellTrapCard = (PreSpellTrapCard) preCard;
+            try {
+                FileWriter fileWriter = new FileWriter("../../resources/cards/spell-trap/" + cardName + ".json");
+                fileWriter.write(new Gson().toJson(preSpellTrapCard));
+                fileWriter.close();
+            } catch (IOException e) {
+                throw e;
+            }
+        }
 
     }
 
-    public String exportCard(String cardName) throws InvalidCardName,IOException{
+    public String exportCard(String cardName) throws InvalidCardName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
-        if(preCard==null) throw new InvalidCardName();
+        if (preCard == null) throw new InvalidCardName();
 
-        if(preCard.getCardType() == CardType.MONSTER) {
+        if (preCard.getCardType() == CardType.MONSTER) {
             try {
                 String json = new String(Files.readAllBytes(
                         Paths.get("../../resources/cards/monster/" + cardName + ".json")));
@@ -61,8 +60,7 @@ public class ImportAndExportMenu {
                 throw e;
             }
 
-        }
-        else{
+        } else {
 
             try {
                 String json = new String(Files.readAllBytes(
