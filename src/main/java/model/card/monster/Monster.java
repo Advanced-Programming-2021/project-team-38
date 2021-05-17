@@ -1,5 +1,6 @@
 package model.card.monster;
 
+import controller.game.BattleController;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
@@ -49,7 +50,11 @@ public class Monster extends Card {
 
     }
 
-    public void deactiveEffect() {
+    public boolean canActiveEffect(Board rivalBoard, Board myBoard, MonsterCardInUse rivalCard, MonsterCardInUse thisCard) {
+        return false;
+    }
+
+    public void deactiveEffect(Board myBoard) {
 
     }
 
@@ -69,7 +74,7 @@ public class Monster extends Card {
     }
 
     //returns
-    protected void receiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
+    public void receiveAttack(BattleController battleController) {
 
     }
     // end during battle

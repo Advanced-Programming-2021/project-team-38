@@ -9,7 +9,7 @@ import model.card.PreCard;
 @Setter
 public abstract class CardInUse {
     protected Card thisCard;
-    protected boolean isPositionChanged;  //if card manner was changed in a round ->true then ->false //todo: in the beginning of any turn we should change it to false
+    protected boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false //todo: in the beginning of any turn we should change it to false
     protected boolean isFaceUp;
 
 

@@ -2,7 +2,7 @@
 
 package controller.game;
 
-import exceptions.WrongPhaseForAction;
+import exceptions.*;
 import model.Enums.Phase;
 import view.Menus.DuelMenu;
 import view.Print;
@@ -17,10 +17,10 @@ public class DuelMenuController {
     private DrawPhaseController drawPhaseController;
     private GamePlayController gamePlayController;
 
-    {
-        drawPhaseController = new DrawPhaseController();
-        currentPhase = Phase.DRAW;
 
+    public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
+        this.drawPhaseController = draw;
+        currentPhase = gamePhase;
     }
 
     public static DuelMenuController newDuel() {
@@ -31,37 +31,43 @@ public class DuelMenuController {
         return DuelMenu.askQuestion(questionToAsk);
     }
 
-    public void summonMonster(boolean isFlip) throws WrongPhaseForAction {
+    public void summonMonster(boolean isFlip) throws WrongPhaseForAction, CantDoActionWithCard, UnableToChangePosition, NoSelectedCard, BeingFull, AlreadyDoneAction, NotEnoughTributes {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
+        if (isFlip) mainPhaseController.flipSummon();
+        else mainPhaseController.summonMonster();
     }
 
-    public void setCard() throws WrongPhaseForAction {
+    public void setCard() throws WrongPhaseForAction, BeingFull, AlreadyDoneAction, CantDoActionWithCard, NoSelectedCard {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
-
+        mainPhaseController.setCard();
     }
 
-    public void setPosition(boolean isToBeAttackMode) throws WrongPhaseForAction {
+    public void changePosition(boolean isToBeAttackMode) throws WrongPhaseForAction, AlreadyDoneAction, UnableToChangePosition, AlreadyInWantedPosition, NoSelectedCard, CantDoActionWithCard {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
+        mainPhaseController.changePosition(isToBeAttackMode);
     }
 
 
     public void attack(int number) throws WrongPhaseForAction {
         if (!currentPhase.equals(Phase.BATTLE))
             throw new WrongPhaseForAction();
+//        battlePhaseController.attack(number); todo: hasti
 
     }
 
-    public void attackDirect() throws WrongPhaseForAction {
+    public void attackDirect() throws WrongPhaseForAction, CardAttackedBeforeExeption, CardCantAttack, CantAttackDirectlyException, NoSelectedCard {
         if (!currentPhase.equals(Phase.BATTLE))
             throw new WrongPhaseForAction();
+        battlePhaseController.attackToLifePoint();
     }
 
-    public void activateEffect() throws WrongPhaseForAction {
+    public void activateEffect() throws WrongPhaseForAction, NoSelectedCard, ActivateEffectNotSpell, BeingFull, SpellPreparation, AlreadyActivatedEffect, CantDoActionWithCard {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
+        mainPhaseController.activateEffect();
     }
 
     public void selectCard(String cardAddress) {
@@ -82,23 +88,25 @@ public class DuelMenuController {
 
 
     public void nextPhase() {
-        this.currentPhase = currentPhase.goToNextPhase();
+        this.currentPhase = currentPhase.goToNextGamePhase();
         switch (Objects.requireNonNull(currentPhase)) {
             case DRAW:
                 break;
             case STANDBY:
-                this.standByPhaseController = new StandByPhaseController();
+                this.standByPhaseController = new StandByPhaseController(gamePlayController);
                 break;
             case MAIN_1:
             case MAIN_2:
                 this.mainPhaseController = new MainPhaseController(gamePlayController);
                 break;
             case BATTLE:
-                this.battlePhaseController = new BattlePhaseController();
+                this.battlePhaseController = new BattlePhaseController(gamePlayController);
                 break;
         }
         Print.print("phase: " + currentPhase.toString());
     }
+
+    //from gameplay to duel menu controller
 
 
 }

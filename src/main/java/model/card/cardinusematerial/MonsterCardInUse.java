@@ -32,16 +32,15 @@ public class MonsterCardInUse extends CardInUse {
         this.attack += amount;
     }
 
-    @Override
-    public Card getThisCard() {
-        return ((Monster) super.getThisCard());
-    }
-
     public void setInAttackMode(boolean inAttackMode) {
         if (isInAttackMode != inAttackMode) {
             isInAttackMode = inAttackMode;
             this.isPositionChanged = true;
         }
+    }
+
+    public boolean hasBeenAttacker() {
+        return hasBeenAttacker;
     }
 
     public void setAttack(Board playerBoard, int monsterCardAttack) {

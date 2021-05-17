@@ -2,6 +2,7 @@
 
 package model.card.monster.mosterswitheffect;
 
+import controller.game.BattleController;
 import model.Board;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
@@ -16,26 +17,17 @@ public class Suijin extends Monster {
         setName("Suijin");
     }
 
-
-    @Override
-    public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {
-        //if user wants to active the effect.
-        isEffectUsed = true;
-    }
-
     private boolean canActiveEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {
         return monsterCardInUse.isFaceUp() && !isEffectUsed &&
                 monsterCardInUse.isAttacked();
     }
 
     @Override
-    protected void receiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
-
-    }
-
-    @Override
-    public Monster getCard() {
-        return this;
+    public void receiveAttack(BattleController battleController) {
+        if (canActiveEffect(battleController.getPreyBoard(), null, battleController.getPreyCard(), null)) {
+            battleController.setAttackerAttack(0);
+            isEffectUsed = true;
+        }
     }
 
     @Override

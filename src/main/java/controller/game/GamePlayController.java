@@ -1,81 +1,66 @@
 package controller.game;
 
+import lombok.Getter;
 import model.Board;
 import model.Deck;
 import model.Enums.Phase;
 import model.Player;
 import model.User;
 import model.card.PreCard;
+import model.card.cardinusematerial.CardInUse;
 
 import java.util.regex.Matcher;
 
+@Getter
+public
 class GamePlayController {
 
-    private User firstUser;
-    private User secondUser;
+//    private User firstUser;
+//    private User secondUser;
     private Player currentPlayer;
     private Player rival;
     private int round;
-    private PreCard currentPlayerSelectedCard;
-    private PreCard rivalSelectedCard;
-    private Board currentPlayerBoard;
-    private Board rivalBoard;
+//    private PreCard rivalSelectedCard;
+//    private Board currentPlayerBoard;
+//    private Board rivalBoard;             if they were needed use player
     private Phase currentPhase;
+//    private MainPhaseController mainPhase;
+//    private BattlePhaseController battlePhase;
+//    private StandByPhaseController standByPhase;
+//    private DrawPhaseController drawPhase;
+    private ActionsOnRival actionsOnRival;
+    private CardInUse selectedCardInUse;
+    private PreCard selectedPreCard;
+
+    {
+//        mainPhase = new MainPhaseController(this);
+//        battlePhase = new BattlePhaseController(this);
+//        standByPhase = new StandByPhaseController(this);
+//        drawPhase = new DrawPhaseController(this);
+        actionsOnRival = new ActionsOnRival(this);
+    }
 
 
-    public GamePlayController(User firstUser, User secondUser) {
-
-        currentPlayerBoard = new Board();
-        rivalBoard = new Board();
+    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu) {
         currentPlayer = new Player(firstUser);
         rival = new Player(secondUser);
+        currentPhase = Phase.DRAW;
+        duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
     }
 //    ---------------------------------------- getters and setters and stuff  -------------------------------------------------
 
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public Player getRival() {
-        return rival;
-    }
-
-    public int getRound() {
-        return round;
-    }
-
-    public void setCurrentPlayerBoard(Board currentPlayerBoard) {
-        this.currentPlayerBoard = currentPlayerBoard;
+    public boolean isAnyCardSelected() {
+        return !(this.selectedPreCard == null && this.selectedCardInUse == null);
     }
 
     public Board getCurrentPlayerBoard() {
-        return currentPlayerBoard;
-    }
-
-    public void setRivalBoard(Board rivalBoard) {
-        this.rivalBoard = rivalBoard;
+        return currentPlayer.getBoard();
     }
 
     public Board getRivalBoard() {
-        return rivalBoard;
+        return rival.getBoard();
     }
 
-    public void setNextPhase() {
-        this.currentPhase = currentPhase.goToNextPhase();
-    }
-
-    public PreCard getCurrentPlayerSelectedCard() {
-        return currentPlayerSelectedCard;
-    }
-
-    public PreCard getRivalSelectedCard() {
-        return rivalSelectedCard;
-    }
-
-    public Phase getCurrentPhase() {
-        return currentPhase;
-    }
 
     public void increaseRound() {
         round++;
@@ -105,7 +90,6 @@ class GamePlayController {
 
     public void selectCard(String cardAddress) {
 
-        //currentPlayerBoard.getCardByAddress(cardAddress);
     }
 
     public void deselectedCard() {
@@ -127,6 +111,10 @@ class GamePlayController {
 
 
     public void runDuel() {
+
+    }
+
+    public void announceWinner(boolean isCurrentPlayerLoser) {
 
     }
 

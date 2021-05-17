@@ -13,13 +13,17 @@ public class Player {
     private ArrayList<Card> unusedCards;
     private Hand hand;
 
+    {
+        this.hand = new Hand();
+        this.board = new Board();
+        this.unusedCards = new ArrayList<>();
+        board = new Board();
+    }
+
     public Player(User user) {
         this.name = user.getNickName();
         this.deck = user.getActiveDeck();
         this.lifePoint = 8000;
-        this.hand = new Hand();
-        this.board = new Board();
-        this.unusedCards = new ArrayList<>();
     }
 
     public String getName() {

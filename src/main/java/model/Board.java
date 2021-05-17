@@ -17,6 +17,7 @@ public class Board {
     private int additionalAttack;
     private int additionalDefense;
     private Player owner;
+    private Phase myPhase;
 
     private Phase onPhase;
 

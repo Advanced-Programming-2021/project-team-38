@@ -1,17 +1,62 @@
 package controller.game;
 
+
+import exceptions.*;
+import model.Enums.Phase;
 import model.card.*;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.monster.Monster;
 
 import java.util.ArrayList;
 
 class BattlePhaseController {
 
-    private Card selectedCard;
-    private ArrayList<Card> chain;
+    private GamePlayController gamePlay;
 
+    public BattlePhaseController(GamePlayController gamePlay) {
+        this.gamePlay = gamePlay;
+    }
 
-    private void battleMade() {
-        //new a BattleController and ...
+    private void battleAnnounced(int cellOfCard) throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, NoCardToAttack, CardAttackedBeforeExeption {
+        MonsterCardInUse preyCard;
+        MonsterCardInUse attacker;
+        if (gamePlay.getSelectedCardInUse().isCellEmpty())
+            throw new NoSelectedCard();
+        else if (!(gamePlay.getSelectedCardInUse() instanceof MonsterCardInUse))
+            throw new CardCantAttack();
+        else if (((MonsterCardInUse)gamePlay.getSelectedCardInUse()).isInAttackMode())
+            throw new CardCantAttack();
+        else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
+            throw new WrongPhaseForAction();
+        else if ((preyCard = gamePlay.getActionsOnRival().getRivalMonsterCell(cellOfCard)).isCellEmpty())
+            throw new NoCardToAttack();
+        else if ((attacker = (MonsterCardInUse) gamePlay.getSelectedCardInUse()).hasBeenAttacker())
+            throw new CardAttackedBeforeExeption();
+        else
+            new BattleController(gamePlay.getCurrentPlayerBoard(),
+                    gamePlay.getRivalBoard(), attacker, preyCard);
+    }
+
+    public void attackToLifePoint() throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, CardAttackedBeforeExeption, CantAttackDirectlyException {
+        MonsterCardInUse attacker;
+        if (gamePlay.getSelectedCardInUse().isCellEmpty())
+            throw new NoSelectedCard();
+        else if (!(gamePlay.getSelectedCardInUse() instanceof MonsterCardInUse))
+            throw new CardCantAttack();
+        else if (((MonsterCardInUse)gamePlay.getSelectedCardInUse()).isInAttackMode())
+            throw new CardCantAttack();
+        else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
+            throw new WrongPhaseForAction();
+        else if ((attacker = (MonsterCardInUse) gamePlay.getSelectedCardInUse()).hasBeenAttacker())
+            throw new CardAttackedBeforeExeption();
+        else if (!canAttackDirectly())
+            throw new CantAttackDirectlyException();
+        else
+            gamePlay.getRival().decreaseLifePoint(attacker.getAttack());
+    }
+
+    private boolean canAttackDirectly() {   //complete
+        return gamePlay.getRivalBoard().getFirstEmptyCardInUse(true) == null;
     }
 
     public String run() {
@@ -19,23 +64,23 @@ class BattlePhaseController {
     }
 
     public void setChain(ArrayList<Card> chain) {
-        this.chain = chain;
+
     }
 
     public void setSelectedCard(Card selectedCard) {
-        this.selectedCard = selectedCard;
+
     }
 
     public ArrayList<Card> getChain() {
-        return chain;
+        return null;
     }
 
     public Card getSelectedCard() {
-        return selectedCard;
+        return null;
     }
 
 
-    private void controlDamage(Card attackReciever) {
+    private void controlDamage(Card attackReceiver) {
 
     }
 
@@ -43,9 +88,7 @@ class BattlePhaseController {
         return null;
     }
 
-    public void attackToLifePoint(int reducingScore) {
 
-    }
 
     private boolean isPossibleToAttack() {
         return true;
@@ -56,7 +99,6 @@ class BattlePhaseController {
     }
 
     public void addToChain(Card card) {
-        chain.add(card);
     }
 
 

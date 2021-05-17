@@ -2,6 +2,7 @@
 
 package model.card.monster.mosterswitheffect;
 
+import controller.game.BattleController;
 import model.Board;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
@@ -26,7 +27,7 @@ public class ManEaterBug extends Monster {
     }
 
     @Override
-    protected void receiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) {
+    public void receiveAttack(BattleController battleController) {
         //if az posht be roo effect active
     }
 
