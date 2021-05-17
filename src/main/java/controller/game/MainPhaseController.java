@@ -3,7 +3,6 @@ package controller.game;
 
 import exceptions.*;
 import model.Player;
-import model.card.Card;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
@@ -99,9 +98,8 @@ class MainPhaseController {
         new SuccessfulAction("", "flip summoned");
     }
 
-    //todo : continue from here!
     public void setCard() throws NoSelectedCard, CantDoActionWithCard, BeingFull, AlreadyDoneAction {
-        PreCard selectedCard = getSelectedPossiblePreCard();
+        PreCard selectedCard = getSelectedPossiblePreCard("set");
         if (!player.getHand().doesContainCard(selectedCard)) throw new CantDoActionWithCard("set");
         if (selectedCard instanceof PreMonsterCard) setMonster((PreMonsterCard) selectedCard);
         if (selectedCard instanceof PreSpellTrapCard) setSpellTrap((PreSpellTrapCard) selectedCard);
@@ -123,56 +121,52 @@ class MainPhaseController {
         SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
-        Card card = selectedCard.newCard();
-        spellTrapCardInUse.setThisCard(card);
+        SpellTrap spellTrap = (SpellTrap) selectedCard.newCard();
+        spellTrapCardInUse.setThisCard(spellTrap);
         new SuccessfulAction("", "set");
         //todo: the spell or trap card in use should be face down. there wasn't any field for it. will it be needed?
     }
 
-    private SpellTrapCardInUse getSelectedSpellCardInUse(PreCard selectedCard) throws NoSelectedCard {
-        if (selectedCard == null) throw new NoSelectedCard();
-        SpellTrapCardInUse[] spellZone = player.getBoard().getSpellTrapZone();
-        for (SpellTrapCardInUse spellTrapCardInUse : spellZone) {
-            if (spellTrapCardInUse.getThisCard().getPreCardInGeneral().equals(selectedCard)) return spellTrapCardInUse;
-        }
-        return null;
-    }
-
     public void activateEffect() throws NoSelectedCard, ActivateEffectNotSpell, CantDoActionWithCard, BeingFull, SpellPreparation, AlreadyActivatedEffect {
-        PreCard selectedCard = getSelectedPossiblePreCard();
-        if (!selectedCard.getCardType().equals(CardType.SPELL)) throw new ActivateEffectNotSpell();
-        PreSpellTrapCard preSpell = (PreSpellTrapCard) selectedCard;
-        SpellTrapCardInUse spellInUse = getSelectedSpellCardInUse(selectedCard);
+        PreSpellTrapCard preSpell;
+        try { //if the card is pre ( e.g. in hand)
+            PreCard selectedCard = getSelectedPossiblePreCard("activate effect");
 
+            if (!selectedCard.getCardType().equals(CardType.SPELL)) throw new ActivateEffectNotSpell();
+            preSpell = (PreSpellTrapCard) selectedCard;
 
-//        //checking if the spell is in hand
-        if (player.getHand().doesContainCard(preSpell)) {
-            if (!preSpell.getIcon().equals(CardIcon.FIELD)) {
-                //the card is in the hand. it goes to the board and gets activated
-                if (player.getBoard().getFirstEmptyCardInUse(false) == null) throw new BeingFull("spell card zone");
-                //todo : does such a spell need any special preparation?
+            if (player.getHand().doesContainCard(preSpell)) {
+                if (preSpell.getIcon().equals(CardIcon.FIELD)) {
+                    //it is a field spell
+                    //todo: we should send the previous field zone card to the graveyard and put this spell there
+                } else {
+                    //the spell is in hand and we should send it to the board
+                    SpellTrapCardInUse spellInUseToPutCard = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
+                    if (spellInUseToPutCard == null) throw new BeingFull("spell card zone");
 
-                SpellTrapCardInUse spellInUseToPutCard = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
-                spellInUseToPutCard.setThisCard(preSpell.newCard());
-
-
-                Print.print("spell activated");
-            } else {
-                //its the field spell. we should handle it!
+                    SpellTrap spellCard = (SpellTrap) preSpell.newCard();
+                    if (!spellCard.areEffectPreparationsDone()) throw new SpellPreparation();
+                    spellInUseToPutCard.setThisCard(spellCard);
+                    spellCard.setActivated(true);
+                    Print.print("spell activated");
+                }
+                return;
             }
-        } else if (spellInUse != null) {
-            //means the spell is in the board
+        } catch (CantDoActionWithCard cantDoActionWithCard) {
+            //the selected card wasn't pre. it is card in use. so it's in the board
+            CardInUse cardInUse = getSelectedPossibleCardInUse("activate effect of");
+            if (!(cardInUse instanceof SpellTrapCardInUse)) throw new ActivateEffectNotSpell();
+            SpellTrapCardInUse spellInUse = (SpellTrapCardInUse) cardInUse;
             SpellTrap spellCard = (SpellTrap) spellInUse.getThisCard();
             if (spellCard.isActivated()) throw new AlreadyActivatedEffect();
-            if (!spellCard.areEffectPreparationsDone()) {
-                throw new SpellPreparation();
-            }
-        } else throw new CantDoActionWithCard("activate effect of");
+            if (!spellCard.areEffectPreparationsDone()) throw new SpellPreparation();
 
+            spellCard.setActivated(true);
+            Print.print("spell activated");
+            return;
+        }
+        throw new CantDoActionWithCard("activate effect of");
 
     }
 
-    private boolean shouldGoToBoard(PreSpellTrapCard preSpell) {
-        return true;//todo
-    }
 }
