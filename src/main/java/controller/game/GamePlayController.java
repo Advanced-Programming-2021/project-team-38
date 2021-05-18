@@ -121,6 +121,8 @@ class GamePlayController {
     }
 
     public void deselectedCard() {
+        this.selectedPreCard = null;
+        this.selectedCardInUse = null;
     }
 
     public void showGraveYard() {

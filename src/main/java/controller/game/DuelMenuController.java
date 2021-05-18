@@ -2,9 +2,11 @@
 
 package controller.game;
 
+import controller.LoginMenuController;
 import exceptions.*;
 import model.Enums.Phase;
 import model.Enums.ZoneName;
+import model.User;
 import view.Menu;
 import view.Menus.DuelMenu;
 import view.Print;
@@ -26,8 +28,19 @@ public class DuelMenuController {
         currentPhase = gamePhase;
     }
 
-    public static DuelMenuController newDuel() {
-        return null;//todo: create the game play controller inside the duel menu controller(by having the users)
+    public static DuelMenuController newDuel(String secondUserName, int numOfRounds) throws InvalidName, NumOfRounds {
+        User secondUser = User.getUserByName(secondUserName);
+        if (secondUser == null) throw new InvalidName("player", "username");
+        if (numOfRounds != 1 && numOfRounds != 3) throw new NumOfRounds();
+
+        DuelMenuController duelMenuController = new DuelMenuController();
+        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController);
+        duelMenuController.setGamePlayController(gamePlayController);
+        return duelMenuController;
+    }
+
+    private void setGamePlayController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
     }
 
     public static String askQuestion(String questionToAsk) {
@@ -103,7 +116,6 @@ public class DuelMenuController {
                 }
             }
         }
-
         if (zoneName == null) throw new InvalidSelection();
         int cardIndex;
         try {
@@ -116,8 +128,10 @@ public class DuelMenuController {
         gamePlayController.selectCard(zoneName, isOpponent, cardIndex);
     }
 
-    public void deselectCard() {
-
+    public void deselectCard() throws NoSelectedCard {
+        if (gamePlayController.isAnyCardSelected()) {
+            gamePlayController.deselectedCard();
+        } else throw new NoSelectedCard();
     }
 
     public void showGraveYard(boolean ofCurrentPlayer) {

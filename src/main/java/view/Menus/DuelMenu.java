@@ -8,13 +8,11 @@ import view.Menu;
 import view.MenuName;
 import view.messageviewing.Print;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class DuelMenu {
     private static final Scanner scanner;
-    public static ArrayList<String> commands;
     private static DuelMenuController duelMenuController = null;
 
     static {
@@ -26,12 +24,14 @@ public class DuelMenu {
     }
 
     public static void checkMenuCommands(String command) throws InvalidCommand, WrongMenu {
-        if (RelatedToMenuController.isMenuFalse(MenuName.PROFILE))
+        if (RelatedToMenuController.isMenuFalse(MenuName.DUEL))
             throw new WrongMenu();
         try {
-            if (command.startsWith("duel new ")) {
+            if (command.startsWith("duel ") && command.contains("--new ")) {
                 if (duelMenuController == null) {
-                    duelMenuController = DuelMenuController.newDuel(); //todo the regex stuff. the input shouldn't be empty
+                    String secondUserName = getSecondUserNameInCommand(command.substring(9));
+                    int numOfRounds = getNumOfRounds(command.substring(9));
+                    duelMenuController = DuelMenuController.newDuel(secondUserName, numOfRounds);
                 }
             } else {
                 if (duelMenuController != null) {
@@ -64,10 +64,33 @@ public class DuelMenu {
                         throw new InvalidCommand();
                 } else {
                     //todo: duel menu controller is null. what is the error?
+                    throw new InvalidCommand();
                 }
             }
         } catch (Exception exception) {
+            if (exception instanceof InvalidCommand) throw new InvalidCommand();
             System.out.println(exception.getMessage());
+        }
+    }
+
+    private static int getNumOfRounds(String command) throws InvalidCommand {
+        command = command.concat(" ");
+        Matcher matcher = Menu.getCommandMatcher(command, "--round (<round>\\d+) ");
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group("round"));
+        } else throw new InvalidCommand();
+    }
+
+    private static String getSecondUserNameInCommand(String command) throws InvalidCommand {
+        command = command.concat(" ");
+        Matcher matcher = Menu.getCommandMatcher(command, "--second-player (<username>\\S+) ");
+        if (matcher.find()) {
+            return matcher.group("username");
+        } else {
+            matcher = Menu.getCommandMatcher(command, "--ai");
+            if (matcher.find())
+                return "AI";
+            else throw new InvalidCommand();
         }
     }
 

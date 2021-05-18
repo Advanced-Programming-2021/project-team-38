@@ -1,7 +1,7 @@
 package controller;
 
+import exceptions.InvalidName;
 import exceptions.NotEnoughMoney;
-import exceptions.NotExisting;
 import model.User;
 import model.card.PreCard;
 import view.messageviewing.SuccessfulAction;
@@ -15,7 +15,7 @@ public class ShopMenuController {
     private static User user;
 
     public static String showAllCards() {
-        ArrayList<PreCard> allPreCards = (ArrayList<PreCard>) PreCard.getAllPreCardsInstances().keySet();
+        ArrayList<PreCard> allPreCards = (ArrayList<PreCard>) PreCard.getAllPreCardsInstances().keySet(); //todo: what is the error?!
         ArrayList<String> cards = new ArrayList<>();
         for (PreCard preCard : allPreCards) {
             cards.add(preCard.getName() + ": " + preCard.getDescription());
@@ -28,9 +28,9 @@ public class ShopMenuController {
         return cardsToShow.toString();
     }
 
-    public static void checkBuying(String cardName) throws NotExisting, NotEnoughMoney {
+    public static void checkBuying(String cardName) throws NotEnoughMoney, InvalidName {
         PreCard preCard = PreCard.findCard(cardName);
-        if (preCard == null) throw new NotExisting("card", cardName);
+        if (preCard == null) throw new InvalidName("card", "name");
         user = LoginMenuController.getCurrentUser();
         if (!user.getCardTreasury().containsKey(cardName) &&
                 preCard.getPrice() > user.getBalance()) throw new NotEnoughMoney();

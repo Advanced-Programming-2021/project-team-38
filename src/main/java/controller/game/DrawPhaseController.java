@@ -24,7 +24,7 @@ public class DrawPhaseController {
     }
 
     public void run() {
-        Print.print("phase: draw phase"); //todo: fine?
+        Print.print("phase: draw phase");
         if (isBeginningOfGame) {
             Collections.shuffle(this.deck.getMainCards());
         }
