@@ -13,6 +13,10 @@ public class RelatedToMenuController {
     public static MenuName currentMenu;
     private static boolean programEnded = false;
 
+    static {
+        currentMenu = MenuName.LOGIN;
+    }
+
     public static void enterMenu(String name) throws InvalidCommand, MenuNavigationError {
         MenuName newMenu;
         try {

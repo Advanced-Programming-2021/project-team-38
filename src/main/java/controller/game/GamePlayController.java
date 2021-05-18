@@ -1,7 +1,6 @@
 package controller.game;
 
-import exceptions.InvalidSelection;
-import exceptions.NoCardFound;
+import exceptions.*;
 import lombok.Getter;
 import model.Board;
 import model.Deck;
@@ -13,28 +12,24 @@ import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import view.Print;
 
-import java.util.regex.Matcher;
-
 @Getter
 public
 class GamePlayController {
 
-//    private User firstUser;
+    //    private User firstUser;
 //    private User secondUser;
     private Player currentPlayer;
     private Player rival;
     private int round;
-//    private PreCard rivalSelectedCard;
-//    private Board currentPlayerBoard;
-//    private Board rivalBoard;             if they were needed use player
     private Phase currentPhase;
-//    private MainPhaseController mainPhase;
+    //    private MainPhaseController mainPhase;
 //    private BattlePhaseController battlePhase;
 //    private StandByPhaseController standByPhase;
 //    private DrawPhaseController drawPhase;
     private ActionsOnRival actionsOnRival;
     private CardInUse selectedCardInUse;
     private PreCard selectedPreCard;
+    private int numOfRounds;
 
     {
 //        mainPhase = new MainPhaseController(this);
@@ -45,14 +40,34 @@ class GamePlayController {
     }
 
 
-    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu) {
-        currentPlayer = new Player(firstUser);
-        rival = new Player(secondUser);
-        currentPhase = Phase.DRAW;
-        duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
+    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu, int numOfRounds)
+            throws InvalidDeck, InvalidName, NoActiveDeck, NumOfRounds {
+        if (isGameValid(firstUser, secondUser, numOfRounds)) {
+            currentPlayer = new Player(firstUser);
+            rival = new Player(secondUser);
+            currentPhase = Phase.DRAW;
+            duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
+            this.numOfRounds = numOfRounds;
+        }
     }
-//    ---------------------------------------- getters and setters and stuff  -------------------------------------------------
 
+    /* static methods for initializing the game */
+    private static boolean isGameValid(User firstUser, User secondUser, int numOfRounds) throws InvalidName, NumOfRounds, NoActiveDeck, InvalidDeck {
+        if (firstUser == null || secondUser == null)
+            throw new InvalidName("user", "username");//it won't happen! just for making sure!
+        if (firstUser.getActiveDeck() == null) throw new NoActiveDeck(firstUser.getUsername());
+        if (secondUser.getActiveDeck() == null) throw new NoActiveDeck(secondUser.getUsername());
+        if (!isDeckValid(firstUser.getActiveDeck())) throw new InvalidDeck(firstUser.getUsername());
+        if (!isDeckValid(secondUser.getActiveDeck())) throw new InvalidDeck(secondUser.getUsername());
+        if (numOfRounds != 1 && numOfRounds != 3) throw new NumOfRounds();
+        return true;
+    }
+
+    private static boolean isDeckValid(Deck deck) {
+        return true;//todo
+    }
+
+    /*  getters and setters and stuff  */
     public boolean isAnyCardSelected() {
         return !(this.selectedPreCard == null && this.selectedCardInUse == null);
     }
@@ -65,28 +80,11 @@ class GamePlayController {
         return rival.getBoard();
     }
 
-
     public void increaseRound() {
         round++;
     }
 
-
-//    ---------------------------------------- static methods for initializing the game -------------------------------------
-
-    private static boolean areUsersValid(Matcher matcher) {
-        return true;
-    } //todo : why here!?
-
-    public static boolean isGameValid(String firstUsername, String secondUsername) {
-        return true;
-    }
-
-    public static boolean isDeckValid(Deck deck) {
-        return true;
-    }
-
-
-//    ---------------------------------------- general actions (in any phase) -------------------------------------------------
+    /* general actions (in any phase) */
 
     public void showBoard() {
 
@@ -133,15 +131,21 @@ class GamePlayController {
     }
 
 
-//    ------------------------------------------- the main part, the game  ----------------------------------------------------
+    /* the main part, the game */
 
-    public void playOneTurn(Player player) {
+    public void playOneRound() {
 
     }
 
 
-    public void runDuel() {
 
+    public void runDuel() {
+        for (int i = 0; i < numOfRounds; i++) {
+            while (true) {
+//                playOneTurn(currentPlayer);
+                break;
+            }
+        }
     }
 
     public void announceWinner(boolean isCurrentPlayerLoser) {

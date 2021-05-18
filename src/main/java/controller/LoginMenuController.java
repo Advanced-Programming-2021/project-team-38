@@ -40,7 +40,7 @@ public class LoginMenuController {
         User user = User.getUserByName(username);
         if (user == null)
             throw new LoginError();
-        else if (user.isPasswordCorrect(password))
+        else if (!user.isPasswordCorrect(password))
             throw new LoginError();
         else return true;
     }
@@ -51,7 +51,9 @@ public class LoginMenuController {
     }
 
     private static void setUserInClasses(User user) {
-        //todo : what do I do!?
+        ProfileMenuController.setUser(user);
+        DeckMenuController.setUser(user);
+
     }
 
 }

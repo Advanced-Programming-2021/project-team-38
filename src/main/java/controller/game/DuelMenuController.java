@@ -14,8 +14,6 @@ import view.Print;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
-import java.util.Objects;
-
 public class DuelMenuController {
     private Phase currentPhase;
     private MainPhaseController mainPhaseController;
@@ -25,24 +23,23 @@ public class DuelMenuController {
     private GamePlayController gamePlayController;
 
 
-    public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
-        this.drawPhaseController = draw;
-        currentPhase = gamePhase;
-    }
-
-    public static DuelMenuController newDuel(String secondUserName, int numOfRounds) throws InvalidName, NumOfRounds {
+    public static DuelMenuController newDuel(String secondUserName, int numOfRounds) throws InvalidName, NumOfRounds, InvalidDeck, NoActiveDeck {
         User secondUser = User.getUserByName(secondUserName);
         if (secondUser == null) throw new InvalidName("player", "username");
-        if (numOfRounds != 1 && numOfRounds != 3) throw new NumOfRounds();
 
         DuelMenuController duelMenuController = new DuelMenuController();
-        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController);
+        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController, numOfRounds);
         duelMenuController.setGamePlayController(gamePlayController);
         return duelMenuController;
     }
 
     private void setGamePlayController(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
+    }
+
+    public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
+        this.drawPhaseController = draw;
+        currentPhase = gamePhase;
     }
 
     public static String askQuestion(String questionToAsk) {

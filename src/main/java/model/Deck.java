@@ -49,14 +49,6 @@ public class Deck {
         this.name = name;
     }
 
-    public void setMainCards(ArrayList<PreCard> mainCards) {
-        this.mainCards = mainCards;
-    }
-
-    public void setSideCards(ArrayList<PreCard> sideCards) {
-        this.sideCards = sideCards;
-    }
-
     public void setOwner(User owner) {
         this.owner = owner;
     }

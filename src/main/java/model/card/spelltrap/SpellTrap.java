@@ -26,6 +26,7 @@ public class SpellTrap extends Card {
 
     public boolean canActivateEffect(Board myBoard, Board rivalBoard, SpellTrapCardInUse thisCard) {
 
+        return false; //todo: returned something to be able to run!
     }
 
     public void activateEffect(Board myBoard, Board rivalBoard, SpellTrapCardInUse thisCard) {

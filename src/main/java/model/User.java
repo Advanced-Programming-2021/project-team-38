@@ -43,7 +43,7 @@ public class User implements Comparable<model.User> {
         }
 
         public static User getUserByName(String username) {
-            for (model.User user : allUsers) {
+            for (User user : allUsers) {
                 if (user.username.equals(username)) {
                     return user;
                 }

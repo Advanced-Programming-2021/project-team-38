@@ -1,7 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
-import exceptions.InvalidCardName;
+import exceptions.InvalidName;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.monster.PreMonsterCard;
@@ -16,10 +16,10 @@ import java.util.regex.Matcher;
 public class ImportAndExportMenu {
 
 
-    public void importCard(String cardName) throws InvalidCardName, IOException {
+    public void importCard(String cardName) throws InvalidName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
-        if (preCard == null) throw new InvalidCardName();
+        if (preCard == null) throw new InvalidName("card", "name");
 
         if (preCard.getCardType() == CardType.MONSTER) {
 
@@ -45,10 +45,10 @@ public class ImportAndExportMenu {
 
     }
 
-    public String exportCard(String cardName) throws InvalidCardName, IOException {
+    public String exportCard(String cardName) throws InvalidName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
-        if (preCard == null) throw new InvalidCardName();
+        if (preCard == null) throw new InvalidName("card", "name");
 
         if (preCard.getCardType() == CardType.MONSTER) {
             try {
