@@ -2,9 +2,11 @@
 package model.card.cardinusematerial;
 
 import lombok.Getter;
+import model.Board;
 
 @Getter
 public class SpellTrapCardInUse extends CardInUse {
+
 
     @Override
     public void putInGraveYard() {

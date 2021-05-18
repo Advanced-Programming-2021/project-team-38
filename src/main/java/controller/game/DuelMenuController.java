@@ -14,6 +14,8 @@ import view.Print;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
+import java.util.Objects;
+
 public class DuelMenuController {
     private Phase currentPhase;
     private MainPhaseController mainPhaseController;
@@ -67,10 +69,11 @@ public class DuelMenuController {
     }
 
 
-    public void attack(int number) throws WrongPhaseForAction {
+    public void attack(int number) throws WrongPhaseForAction, CardAttackedBeforeExeption, CardCantAttack, NoCardToAttack, NoSelectedCard {
         if (!currentPhase.equals(Phase.BATTLE))
             throw new WrongPhaseForAction();
-//        battlePhaseController.attack(number); todo: hasti
+
+        battlePhaseController.battleAnnounced(number);
 
     }
 
