@@ -30,9 +30,13 @@ public class Menu {
             DeckMenu.checkMenuCommands(command.substring(5));
         else if (command.startsWith("shop "))
             ShopMenu.checkMenuCommands(command.substring(5));
-        else if (DuelMenu.supportsCommand(command))
-            DuelMenu.checkMenuCommands(command);
-        else if (command.equals("user logout"))
+        else if (command.startsWith("duel ")) {
+            try {
+                DuelMenu.checkMenuCommands(command.substring(5));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (command.equals("user logout"))
             MainMenu.logout();
         else
             throw new InvalidCommand();

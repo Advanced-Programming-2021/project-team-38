@@ -21,6 +21,8 @@ public class DuelMenuController {
     private StandByPhaseController standByPhaseController;
     private DrawPhaseController drawPhaseController;
     private GamePlayController gamePlayController;
+    private int numOfRounds;
+    private static boolean isAnyGameRunning = false;
 
 
     public static DuelMenuController newDuel(String secondUserName, int numOfRounds) throws InvalidName, NumOfRounds, InvalidDeck, NoActiveDeck {
@@ -28,13 +30,24 @@ public class DuelMenuController {
         if (secondUser == null) throw new InvalidName("player", "username");
 
         DuelMenuController duelMenuController = new DuelMenuController();
-        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController, numOfRounds);
+        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController);
+        duelMenuController.setNumOfRounds(numOfRounds);
         duelMenuController.setGamePlayController(gamePlayController);
+        isAnyGameRunning = true;
         return duelMenuController;
+    }
+
+    public boolean isIsAnyBattleRunning() {
+        return isAnyGameRunning;
     }
 
     private void setGamePlayController(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
+    }
+
+    private void setNumOfRounds(int numOfRounds) throws NumOfRounds {
+        if (numOfRounds != 1 && numOfRounds != 3) throw new NumOfRounds();
+        this.numOfRounds = numOfRounds;
     }
 
     public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
@@ -64,7 +77,6 @@ public class DuelMenuController {
             throw new WrongPhaseForAction();
         mainPhaseController.changePosition(isToBeAttackMode);
     }
-
 
     public void attack(int number) throws WrongPhaseForAction, CardAttackedBeforeExeption, CardCantAttack, NoCardToAttack, NoSelectedCard {
         if (!currentPhase.equals(Phase.BATTLE))
@@ -142,7 +154,6 @@ public class DuelMenuController {
 
     }
 
-
     public void nextPhase() {
         this.currentPhase = currentPhase.goToNextGamePhase();
         switch (Objects.requireNonNull(currentPhase)) {
@@ -158,9 +169,31 @@ public class DuelMenuController {
             case BATTLE:
                 this.battlePhaseController = new BattlePhaseController(gamePlayController);
                 break;
+            case END:
+                this.gamePlayController.setTurnEnded(true);
         }
         Print.print("phase: " + currentPhase.toString());
     }
+
+    public void runGame() throws InvalidCommand {
+        for (int i = 0; i < numOfRounds; i++) {
+            gamePlayController.setRoundEnded(false);
+            runOneRound();
+            //todo: print that one round is ended and we want to go to the next round
+        }
+
+    }
+
+    private void runOneRound() throws InvalidCommand {
+        while (!gamePlayController.isRoundEnded()) {
+            while (!gamePlayController.isTurnEnded()) {
+                DuelMenu.checkCommandsInGame();
+            }
+            gamePlayController.swapPlayers();
+            if (!gamePlayController.isRoundEnded()) gamePlayController.setTurnEnded(false);
+        }
+    }
+
 
     //from gameplay to duel menu controller
 

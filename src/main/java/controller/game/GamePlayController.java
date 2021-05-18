@@ -2,6 +2,7 @@ package controller.game;
 
 import exceptions.*;
 import lombok.Getter;
+import lombok.Setter;
 import model.Board;
 import model.Deck;
 import model.Enums.Phase;
@@ -13,6 +14,7 @@ import model.card.cardinusematerial.CardInUse;
 import view.Print;
 
 @Getter
+@Setter
 public
 class GamePlayController {
 
@@ -29,7 +31,8 @@ class GamePlayController {
     private ActionsOnRival actionsOnRival;
     private CardInUse selectedCardInUse;
     private PreCard selectedPreCard;
-    private int numOfRounds;
+    private boolean isRoundEnded;
+    private boolean isTurnEnded;
 
     {
 //        mainPhase = new MainPhaseController(this);
@@ -40,26 +43,24 @@ class GamePlayController {
     }
 
 
-    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu, int numOfRounds)
-            throws InvalidDeck, InvalidName, NoActiveDeck, NumOfRounds {
-        if (isGameValid(firstUser, secondUser, numOfRounds)) {
+    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu)
+            throws InvalidDeck, InvalidName, NoActiveDeck {
+        if (isGameValid(firstUser, secondUser)) {
             currentPlayer = new Player(firstUser);
             rival = new Player(secondUser);
             currentPhase = Phase.DRAW;
             duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
-            this.numOfRounds = numOfRounds;
         }
     }
 
     /* static methods for initializing the game */
-    private static boolean isGameValid(User firstUser, User secondUser, int numOfRounds) throws InvalidName, NumOfRounds, NoActiveDeck, InvalidDeck {
+    private static boolean isGameValid(User firstUser, User secondUser) throws InvalidName, NoActiveDeck, InvalidDeck {
         if (firstUser == null || secondUser == null)
             throw new InvalidName("user", "username");//it won't happen! just for making sure!
         if (firstUser.getActiveDeck() == null) throw new NoActiveDeck(firstUser.getUsername());
         if (secondUser.getActiveDeck() == null) throw new NoActiveDeck(secondUser.getUsername());
         if (!isDeckValid(firstUser.getActiveDeck())) throw new InvalidDeck(firstUser.getUsername());
         if (!isDeckValid(secondUser.getActiveDeck())) throw new InvalidDeck(secondUser.getUsername());
-        if (numOfRounds != 1 && numOfRounds != 3) throw new NumOfRounds();
         return true;
     }
 
@@ -133,23 +134,17 @@ class GamePlayController {
 
     /* the main part, the game */
 
-    public void playOneRound() {
-
+    public void announceWinner(boolean isCurrentPlayerLoser) { //I think it needs an input for draw, maybe better get an enum
+        //todo
+        //the winner is the winner of the current round
+        this.isRoundEnded = true;
+        this.isTurnEnded = true;
+        //todo: show the winner or the other things in the output
     }
 
-
-
-    public void runDuel() {
-        for (int i = 0; i < numOfRounds; i++) {
-            while (true) {
-//                playOneTurn(currentPlayer);
-                break;
-            }
-        }
+    public void swapPlayers() {
+        Player hold = currentPlayer;
+        currentPlayer = rival;
+        rival = hold;
     }
-
-    public void announceWinner(boolean isCurrentPlayerLoser) {
-
-    }
-
 }
