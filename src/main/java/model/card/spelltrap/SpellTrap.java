@@ -1,8 +1,10 @@
 package model.card.spelltrap;
 
+import controller.game.GamePlayController;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
+import model.Player;
 import model.card.Card;
 import model.card.PreCard;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -24,30 +26,25 @@ public class SpellTrap extends Card {
         return this;
     }
 
-    public boolean canActivateEffect(Board myBoard, Board rivalBoard, SpellTrapCardInUse thisCard) {
-
+    public boolean areEffectPreparationsDone(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
+        return true;
         return false; //todo: returned something to be able to run!
     }
 
-    public void activateEffect(Board myBoard, Board rivalBoard, SpellTrapCardInUse thisCard) {
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
 
     }
 
-    public void deactiveEffect(Board myBoard, Board rivalBoard, SpellTrapCardInUse thisCard) {
+    public void deactiveEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
 
     }
 
-    public void destroyThis(Board myBoard, Board rivalBoard, SpellTrapCardInUse thisCard) {
+    public void destroyThis(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
 
     }
 
     public void spinCard() {
 
-    }
-
-
-    public boolean areEffectPreparationsDone() {
-        return true;//todo
     }
 
 
