@@ -59,6 +59,10 @@ public class DuelMenuController {
         return DuelMenu.askQuestion(questionToAsk);
     }
 
+    public String askForSth(String wanted) throws InvalidTributeAddress, NoCardFound, InvalidSelection {
+        return DuelMenu.askForSth(wanted);
+    }
+
     public void summonMonster(boolean isFlip) throws WrongPhaseForAction, CantDoActionWithCard, UnableToChangePosition, NoSelectedCard, BeingFull, AlreadyDoneAction, NotEnoughTributes {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();

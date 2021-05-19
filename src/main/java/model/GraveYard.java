@@ -21,8 +21,8 @@ public class GraveYard {
             preCardsInGraveYard.add(preCard);
     }
 
-    public void removeCard(Card card){
-        preCardsInGraveYard.remove(card);
+    public void removeCard(PreCard preCard){
+        preCardsInGraveYard.remove(preCard);
     }
 
     public void showMonsters(){

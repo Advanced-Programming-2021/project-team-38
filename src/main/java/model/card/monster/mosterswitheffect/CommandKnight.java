@@ -35,7 +35,7 @@ public class CommandKnight extends Monster {
 
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new CommandKnight(preCardInGeneral);
     }
 }

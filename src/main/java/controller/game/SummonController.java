@@ -5,6 +5,9 @@ import exceptions.AlreadyDoneAction;
 import exceptions.InvalidTributeAddress;
 import exceptions.NotEnoughTributes;
 import model.Board;
+import model.Enums.ZoneName;
+import model.Player;
+import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
@@ -101,5 +104,29 @@ public class SummonController {
         Monster tributeMonster = (Monster) board.getMonsterZone()[tributeIndex].getThisCard();
         if (tributeMonster == null) throw new InvalidTributeAddress();
         tributeMonster.sendToGraveYard();
+    }
+
+    public static void specialSummonPreCard(GamePlayController gamePlay,
+                                            PreCard preCard, Player player, ZoneName zoneName) throws CloneNotSupportedException {
+        Board playerBoard = player.getBoard();
+        switch (zoneName) {
+            case MONSTER:
+                for (CardInUse cell : playerBoard.getMonsterZone()) {
+                    if (cell.isCellEmpty()) {
+                        cell.setACardInThisCell(preCard);
+                        break;
+                    }
+                }
+                break;
+            case SPELL:
+                for (CardInUse cell : playerBoard.getSpellTrapZone()) {
+                    if (cell.isCellEmpty()) {
+                        cell.setACardInThisCell(preCard);
+                        break;
+                    }
+                }
+                break;
+                //TODO continue
+        }
     }
 }

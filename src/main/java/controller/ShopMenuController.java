@@ -14,6 +14,10 @@ public class ShopMenuController {
     private static HashMap<String, Integer> allCards; //todo:  Why did we need this? (I'm negar!)
     private static User user;
 
+    public static void setUser(User user) {
+        ShopMenuController.user = user;
+    }
+
     public static String showAllCards() {
         ArrayList<PreCard> allPreCards = (ArrayList<PreCard>) PreCard.getAllPreCardsInstances().keySet(); //todo: what is the error?!
         ArrayList<String> cards = new ArrayList<>();
@@ -31,7 +35,7 @@ public class ShopMenuController {
     public static void checkBuying(String cardName) throws NotEnoughMoney, InvalidName {
         PreCard preCard = PreCard.findCard(cardName);
         if (preCard == null) throw new InvalidName("card", "name");
-        user = LoginMenuController.getCurrentUser();
+//        user = LoginMenuController.getCurrentUser(); TODO change set users together
         if (!user.getCardTreasury().containsKey(cardName) &&
                 preCard.getPrice() > user.getBalance()) throw new NotEnoughMoney();
         sellCard(preCard);
@@ -42,7 +46,7 @@ public class ShopMenuController {
         if (user.getCardTreasury().containsKey(preCard.getName())) price = 0;
         else price = preCard.getPrice();
         user.decreaseBalance(price);
-        user.addPreCard(preCard);
+        user.addPreCardToTreasury(preCard);
         new SuccessfulAction("card " + preCard.getName(), "is sold");
     }
 }

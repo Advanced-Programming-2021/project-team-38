@@ -104,12 +104,13 @@ public class DuelMenu {
         }
     }
 
-//        public static String scanNameOfCard(){
-//
-//    }
-
     public static String askQuestion(String questionToAsk) {
         Print.print(questionToAsk);
+        return scanner.nextLine();
+    }
+
+    public static String askForSth(String wanted) {
+        System.out.println(wanted);
         return scanner.nextLine();
     }
 

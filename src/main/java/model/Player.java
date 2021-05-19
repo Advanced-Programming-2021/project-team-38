@@ -1,6 +1,9 @@
 package model;
 
 public class Player {
+    //TODO clone the deck when game is started
+
+    private String name;
     private final String name;
     private int gameScore;
     private final Deck deck;

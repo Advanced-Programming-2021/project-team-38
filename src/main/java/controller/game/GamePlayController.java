@@ -18,26 +18,22 @@ import view.Print;
 public
 class GamePlayController {
 
-    //    private User firstUser;
-//    private User secondUser;
+
     private Player currentPlayer;
     private Player rival;
     private Phase currentPhase;
-    //    private MainPhaseController mainPhase;
-//    private BattlePhaseController battlePhase;
-//    private StandByPhaseController standByPhase;
-//    private DrawPhaseController drawPhase;
     private ActionsOnRival actionsOnRival;
+
     private CardInUse selectedCardInUse;
     private PreCard selectedPreCard;
+    private boolean isSelectedCardFromRivalBoard = false;
+
     private boolean isRoundEnded;
     private boolean isTurnEnded;
 
+    private DuelMenuController duelMenu;
+
     {
-//        mainPhase = new MainPhaseController(this);
-//        battlePhase = new BattlePhaseController(this);
-//        standByPhase = new StandByPhaseController(this);
-//        drawPhase = new DrawPhaseController(this);
         actionsOnRival = new ActionsOnRival(this);
     }
 
@@ -48,6 +44,7 @@ class GamePlayController {
             currentPlayer = new Player(firstUser);
             rival = new Player(secondUser);
             currentPhase = Phase.DRAW;
+            this.duelMenu = duelMenu;
             duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
         }
     }
@@ -119,6 +116,7 @@ class GamePlayController {
     public void deselectedCard() {
         this.selectedPreCard = null;
         this.selectedCardInUse = null;
+        isSelectedCardFromRivalBoard = false;
     }
 
     public void showGraveYard() {

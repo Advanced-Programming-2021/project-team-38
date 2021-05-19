@@ -38,7 +38,7 @@ public class Texchanger extends Monster{
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new Texchanger(preCardInGeneral);
     }
 }
