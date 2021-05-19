@@ -5,6 +5,8 @@ import model.card.Card;
 import java.util.ArrayList;
 
 public class Player {
+    //TODO clone the deck when game is started
+
     private String name;
     private int gameScore;
     private Deck deck;

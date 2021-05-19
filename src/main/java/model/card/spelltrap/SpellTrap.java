@@ -1,9 +1,9 @@
 package model.card.spelltrap;
 
 import controller.game.GamePlayController;
+import exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
-import model.Board;
 import model.Player;
 import model.card.Card;
 import model.card.PreCard;
@@ -31,7 +31,7 @@ public class SpellTrap extends Card {
         return false; //todo: returned something to be able to run!
     }
 
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
 
     }
 
@@ -55,7 +55,7 @@ public class SpellTrap extends Card {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new SpellTrap(preCardInGeneral);
     }
 }

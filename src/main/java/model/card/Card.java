@@ -22,7 +22,7 @@ public abstract class Card {
     }
 
     @Override
-    protected abstract Object clone() throws CloneNotSupportedException;
+    public abstract Object clone() throws CloneNotSupportedException;
 
 
     public String getName() {

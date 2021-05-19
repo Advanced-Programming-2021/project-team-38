@@ -22,6 +22,7 @@ public class Board {
     private int additionalDefense;
     private Player owner;
     private Phase myPhase;
+    private Deck deckInUse;
 
     private Phase onPhase;
 

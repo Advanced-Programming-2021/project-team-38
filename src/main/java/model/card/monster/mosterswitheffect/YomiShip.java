@@ -26,7 +26,7 @@ public class YomiShip extends Monster {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new YomiShip(preCardInGeneral);
     }
 }

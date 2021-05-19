@@ -18,6 +18,7 @@ import view.Print;
 public
 class GamePlayController {
 
+
     private Player currentPlayer;
     private Player rival;
     private int round;

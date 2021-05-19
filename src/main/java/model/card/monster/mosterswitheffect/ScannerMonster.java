@@ -56,7 +56,7 @@ public class ScannerMonster extends Monster {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {    //shouldn't be used actually
+    public Object clone() throws CloneNotSupportedException {    //shouldn't be used actually
         return new ScannerMonster(preCardInGeneral);
     }
 }
