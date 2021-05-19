@@ -22,7 +22,6 @@ class GamePlayController {
 //    private User secondUser;
     private Player currentPlayer;
     private Player rival;
-    private int round;
     private Phase currentPhase;
     //    private MainPhaseController mainPhase;
 //    private BattlePhaseController battlePhase;
@@ -81,9 +80,7 @@ class GamePlayController {
         return rival.getBoard();
     }
 
-    public void increaseRound() {
-        round++;
-    }
+
 
     /* general actions (in any phase) */
 

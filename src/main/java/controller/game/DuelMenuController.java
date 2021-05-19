@@ -181,7 +181,7 @@ public class DuelMenuController {
             runOneRound();
             //todo: print that one round is ended and we want to go to the next round
         }
-
+        isAnyGameRunning = false;
     }
 
     private void runOneRound() throws InvalidCommand {

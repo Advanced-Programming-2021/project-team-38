@@ -2,6 +2,7 @@ package controller;
 
 import exceptions.InvalidCommand;
 import exceptions.MenuNavigationError;
+import exceptions.NeedToLogin;
 import view.MenuName;
 import view.messageviewing.Print;
 
@@ -17,7 +18,7 @@ public class RelatedToMenuController {
         currentMenu = MenuName.LOGIN;
     }
 
-    public static void enterMenu(String name) throws InvalidCommand, MenuNavigationError {
+    public static void enterMenu(String name) throws InvalidCommand, MenuNavigationError, NeedToLogin {
         MenuName newMenu;
         try {
             newMenu = MenuName.valueOf(name.toUpperCase());
@@ -26,9 +27,10 @@ public class RelatedToMenuController {
         }
         if (currentMenu == newMenu)
             throw new MenuNavigationError();
-        else if (currentMenu == MenuName.LOGIN && newMenu == MenuName.MAIN)
-            currentMenu = newMenu;
-        else if (currentMenu == MenuName.MAIN && newMenu != MenuName.LOGIN)
+        else if (currentMenu == MenuName.LOGIN && newMenu == MenuName.MAIN) {
+            if (LoginMenuController.getCurrentUser() != null) currentMenu = newMenu;
+            else throw new NeedToLogin();
+        } else if (currentMenu == MenuName.MAIN && newMenu != MenuName.LOGIN)
             currentMenu = newMenu;
         else
             throw new MenuNavigationError();

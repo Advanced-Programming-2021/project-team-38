@@ -3,9 +3,8 @@ package controller.game;
 
 import exceptions.*;
 import model.Enums.Phase;
-import model.card.*;
+import model.card.Card;
 import model.card.cardinusematerial.MonsterCardInUse;
-import model.card.monster.Monster;
 
 import java.util.ArrayList;
 
