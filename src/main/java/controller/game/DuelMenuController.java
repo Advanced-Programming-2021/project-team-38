@@ -114,22 +114,7 @@ public class DuelMenuController {
                 else throw new InvalidSelection();
             } else {
                 if (zoneName != null) throw new InvalidSelection();
-                switch (field) {
-                    case "hand":
-                        zoneName = ZoneName.HAND;
-                        break;
-                    case "monster":
-                        zoneName = ZoneName.MONSTER;
-                        break;
-                    case "spell":
-                        zoneName = ZoneName.SPELL;
-                        break;
-                    case "field":
-                        zoneName = ZoneName.FIELD;
-                        break;
-                    default:
-                        throw new InvalidSelection();
-                }
+                zoneName = getZoneName(field);
             }
         }
         if (zoneName == null) throw new InvalidSelection();
@@ -144,9 +129,33 @@ public class DuelMenuController {
         gamePlayController.selectCard(zoneName, isOpponent, cardIndex);
     }
 
+    private ZoneName getZoneName(String field) throws InvalidSelection {
+        ZoneName zoneName;
+        switch (field) {
+            case "hand":
+                zoneName = ZoneName.HAND;
+                break;
+            case "monster":
+                zoneName = ZoneName.MONSTER;
+                break;
+            case "spell":
+                zoneName = ZoneName.SPELL;
+                break;
+            case "field":
+                zoneName = ZoneName.FIELD;
+                break;
+            case "graveyard":
+                zoneName = ZoneName.GRAVEYARD;
+                break;
+            default:
+                throw new InvalidSelection();
+        }
+        return zoneName;
+    }
+
     public void deselectCard() throws NoSelectedCard {
         if (gamePlayController.isAnyCardSelected()) {
-            gamePlayController.deselectedCard();
+            gamePlayController.deselectCard();
         } else throw new NoSelectedCard();
     }
 

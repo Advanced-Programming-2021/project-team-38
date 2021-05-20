@@ -18,8 +18,8 @@ public class PotOfGreed extends SpellTrap {
 
     @Override
     public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
-        DuelMenuController duelMenu = gamePlay.getDuelMenu();
-        gamePlay.deselectedCard();
+        DuelMenuController duelMenu = gamePlay.getDuelMenuController();
+        gamePlay.deselectCard();
         Print.print("two cards from deck were added to your hand");
 
         myPlayer.getHand().addCard(

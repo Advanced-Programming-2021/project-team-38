@@ -31,21 +31,21 @@ class GamePlayController {
     private boolean isRoundEnded;
     private boolean isTurnEnded;
 
-    private DuelMenuController duelMenu;
+    private DuelMenuController duelMenuController;
 
     {
         actionsOnRival = new ActionsOnRival(this);
     }
 
 
-    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenu)
+    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenuController)
             throws InvalidDeck, InvalidName, NoActiveDeck {
         if (isGameValid(firstUser, secondUser)) {
             currentPlayer = new Player(firstUser);
             rival = new Player(secondUser);
             currentPhase = Phase.DRAW;
-            this.duelMenu = duelMenu;
-            duelMenu.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
+            this.duelMenuController = duelMenuController;
+            duelMenuController.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
         }
     }
 
@@ -90,22 +90,27 @@ class GamePlayController {
 
             case HAND:
                 if (isForOpponent) throw new InvalidSelection();
-                this.selectedCardInUse = null;
                 this.selectedPreCard = currentPlayer.getHand().getCardWithNumber(cardIndex);
+                this.selectedCardInUse = null;
                 break;
             case MONSTER:
-                this.selectedPreCard = null;
                 this.selectedCardInUse = currentPlayer.getBoard().getCardInUse(cardIndex, true);
+                this.selectedPreCard = null;
                 break;
             case SPELL:
-                this.selectedPreCard = null;
                 this.selectedCardInUse = currentPlayer.getBoard().getCardInUse(cardIndex, false);
+                this.selectedPreCard = null;
                 break;
             case FIELD:
-                this.selectedCardInUse = null;
                 PreCard fieldCard = currentPlayer.getBoard().getFieldCard();
                 if (fieldCard == null) throw new NoCardFound();
                 this.selectedPreCard = currentPlayer.getBoard().getFieldCard();
+                this.selectedCardInUse = null;
+                break;
+            case GRAVEYARD:
+                if (isForOpponent) this.selectedPreCard = rival.getBoard().getGraveYard().getPreCard(cardIndex);
+                else this.selectedPreCard = currentPlayer.getBoard().getGraveYard().getPreCard(cardIndex);
+                this.selectedCardInUse = null;
                 break;
             default:
                 throw new InvalidSelection();
@@ -113,14 +118,15 @@ class GamePlayController {
         Print.print("card selected");
     }
 
-    public void deselectedCard() {
+    public void deselectCard() {
         this.selectedPreCard = null;
         this.selectedCardInUse = null;
-        isSelectedCardFromRivalBoard = false;
+        isSelectedCardFromRivalBoard = false; //todo: why do we need this thing?
     }
 
-    public void showGraveYard() {
-        //currentPlayerBoard.getGraveYard().showGraveYard();
+    public String showGraveYard(boolean shouldShowCurrent) {
+        if (shouldShowCurrent) return currentPlayer.getBoard().getGraveYard().toString();
+        else return rival.getBoard().getGraveYard().toString();
     }
 
     public void surrender(Player player) {

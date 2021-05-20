@@ -27,7 +27,6 @@ public class SpellTrap extends Card {
     }
 
     public boolean areEffectPreparationsDone(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
-        return true;
         return false; //todo: returned something to be able to run!
     }
 

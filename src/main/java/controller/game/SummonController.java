@@ -25,7 +25,6 @@ public class SummonController {
     private Board board;
     ArrayList<CardInUse> summonedCards; //it is generated in the main phase calling this class
 
-
     public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, GamePlayController controller, ArrayList<CardInUse> summonedCards) {
         this.preMonster = preMonster;
         this.numOfNormalSummons = 0;
@@ -41,13 +40,12 @@ public class SummonController {
         normal(monster);
     }
 
-
     private void normal(Monster monster) throws AlreadyDoneAction, NotEnoughTributes {
         if (numOfNormalSummons != 0) {
             throw new AlreadyDoneAction("summoned/set");
         } else if (preMonster.getLevel() >= 5) tributeSummon(monster);
         else {
-            putMonsterInUse(monster);
+            putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
         }
         numOfNormalSummons++; //todo: is summoning with tribute ( not ritual ) also counted here ?
     }
@@ -79,16 +77,16 @@ public class SummonController {
             }
         }
         monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
-        putMonsterInUse(monster);
+        putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
 
     }
 
 
-    private void putMonsterInUse(Monster monster) {
+    private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         monsterCardInUse.setInAttackMode(true);
         monsterCardInUse.setFaceUp(true);
         monsterCardInUse.setThisCard(monster);
-        this.summonedCards.add(monsterCardInUse);
+        if (!isSpecial) summonedCards.add(monsterCardInUse);
         new SuccessfulAction("", "summoned");
     }
 
@@ -106,27 +104,29 @@ public class SummonController {
         tributeMonster.sendToGraveYard();
     }
 
-    public static void specialSummonPreCard(GamePlayController gamePlay,
-                                            PreCard preCard, Player player, ZoneName zoneName) throws CloneNotSupportedException {
+    public static void specialSummonPreCard(GamePlayController gamePlay, PreCard preCard, Player player, ZoneName zoneName) {
         Board playerBoard = player.getBoard();
         switch (zoneName) {
             case MONSTER:
-                for (CardInUse cell : playerBoard.getMonsterZone()) {
-                    if (cell.isCellEmpty()) {
-                        cell.setACardInThisCell(preCard);
-                        break;
-                    }
-                }
+//                for (CardInUse cell : playerBoard.getMonsterZone()) {
+//                    if (cell.isCellEmpty()) {
+//                        cell.setACardInThisCell(preCard);
+//                        break;
+//                    }
+//                }
+                MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
+                putMonsterInUse((Monster) preCard.newCard(), true, monsterCardInUse, null);
                 break;
             case SPELL:
-                for (CardInUse cell : playerBoard.getSpellTrapZone()) {
-                    if (cell.isCellEmpty()) {
-                        cell.setACardInThisCell(preCard);
-                        break;
-                    }
-                }
+//                for (CardInUse cell : playerBoard.getSpellTrapZone()) {
+//                    if (cell.isCellEmpty()) {
+//                        cell.setACardInThisCell(preCard);
+//                        break;
+//                    }
+//                }
+                //todo: Mage mishe spelltrap ham special summon kard?
                 break;
-                //TODO continue
+            //TODO continue
         }
     }
 }

@@ -19,17 +19,17 @@ public class Terraforming extends SpellTrap {
 
     @Override
     public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
-        DuelMenuController duelMenu = gamePlay.getDuelMenu();
-        gamePlay.deselectedCard();
+        DuelMenuController duelMenu = gamePlay.getDuelMenuController();
+        gamePlay.deselectCard();
         duelMenu.askForSth("please select a field card from your deck");  //TODO bring to view
         PreCard preCard = gamePlay.getSelectedPreCard();
         if (preCard == null)
             throw new NoSelectedCard();
         else if (!(preCard instanceof PreSpellTrapCard))
             throw new NotAppropriateCard("field spell");
-        else if(((PreSpellTrapCard) preCard).getIcon() != CardIcon.FIELD)
+        else if (((PreSpellTrapCard) preCard).getIcon() != CardIcon.FIELD)
             throw new NotAppropriateCard("field spell");
-        else  {
+        else {
             myPlayer.getBoard().getDeckInUse().removeCard(preCard, false);
             myPlayer.getHand().addCard(preCard);
         }

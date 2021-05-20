@@ -145,7 +145,7 @@ class MainPhaseController {
                     if (spellInUseToPutCard == null) throw new BeingFull("spell card zone");
 
                     SpellTrap spellCard = (SpellTrap) preSpell.newCard();
-                    if (!spellCard.areEffectPreparationsDone()) throw new SpellPreparation();
+//                    if (!spellCard.areEffectPreparationsDone()) throw new SpellPreparation();//todo: the function needed an input
                     spellInUseToPutCard.setThisCard(spellCard);
                     spellCard.setActivated(true);
                     Print.print("spell activated");
@@ -159,7 +159,7 @@ class MainPhaseController {
             SpellTrapCardInUse spellInUse = (SpellTrapCardInUse) cardInUse;
             SpellTrap spellCard = (SpellTrap) spellInUse.getThisCard();
             if (spellCard.isActivated()) throw new AlreadyActivatedEffect();
-            if (!spellCard.areEffectPreparationsDone()) throw new SpellPreparation();
+//            if (!spellCard.areEffectPreparationsDone()) throw new SpellPreparation(); //todo: the function needed an input
 
             spellCard.setActivated(true);
             Print.print("spell activated");

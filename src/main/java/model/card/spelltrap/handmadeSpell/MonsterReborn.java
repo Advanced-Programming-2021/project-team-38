@@ -19,24 +19,24 @@ public class MonsterReborn extends SpellTrap {
     }
 
     @Override
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
-        DuelMenuController duelMenu = gamePlay.getDuelMenu();
-        gamePlay.deselectedCard();
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay)
+            throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
+        DuelMenuController duelMenu = gamePlay.getDuelMenuController();
+        gamePlay.deselectCard();
         String selectCardCommand = duelMenu.askForSth("please select a monster from graveyard");  //TODO bring to view
-        boolean isSelectedFromOtherPlayerBoard = false;
-        if (selectCardCommand.contains("--opponent")) isSelectedFromOtherPlayerBoard = true;
+        boolean isSelectedFromOtherPlayerBoard = selectCardCommand.contains("--opponent");
         duelMenu.selectCard(selectCardCommand);
         PreCard preCard = gamePlay.getSelectedPreCard();
         if (preCard == null)
             throw new NoSelectedCard();
         else if (!(preCard instanceof PreMonsterCard))
             throw new NotAppropriateCard("monster");
-        else  {
+        else {
             SummonController.specialSummonPreCard(gamePlay, preCard, myPlayer, ZoneName.MONSTER);
             if (isSelectedFromOtherPlayerBoard)
-            rivalPlayer.getBoard().getGraveYard().removeCard(preCard);
+                rivalPlayer.getBoard().getGraveYard().removeCard(preCard);
             else
-            myPlayer.getBoard().getGraveYard().removeCard(preCard);
+                myPlayer.getBoard().getGraveYard().removeCard(preCard);
         }
     }
 }

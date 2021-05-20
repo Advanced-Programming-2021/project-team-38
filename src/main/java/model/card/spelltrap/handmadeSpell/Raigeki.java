@@ -19,8 +19,8 @@ public class Raigeki extends SpellTrap {
 
     @Override
     public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
-        DuelMenuController duelMenu = gamePlay.getDuelMenu();
-        gamePlay.deselectedCard();
+        DuelMenuController duelMenu = gamePlay.getDuelMenuController();
+        gamePlay.deselectCard();
         for (int i = 0; i < 5; i++) {
             MonsterCardInUse cell = (MonsterCardInUse) rivalPlayer.getBoard().getFirstEmptyCardInUse(true);
             ((Monster) cell.getThisCard()).destroyThis
