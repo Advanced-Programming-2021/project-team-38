@@ -18,33 +18,25 @@ public class DuelMenu {
         scanner = new Scanner(System.in);
     }
 
-    public static boolean supportsCommand(String command) {
-        return true;//todo
-    }
-
     public static void checkMenuCommands(String command)
             throws InvalidCommand, WrongMenu, InvalidDeck, InvalidName, NoActiveDeck, NumOfRounds {
         if (RelatedToMenuController.isMenuFalse(MenuName.DUEL))
             throw new WrongMenu();
         if (command.contains("--new")) {
-            if (duelMenuController == null) {
-                String secondUserName = getSecondUserNameInCommand(command.substring(9));
-                int numOfRounds = getNumOfRounds(command.substring(9));
-                duelMenuController = DuelMenuController.newDuel(secondUserName, numOfRounds);
-                while (duelMenuController.isIsAnyBattleRunning()) {
-                    duelMenuController.runGame();
-//                    try {
-//                        checkCommandsInGame();
-//                    } catch (Exception exception) {
-//                        System.out.println(exception.getMessage());
-//                    }
-                }
-                duelMenuController = null;
-            }
-        } else {
-            throw new InvalidCommand();
-        }
+            sendNewDuelRequest(command);
+        } else throw new InvalidCommand();
+    }
 
+    private static void sendNewDuelRequest(String command) throws InvalidCommand, InvalidName, NumOfRounds, InvalidDeck, NoActiveDeck {
+        if (duelMenuController == null) {
+            String secondUserName = getSecondUserNameInCommand(command.substring(9));
+            int numOfRounds = getNumOfRounds(command.substring(9));
+            duelMenuController = DuelMenuController.newDuel(secondUserName, numOfRounds);
+            while (duelMenuController.isIsAnyGameRunning()) {
+                duelMenuController.runGame();
+            }
+            duelMenuController = null;
+        }
     }
 
     public static void checkCommandsInGame() throws InvalidCommand { //todo: surrender
@@ -75,11 +67,13 @@ public class DuelMenu {
                 duelMenuController.showCard();
             else if (command.equals("next phase"))
                 duelMenuController.nextPhase();
+            else if (command.equals("surrender"))
+                duelMenuController.surrender();
             else
                 throw new InvalidCommand();
         } catch (Exception exception) {
             if (exception instanceof InvalidCommand) throw new InvalidCommand();
-            System.out.println(exception.getMessage());
+            Print.print(exception.getMessage());
         }
     }
 
@@ -104,13 +98,21 @@ public class DuelMenu {
         }
     }
 
+    public static void showHeadOrTails(boolean isHead, String firstName, String secondName) {
+        Print.print("Playing head or tails to figure out the first player...");
+        //todo: can we do sth to wait?
+        if (isHead) Print.print("HEAD!");
+        else Print.print("TAILS!");
+        Print.print("The first player is " + firstName + "\n" + "The second player is " + secondName);
+    }
+
     public static String askQuestion(String questionToAsk) {
         Print.print(questionToAsk);
         return scanner.nextLine();
     }
 
     public static String askForSth(String wanted) {
-        System.out.println(wanted);
+        Print.print(wanted);
         return scanner.nextLine();
     }
 

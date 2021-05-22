@@ -2,10 +2,10 @@ package controller.game;
 
 
 import exceptions.AlreadyDoneAction;
+import exceptions.BeingFull;
 import exceptions.InvalidTributeAddress;
 import exceptions.NotEnoughTributes;
 import model.Board;
-import model.Enums.ZoneName;
 import model.Player;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
@@ -69,7 +69,7 @@ public class SummonController {
             String address = DuelMenuController.askQuestion("Enter the index of a card to tribute:");
             try {
                 int index = Integer.parseInt(address);
-                tribute(index);
+                payTribute(index);
             } catch (InvalidTributeAddress invalidAddress) {
                 if (address.equals("cancel")) return;
                 Print.print(invalidAddress.getMessage());
@@ -97,36 +97,21 @@ public class SummonController {
         //todo: some cards need more tributes
     }
 
-    private void tribute(int tributeIndex) throws InvalidTributeAddress {
+    private void payTribute(int tributeIndex) throws InvalidTributeAddress {
         if (tributeIndex < 1 || tributeIndex > 5) throw new InvalidTributeAddress();
         Monster tributeMonster = (Monster) board.getMonsterZone()[tributeIndex].getThisCard();
         if (tributeMonster == null) throw new InvalidTributeAddress();
         tributeMonster.sendToGraveYard();
     }
 
-    public static void specialSummonPreCard(GamePlayController gamePlay, PreCard preCard, Player player, ZoneName zoneName) {
+    //todo: its not good because it is static
+    public static void specialSummonPreCard(PreCard preCard, Player player) throws BeingFull {
         Board playerBoard = player.getBoard();
-        switch (zoneName) {
-            case MONSTER:
-//                for (CardInUse cell : playerBoard.getMonsterZone()) {
-//                    if (cell.isCellEmpty()) {
-//                        cell.setACardInThisCell(preCard);
-//                        break;
-//                    }
-//                }
-                MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
-                putMonsterInUse((Monster) preCard.newCard(), true, monsterCardInUse, null);
-                break;
-            case SPELL:
-//                for (CardInUse cell : playerBoard.getSpellTrapZone()) {
-//                    if (cell.isCellEmpty()) {
-//                        cell.setACardInThisCell(preCard);
-//                        break;
-//                    }
-//                }
-                //todo: Mage mishe spelltrap ham special summon kard?
-                break;
-            //TODO continue
-        }
+        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
+        if (monsterCardInUse == null) throw new BeingFull("monster card zone");
+        putMonsterInUse((Monster) preCard.newCard(), true, monsterCardInUse, null);
+
+        //TODO continue
     }
 }
+

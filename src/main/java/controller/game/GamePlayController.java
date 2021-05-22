@@ -6,18 +6,21 @@ import lombok.Setter;
 import model.Board;
 import model.Deck;
 import model.Enums.Phase;
+import model.Enums.RoundResult;
 import model.Enums.ZoneName;
 import model.Player;
 import model.User;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
+import view.Menus.DuelMenu;
 import view.Print;
+
+import java.util.HashMap;
 
 @Getter
 @Setter
 public
 class GamePlayController {
-
 
     private Player currentPlayer;
     private Player rival;
@@ -26,19 +29,23 @@ class GamePlayController {
 
     private CardInUse selectedCardInUse;
     private PreCard selectedPreCard;
-    private boolean isSelectedCardFromRivalBoard = false;
+    private boolean isSelectedCardFromRivalBoard;
 
     private boolean isRoundEnded;
     private boolean isTurnEnded;
+    private int numOfRounds;
+    private HashMap<Player, Integer> roundWinnersLP;
 
     private DuelMenuController duelMenuController;
 
     {
+        isSelectedCardFromRivalBoard = false;
         actionsOnRival = new ActionsOnRival(this);
+        roundWinnersLP = new HashMap<>();
     }
 
 
-    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenuController)
+    public GamePlayController(User firstUser, User secondUser, DuelMenuController duelMenuController, int numOfRounds)
             throws InvalidDeck, InvalidName, NoActiveDeck {
         if (isGameValid(firstUser, secondUser)) {
             currentPlayer = new Player(firstUser);
@@ -46,6 +53,7 @@ class GamePlayController {
             currentPhase = Phase.DRAW;
             this.duelMenuController = duelMenuController;
             duelMenuController.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
+            this.numOfRounds = numOfRounds;
         }
     }
 
@@ -129,23 +137,54 @@ class GamePlayController {
         else return rival.getBoard().getGraveYard().toString();
     }
 
-    public void surrender(Player player) {
+    public void surrender() {
+        setWinner(RoundResult.CURRENT_SURRENDER);
     }
 
 
     /* the main part, the game */
 
-    public void announceWinner(boolean isCurrentPlayerLoser) { //I think it needs an input for draw, maybe better get an enum
+    public void setWinner(RoundResult roundResult) { //I think it needs an input for draw, maybe better get an enum
         //todo
         //the winner is the winner of the current round
         this.isRoundEnded = true;
         this.isTurnEnded = true;
+        Player winner, loser;
+        switch (roundResult) {
+            case CURRENT_WON:
+                winner = currentPlayer;
+                loser = rival;
+                break;
+            case RIVAL_WON:
+            case CURRENT_SURRENDER:
+                winner = rival;
+                loser = currentPlayer;
+                break;
+            case DRAW:
+
+                break;
+        }
         //todo: show the winner or the other things in the output
+    }
+
+    private int calculateWinnerScore(Player winner) {
+        if (numOfRounds == 1) {
+            return 1000 + winner.getLifePoint();
+        } else {
+            return 0;//todo
+        }
     }
 
     public void swapPlayers() {
         Player hold = currentPlayer;
         currentPlayer = rival;
         rival = hold;
+    }
+
+    public void playHeadOrTails() {
+        boolean isHead;
+        isHead = Math.random() < 0.5;
+        if (isHead) swapPlayers();
+        DuelMenu.showHeadOrTails(isHead, currentPlayer.getName(), rival.getName());
     }
 }

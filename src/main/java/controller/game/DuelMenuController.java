@@ -30,14 +30,16 @@ public class DuelMenuController {
         if (secondUser == null) throw new InvalidName("player", "username");
 
         DuelMenuController duelMenuController = new DuelMenuController();
-        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController);
+        GamePlayController gamePlayController = new GamePlayController(LoginMenuController.getCurrentUser(), secondUser, duelMenuController, numOfRounds);
         duelMenuController.setNumOfRounds(numOfRounds);
         duelMenuController.setGamePlayController(gamePlayController);
+        gamePlayController.playHeadOrTails();
+
         isAnyGameRunning = true;
         return duelMenuController;
     }
 
-    public boolean isIsAnyBattleRunning() {
+    public boolean isIsAnyGameRunning() {
         return isAnyGameRunning;
     }
 
@@ -167,6 +169,10 @@ public class DuelMenuController {
 
     }
 
+    public void surrender() {
+        gamePlayController.surrender();
+    }
+
     public void nextPhase() {
         this.currentPhase = currentPhase.goToNextGamePhase();
         switch (Objects.requireNonNull(currentPhase)) {
@@ -195,6 +201,7 @@ public class DuelMenuController {
             //todo: print that one round is ended and we want to go to the next round
         }
         isAnyGameRunning = false;
+        announceWinner();
     }
 
     private void runOneRound() throws InvalidCommand {
@@ -205,6 +212,10 @@ public class DuelMenuController {
             gamePlayController.swapPlayers();
             if (!gamePlayController.isRoundEnded()) gamePlayController.setTurnEnded(false);
         }
+    }
+
+    public void announceWinner() {
+        //todo
     }
 
 

@@ -1,6 +1,7 @@
 package controller.game;
 
 import model.Deck;
+import model.Enums.RoundResult;
 import model.Hand;
 import model.card.PreCard;
 import view.Print;
@@ -30,7 +31,7 @@ public class DrawPhaseController {
         }
         boolean isLost = checkLoss();
         if (isLost) {
-            gamePlayController.announceWinner(true);
+            gamePlayController.setWinner(RoundResult.RIVAL_WON);
         } else {
             addCardsFromDeckToHand();
             activeDrawEffects();
