@@ -7,6 +7,8 @@ import model.card.PreCard;
 import model.card.monster.PreMonsterCard;
 import model.card.spelltrap.PreSpellTrapCard;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +18,7 @@ import java.util.regex.Matcher;
 public class ImportAndExportMenu {
 
 
-    public void importCard(String cardName) throws InvalidCardName, IOException {
+    public static void importCard(String cardName) throws InvalidCardName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
         if (preCard == null) throw new InvalidCardName();
@@ -45,7 +47,7 @@ public class ImportAndExportMenu {
 
     }
 
-    public String exportCard(String cardName) throws InvalidCardName, IOException {
+    public static String exportCard(String cardName) throws InvalidCardName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
         if (preCard == null) throw new InvalidCardName();
@@ -75,12 +77,19 @@ public class ImportAndExportMenu {
 
     }
 
-    public void importUser(Matcher matcher) {
+    public static void deleteCard(String cardName)throws InvalidCardName{
+        PreCard preCard = PreCard.findCard(cardName);
+        if (preCard == null) throw new InvalidCardName();
+        File file=new File("");
+
+
+    }
+    public static void importUser(Matcher matcher) {
 
 
     }
 
-    public void exportUser(Matcher matcher) {
+    public static void exportUser(Matcher matcher) {
 
     }
 
