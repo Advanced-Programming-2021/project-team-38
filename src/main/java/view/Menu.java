@@ -2,6 +2,7 @@ package view;
 
 import exceptions.InvalidCommand;
 import exceptions.MenuNavigationError;
+import exceptions.NeedToLogin;
 import exceptions.WrongMenu;
 import view.Menus.*;
 
@@ -16,7 +17,7 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu {
+    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu, NeedToLogin {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));
@@ -30,9 +31,13 @@ public class Menu {
             DeckMenu.checkMenuCommands(command.substring(5));
         else if (command.startsWith("shop "))
             ShopMenu.checkMenuCommands(command.substring(5));
-        else if (DuelMenu.supportsCommand(command))
-            DuelMenu.checkMenuCommands(command);
-        else if (command.equals("user logout"))
+        else if (command.startsWith("duel ")) {
+            try {
+                DuelMenu.checkMenuCommands(command.substring(5));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (command.equals("user logout"))
             MainMenu.logout();
         else
             throw new InvalidCommand();

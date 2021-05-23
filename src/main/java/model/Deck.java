@@ -49,14 +49,6 @@ public class Deck {
         this.name = name;
     }
 
-    public void setMainCards(ArrayList<PreCard> mainCards) {
-        this.mainCards = mainCards;
-    }
-
-    public void setSideCards(ArrayList<PreCard> sideCards) {
-        this.sideCards = sideCards;
-    }
-
     public void setOwner(User owner) {
         this.owner = owner;
     }
@@ -142,7 +134,9 @@ public class Deck {
     }
 
     private boolean isPossibleToAdd(String nameOfCard, PreCard preCard) throws OccurrenceException {
-        int limit = findLimitOfCard(nameOfCard);
+        int limit = 3;
+        if (preCard instanceof PreSpellTrapCard)
+            limit = findLimitOfCard(nameOfCard);
         int occurrence = Collections.frequency(mainCards, preCard) +
                 Collections.frequency(sideCards,preCard);
         if (occurrence == limit) {

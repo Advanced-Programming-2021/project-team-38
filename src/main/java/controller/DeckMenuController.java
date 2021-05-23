@@ -8,6 +8,7 @@ import model.Deck;
 import model.User;
 import model.card.PreCard;
 import view.Print;
+import view.messageviewing.SuccessfulAction;
 
 import java.util.Objects;
 
@@ -21,8 +22,10 @@ public class DeckMenuController {
     public static void createDeck(String deckName) throws AlreadyExistingError {
         if (user.findDeckByName(deckName) != null)
             throw new AlreadyExistingError("deck", "name", deckName);
-        else
+        else {
             user.addDeck(new Deck(deckName, user));
+            new SuccessfulAction("deck", "created");
+        }
     }
 
     public static void deleteDeck(String deckName) throws NotExisting {
@@ -41,8 +44,10 @@ public class DeckMenuController {
         Deck targetDeck = user.findDeckByName(deckName);
         if (targetDeck == null)
             throw new NotExisting("deck", deckName);
-        else
+        else {
             user.setActiveDeck(targetDeck);
+            new SuccessfulAction("deck", "activated");
+        }
     }
 
     public static void addCardToDeck(String command, boolean side) throws NotExisting, BeingFull, OccurrenceException {   //if it is side deck the boolean should be true

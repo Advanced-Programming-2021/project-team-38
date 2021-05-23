@@ -43,7 +43,7 @@ public class User implements Comparable<model.User> {
         }
 
         public static User getUserByName(String username) {
-            for (model.User user : allUsers) {
+            for (User user : allUsers) {
                 if (user.username.equals(username)) {
                     return user;
                 }
@@ -140,14 +140,14 @@ public class User implements Comparable<model.User> {
             this.balance -= decreasingAmount;
         }
 
-        public void addPreCard(PreCard preCard) {
+        public void addPreCardToTreasury(PreCard preCard) {
             if (preCard == null) return;
             if (this.cardTreasury.containsKey(preCard.getName())) {
                 cardTreasury.put(preCard.getName(), cardTreasury.get(preCard.getName()) + 1);
             } else {
                 this.cardTreasury.put(preCard.getName(), 1);
             }
-            this.preCards.add(preCard);
+            this.preCards.add(preCard); //TODO what is this for?
         }
 
         public void increaseScore(int increasingAmount) {

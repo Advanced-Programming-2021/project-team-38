@@ -1,16 +1,15 @@
 import controller.ShopMenuController;
-import exceptions.InvalidCardName;
+import exceptions.InvalidName;
 import exceptions.NotEnoughMoney;
-import exceptions.NotExisting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 public class ShopMenuTest {
     @Test
-    public void wrongCardName() throws NotExisting, NotEnoughMoney {
+    public void wrongCardName() throws NotEnoughMoney, InvalidName {
         ShopMenuController.checkBuying("wrong name");
-        Assertions.assertThrows(InvalidCardName.class, new Executable() {
+        Assertions.assertThrows(InvalidName.class, new Executable() {
             @Override
             public void execute() throws Throwable {
                 System.out.println("hi"); //todo : what should I do !?

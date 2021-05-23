@@ -3,9 +3,8 @@ package controller.game;
 
 import exceptions.*;
 import model.Enums.Phase;
-import model.card.*;
+import model.card.Card;
 import model.card.cardinusematerial.MonsterCardInUse;
-import model.card.monster.Monster;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ class BattlePhaseController {
         this.gamePlay = gamePlay;
     }
 
-    private void battleAnnounced(int cellOfCard) throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, NoCardToAttack, CardAttackedBeforeExeption {
+    public void battleAnnounced(int cellOfCard) throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, NoCardToAttack, CardAttackedBeforeExeption {
         MonsterCardInUse preyCard;
         MonsterCardInUse attacker;
         if (gamePlay.getSelectedCardInUse().isCellEmpty())

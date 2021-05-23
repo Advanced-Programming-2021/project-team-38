@@ -2,8 +2,8 @@ package view.Menus;
 
 import controller.ShopMenuController;
 import exceptions.InvalidCommand;
+import exceptions.InvalidName;
 import exceptions.NotEnoughMoney;
-import exceptions.NotExisting;
 import view.messageviewing.Print;
 
 public class ShopMenu {
@@ -12,7 +12,7 @@ public class ShopMenu {
             String cardName = command.substring(4);
             try {
                 ShopMenuController.checkBuying(cardName);
-            } catch (NotExisting | NotEnoughMoney exception) {
+            } catch (InvalidName | NotEnoughMoney exception) {
                 System.out.println(exception.getMessage());
             }
         } else if (command.equals("show --all")) {

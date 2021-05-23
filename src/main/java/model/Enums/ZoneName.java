@@ -4,5 +4,6 @@ public enum ZoneName {
     HAND,
     MONSTER,
     SPELL,
-    FIELD
+    FIELD,
+    GRAVEYARD
 }

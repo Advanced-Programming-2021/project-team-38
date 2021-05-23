@@ -22,17 +22,18 @@ public class LoginMenu {
             throw new WrongMenu();
         }
         if (command.startsWith("create "))
-            createUser(command);
+            createUser(command.substring(7));
         else if (command.startsWith("login "))
-            login(command);
+            login(command.substring(6));
         else
             throw new InvalidCommand();
     }
 
     private static void createUser(String command) throws InvalidCommand {
-        Matcher usernameMatcher = getCommandMatcher(command, "--username (<username>\\S+)");
-        Matcher passwordMatcher = getCommandMatcher(command, "--password (<password>\\S+)");
-        Matcher nickMatcher = getCommandMatcher(command, "--nickname (<nickName>\\S+)");
+        command = command.concat(" ");
+        Matcher usernameMatcher = getCommandMatcher(command, "--username (?<username>\\S+) ");
+        Matcher passwordMatcher = getCommandMatcher(command, "--password (?<password>\\S+) ");
+        Matcher nickMatcher = getCommandMatcher(command, "--nickname (?<nickName>\\S+) ");
         if (usernameMatcher.find() && passwordMatcher.find() && nickMatcher.find()) {
             String username = usernameMatcher.group("username");
             String password = passwordMatcher.group("password");
@@ -46,8 +47,9 @@ public class LoginMenu {
     }
 
     private static void login(String command) throws InvalidCommand {
-        Matcher usernameMatcher = getCommandMatcher(command, "--username (<username>\\S+)");
-        Matcher passwordMatcher = getCommandMatcher(command, "--password (<password>\\S+)");
+        command = command.concat(" ");
+        Matcher usernameMatcher = getCommandMatcher(command, "--username (?<username>\\S+) ");
+        Matcher passwordMatcher = getCommandMatcher(command, "--password (?<password>\\S+) ");
         if (usernameMatcher.find() && passwordMatcher.find()) {
             String username = usernameMatcher.group("username");
             String password = passwordMatcher.group("password");

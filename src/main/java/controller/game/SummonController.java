@@ -2,9 +2,12 @@ package controller.game;
 
 
 import exceptions.AlreadyDoneAction;
+import exceptions.BeingFull;
 import exceptions.InvalidTributeAddress;
 import exceptions.NotEnoughTributes;
 import model.Board;
+import model.Player;
+import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
@@ -22,7 +25,6 @@ public class SummonController {
     private Board board;
     ArrayList<CardInUse> summonedCards; //it is generated in the main phase calling this class
 
-
     public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, GamePlayController controller, ArrayList<CardInUse> summonedCards) {
         this.preMonster = preMonster;
         this.numOfNormalSummons = 0;
@@ -38,13 +40,12 @@ public class SummonController {
         normal(monster);
     }
 
-
     private void normal(Monster monster) throws AlreadyDoneAction, NotEnoughTributes {
         if (numOfNormalSummons != 0) {
             throw new AlreadyDoneAction("summoned/set");
         } else if (preMonster.getLevel() >= 5) tributeSummon(monster);
         else {
-            putMonsterInUse(monster);
+            putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
         }
         numOfNormalSummons++; //todo: is summoning with tribute ( not ritual ) also counted here ?
     }
@@ -68,7 +69,7 @@ public class SummonController {
             String address = DuelMenuController.askQuestion("Enter the index of a card to tribute:");
             try {
                 int index = Integer.parseInt(address);
-                tribute(index);
+                payTribute(index);
             } catch (InvalidTributeAddress invalidAddress) {
                 if (address.equals("cancel")) return;
                 Print.print(invalidAddress.getMessage());
@@ -76,16 +77,16 @@ public class SummonController {
             }
         }
         monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
-        putMonsterInUse(monster);
+        putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
 
     }
 
 
-    private void putMonsterInUse(Monster monster) {
+    private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         monsterCardInUse.setInAttackMode(true);
         monsterCardInUse.setFaceUp(true);
         monsterCardInUse.setThisCard(monster);
-        this.summonedCards.add(monsterCardInUse);
+        if (!isSpecial) summonedCards.add(monsterCardInUse);
         new SuccessfulAction("", "summoned");
     }
 
@@ -96,10 +97,21 @@ public class SummonController {
         //todo: some cards need more tributes
     }
 
-    private void tribute(int tributeIndex) throws InvalidTributeAddress {
+    private void payTribute(int tributeIndex) throws InvalidTributeAddress {
         if (tributeIndex < 1 || tributeIndex > 5) throw new InvalidTributeAddress();
         Monster tributeMonster = (Monster) board.getMonsterZone()[tributeIndex].getThisCard();
         if (tributeMonster == null) throw new InvalidTributeAddress();
         tributeMonster.sendToGraveYard();
     }
+
+    //todo: its not good because it is static
+    public static void specialSummonPreCard(PreCard preCard, Player player) throws BeingFull {
+        Board playerBoard = player.getBoard();
+        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
+        if (monsterCardInUse == null) throw new BeingFull("monster card zone");
+        putMonsterInUse((Monster) preCard.newCard(), true, monsterCardInUse, null);
+
+        //TODO continue
+    }
 }
+

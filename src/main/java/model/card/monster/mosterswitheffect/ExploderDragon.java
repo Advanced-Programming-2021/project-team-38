@@ -20,7 +20,7 @@ public class ExploderDragon extends Monster{
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new ExploderDragon(preCardInGeneral);
     }
 }

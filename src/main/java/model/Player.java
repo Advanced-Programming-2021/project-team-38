@@ -1,22 +1,20 @@
 package model;
 
-import model.card.Card;
-
-import java.util.ArrayList;
-
 public class Player {
-    private String name;
+    //TODO clone the deck when game is started
+
+    private final String name;
     private int gameScore;
-    private Deck deck;
+    private final Deck deck;
     private int lifePoint;
     private Board board;
-    private ArrayList<Card> unusedCards;
+    //    private ArrayList<Card> unusedCards;
     private Hand hand;
 
     {
         this.hand = new Hand();
         this.board = new Board();
-        this.unusedCards = new ArrayList<>();
+//        this.unusedCards = new ArrayList<>();
         board = new Board();
     }
 
@@ -46,9 +44,9 @@ public class Player {
         return board;
     }
 
-    public ArrayList<Card> getUnusedCards() {
-        return unusedCards;
-    }
+//    public ArrayList<Card> getUnusedCards() {
+//        return unusedCards;
+//    }
 
     public Hand getHand() {
         return this.hand;

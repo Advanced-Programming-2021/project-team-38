@@ -40,15 +40,4 @@ public class PreMonsterCard extends PreCard {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return "PreMonsterCard{" +
-                "level=" + level +
-                ", defense=" + defense +
-                ", attack=" + attack +
-                ", type=" + type +
-                ", monsterType=" + monsterType +
-                ", attribute=" + attribute +
-                '}';
-    }
 }

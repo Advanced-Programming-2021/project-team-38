@@ -1,6 +1,7 @@
 package controller.game;
 
 import model.Deck;
+import model.Enums.RoundResult;
 import model.Hand;
 import model.card.PreCard;
 import view.Print;
@@ -24,13 +25,13 @@ public class DrawPhaseController {
     }
 
     public void run() {
-        Print.print("phase: draw phase"); //todo: fine?
+        Print.print("phase: draw phase");
         if (isBeginningOfGame) {
             Collections.shuffle(this.deck.getMainCards());
         }
         boolean isLost = checkLoss();
         if (isLost) {
-            gamePlayController.announceWinner(true);
+            gamePlayController.setWinner(RoundResult.RIVAL_WON);
         } else {
             addCardsFromDeckToHand();
             activeDrawEffects();

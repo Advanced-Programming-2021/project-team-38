@@ -1,6 +1,6 @@
 package model;
 
-import model.card.Card;
+import exceptions.InvalidSelection;
 import model.card.PreCard;
 
 import java.util.ArrayList;
@@ -21,12 +21,17 @@ public class GraveYard {
             preCardsInGraveYard.add(preCard);
     }
 
-    public void removeCard(Card card){
-        preCardsInGraveYard.remove(card);
+    public void removeCard(PreCard preCard) {
+        preCardsInGraveYard.remove(preCard);
     }
 
-    public void showMonsters(){
+    public void showMonsters() {
 
+    }
+
+    public PreCard getPreCard(int cardIndex) throws InvalidSelection {
+        if (cardIndex < 1 || cardIndex > this.preCardsInGraveYard.size()) throw new InvalidSelection();
+        return this.preCardsInGraveYard.get(cardIndex - 1);
     }
 
     @Override
@@ -37,5 +42,7 @@ public class GraveYard {
         }
         return showGraveyard;
     }
+
+
 }
 
