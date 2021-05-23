@@ -35,7 +35,6 @@ public class ShopMenuController {
     public static void checkBuying(String cardName) throws NotEnoughMoney, InvalidName {
         PreCard preCard = PreCard.findCard(cardName);
         if (preCard == null) throw new InvalidName("card", "name");
-//        user = LoginMenuController.getCurrentUser(); TODO change set users together
         if (!user.getCardTreasury().containsKey(cardName) &&
                 preCard.getPrice() > user.getBalance()) throw new NotEnoughMoney();
         sellCard(preCard);

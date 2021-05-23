@@ -38,7 +38,7 @@ public class User implements Comparable<model.User> {
             this.score = 0;
             this.preCards = new ArrayList<>();
             this.decks = new ArrayList<>();
-            this.balance = 0;
+            this.balance = 1000; //todo I'm not sure!
             allUsers.add(this);
         }
 
@@ -150,22 +150,22 @@ public class User implements Comparable<model.User> {
             this.preCards.add(preCard); //TODO what is this for?
         }
 
-        public void increaseScore(int increasingAmount) {
-            this.score += increasingAmount;
-        }
+    public void increaseScore(int increasingAmount) {
+        this.score += increasingAmount;
+    }
 
-        public boolean isPasswordCorrect(String password) {
-            return password.equals(this.password);
-        }
+    public boolean isPasswordWrong(String password) {
+        return !password.equals(this.password);
+    }
 
-        public void setActiveDeck(Deck deck) {
-            if (this.decks.contains(deck)) {    //TODO what if an error happens?
-                this.activeDeck = deck;
-            }
+    public void setActiveDeck(Deck deck) {
+        if (this.decks.contains(deck)) {    //TODO what if an error happens?
+            this.activeDeck = deck;
         }
+    }
 
-        @Override
-        public int compareTo(model.User otherUser) {
+    @Override
+    public int compareTo(model.User otherUser) {
             if (this.score > otherUser.score) return -1;
             if (this.score < otherUser.score) return 1;
             return this.username.compareTo(otherUser.username);

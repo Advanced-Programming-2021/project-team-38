@@ -62,7 +62,7 @@ public class DeckMenuTest {  //controller
 
     @Test
     @DisplayName("add card")
-    public void addCard() throws AlreadyExistingError, NotExisting, NotEnoughMoney, InvalidName, BeingFull, OccurrenceException {
+    public void addCard() throws AlreadyExistingError, NotExisting, NotEnoughMoney, InvalidName, BeingFull, OccurrenceException, InvalidCommand {
         ShopMenuController.setUser(user);
         Assertions.assertNotNull(PreCard.findCard("Horn Imp"));
         PreCard preCard = PreCard.findCard("Horn Imp");

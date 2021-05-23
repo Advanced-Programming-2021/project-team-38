@@ -29,7 +29,7 @@ public class ProfileMenuController {
                 getCommandString(command, "--current ([^-]+)")).trim();
         String newPassword = Objects.requireNonNull(RelatedToMenuController.
                 getCommandString(command, "--new ([^-]+)")).trim();
-        if (!user.isPasswordCorrect(currentPassword))
+        if (user.isPasswordWrong(currentPassword))
             throw new WrongPassword();
         else if (currentPassword.equals(newPassword))
             throw new EqualPasswordException();

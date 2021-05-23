@@ -1,15 +1,13 @@
 package controller;
 
-import exceptions.AlreadyExistingError;
-import exceptions.BeingFull;
-import exceptions.NotExisting;
-import exceptions.OccurrenceException;
+import exceptions.*;
 import model.Deck;
 import model.User;
 import model.card.PreCard;
 import view.Print;
 import view.messageviewing.SuccessfulAction;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DeckMenuController {
@@ -50,11 +48,10 @@ public class DeckMenuController {
         }
     }
 
-    public static void addCardToDeck(String command, boolean side) throws NotExisting, BeingFull, OccurrenceException {   //if it is side deck the boolean should be true
-        String cardName = Objects.requireNonNull(RelatedToMenuController.
-                getCommandString(command, "--card ([^-]+)")).trim();
-        String deckName = Objects.requireNonNull(RelatedToMenuController.
-                getCommandString(command, "--deck ([^-]+)")).trim();
+    public static void addCardToDeck(String command, boolean side) throws NotExisting, BeingFull, OccurrenceException, InvalidCommand {   //if it is side deck the boolean should be true
+        ArrayList<String> names = analyseCardCommand(command);
+        String cardName = names.get(0);
+        String deckName = names.get(1);
         Deck targetDeck = user.findDeckByName(deckName);
         if (!user.getCardTreasury().containsKey(cardName) ||
                 user.getCardTreasury().get(cardName) == 0)
@@ -66,11 +63,10 @@ public class DeckMenuController {
         }
     }
 
-    public static void removeCardFromDeck(String command, boolean side) throws NotExisting {
-        String cardName = Objects.requireNonNull(RelatedToMenuController.
-                getCommandString(command, "--card ([^-]+)")).trim();
-        String deckName = Objects.requireNonNull(RelatedToMenuController.
-                getCommandString(command, "--deck ([^-]+)")).trim();
+    public static void removeCardFromDeck(String command, boolean side) throws NotExisting, InvalidCommand {
+        ArrayList<String> names = analyseCardCommand(command);
+        String cardName = names.get(0);
+        String deckName = names.get(1);
         Deck targetDeck = user.findDeckByName(deckName);
         PreCard targetPreCard = PreCard.findCard(cardName);
         if (targetDeck == null)
@@ -81,6 +77,20 @@ public class DeckMenuController {
             throw new NotExisting("card", cardName);    //TODO add the side or main thing
         else
             targetDeck.removeCard(targetPreCard, side);
+    }
+
+    private static ArrayList<String> analyseCardCommand(String command) throws InvalidCommand {
+        ArrayList<String> names = new ArrayList<>();
+        String cardName = (RelatedToMenuController.
+                getCommandString(command, "--card ([^-]+)"));
+        String deckName = (RelatedToMenuController.
+                getCommandString(command, "--deck ([^-]+)"));
+        if (deckName == null || cardName == null) throw new InvalidCommand();
+        cardName = cardName.trim();
+        deckName = deckName.trim();
+        names.add(cardName);
+        names.add(deckName);
+        return names;
     }
 
     public static void showAllDecks() {

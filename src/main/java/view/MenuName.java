@@ -1,6 +1,6 @@
 package view;
 
-public enum MenuName {
+public enum MenuName { //todo: it would be really good to put a help option and show it
     LOGIN,
     SHOP,
     PROFILE,
@@ -41,6 +41,52 @@ public enum MenuName {
                 return "Profile Menu";
             case SCOREBOARD:
                 return "Scoreboard Menu";
+            default:
+                return "menu is not here";
+        }
+    }
+
+    public String MenuHelp() {
+        switch (this) {
+            case LOGIN:
+                return "user create --username <username> --nickname <nickname> --password <password>\n" +
+                        "user login --username <username> --password <password>";
+            case SHOP:
+                return "shop buy <card name>\n" +
+                        "shop show --all";
+            case PROFILE:
+                return "profile change --nickname <nickname>\n" +
+                        "profile change --password --current <current password> --new <new password>\n";
+            case DECK:
+                return "deck create <deck name>\n" +
+                        "deck delete <deck name>\n" +
+                        "deck set-activate <deck name>\n" +
+                        "deck add-card --card <card name> --deck <deck name> --side(optional)\n" +
+                        "deck rm-card --card <card name> --deck <deck name> --side(optional)\n" +
+                        "deck show --all\n" +
+                        "deck show --deck-name <deck name> --side(Opt)\n" +
+                        "deck show --cards\n";
+            case SCOREBOARD:
+                return "scoreboard show";
+            case DUEL:
+                return "duel --new --second-player <player2 username> --rounds <1/3>\n" +
+                        "duel --new --ai --rounds <1/3>\n" +
+                        "select <card address>\n" +
+                        "summon\n" +
+                        "set\n" +
+                        "set -- position attack/defense\n" +
+                        "flip-summon\n" +
+                        "attack <number>\n" +
+                        "attack direct\n" +
+                        "activate effect\n" +
+                        "show graveyard\n" +
+                        "card show --selected\n" +
+                        "surrender\n";
+            //todo: it would be better if we could show related commands of each phase
+            case MAIN:
+                return "user logout\n" +
+                        "menu exit\n" +
+                        "menu enter";
             default:
                 return "menu is not here";
         }
