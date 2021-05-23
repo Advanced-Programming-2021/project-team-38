@@ -1,5 +1,7 @@
 package model;
 
+import model.card.PreCard;
+
 public class Player {
     //TODO clone the deck when game is started
 
@@ -44,9 +46,12 @@ public class Player {
         return board;
     }
 
-//    public ArrayList<Card> getUnusedCards() {
+    //    public ArrayList<Card> getUnusedCards() {
 //        return unusedCards;
 //    }
+    public PreCard takeACardFromDeck() {
+        return deck.getMainCards().remove(0);
+    }
 
     public Hand getHand() {
         return this.hand;

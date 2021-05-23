@@ -7,6 +7,7 @@ import lombok.Setter;
 import model.Player;
 import model.card.Card;
 import model.card.PreCard;
+import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
 
 @Getter
@@ -43,6 +44,10 @@ public class SpellTrap extends Card {
     }
 
     public void spinCard() {
+
+    }
+
+    public void watch(MonsterCardInUse monsterCardInUse, Player myPlayer, Player rivalPlayer) {
 
     }
 

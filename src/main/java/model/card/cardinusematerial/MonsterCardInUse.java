@@ -8,6 +8,7 @@ import model.Board;
 import model.card.Card;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
+import model.card.spelltrap.SpellTrap;
 
 @Getter
 @Setter
@@ -30,6 +31,10 @@ public class MonsterCardInUse extends CardInUse {
 
     public void addToAttack(int amount) {   //amount can be negative
         this.attack += amount;
+    }
+
+    public void addToDefense(int amount) {   //amount can be negative
+        this.defense += amount;
     }
 
     public void setInAttackMode(boolean inAttackMode) {
@@ -92,5 +97,9 @@ public class MonsterCardInUse extends CardInUse {
         //TODO think what to do
         isAttacking = true;
         hasBeenAttacker = true;
+    }
+
+    public void addToAreWatchingYou(SpellTrap theCard) {
+        getAreWatchingYou().add(theCard);
     }
 }
