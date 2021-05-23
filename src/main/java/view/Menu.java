@@ -39,6 +39,8 @@ public class Menu {
             }
         } else if (command.equals("user logout"))
             MainMenu.logout();
+        else if (command.equals("exit program"))
+            LoginMenu.checkMenuCommands(command);
         else
             throw new InvalidCommand();
         //todo : the command "card show <card name>" can be used in duel, shop, and deck menus

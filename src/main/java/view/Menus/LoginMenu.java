@@ -7,6 +7,7 @@ import exceptions.InvalidCommand;
 import exceptions.LoginError;
 import exceptions.WrongMenu;
 import view.MenuName;
+import view.Print;
 
 import java.util.regex.Matcher;
 
@@ -18,14 +19,16 @@ public class LoginMenu {
     }
 
     public static void checkMenuCommands(String command) throws InvalidCommand, WrongMenu {
-        if (RelatedToMenuController.isMenuFalse(MenuName.LOGIN)) {
+        if (RelatedToMenuController.isMenuFalse(MenuName.LOGIN))
             throw new WrongMenu();
-        }
         if (command.startsWith("create "))
             createUser(command.substring(7));
         else if (command.startsWith("login "))
             login(command.substring(6));
-        else
+        else if (command.equals("exit program")) {
+            Print.print("Good Bye!");
+            System.exit(0);
+        } else
             throw new InvalidCommand();
     }
 

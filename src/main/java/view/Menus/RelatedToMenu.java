@@ -14,8 +14,8 @@ public class RelatedToMenu {
             RelatedToMenuController.exitMenu();
         } else if (command.matches("show-current")) {
             RelatedToMenuController.showMenu();
-        } else
-            throw new InvalidCommand();
+        } else if (command.equals("help")) {
+            RelatedToMenuController.showMenuHelp();
+        } else throw new InvalidCommand();
     }
-
 }

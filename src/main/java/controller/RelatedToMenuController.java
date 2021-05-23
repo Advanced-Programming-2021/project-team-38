@@ -18,6 +18,11 @@ public class RelatedToMenuController {
         currentMenu = MenuName.LOGIN;
     }
 
+    public static void setCurrentMenu(MenuName menuName) {
+        currentMenu = menuName;
+        System.out.println("current menu: " + currentMenu.stringMenu());
+    }
+
     public static void enterMenu(String name) throws InvalidCommand, MenuNavigationError, NeedToLogin {
         MenuName newMenu;
         try {
@@ -31,7 +36,7 @@ public class RelatedToMenuController {
             if (LoginMenuController.getCurrentUser() != null) currentMenu = newMenu;
             else throw new NeedToLogin();
         } else if (currentMenu == MenuName.MAIN && newMenu != MenuName.LOGIN)
-            currentMenu = newMenu;
+            setCurrentMenu(newMenu);
         else
             throw new MenuNavigationError();
     }
@@ -40,9 +45,9 @@ public class RelatedToMenuController {
         if (currentMenu == MenuName.LOGIN) {
             programEnded = true;
         } else if (currentMenu == MenuName.MAIN)
-            currentMenu = MenuName.LOGIN;
+            setCurrentMenu(MenuName.LOGIN);
         else
-            currentMenu = MenuName.MAIN;
+            setCurrentMenu(MenuName.MAIN);
     }
 
     public static boolean isProgramEnded() {
@@ -52,6 +57,10 @@ public class RelatedToMenuController {
 
     public static void showMenu() {
         Print.print(currentMenu.stringMenu());
+    }
+
+    public static void showMenuHelp() {
+        Print.print(currentMenu.MenuHelp());
     }
 
     public static void setProgramEnded(boolean isEnded) {
@@ -81,4 +90,5 @@ public class RelatedToMenuController {
             else
                 return matcher.group(1);
     }
+
 }
