@@ -4,10 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import model.card.Card;
 import model.card.PreCard;
+import model.card.spelltrap.SpellTrap;
+
+import java.util.ArrayList;
 
 @Getter
 @Setter
 public abstract class CardInUse {
+    protected ArrayList<SpellTrap> areWatchingYou;
     protected Card thisCard;
     protected boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false //todo: in the beginning of any turn we should change it to false
     protected boolean isFaceUp;

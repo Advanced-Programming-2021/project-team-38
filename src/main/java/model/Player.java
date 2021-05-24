@@ -1,15 +1,18 @@
 package model;
 
+import model.card.PreCard;
+
 public class Player {
     //TODO clone the deck when game is started
 
     private final String name;
-    private int gameScore;
     private final Deck deck;
     private int lifePoint;
     private Board board;
     //    private ArrayList<Card> unusedCards;
     private Hand hand;
+    private final User owner;
+
 
     {
         this.hand = new Hand();
@@ -18,18 +21,19 @@ public class Player {
         board = new Board();
     }
 
-    public Player(User user) {
-        this.name = user.getNickName();
-        this.deck = user.getActiveDeck();
+    public Player(User owner) {
+        this.owner = owner;
+        this.name = owner.getNickName();
+        this.deck = owner.getActiveDeck();
         this.lifePoint = 8000;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public String getName() {
         return name;
-    }
-
-    public int getGameScore() {
-        return gameScore;
     }
 
     public Deck getDeck() {
@@ -44,9 +48,12 @@ public class Player {
         return board;
     }
 
-//    public ArrayList<Card> getUnusedCards() {
+    //    public ArrayList<Card> getUnusedCards() {
 //        return unusedCards;
 //    }
+    public PreCard takeACardFromDeck() {
+        return deck.getMainCards().remove(0);
+    }
 
     public Hand getHand() {
         return this.hand;

@@ -20,12 +20,12 @@ import java.util.ArrayList;
 public class SummonController {
     private final PreMonsterCard preMonster;
     private int numOfNormalSummons;
-    private final GamePlayController controller;
+    private final RoundController controller;
     private MonsterCardInUse monsterCardInUse;
     private Board board;
     ArrayList<CardInUse> summonedCards; //it is generated in the main phase calling this class
 
-    public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, GamePlayController controller, ArrayList<CardInUse> summonedCards) {
+    public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, RoundController controller, ArrayList<CardInUse> summonedCards) {
         this.preMonster = preMonster;
         this.numOfNormalSummons = 0;
         this.controller = controller;

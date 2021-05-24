@@ -32,8 +32,8 @@ public class DuelMenu {
             String secondUserName = getSecondUserNameInCommand(command.substring(9));
             int numOfRounds = getNumOfRounds(command.substring(9));
             duelMenuController = DuelMenuController.newDuel(secondUserName, numOfRounds);
-            while (duelMenuController.isIsAnyGameRunning()) {
-                duelMenuController.runGame();
+            while (duelMenuController != null && duelMenuController.isIsAnyGameRunning()) {
+                duelMenuController.runMatch();
             }
             duelMenuController = null;
         }
@@ -116,5 +116,15 @@ public class DuelMenu {
         return scanner.nextLine();
     }
 
+    public static void showWinner(String winnerUsername, int winnerScore, int loserScore, boolean isForMatch) {
+        String matchOrGame;
+        if (!isForMatch) matchOrGame = "game";
+        else matchOrGame = "whole match";
+        Print.print(winnerUsername + " won the " + matchOrGame + " and the score is: " + winnerScore + "-" + loserScore);
+    }
+
+    public static void showPhase(String phaseName) {
+        Print.print("phase: " + phaseName);
+    }
 
 }

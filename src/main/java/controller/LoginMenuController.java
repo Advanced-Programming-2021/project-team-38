@@ -54,6 +54,7 @@ public class LoginMenuController {
         ProfileMenuController.setUser(user);
         DeckMenuController.setUser(user);
         ShopMenuController.setUser(user);
+
     }
 
 }

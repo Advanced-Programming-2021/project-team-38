@@ -1,5 +1,6 @@
 package view;
 
+import controller.RelatedToMenuController;
 import exceptions.InvalidCommand;
 import exceptions.MenuNavigationError;
 import exceptions.NeedToLogin;
@@ -15,6 +16,18 @@ public class Menu {
 
     static {
         scanner = new Scanner(System.in);
+    }
+
+    public static void run() {
+        boolean isProgramEnded = false;
+        while (!isProgramEnded) {
+            try {
+                Menu.checkMenuCommands();
+            } catch (InvalidCommand | MenuNavigationError | WrongMenu | NeedToLogin exception) {
+                Print.print(exception.getMessage());
+            }
+            isProgramEnded = RelatedToMenuController.isProgramEnded();
+        }
     }
 
     public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu, NeedToLogin {

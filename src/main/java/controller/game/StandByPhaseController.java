@@ -2,7 +2,7 @@ package controller.game;
 
 public class StandByPhaseController {
 
-    public StandByPhaseController(GamePlayController gamePlay) {
+    public StandByPhaseController(RoundController gamePlay) {
 
     }
 

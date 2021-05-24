@@ -20,14 +20,14 @@ import java.util.ArrayList;
 
 class MainPhaseController {
     private Player player;
-    private GamePlayController controller;
+    private RoundController controller;
     private ArrayList<CardInUse> summonedInThisPhase; //used in handling the flip summon. can be used for some effects of cards
 
     {
         summonedInThisPhase = new ArrayList<>();
     }
 
-    public MainPhaseController(GamePlayController controller) {
+    public MainPhaseController(RoundController controller) {
         this.controller = controller;
         this.player = controller.getCurrentPlayer();
     }

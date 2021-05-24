@@ -3,8 +3,8 @@
 import controller.DeckMenuController;
 import controller.ShopMenuController;
 import exceptions.*;
-import model.Deck;
 import model.User;
+import model.Deck;
 import model.card.CardLoader;
 import model.card.PreCard;
 import org.junit.jupiter.api.Assertions;

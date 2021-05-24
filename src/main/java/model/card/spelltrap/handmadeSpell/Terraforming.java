@@ -1,7 +1,7 @@
 package model.card.spelltrap.handmadeSpell;
 
 import controller.game.DuelMenuController;
-import controller.game.GamePlayController;
+import controller.game.RoundController;
 import exceptions.*;
 import model.Player;
 import model.card.PreCard;
@@ -18,7 +18,7 @@ public class Terraforming extends SpellTrap {
     }
 
     @Override
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException {
         DuelMenuController duelMenu = gamePlay.getDuelMenuController();
         gamePlay.deselectCard();
         duelMenu.askForSth("please select a field card from your deck");  //TODO bring to view

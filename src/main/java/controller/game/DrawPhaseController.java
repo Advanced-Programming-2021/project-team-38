@@ -9,14 +9,14 @@ import view.Print;
 import java.util.Collections;
 
 public class DrawPhaseController {
-    private final GamePlayController gamePlayController;
+    private final RoundController roundController;
     private int numOfCardsToAdd;
     private Deck deck;
     private boolean isBeginningOfGame;
     private Hand hand;
 
-    public DrawPhaseController(GamePlayController gamePlay, boolean isBeginningOfGame) {
-        this.gamePlayController = gamePlay;
+    public DrawPhaseController(RoundController gamePlay, boolean isBeginningOfGame) {
+        this.roundController = gamePlay;
         this.deck = gamePlay.getCurrentPlayer().getDeck();
         this.isBeginningOfGame = isBeginningOfGame;
         if (isBeginningOfGame) this.numOfCardsToAdd = 5;
@@ -31,7 +31,7 @@ public class DrawPhaseController {
         }
         boolean isLost = checkLoss();
         if (isLost) {
-            gamePlayController.setWinner(RoundResult.RIVAL_WON);
+            roundController.setRoundWinner(RoundResult.RIVAL_WON);
         } else {
             addCardsFromDeckToHand();
             activeDrawEffects();
