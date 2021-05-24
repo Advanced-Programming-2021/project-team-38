@@ -1,7 +1,7 @@
 package model.card.spelltrap.handmadeSpell;
 
 import controller.game.DuelMenuController;
-import controller.game.GamePlayController;
+import controller.game.RoundController;
 import exceptions.*;
 import model.Player;
 import model.card.PreCard;
@@ -19,7 +19,7 @@ public class MonsterReborn extends SpellTrap {
     }
 
     @Override
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay)
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay)
             throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, BeingFull {
         DuelMenuController duelMenu = gamePlay.getDuelMenuController();
         gamePlay.deselectCard();

@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 class BattlePhaseController {
 
-    private GamePlayController gamePlay;
+    private RoundController gamePlay;
 
-    public BattlePhaseController(GamePlayController gamePlay) {
+    public BattlePhaseController(RoundController gamePlay) {
         this.gamePlay = gamePlay;
     }
 

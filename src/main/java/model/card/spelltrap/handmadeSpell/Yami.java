@@ -1,7 +1,7 @@
 //Field card
 package model.card.spelltrap.handmadeSpell;
 
-import controller.game.GamePlayController;
+import controller.game.RoundController;
 import model.Player;
 import model.card.PreCard;
 import model.card.cardinusematerial.MonsterCardInUse;
@@ -25,7 +25,7 @@ public class Yami extends SpellTrap {
     }
 
     @Override
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) {
         for (MonsterCardInUse monsterCardInUse : myPlayer.getBoard().getMonsterZone()) {
             monsterCardInUse.addToAreWatchingYou(this);
             watch(monsterCardInUse, myPlayer, rivalPlayer);
@@ -51,7 +51,7 @@ public class Yami extends SpellTrap {
     }
 
     @Override   //TODO should deactive it's effect
-    public void destroyThis(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, GamePlayController gamePlay) {
+    public void destroyThis(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) {
 
     }
 }

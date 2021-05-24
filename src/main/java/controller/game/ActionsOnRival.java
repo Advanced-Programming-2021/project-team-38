@@ -1,6 +1,5 @@
 package controller.game;
 
-import model.Player;
 import model.card.Card;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
@@ -8,10 +7,10 @@ import model.card.cardinusematerial.MonsterCardInUse;
 import view.messageviewing.Print;
 
 class ActionsOnRival {
-    private GamePlayController gamePlay;
+    private RoundController gamePlay;
     private CardInUse selectedCellRival;
 
-    public ActionsOnRival(GamePlayController gamePlay) {
+    public ActionsOnRival(RoundController gamePlay) {
         this.gamePlay = gamePlay;
     }
 
