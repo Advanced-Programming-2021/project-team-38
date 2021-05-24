@@ -1,7 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
-import exceptions.InvalidCardName;
+import exceptions.InvalidName;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.monster.PreMonsterCard;
@@ -18,10 +18,10 @@ import java.util.regex.Matcher;
 public class ImportAndExportMenu {
 
 
-    public static void importCard(String cardName) throws InvalidCardName, IOException {
+    public static void importCard(String cardName) throws InvalidName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
-        if (preCard == null) throw new InvalidCardName();
+        if (preCard == null) throw new InvalidName("card",preCard.getName());
 
         if (preCard.getCardType() == CardType.MONSTER) {
 
@@ -47,10 +47,10 @@ public class ImportAndExportMenu {
 
     }
 
-    public static String exportCard(String cardName) throws InvalidCardName, IOException {
+    public static String exportCard(String cardName) throws InvalidName, IOException {
 
         PreCard preCard = PreCard.findCard(cardName);
-        if (preCard == null) throw new InvalidCardName();
+        if (preCard == null) throw new InvalidName("card",preCard.getName());
 
         if (preCard.getCardType() == CardType.MONSTER) {
             try {
@@ -77,9 +77,9 @@ public class ImportAndExportMenu {
 
     }
 
-    public static void deleteCard(String cardName)throws InvalidCardName{
+    public static void deleteCard(String cardName)throws InvalidName{
         PreCard preCard = PreCard.findCard(cardName);
-        if (preCard == null) throw new InvalidCardName();
+        if (preCard == null) throw new InvalidName("card",preCard.getName());
         File file=new File("");
 
 
@@ -93,11 +93,11 @@ public class ImportAndExportMenu {
 
     }
 
-//    public Matcher getMatcher(String info) {
-//        return null;
-//    }
-//
-//    public String processFile(File file) {
-//        return null;
-//    }
+    public Matcher getMatcher(String info) {
+        return null;
+    }
+
+    public String processFile(File file) {
+        return null;
+    }
 }
