@@ -15,8 +15,7 @@ import view.Print;
 
 @Getter
 @Setter
-public
-class RoundController {
+public class RoundController {
 
     private Player currentPlayer;
     private Player rival;
@@ -146,15 +145,17 @@ class RoundController {
     }
 
     public void announceRoundWinner() {
-        this.duelMenuController.handleRoundWinner(winner.getOwner(), loser.getOwner(), winner.getLifePoint(), loser.getLifePoint(), 0, 0, this.roundIndex);
-        //todo: what should I put for winner score and loser score?
+        if (winner == null || loser == null) return;//todo!
+        this.duelMenuController.handleRoundWinner(winner.getOwner(), loser.getOwner(), winner.getLifePoint(), loser.getLifePoint(), 1, 0, this.roundIndex);
+        //todo: not sure what to put as the scores!
     }
 
+    public void sendToGraveYard(CardInUse cardInUse) {
+        //todo
+    }
 
-//    public void playHeadOrTails() {
-//        boolean isHead;
-//        isHead = Math.random() < 0.5;
-//        if (isHead) swapPlayers();
-//        DuelMenu.showHeadOrTails(isHead, currentPlayer.getName(), rival.getName());
-//    }
+    public void sendToGraveYard(PreCard fieldCard) {
+        //todo
+    }
+
 }

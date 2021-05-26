@@ -1,13 +1,15 @@
 package model;
 
 import exceptions.BeingFull;
+import exceptions.InvalidName;
+import exceptions.NotExisting;
 import exceptions.OccurrenceException;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.spelltrap.CardStatus;
 import model.card.spelltrap.PreSpellTrapCard;
 import view.Print;
-import view.SuccessMessages;
+import view.messageviewing.SuccessfulAction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +29,10 @@ public class Deck {
         this.name = name;
         this.mainCards = new ArrayList<>();
         this.sideCards = new ArrayList<>();
+    }
+
+    public static boolean isDeckInvalid(Deck deck) {
+        return false;//todo
     }
 
     public String getName() {
@@ -61,7 +67,7 @@ public class Deck {
 //        return isNumOfCardsValid;
 //    }
 
-//    print a deck by its side
+    //    print a deck by its side
     //start
     public void showDeck(boolean side) {
         Print.print(this.getName());
@@ -70,8 +76,8 @@ public class Deck {
 
     private void sortAndFilter(boolean side) {   //TODO test
         ArrayList<PreCard> preCards;
-        if (side)   preCards = sideCards;
-        else    preCards = mainCards;
+        if (side) preCards = sideCards;
+        else preCards = mainCards;
 
         preCards.sort(Comparator.comparing(PreCard::getName));
         filterAndPrint(preCards);
@@ -97,23 +103,29 @@ public class Deck {
     //the end
 
     public void removeCard(PreCard preCard, boolean side) {
+        String mainOrSide;
         if (side) {
             sideCards.remove(preCard);
-        } else
+            mainOrSide = "side";
+        } else {
             mainCards.remove(preCard);
-
-        Print.print(SuccessMessages.removeCardFromDeck);
+            mainOrSide = "main";
+        }
+        new SuccessfulAction("card", "removed from" + mainOrSide + " deck");
     }
 
     public void addCard(String name, boolean side) throws BeingFull, OccurrenceException {
+        String mainOrSide;
         if (side) {
             if (sideCards.size() >= 15) {
                 throw new BeingFull("side deck");
             }
+            mainOrSide = "side";
         } else {
             if (mainCards.size() >= 40) {
                 throw new BeingFull("main deck");
             }
+            mainOrSide = "main";
         }
 
         PreCard preCard = PreCard.findCard(name);
@@ -124,7 +136,7 @@ public class Deck {
             else
                 mainCards.add(preCard);
 
-            Print.print(SuccessMessages.addCardToDeck);
+            new SuccessfulAction("card", "added to " + mainOrSide + " deck");
         }
 
     }
@@ -138,7 +150,7 @@ public class Deck {
         if (preCard instanceof PreSpellTrapCard)
             limit = findLimitOfCard(nameOfCard);
         int occurrence = Collections.frequency(mainCards, preCard) +
-                Collections.frequency(sideCards,preCard);
+                Collections.frequency(sideCards, preCard);
         if (occurrence == limit) {
             throw new OccurrenceException(limit, nameOfCard, this.getName());
         }
@@ -153,6 +165,18 @@ public class Deck {
             limit = 3;
 
         return limit;
+    }
+
+    public void exchangeCard(String cardName, boolean isFromMainToSide) throws InvalidName, NotExisting, BeingFull, OccurrenceException {
+        ArrayList<PreCard> origin;
+        if (isFromMainToSide) origin = this.mainCards;
+        else origin = this.sideCards;
+
+        PreCard preCard = PreCard.findCard(cardName);
+        if (preCard == null) throw new NotExisting("card", "name");
+        if (!origin.contains(preCard)) throw new InvalidName("card", "name in the deck");
+        removeCard(preCard, !isFromMainToSide);
+        addCard(cardName, isFromMainToSide);
     }
 
     @Override

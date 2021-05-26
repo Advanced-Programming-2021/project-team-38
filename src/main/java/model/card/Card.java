@@ -7,8 +7,8 @@ public abstract class Card {
     protected String name;
     protected Card instance;
     protected PreCard preCardInGeneral;
+    protected boolean shouldDieAfterActivated = false;
 
-    //by me
     public Card(PreCard preCard) {
         preCardInGeneral = preCard;
     }
@@ -31,12 +31,6 @@ public abstract class Card {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    //end
-
-    public static Card getCardByName(String cardName) {
-        return null;
     }
 
 }
