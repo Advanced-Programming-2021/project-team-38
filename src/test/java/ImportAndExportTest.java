@@ -1,18 +1,23 @@
+import controller.DeckMenuController;
 import controller.ImportAndExportMenu;
+import exceptions.AlreadyExistingError;
 import exceptions.InvalidName;
 import exceptions.InvalidName;
+import model.User;
 import model.card.CardLoader;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 
 public class ImportAndExportTest {
-//    @BeforeAll
-//    //egara kon csv ro
+
+    @BeforeEach
+    public void init() {
+        CardLoader.loadCsv();
+        CardLoader.setCards();
+    }
+
     @Test
     @DisplayName("import wrong card name")
     public void importCardTest() {
@@ -28,7 +33,7 @@ public class ImportAndExportTest {
             @Override
             public void execute() throws Throwable {
                 ImportAndExportMenu.importCard("Command Knight");
-                ImportAndExportMenu.exportCard("Sujin");
+                ImportAndExportMenu.exportCard("Suijin");
             }
         };
         Assertions.assertThrows(IOException.class,secondCommand);
@@ -38,11 +43,11 @@ public class ImportAndExportTest {
     @Test
     @DisplayName("import and export new card")
     public void importAndExportNewCardTest() throws InvalidName, IOException {
-        CardLoader.loadCsv();
-        CardLoader.setCards();
         ImportAndExportMenu.importCard("Command Knight");
-        String json =ImportAndExportMenu.exportCard("Sujin");
-        Assertions.assertEquals("jjk",json);
+        String json =ImportAndExportMenu.exportCard("Command Knight");
+        Assertions.assertNotNull(json);
+        ImportAndExportMenu.deleteCard("Command Knight");
+
     }
 
 }
