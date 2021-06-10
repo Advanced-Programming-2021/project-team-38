@@ -14,9 +14,6 @@ import java.util.regex.Matcher;
 import static view.Menu.getCommandMatcher;
 
 public class LoginMenu {
-    public static void sendLoginInfo() {
-
-    }
 
     public static void checkMenuCommands(String command) throws InvalidCommand, WrongMenu {
         if (RelatedToMenuController.isMenuFalse(MenuName.LOGIN))

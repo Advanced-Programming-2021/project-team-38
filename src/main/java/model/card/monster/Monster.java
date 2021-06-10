@@ -14,6 +14,7 @@ import model.card.cardinusematerial.MonsterCardInUse;
 public class Monster extends Card {
     protected PreMonsterCard myPreCard;
     protected boolean canBeNormalSummoned;
+    protected int numOfNeededTributes;
 
     public Monster(PreCard preCard) {
         super(preCard);
@@ -23,8 +24,16 @@ public class Monster extends Card {
 
     public Monster setUpMonster() {    //after instance creation it will fill the fields
         setName(myPreCard.getName());
+        setNumOfTributes(); //todo: fine? check with hasti
         instance = this;
         return this;
+    }
+
+    protected void setNumOfTributes() {
+        int level = myPreCard.getLevel();
+        if (level <= 4) numOfNeededTributes = 0;
+        else if (level <= 6) numOfNeededTributes = 1;
+        else numOfNeededTributes = 2;
     }
 
     @Override
@@ -58,9 +67,6 @@ public class Monster extends Card {
 
     }
 
-    public void sendToGraveYard() {
-
-    }
 
     //during battle
     public void destroyThis(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard, int LPDamage) {

@@ -1,7 +1,10 @@
 package model;
 
 import exceptions.InvalidSelection;
+import model.card.CardType;
 import model.card.PreCard;
+import model.card.monster.MonsterCardType;
+import model.card.monster.PreMonsterCard;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,17 @@ public class Hand {
 
     public boolean doesContainCard(PreCard preCard) {
         return cardsInHand.contains(preCard);
+    }
+
+    public ArrayList<PreMonsterCard> getMonstersOfType(MonsterCardType monsterCardType) {
+        ArrayList<PreMonsterCard> monsters = new ArrayList<>();
+        for (PreCard preCard : cardsInHand) {
+            if (preCard.getCardType().equals(CardType.MONSTER)) {
+                PreMonsterCard preMonsterCard = (PreMonsterCard) preCard;
+                if (preMonsterCard.getType().equals(MonsterCardType.RITUAL)) monsters.add(preMonsterCard);
+            }
+        }
+        return monsters;
     }
 
     public void addCard(PreCard preCard) {

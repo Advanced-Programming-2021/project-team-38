@@ -44,8 +44,4 @@ public class DeckMenu {
             System.out.println(exception.getMessage());
         }
     }
-
-    public static String scanNameOfCard() {
-        return null;
-    }
 }

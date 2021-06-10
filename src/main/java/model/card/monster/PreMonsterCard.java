@@ -10,7 +10,7 @@ public class PreMonsterCard extends PreCard {
     private int level;  //for number of tributes when summoned,
     private int defense;
     private int attack;
-    private MonsterCardType type;   //nemidoonam
+    private MonsterCardType type;    //The ritual type is checked in summon
     private MonsterType monsterType;    //nemidoonam
     private CardAttribute attribute;    //property of card that is sometimes important for it's effects
 

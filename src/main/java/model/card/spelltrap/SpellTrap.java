@@ -27,11 +27,11 @@ public class SpellTrap extends Card {
         return this;
     }
 
-    public boolean areEffectPreparationsDone(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) {
-        return false; //todo: returned something to be able to run!
+    public boolean areEffectPreparationsDone(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController controller) {
+        return true; //todo: returned something to be able to run!
     }
 
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException, BeingFull {
+    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException, BeingFull, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction, CantDoActionWithCard {
 
     }
 

@@ -4,26 +4,32 @@ package controller.game;
 
 import controller.LoginMenuController;
 import exceptions.*;
+import lombok.Getter;
+import model.CardAddress;
 import model.Deck;
 import model.Enums.Phase;
-import model.Enums.ZoneName;
+import model.Player;
 import model.User;
-import view.Menu;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.monster.MonsterManner;
+import model.card.monster.PreMonsterCard;
 import view.Menus.DuelMenu;
+import view.Print;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.regex.Matcher;
 
+
+@Getter
 public class DuelMenuController {
     private static boolean isAnyGameRunning = false;
 
     private User firstUser;
     private User secondUser;
 
-    private ArrayList<HashMap<User, Integer>> usersLP;
-    private ArrayList<User> roundsWinner;
+    private final ArrayList<HashMap<User, Integer>> usersLP;
+    private final ArrayList<User> roundsWinner;
 
     private Phase currentPhase;
     private MainPhaseController mainPhaseController;
@@ -64,23 +70,21 @@ public class DuelMenuController {
             throw new InvalidName("user", "username");
         if (firstUser.getActiveDeck() == null) throw new NoActiveDeck(firstUser.getUsername());
         if (secondUser.getActiveDeck() == null) throw new NoActiveDeck(secondUser.getUsername());
-        if (!isDeckValid(firstUser.getActiveDeck())) throw new InvalidDeck(firstUser.getUsername());
-        if (!isDeckValid(secondUser.getActiveDeck())) throw new InvalidDeck(secondUser.getUsername());
+        if (Deck.isDeckInvalid(firstUser.getActiveDeck())) throw new InvalidDeck(firstUser.getUsername());
+        if (Deck.isDeckInvalid(secondUser.getActiveDeck())) throw new InvalidDeck(secondUser.getUsername());
         return true;
-    }
-
-    private static boolean isDeckValid(Deck deck) {
-        return true;//todo
     }
 
 
     /*match actions*/
 
     public void runMatch() throws InvalidCommand, InvalidDeck, NoActiveDeck, InvalidName {
-//        playHeadOrTails(); //todo
+        playHeadOrTails();
         for (int i = 0; i < numOfRounds; i++) {
             runOneRound(i);
             if (checkMatchFinished()) break;
+            exchangeCardInDecks(roundController.getCurrentPlayer());
+            exchangeCardInDecks(roundController.getRival());
         }
         isAnyGameRunning = false;
         announceWinnerOfMatch();
@@ -101,6 +105,28 @@ public class DuelMenuController {
         User hold = this.firstUser;
         this.firstUser = this.secondUser;
         this.secondUser = hold;
+    }
+
+    private void exchangeCardInDecks(Player player) {
+        String answer = DuelMenu.askQuestion("Dear" + player.getName() + "! Do you want to exchange cards of side deck and main deck?\n" +
+                " (no/ from main to side/ from side to main)");
+        try {
+            switch (answer) {
+                case "no":
+                    return;
+                case "from main to side":
+                    String cardName = DuelMenu.askQuestion("Enter the name of the card.");
+                    player.getDeck().exchangeCard(cardName, true);
+                    break;
+                case "from side to main":
+                    cardName = DuelMenu.askQuestion("Enter the name of the card.");
+                    player.getDeck().exchangeCard(cardName, false);
+                    break;
+            }
+        } catch (InvalidName | NotExisting | OccurrenceException | BeingFull exception) {
+            Print.print(exception.getMessage());
+        }
+        exchangeCardInDecks(player);
     }
 
     public void handleRoundWinner(User winner, User loser, int winnerLP, int loserLP, int winnerScore, int loserScore, int roundIndex) {
@@ -146,6 +172,12 @@ public class DuelMenuController {
     private boolean checkMatchFinished() {
         if (this.roundController.getRoundIndex() != 1) return false;
         return this.roundsWinner.get(0).equals(this.roundsWinner.get(1));
+    }
+
+    public void playHeadOrTails() {
+        boolean isHead = Math.random() < 0.5;
+        if (isHead) swapUsers();
+        DuelMenu.showHeadOrTails(isHead, firstUser.getUsername(), secondUser.getUsername());
     }
 
 
@@ -215,37 +247,15 @@ public class DuelMenuController {
         battlePhaseController.attackToLifePoint();
     }
 
-    public void activateEffect() throws WrongPhaseForAction, NoSelectedCard, ActivateEffectNotSpell, BeingFull, SpellPreparation, AlreadyActivatedEffect, CantDoActionWithCard {
+    public void activateEffect() throws WrongPhaseForAction, NoSelectedCard, ActivateEffectNotSpell, BeingFull, SpellPreparation, AlreadyActivatedEffect, CantDoActionWithCard, NotAppropriateCard, InvalidTributeAddress, NoCardFound, CloneNotSupportedException, InvalidSelection, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
-        mainPhaseController.activateEffect();
+        mainPhaseController.activateEffect(true);
     }
 
-    public void selectCard(String cardAddress) throws InvalidTributeAddress, InvalidSelection, NoCardFound {
-        cardAddress = cardAddress.concat(" ");
-        boolean isOpponent = false;
-        ZoneName zoneName = null;
-        Matcher flagMatcher = Menu.getCommandMatcher(cardAddress, "--(<field>\\S+) ");
-        while (flagMatcher.find()) {
-            String field = flagMatcher.group("field");
-            if (field.equals("opponent")) {
-                if (!isOpponent) isOpponent = true;
-                else throw new InvalidSelection();
-            } else {
-                if (zoneName != null) throw new InvalidSelection();
-                zoneName = ZoneName.getZoneName(field);
-            }
-        }
-        if (zoneName == null) throw new InvalidSelection();
-        int cardIndex;
-        try {
-            cardIndex = Integer.parseInt(cardAddress);
-        } catch (Exception e) {
-            if (!zoneName.equals(ZoneName.FIELD))
-                throw new InvalidSelection();
-            cardIndex = -1;
-        }
-        roundController.selectCard(zoneName, isOpponent, cardIndex);
+    public void selectCard(String address) throws InvalidSelection, NoCardFound {
+        CardAddress cardAddress = new CardAddress(address);
+        roundController.selectCard(cardAddress.getZoneName(), cardAddress.isForOpponent(), cardAddress.getIndex());
     }
 
     public void deselectCard() throws NoSelectedCard {
@@ -254,8 +264,8 @@ public class DuelMenuController {
         } else throw new NoSelectedCard();
     }
 
-    public void showGraveYard(boolean ofCurrentPlayer) {
-        roundController.showGraveYard(ofCurrentPlayer);
+    public String showGraveYard(boolean ofCurrentPlayer) {
+        return roundController.showGraveYard(ofCurrentPlayer);
     }
 
     public void showCard() {//todo
@@ -286,4 +296,40 @@ public class DuelMenuController {
         DuelMenu.showPhase(currentPhase.toString());
     }
 
+
+    public PreMonsterCard getRitualSummonCommand() {
+        boolean isCancelled = DuelMenu.askToSelectRitualMonsterCard();
+        if (isCancelled) return null;
+        if (!(roundController.getSelectedPreCard() instanceof PreMonsterCard)) {
+            Print.print("you should ritual summon right now");
+            return getRitualSummonCommand();
+        } else {
+            return (PreMonsterCard) roundController.getSelectedPreCard();
+        }
+    }
+
+    public ArrayList<MonsterCardInUse> getTributes() {
+        MonsterCardInUse[] monstersInBoard = roundController.getCurrentPlayer().getBoard().getMonsterZone();
+
+        ArrayList<String> tributeAddresses = DuelMenu.getTributeAddresses();
+        if (tributeAddresses == null) return null;
+        try {
+            ArrayList<MonsterCardInUse> tributesInUse = new ArrayList<>();
+            for (String tributeAddress : tributeAddresses) {
+                tributesInUse.add(new CardAddress(tributeAddress).getCardInUseInAddress(monstersInBoard));
+            }
+            return tributesInUse;
+        } catch (InvalidSelection invalidSelection) {
+            return getTributes();
+        }
+    }
+
+    public boolean askToEnterSummon() {
+        return DuelMenu.forceGetCommand("summon", "you should ritual summon right now");
+    }
+
+    public MonsterManner getRitualManner() {
+        String mannerString = DuelMenu.getRitualManner();
+        return MonsterManner.getMonsterManner(mannerString);
+    }
 }
