@@ -7,32 +7,32 @@ import model.card.cardinusematerial.MonsterCardInUse;
 import view.messageviewing.Print;
 
 class ActionsOnRival {
-    private RoundController gamePlay;
+    private RoundController roundController;
     private CardInUse selectedCellRival;
 
-    public ActionsOnRival(RoundController gamePlay) {
-        this.gamePlay = gamePlay;
+    public ActionsOnRival(RoundController roundController) {
+        this.roundController = roundController;
     }
 
     public void showGraveyard() {
         int i = 1;
-        for (PreCard preCard : gamePlay.getRival().getBoard().getGraveYard().getCardsInGraveYard()) {
+        for (PreCard preCard : roundController.getRival().getBoard().getGraveYard().getCardsInGraveYard()) {
             Print.print(String.format("%d. %s", i, preCard));
             i++;
         }
-        if (i==1)
+        if (i == 1)
             Print.print("graveyard empty");
     }
 
     public MonsterCardInUse getRivalMonsterCell(int cellNo) {
-        return gamePlay.getRivalBoard().getMonsterZone()[cellNo];
+        return roundController.getRivalBoard().getMonsterZone()[cellNo];
     }
 
-    public Card selectedCard() {
+    public Card selectCard() {
         return null;
     }
 
-    public void deselectedCard() {
+    public void deselectCard() {
 
     }
 
