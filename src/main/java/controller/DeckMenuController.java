@@ -80,7 +80,6 @@ public class DeckMenuController {
     }
 
     private static ArrayList<String> analyseCardCommand(String command) throws InvalidCommand {
-        //todo: there are two cards that have "-" in the name, it doesn't handle them
         ArrayList<String> names = new ArrayList<>();
         String cardName = (RelatedToMenuController.
                 getCommandString(command, "--card ([^-]+)"));

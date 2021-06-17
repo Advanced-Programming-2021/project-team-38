@@ -1,13 +1,18 @@
 package model.card;
 
 import lombok.Getter;
+import model.card.cardinusematerial.CardInUse;
+import model.watchers.Watcher;
+
+import java.util.ArrayList;
 
 @Getter
 public abstract class Card {
-    protected String name;
-    protected Card instance;
-    protected PreCard preCardInGeneral;
-    protected boolean shouldDieAfterActivated = false;
+    public String name;
+    public Card instance;
+    public PreCard preCardInGeneral;
+    public boolean shouldDieAfterActivated = false;
+    public ArrayList<Watcher> builtInWatchers;
 
     public Card(PreCard preCard) {
         preCardInGeneral = preCard;
@@ -33,4 +38,11 @@ public abstract class Card {
         this.name = name;
     }
 
+    public void putBuiltInWatchers(CardInUse cardInUse) {
+        for (Watcher watcher : builtInWatchers) {
+            if (watcher.canPutWatcher()) {
+                watcher.putWatcher(cardInUse);
+            }
+        }
+    }
 }

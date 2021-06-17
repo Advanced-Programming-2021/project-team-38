@@ -5,10 +5,12 @@ package model.card.cardinusematerial;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
+import model.CardState;
 import model.card.Card;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
 import model.card.spelltrap.SpellTrap;
+import model.watchers.watchingexceptions.CancelBattle;
 
 @Getter
 @Setter
@@ -69,7 +71,7 @@ public class MonsterCardInUse extends CardInUse {
         return defense;
     }
 
-    private void resetCell() {  //** watch out the come on this turn
+    public void resetCell() {  //** watch out the come on this turn
         cameOnThisTurn = false;
         isAttacked = false;
         isAttacking = false;
@@ -99,7 +101,10 @@ public class MonsterCardInUse extends CardInUse {
         hasBeenAttacker = true;
     }
 
-    public void addToAreWatchingYou(SpellTrap theCard) {
-        getAreWatchingYou().add(theCard);
+    public void destroyThis() throws CancelBattle {
+        //throw exception TODO
+        watchByState(CardState.DESTROY);
+        sendToGraveYard();
     }
+
 }

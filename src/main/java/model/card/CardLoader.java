@@ -3,6 +3,7 @@
 package model.card;
 
 import com.opencsv.CSVReader;
+import lombok.Getter;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
 import model.card.monster.mosterswitheffect.CommandKnight;

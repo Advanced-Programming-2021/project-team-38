@@ -9,6 +9,9 @@ import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
+import model.watchers.Watcher;
+
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -17,20 +20,47 @@ public class Board {
 
     private MonsterCardInUse[] monsterZone;
     private SpellTrapCardInUse[] spellTrapZone;
-    private PreCard fieldCard;
+    private SpellTrapCardInUse fieldCard;   //TODO !!! check updated with new program
+
+    //watchers which are only available in areWatchingMe Cards. -> scanner, changeOfHearts
+    private ArrayList<Watcher> freeBuiltInWatchers;
     private int additionalAttack;
     private int additionalDefense;
     private Player owner;
     private Phase myPhase;
     private Deck deckInUse;
 
-    private Phase onPhase;
-
     {
         this.monsterZone = new MonsterCardInUse[5];
         this.spellTrapZone = new SpellTrapCardInUse[5];
         newCells();
         graveYard = new GraveYard();
+    }
+
+    //TODO !!! negar please
+    //TODO set myPhase at start of game
+    public void update(){
+        myPhase = myPhase.goToNextPhase();
+
+        for (Watcher freeWatcher : freeBuiltInWatchers) {
+            freeWatcher.update(myPhase);
+        }
+
+        for (MonsterCardInUse monsterCardInUse : monsterZone) {
+            for (Watcher builtInWatcher : monsterCardInUse.thisCard.builtInWatchers) {
+                builtInWatcher.update(myPhase);
+            }
+        }
+
+        for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
+            for (Watcher builtInWatcher : spellTrapCardInUse.thisCard.builtInWatchers) {
+                builtInWatcher.update(myPhase);
+            }
+        }
+
+        for (Watcher builtInWatcher : fieldCard.thisCard.builtInWatchers) {
+            builtInWatcher.update(myPhase);
+        }
     }
 
 

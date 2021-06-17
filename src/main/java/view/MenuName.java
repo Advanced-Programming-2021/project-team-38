@@ -64,7 +64,7 @@ public enum MenuName {
                         "deck add-card --card <card name> --deck <deck name> --side(optional)\n" +
                         "deck rm-card --card <card name> --deck <deck name> --side(optional)\n" +
                         "deck show --all\n" +
-                        "deck show --deck-name <deck name> --side(optional)\n" +
+                        "deck show --deck-name <deck name> --side(Opt)\n" +
                         "deck show --cards\n";
             case SCOREBOARD:
                 return "scoreboard show";

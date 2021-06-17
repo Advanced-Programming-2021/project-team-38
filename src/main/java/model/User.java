@@ -38,7 +38,7 @@ public class User implements Comparable<model.User> {
             this.score = 0;
             this.preCards = new ArrayList<>();
             this.decks = new ArrayList<>();
-            this.balance = 10000000; //todo I'm not sure!
+            this.balance = 1000; //todo I'm not sure!
             allUsers.add(this);
         }
 
