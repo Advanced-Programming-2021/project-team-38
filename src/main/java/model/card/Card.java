@@ -45,4 +45,10 @@ public abstract class Card {
             }
         }
     }
+
+    public void theCardIsBeingDeleted() {
+        for (Watcher builtInWatcher : builtInWatchers) {
+            builtInWatcher.deleteWatcher();
+        }
+    }
 }

@@ -1,3 +1,4 @@
+//finished
 package model.watchers;
 
 import controller.game.DuelMenuController;
@@ -9,7 +10,7 @@ import model.watchers.watchingexceptions.CancelBattle;
 
 public class CommandKnightWatcher extends Watcher {
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController) throws CancelBattle {
+    public void watch(CardState cardState, DuelMenuController duelMenuController){
         //nothing
     }
 

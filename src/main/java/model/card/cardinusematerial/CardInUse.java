@@ -53,19 +53,22 @@ public abstract class CardInUse {
         isPositionChanged = false;
         thisCard = null;
         isFaceUp = false;
-        for (Watcher watcher: watchersOfCardInUse) {
+        for (Watcher watcher : watchersOfCardInUse) {
             watcher.disableWatcher(this);
         }
 
         watchersOfCardInUse = new ArrayList<>();
+        assert thisCard != null;    //TODO what is it doing?
+        thisCard.theCardIsBeingDeleted();
+        thisCard = null;
     }
 
-    public void sendToGraveYard() throws CancelBattle {
+    public void sendToGraveYard() {
         watchByState(CardState.SENT_TO_GRAVEYARD);
         resetCell();
     }
 
-    public void watchByState(CardState cardState) throws CancelBattle {
+    public void watchByState(CardState cardState) {
         for (Watcher watcher : watchersOfCardInUse) {
             //TODO !!! for negar
             if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)

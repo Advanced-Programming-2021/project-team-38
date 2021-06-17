@@ -1,5 +1,7 @@
+//finished
 package model.watchers;
 
+import controller.game.BattleController;
 import controller.game.DuelMenuController;
 import model.CardState;
 import model.Enums.Phase;
@@ -13,20 +15,18 @@ public class CommandKnightHolyWatcher extends Watcher{
         whoToWatch = WhoToWatch.MINE;
     }
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController) throws CancelBattle {
+    public void watch(CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
             if (handleChain()) {
                 for (MonsterCardInUse monsterCardInUse : ownerOfWatcher.ownerOfCard.getBoard().getMonsterZone()) {
-                    if (!monsterCardInUse.isCellEmpty() && monsterCardInUse != ownerOfWatcher)
-                        throw new CancelBattle();
+                    if (!monsterCardInUse.isCellEmpty() && monsterCardInUse != ownerOfWatcher) {
+                        BattleController battle = duelMenuController.getBattlePhaseController().battleController;
+                        battle.canBattleHappen = false;
+                        isWatcherActivated = true;
+                    }
                 }
             }
         }
-    }
-
-    @Override
-    public void reNewWatch() {
-
     }
 
     @Override
