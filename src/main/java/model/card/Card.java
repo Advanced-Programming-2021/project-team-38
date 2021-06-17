@@ -26,10 +26,6 @@ public abstract class Card {
         this.instance = instance;
     }
 
-    @Override
-    public abstract Object clone() throws CloneNotSupportedException;
-
-
     public String getName() {
         return name;
     }
@@ -45,4 +41,13 @@ public abstract class Card {
             }
         }
     }
+
+    @Override
+    public abstract Object clone() throws CloneNotSupportedException; //todo: check with hasti
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    //todo: What should be here?
 }

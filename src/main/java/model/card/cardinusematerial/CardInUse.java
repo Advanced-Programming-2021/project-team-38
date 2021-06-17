@@ -28,7 +28,6 @@ public abstract class CardInUse {
         this.ownerOfCard = board.getOwner();
     }
 
-
     {
         isPositionChanged = false;
         isFaceUp = false;

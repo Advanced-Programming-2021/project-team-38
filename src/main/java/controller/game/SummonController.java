@@ -6,7 +6,6 @@ package controller.game;
 import exceptions.*;
 import model.Board;
 import model.Player;
-import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
@@ -19,15 +18,15 @@ import view.messageviewing.SuccessfulAction;
 import java.util.ArrayList;
 
 public class SummonController {
-    private final PreMonsterCard preMonster;
+    private final Monster monster;
     private int numOfNormalSummons;
     private final RoundController controller;
     private MonsterCardInUse monsterCardInUse;
     private final Board board;
     ArrayList<CardInUse> summonedCards; //it is generated in the main phase calling this class
 
-    public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, RoundController controller, ArrayList<CardInUse> summonedCards) {
-        this.preMonster = preMonster;
+    public SummonController(MonsterCardInUse monsterCardInUse, Monster monster, RoundController controller, ArrayList<CardInUse> summonedCards) {
+        this.monster = monster;
         this.numOfNormalSummons = 0;
         this.controller = controller;
         this.monsterCardInUse = monsterCardInUse;
@@ -36,9 +35,9 @@ public class SummonController {
     }
 
     public void normal() throws AlreadyDoneAction, NotEnoughTributes {
-        Monster monster = (Monster) preMonster.newCard();
         if (numOfNormalSummons != 0) throw new AlreadyDoneAction("summoned");
-        if (preMonster.getLevel() >= 5) tributeSummon(monster);
+        //todo: sometimes the monster's level shouldn't be checked(special effects)
+        if (monster.getLevel() >= 5) tributeSummon(monster);
         else putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
         numOfNormalSummons++;
     }
@@ -63,14 +62,14 @@ public class SummonController {
     }
 
     public void ritualSummon(ArrayList<MonsterCardInUse> tributes) throws CantDoActionWithCard {
-        Monster monster = (Monster) preMonster.newCard();
+        PreMonsterCard preMonster = (PreMonsterCard) monster.getPreCardInGeneral();
         if (!preMonster.getType().equals(MonsterCardType.RITUAL)) throw new CantDoActionWithCard("ritual summon");
         for (MonsterCardInUse tribute : tributes) {
             controller.sendToGraveYard(tribute);
         }
         MonsterManner monsterManner = controller.getDuelMenuController().getRitualManner();
         putMonsterInUse(monster, true, this.monsterCardInUse, summonedCards);
-        switch (monsterManner) {
+        switch (monsterManner) { //todo: it should be a function inside the monster itself( because watchers watch this!)
             case DEFENSIVE_OCCUPIED:
                 monsterCardInUse.setFaceUp(true);
                 monsterCardInUse.setInAttackMode(false);
@@ -89,6 +88,7 @@ public class SummonController {
         monsterCardInUse.setThisCard(monster);
         if (!isSpecial) summonedCards.add(monsterCardInUse);
         new SuccessfulAction("", "summoned");
+        //todo : after that, all of the watchers in the world should be called! because some of them may start wathcing us;
     }
 
     private int findNumOfTributes(Monster monster) {
@@ -109,15 +109,13 @@ public class SummonController {
     }
 
 
-    //todo: its not good because it is static
-    public static void specialSummonPreCard(PreCard preCard, Player player) throws BeingFull {
-        if (player == null || preCard == null) return;
+    //todo: its not good because it is static , (kollan it should be changed)
+    public static void specialSummon(Monster monster, Player player) throws BeingFull {
+        if (player == null || monster == null) return;
         Board playerBoard = player.getBoard();
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
-        putMonsterInUse((Monster) preCard.newCard(), true, monsterCardInUse, null);
-
-        //TODO continue
+        putMonsterInUse(monster, true, monsterCardInUse, null);
     }
 }
 

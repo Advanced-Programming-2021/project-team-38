@@ -9,7 +9,7 @@ import model.Enums.RoundResult;
 import model.Enums.ZoneName;
 import model.Player;
 import model.User;
-import model.card.PreCard;
+import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
 import view.Print;
 
@@ -25,8 +25,9 @@ public class RoundController {
     private Phase currentPhase;
     private ActionsOnRival actionsOnRival;
 
-    private CardInUse selectedCardInUse;
-    private PreCard selectedPreCard;
+    //    private CardInUse selectedCardInUse;
+//    private PreCard selectedPreCard;
+    private Card selectedCard;
     private boolean isSelectedCardFromRivalBoard;
 
     private boolean isRoundEnded;
@@ -56,7 +57,8 @@ public class RoundController {
 
     /*  getters and setters and stuff  */
     public boolean isAnyCardSelected() {
-        return !(this.selectedPreCard == null && this.selectedCardInUse == null);
+//        return !(this.selectedPreCard == null && this.selectedCardInUse == null);
+        return this.selectedCard != null;
     }
 
     public Board getCurrentPlayerBoard() {
@@ -72,30 +74,26 @@ public class RoundController {
     /* general actions (in any phase) */
 
     public void selectCard(ZoneName zoneName, boolean isForOpponent, int cardIndex) throws InvalidSelection, NoCardFound {
+        Player ownerOfToBeSelected = currentPlayer;
+        if (isForOpponent) ownerOfToBeSelected = rival;
         switch (zoneName) {
             case HAND:
                 if (isForOpponent) throw new InvalidSelection();
-                this.selectedPreCard = currentPlayer.getHand().getCardWithNumber(cardIndex);
-                this.selectedCardInUse = null;
+                this.selectedCard = currentPlayer.getHand().getCardWithNumber(cardIndex);
                 break;
             case MONSTER:
-                this.selectedCardInUse = currentPlayer.getBoard().getCardInUse(cardIndex, true);
-                this.selectedPreCard = null;
+                this.selectedCard = ownerOfToBeSelected.getBoard().getCardInUse(cardIndex, true).getThisCard();
                 break;
             case SPELL:
-                this.selectedCardInUse = currentPlayer.getBoard().getCardInUse(cardIndex, false);
-                this.selectedPreCard = null;
+                this.selectedCard = ownerOfToBeSelected.getBoard().getCardInUse(cardIndex, false).getThisCard();
                 break;
             case FIELD:
-                PreCard fieldCard = currentPlayer.getBoard().getFieldCard();
+                Card fieldCard = ownerOfToBeSelected.getBoard().getFieldCard().getThisCard();
                 if (fieldCard == null) throw new NoCardFound();
-                this.selectedPreCard = currentPlayer.getBoard().getFieldCard();
-                this.selectedCardInUse = null;
+                this.selectedCard = fieldCard;
                 break;
             case GRAVEYARD:
-                if (isForOpponent) this.selectedPreCard = rival.getBoard().getGraveYard().getPreCard(cardIndex);
-                else this.selectedPreCard = currentPlayer.getBoard().getGraveYard().getPreCard(cardIndex);
-                this.selectedCardInUse = null;
+                this.selectedCard = ownerOfToBeSelected.getBoard().getGraveYard().getCard(cardIndex);
                 break;
             default:
                 throw new InvalidSelection();
@@ -104,8 +102,7 @@ public class RoundController {
     }
 
     public void deselectCard() {
-        this.selectedPreCard = null;
-        this.selectedCardInUse = null;
+        this.selectedCard = null;
         isSelectedCardFromRivalBoard = false; //todo: why do we need this thing?
     }
 
@@ -147,11 +144,7 @@ public class RoundController {
     }
 
     public void sendToGraveYard(CardInUse cardInUse) {
-        //todo
-    }
-
-    public void sendToGraveYard(PreCard fieldCard) {
-        //todo
+//        cardInUse.sendToGraveYard();
     }
 
 }

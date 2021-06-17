@@ -11,8 +11,8 @@ import model.Enums.Phase;
 import model.Player;
 import model.User;
 import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
-import model.card.monster.PreMonsterCard;
 import view.Menus.DuelMenu;
 import view.Print;
 
@@ -108,7 +108,8 @@ public class DuelMenuController {
     }
 
     private void exchangeCardInDecks(Player player) {
-        String answer = DuelMenu.askQuestion("Dear" + player.getName() + "! Do you want to exchange cards of side deck and main deck?\n" +
+        String answer = DuelMenu.askQuestion("Dear" + player.getName() + "!" +
+                " Do you want to exchange cards of side deck and main deck?\n" +
                 " (no/ from main to side/ from side to main)");
         try {
             switch (answer) {
@@ -296,14 +297,14 @@ public class DuelMenuController {
     }
 
 
-    public PreMonsterCard getRitualSummonCommand() {
+    public Monster getRitualSummonCommand() {
         boolean isCancelled = DuelMenu.askToSelectRitualMonsterCard();
         if (isCancelled) return null;
-        if (!(roundController.getSelectedPreCard() instanceof PreMonsterCard)) {
+        if (!(roundController.getSelectedCard() instanceof Monster)) {
             Print.print("you should ritual summon right now");
             return getRitualSummonCommand();
         } else {
-            return (PreMonsterCard) roundController.getSelectedPreCard();
+            return (Monster) roundController.getSelectedCard();
         }
     }
 

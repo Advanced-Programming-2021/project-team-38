@@ -197,21 +197,24 @@ public class MainPhaseController {
         }
     }
 
-    public boolean handleRitualSummon() throws BeingFull, CantDoActionWithCard { //returns true if the ritual summon is cancelled
-        PreMonsterCard preMonster = this.controller.getDuelMenuController().getRitualSummonCommand();
-        if (preMonster == null) return true;
+
+    //returns true if the ritual summon is cancelled
+    public boolean handleRitualSummon() throws BeingFull, CantDoActionWithCard {
+//        PreMonsterCard monster = this.controller.getDuelMenuController().getRitualSummonCommand();
+        Monster monster = this.controller.getDuelMenuController().getRitualSummonCommand();
+        if (monster == null) return true;
         if (controller.getDuelMenuController().askToEnterSummon()) return true;
         ArrayList<MonsterCardInUse> tributeMonsters;
         while (true) {
             tributeMonsters = this.controller.getDuelMenuController().getTributes();
             if (tributeMonsters == null) return true;
-            if (areTributeLevelsFine(tributeMonsters, preMonster.getLevel())) break;
-            Print.print("selected monsters levels don’t match with ritual monster");
+            if (areTributeLevelsFine(tributeMonsters, monster.getLevel())) break;
+            Print.print("Selected monsters don’t match with ritual summon requirements!");
         }
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) controller.getCurrentPlayer().getBoard().getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
 
-        SummonController summonController = new SummonController(monsterCardInUse, preMonster, controller, this.summonedInThisPhase);
+        SummonController summonController = new SummonController(monsterCardInUse, monster, controller, this.summonedInThisPhase);
         summonController.ritualSummon(tributeMonsters);
         return false;
     }
