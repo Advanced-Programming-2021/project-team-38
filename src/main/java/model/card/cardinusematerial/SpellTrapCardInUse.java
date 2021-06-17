@@ -8,6 +8,10 @@ import model.Board;
 public class SpellTrapCardInUse extends CardInUse {
 
 
+    public SpellTrapCardInUse(Board board) {
+        super(board);
+    }
+
     @Override
     public void putInGraveYard() {
 

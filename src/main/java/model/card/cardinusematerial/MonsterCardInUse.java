@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Board;
 import model.CardState;
-import model.card.Card;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
-import model.card.spelltrap.SpellTrap;
 import model.watchers.watchingexceptions.CancelBattle;
 
 @Getter
@@ -28,6 +26,10 @@ public class MonsterCardInUse extends CardInUse {
         attack = 0;
         isInAttackMode = true; //it's needed for the first use of "setInAttackMode"
         //todo: if the monster is flip summoned, should we be able to change its attackMode after that?
+    }
+
+    public MonsterCardInUse(Board board) {
+        super(board);
     }
 
 

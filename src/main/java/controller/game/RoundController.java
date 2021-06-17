@@ -45,8 +45,8 @@ public class RoundController {
 
     public RoundController(User firstUser, User secondUser, DuelMenuController duelMenuController, int roundIndex)
             throws InvalidDeck, InvalidName, NoActiveDeck {
-        currentPlayer = new Player(firstUser);
-        rival = new Player(secondUser);
+        currentPlayer = new Player(firstUser, this);
+        rival = new Player(secondUser, this);
         currentPhase = Phase.DRAW;
         this.duelMenuController = duelMenuController;
         duelMenuController.setDrawPhase(new DrawPhaseController(this, true));

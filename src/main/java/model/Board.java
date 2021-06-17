@@ -1,11 +1,11 @@
 package model;
 
+import controller.game.DuelMenuController;
 import exceptions.InvalidSelection;
 import exceptions.NoCardFound;
 import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;
-import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -29,6 +29,7 @@ public class Board {
     private Player owner;
     private Phase myPhase;
     private Deck deckInUse;
+    private DuelMenuController controller;
 
     {
         this.monsterZone = new MonsterCardInUse[5];
@@ -70,8 +71,8 @@ public class Board {
 
     private void newCells() {
         for (int i = 0; i < 5; i++) {
-            monsterZone[i] = new MonsterCardInUse();
-            spellTrapZone[i] = new SpellTrapCardInUse();
+            monsterZone[i] = new MonsterCardInUse(this);
+            spellTrapZone[i] = new SpellTrapCardInUse(this);
         }
     }
 
