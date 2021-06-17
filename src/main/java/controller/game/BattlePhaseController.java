@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 class BattlePhaseController {
 
-    private RoundController gamePlay;
+    public RoundController gamePlay;
+    public BattleController battleController;
 
     public BattlePhaseController(RoundController gamePlay) {
         this.gamePlay = gamePlay;
@@ -32,7 +33,7 @@ class BattlePhaseController {
         else if ((attacker = (MonsterCardInUse) gamePlay.getSelectedCardInUse()).hasBeenAttacker())
             throw new CardAttackedBeforeExeption();
         else
-            new BattleController(gamePlay.getCurrentPlayerBoard(),
+            battleController = new BattleController(gamePlay.getCurrentPlayerBoard(),
                     gamePlay.getRivalBoard(), attacker, preyCard);
     }
 

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="yo-gi-oh" />
+        <module name="phaseOneSimulated" />
         <module name="project-team-38" />
       </profile>
     </annotationProcessing>

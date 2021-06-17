@@ -3,6 +3,8 @@ package controller.game;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
+import model.CardState;
+import model.watchers.watchingexceptions.CancelBattle;
 import view.Print;
 import view.messageviewing.Winner;
 import model.card.cardinusematerial.MonsterCardInUse;
@@ -22,8 +24,14 @@ public class BattleController {
         this.preyBoard = preyBoard;
         this.attacker = attacker;
         this.preyCard = preyCard;
-        isPreyCardInAttackMode = preyCard.isInAttackMode();
-        run();
+        try {
+            attacker.watchByState(CardState.WANT_TO_ATTACK);
+            preyCard.watchByState(CardState.IS_ATTACKED);
+            isPreyCardInAttackMode = preyCard.isInAttackMode();
+            run();
+        } catch (CancelBattle cancelBattle){
+            System.out.println("this battle can't happen");
+        }
     }
 
     private void run() {
