@@ -49,7 +49,7 @@ public class RoundController {
         rival = new Player(secondUser);
         currentPhase = Phase.DRAW;
         this.duelMenuController = duelMenuController;
-        duelMenuController.setDrawPhase(new DrawPhaseController(this, true), currentPhase);
+        duelMenuController.setDrawPhase(new DrawPhaseController(this, true));
         this.roundIndex = roundIndex;
     }
 
@@ -70,10 +70,6 @@ public class RoundController {
 
 
     /* general actions (in any phase) */
-
-    public void showBoard() {
-
-    }
 
     public void selectCard(ZoneName zoneName, boolean isForOpponent, int cardIndex) throws InvalidSelection, NoCardFound {
         switch (zoneName) {

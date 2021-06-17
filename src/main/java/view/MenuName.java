@@ -1,6 +1,6 @@
 package view;
 
-public enum MenuName { //todo: it would be really good to put a help option and show it
+public enum MenuName {
     LOGIN,
     SHOP,
     PROFILE,

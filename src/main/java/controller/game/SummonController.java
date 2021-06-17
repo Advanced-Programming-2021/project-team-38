@@ -23,7 +23,7 @@ public class SummonController {
     private int numOfNormalSummons;
     private final RoundController controller;
     private MonsterCardInUse monsterCardInUse;
-    private Board board;
+    private final Board board;
     ArrayList<CardInUse> summonedCards; //it is generated in the main phase calling this class
 
     public SummonController(MonsterCardInUse monsterCardInUse, PreMonsterCard preMonster, RoundController controller, ArrayList<CardInUse> summonedCards) {
@@ -41,6 +41,25 @@ public class SummonController {
         if (preMonster.getLevel() >= 5) tributeSummon(monster);
         else putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
         numOfNormalSummons++;
+    }
+
+    private void tributeSummon(Monster monster) throws NotEnoughTributes {
+        int tributesNeeded = findNumOfTributes(monster);
+        if (board.getNumOfAvailableTributes() < tributesNeeded) {
+            throw new NotEnoughTributes();
+        }
+        for (int i = 0; i < tributesNeeded; i++) {
+            String address = DuelMenuController.askQuestion("Enter the index of a card to tribute:");
+            try {
+                payTributeFromBoard(address);
+            } catch (InvalidTributeAddress invalidAddress) {
+                if (address.equals("cancel")) return;
+                Print.print(invalidAddress.getMessage());
+                i--;
+            }
+        }
+        monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
+        putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
     }
 
     public void ritualSummon(ArrayList<MonsterCardInUse> tributes) throws CantDoActionWithCard {
@@ -62,27 +81,6 @@ public class SummonController {
                 break;
         }
     }
-
-
-    private void tributeSummon(Monster monster) throws NotEnoughTributes {
-        int tributesNeeded = findNumOfTributes(monster);
-        if (board.getNumOfAvailableTributes() < tributesNeeded) {
-            throw new NotEnoughTributes();
-        }
-        for (int i = 0; i < tributesNeeded; i++) {
-            String address = DuelMenuController.askQuestion("Enter the index of a card to tribute:");
-            try {
-                payTributeFromBoard(address);
-            } catch (InvalidTributeAddress invalidAddress) {
-                if (address.equals("cancel")) return;
-                Print.print(invalidAddress.getMessage());
-                i--;
-            }
-        }
-        monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
-        putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
-    }
-
 
     private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         if (monsterCardInUse == null || summonedCards == null) return;

@@ -19,7 +19,6 @@ public class ShopMenuController {
     }
 
     public static String showAllCards() {
-//        ArrayList<PreCard> allPreCards = (ArrayList<PreCard>) PreCard.getAllPreCardsInstances().keySet(); //todo: what is the error?!
         ArrayList<PreCard> allPreCards = new ArrayList<>(PreCard.getAllPreCardsInstances().keySet());
         ArrayList<String> cards = new ArrayList<>();
         for (PreCard preCard : allPreCards) {

@@ -28,7 +28,7 @@ public class DuelMenuController {
     private User firstUser;
     private User secondUser;
 
-    private final ArrayList<HashMap<User, Integer>> usersLP;
+    private final ArrayList<HashMap<User, Integer>> usersLP; //the i th member of list, is a hashmap that shows the lp of each user in the i th round
     private final ArrayList<User> roundsWinner;
 
     private Phase currentPhase;
@@ -40,7 +40,7 @@ public class DuelMenuController {
     private RoundController roundController;
     private int numOfRounds;
 
-    public DuelMenuController(User firstUser, User secondUser, int numOfRounds) throws NumOfRounds {
+    private DuelMenuController(User firstUser, User secondUser, int numOfRounds) throws NumOfRounds {
         setFirstUser(firstUser);
         setSecondUser(secondUser);
         setNumOfRounds(numOfRounds);
@@ -94,7 +94,7 @@ public class DuelMenuController {
         this.roundController = new RoundController(this.firstUser, this.secondUser, this, roundIndex);
         while (!roundController.isRoundEnded()) {
             while (!roundController.isTurnEnded()) {
-                DuelMenu.checkCommandsInGame();
+                DuelMenu.checkCommandsInRound();
             }
             swapUsers();
         }
@@ -198,9 +198,8 @@ public class DuelMenuController {
         this.secondUser = user;
     }
 
-    public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
+    public void setDrawPhase(DrawPhaseController draw) {
         this.drawPhaseController = draw;
-        currentPhase = gamePhase;
     }
 
 

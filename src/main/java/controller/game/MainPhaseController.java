@@ -81,9 +81,8 @@ public class MainPhaseController {
     }
 
     public void flipSummon() throws NoSelectedCard, CantDoActionWithCard {
-
-        CardInUse selectedCard = getSelectedPossibleCardInUse("change position of");
-        if (!(selectedCard instanceof MonsterCardInUse)) throw new CantDoActionWithCard("change position of");
+        CardInUse selectedCard = getSelectedPossibleCardInUse("flip summon");
+        if (!(selectedCard instanceof MonsterCardInUse)) throw new CantDoActionWithCard("flip summon");
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) selectedCard;
 
         if (summonedInThisPhase.contains(monsterCardInUse))
@@ -91,8 +90,8 @@ public class MainPhaseController {
         if (monsterCardInUse.isFaceUp() || monsterCardInUse.isInAttackMode())
             throw new CantDoActionWithCard("flip summon");
 
-        monsterCardInUse.setFaceUp(false);
-        monsterCardInUse.setAttacking(false);
+        monsterCardInUse.setFaceUp(true);
+        monsterCardInUse.setAttacking(true);
         new SuccessfulAction("", "flip summoned");
     }
 
