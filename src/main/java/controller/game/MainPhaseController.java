@@ -32,42 +32,49 @@ public class MainPhaseController {
         this.controller = controller;
         this.player = controller.getCurrentPlayer();
     }
+//
+//    private PreCard getSelectedPossiblePreCard(String action) throws NoSelectedCard, CantDoActionWithCard {
+//        if (controller.isAnyCardSelected()) {
+//            PreCard selectedCard = this.controller.getSelectedPreCard();
+//            if (selectedCard == null) throw new CantDoActionWithCard(action);
+//            return selectedCard;
+//        } else throw new NoSelectedCard();
+//    }
+//
+//    private CardInUse getSelectedPossibleCardInUse(String action) throws CantDoActionWithCard, NoSelectedCard {
+//        if (controller.isAnyCardSelected()) {
+//            CardInUse selectedCard = this.controller.getSelectedCardInUse();
+//            if (selectedCard == null) throw new CantDoActionWithCard(action);
+//            return selectedCard;
+//        } else throw new NoSelectedCard();
+//    }
 
-    private PreCard getSelectedPossiblePreCard(String action) throws NoSelectedCard, CantDoActionWithCard {
-        if (controller.isAnyCardSelected()) {
-            PreCard selectedCard = this.controller.getSelectedPreCard();
-            if (selectedCard == null) throw new CantDoActionWithCard(action);
-            return selectedCard;
-        } else throw new NoSelectedCard();
+    private Card getSelectedCard() throws NoSelectedCard {
+        if (this.controller.getSelectedCard() == null) throw new NoSelectedCard();
+        return this.controller.getSelectedCard();
     }
-
-    private CardInUse getSelectedPossibleCardInUse(String action) throws CantDoActionWithCard, NoSelectedCard {
-        if (controller.isAnyCardSelected()) {
-            CardInUse selectedCard = this.controller.getSelectedCardInUse();
-            if (selectedCard == null) throw new CantDoActionWithCard(action);
-            return selectedCard;
-        } else throw new NoSelectedCard();
-    }
-
 
     /* this function doesn't handle flip summon */
     public void summonMonster() throws NoSelectedCard, CantDoActionWithCard, AlreadyDoneAction, NotEnoughTributes, BeingFull {
-        PreCard selectedCard = getSelectedPossiblePreCard("summon");
+        Card selectedCard = getSelectedCard();
         /* checking the errors */
-        if (!player.getHand().doesContainCard(selectedCard) || !(selectedCard instanceof PreMonsterCard))
+        if (!player.getHand().doesContainCard(selectedCard) || !(selectedCard instanceof Monster))
             throw new CantDoActionWithCard("summon");
         if (player.getBoard().isMonsterZoneFull()) throw new BeingFull("monster card zone");
 
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
-        SummonController summonController = new SummonController(monsterCardInUse, (PreMonsterCard) selectedCard, controller, summonedInThisPhase);
+        SummonController summonController = new SummonController(monsterCardInUse, (Monster) selectedCard, controller, summonedInThisPhase);
         summonController.normal();
     }
 
-    public void changePosition(boolean isToBeAttackMode) throws NoSelectedCard, AlreadyDoneAction, AlreadyInWantedPosition, CantDoActionWithCard {
+    public void changePosition(boolean isToBeAttackMode)
+            throws NoSelectedCard, AlreadyDoneAction, AlreadyInWantedPosition, CantDoActionWithCard {
 
-        CardInUse selectedCard = getSelectedPossibleCardInUse("change position of");
-        if (!(selectedCard instanceof MonsterCardInUse)) throw new CantDoActionWithCard("change position of");
-        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) selectedCard;
+        Card selectedCard = getSelectedCard();
+        if (!(selectedCard instanceof Monster)) throw new CantDoActionWithCard("change position of");
+        CardInUse cardInUse = player.getBoard().getCellOf(selectedCard);
+        if (!(cardInUse instanceof MonsterCardInUse)) throw new CantDoActionWithCard("change position of");
+        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) cardInUse;
 
         if (monsterCardInUse.isPositionChanged()) throw new AlreadyDoneAction("changed this card position");
 
@@ -81,9 +88,10 @@ public class MainPhaseController {
     }
 
     public void flipSummon() throws NoSelectedCard, CantDoActionWithCard {
-        CardInUse selectedCard = getSelectedPossibleCardInUse("flip summon");
-        if (!(selectedCard instanceof MonsterCardInUse)) throw new CantDoActionWithCard("flip summon");
-        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) selectedCard;
+        Card selectedCard = getSelectedCard();
+        if (!(selectedCard instanceof Monster)) throw new CantDoActionWithCard("flip summon");
+        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getCellOf(selectedCard);
+        if (monsterCardInUse == null) throw new CantDoActionWithCard("flip summon");
 
         if (summonedInThisPhase.contains(monsterCardInUse))
             throw new CantDoActionWithCard("flip summon");
@@ -96,29 +104,29 @@ public class MainPhaseController {
     }
 
     public void setCard() throws NoSelectedCard, CantDoActionWithCard, BeingFull, AlreadyDoneAction {
-        PreCard selectedCard = getSelectedPossiblePreCard("set");
+        Card selectedCard = getSelectedCard();
         if (!player.getHand().doesContainCard(selectedCard)) throw new CantDoActionWithCard("set");
-        if (selectedCard instanceof PreMonsterCard) setMonster((PreMonsterCard) selectedCard);
-        if (selectedCard instanceof PreSpellTrapCard) setSpellTrap((PreSpellTrapCard) selectedCard);
+        if (selectedCard instanceof Monster) setMonster((Monster) selectedCard);
+        if (selectedCard instanceof SpellTrap) setSpellTrap((SpellTrap) selectedCard);
     }
 
-    private void setMonster(PreMonsterCard selectedCard) throws BeingFull, AlreadyDoneAction {
+    private void setMonster(Monster selectedCard) throws BeingFull, AlreadyDoneAction {
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
         if (!summonedInThisPhase.isEmpty()) throw new AlreadyDoneAction("summoned/set");//todo: fine?( in tests )
 
-        Monster monster = (Monster) selectedCard.newCard();
+//        Monster monster = (Monster) selectedCard.newCard();
         monsterCardInUse.setThisCard(monster);
         monsterCardInUse.setFaceUp(false);
         monsterCardInUse.setInAttackMode(false);
         new SuccessfulAction("", "set");
     }
 
-    private void setSpellTrap(PreSpellTrapCard selectedCard) throws BeingFull {
+    private void setSpellTrap(SpellTrap selectedCard) throws BeingFull {
         SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
-        SpellTrap spellTrap = (SpellTrap) selectedCard.newCard();
+//        SpellTrap spellTrap = (SpellTrap) selectedCard.newCard();
         spellTrapCardInUse.setThisCard(spellTrap);
         new SuccessfulAction("", "set");
         //todo: the spell or trap card in use should be face down. there wasn't any field for it. will it be needed?

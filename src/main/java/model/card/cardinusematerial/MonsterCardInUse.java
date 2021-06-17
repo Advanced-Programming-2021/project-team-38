@@ -41,12 +41,17 @@ public class MonsterCardInUse extends CardInUse {
         this.defense += amount;
     }
 
-    public void setInAttackMode(boolean inAttackMode) {
+    public void setInAttackMode(boolean inAttackMode) { //todo : watchers should be notified
         if (isInAttackMode != inAttackMode) {
             isInAttackMode = inAttackMode;
             this.isPositionChanged = true;
         }
     }
+
+    public void setFaceUp(boolean faceUp) {
+        isFaceUp = faceUp; //todo: watchers should watch!
+    }
+
 
     public boolean hasBeenAttacker() {
         return hasBeenAttacker;

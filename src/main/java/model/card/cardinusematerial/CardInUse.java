@@ -8,7 +8,6 @@ import model.CardState;
 import model.Player;
 import model.card.Card;
 import model.watchers.Watcher;
-import model.watchers.watchingexceptions.CancelBattle;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ public abstract class CardInUse {
         isPositionChanged = false;
         isFaceUp = false;
     }
-
 
     public Card getThisCard() {
         return thisCard;
