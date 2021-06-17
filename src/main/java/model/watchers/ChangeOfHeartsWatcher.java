@@ -8,7 +8,7 @@ import model.watchers.watchingexceptions.CancelBattle;
 
 public class ChangeOfHeartsWatcher extends Watcher{
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController) throws CancelBattle {
+    public void watch(CardState cardState, DuelMenuController duelMenuController){
         if (cardState == CardState.ACTIVE_MY_EFFECT) {
             if (Watcher.addToStack(this)) { //TODO remove
                 ownerOfWatcher.watchByState(CardState.ACTIVE_EFFECT);
@@ -17,11 +17,6 @@ public class ChangeOfHeartsWatcher extends Watcher{
                 //throw exception don't continue my for on watchers
             }
         }
-    }
-
-    @Override
-    public void reNewWatch() {
-
     }
 
     @Override

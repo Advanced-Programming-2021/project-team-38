@@ -17,14 +17,14 @@ public abstract class Watcher {
     public boolean isWatcherActivated = false;
     public CardInUse ownerOfWatcher;
     protected static boolean isInChainMode = false;
-    private int speed = 1;
+    public int speed = 1;
 
     static {
         allWatchers = new HashMap<>();
         stack = new ArrayList<>();
     }
 
-    public abstract void watch(CardState cardState, DuelMenuController duelMenuController) throws CancelBattle;
+    public abstract void watch(CardState cardState, DuelMenuController duelMenuController);
 
     /*
     sees if the watcher can be put on cards.
@@ -65,7 +65,7 @@ public abstract class Watcher {
         return false;
     }
 
-    public boolean handleChain() throws CancelBattle {
+    public boolean handleChain() {
         if (Watcher.addToStack(this)) {
             ownerOfWatcher.watchByState(CardState.ACTIVE_EFFECT);
             emptyStack();
@@ -73,6 +73,11 @@ public abstract class Watcher {
         }
 
         return false;
+    }
+
+    public void trapHasDoneItsEffect() {
+        isWatcherActivated = true;
+        ownerOfWatcher.sendToGraveYard();
     }
 
 }

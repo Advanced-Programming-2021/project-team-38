@@ -18,45 +18,40 @@ public class BattleController {
     private MonsterCardInUse attacker, preyCard;
     private boolean isPreyCardInAttackMode;
     private int attackerAttack, preyPoint;
+    public boolean canBattleHappen = true;
 
     public BattleController(Board attackerBoard, Board preyBoard, MonsterCardInUse attacker, MonsterCardInUse preyCard) {
         this.attackerBoard = attackerBoard;
         this.preyBoard = preyBoard;
         this.attacker = attacker;
         this.preyCard = preyCard;
-        try {
             attacker.watchByState(CardState.WANT_TO_ATTACK);
             preyCard.watchByState(CardState.IS_ATTACKED);
             isPreyCardInAttackMode = preyCard.isInAttackMode();
-            run();
-        } catch (CancelBattle cancelBattle){
-            System.out.println("this battle can't happen");
-        }
+            if (canBattleHappen)    run();
+            else    System.out.println("this battle can't happen");
     }
 
     private void run() {
-        //TODO check to see if can attacker can attack
-        if (((Monster) preyCard.getThisCard()).canReceiveAttack(attackerBoard, preyBoard, attacker, preyCard)) {
-            preyCard.changeIsAttacked();
-            attacker.changeIsAttacking();
+        preyCard.changeIsAttacked();
+        attacker.changeIsAttacking();
 
-            if (!isPreyCardInAttackMode)    preyCard.changePosition();
-            attackerAttack = attacker.getAttack();
-            preyPoint = preyCard.appropriatePointAtBattle();
+        if (!isPreyCardInAttackMode) preyCard.changePosition();
+        attackerAttack = attacker.getAttack();
+        preyPoint = preyCard.appropriatePointAtBattle();
 
-            ((Monster)preyCard.getThisCard()).receiveAttack(this);
-            differenceOfPoints = Math.abs(attackerAttack - preyPoint);
-            if (!isPreyCardInAttackMode) {
-                Print.print(String.format("opponent’s monster card was %s",
-                        preyCard.getThisCard().getName()));
-            }
-            if (attackerAttack > preyPoint) {
-                attackerWins();
-            } else if (attackerAttack == preyPoint) {
-                noneWins();
-            } else {
-                preyWins();
-            }
+        ((Monster) preyCard.getThisCard()).receiveAttack(this);
+        differenceOfPoints = Math.abs(attackerAttack - preyPoint);
+        if (!isPreyCardInAttackMode) {
+            Print.print(String.format("opponent’s monster card was %s",
+                    preyCard.getThisCard().getName()));
+        }
+        if (attackerAttack > preyPoint) {
+            attackerWins();
+        } else if (attackerAttack == preyPoint) {
+            noneWins();
+        } else {
+            preyWins();
         }
     }
 

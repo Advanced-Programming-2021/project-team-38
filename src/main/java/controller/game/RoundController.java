@@ -147,4 +147,9 @@ public class RoundController {
 //        cardInUse.sendToGraveYard();
     }
 
+    public Player getMyRival(Player myPlayer) {
+        if (currentPlayer == myPlayer)    return rival;
+        else    return currentPlayer;
+    }
+
 }

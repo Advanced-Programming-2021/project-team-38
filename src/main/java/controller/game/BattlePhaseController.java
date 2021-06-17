@@ -8,7 +8,7 @@ import model.card.cardinusematerial.MonsterCardInUse;
 
 import java.util.ArrayList;
 
-class BattlePhaseController {
+public class BattlePhaseController {
 
     public RoundController gamePlay;
     public BattleController battleController;
