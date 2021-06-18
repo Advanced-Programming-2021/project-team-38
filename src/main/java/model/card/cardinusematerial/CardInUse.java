@@ -58,8 +58,8 @@ public abstract class CardInUse {
 
     public void setACardInCell(Card card) {
         thisCard = card;
-        //TODO
-        card.putBuiltInWatchers(this);
+        card.cardIsBeingSetInCell(this);
+//        card.putBuiltInWatchers(this);
     }
 
     public void resetCell() {

@@ -16,6 +16,7 @@ public abstract class Card {
 
     public Card(PreCard preCard) {
         preCardInGeneral = preCard;
+
     }
 
     public Card getInstance() { //TODO to be complete
@@ -50,5 +51,13 @@ public abstract class Card {
         for (Watcher builtInWatcher : builtInWatchers) {
             builtInWatcher.deleteWatcher();
         }
+    }
+
+    public void cardIsBeingSetInCell(CardInUse cardInUse) {
+        for (String nameOfWatcher : preCardInGeneral.nameOfWatchers) {
+            builtInWatchers.add(Watcher.createWatcher(nameOfWatcher, cardInUse));
+        }
+
+        putBuiltInWatchers(cardInUse);
     }
 }

@@ -4,6 +4,7 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
+import model.watchers.monsters.CommandKnightHolyWatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,10 @@ public abstract class Watcher {
         stack = new ArrayList<>();
     }
 
+    public Watcher(CardInUse ownerOfWatcher) {
+        this.ownerOfWatcher = ownerOfWatcher;
+    }
+
     public abstract void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController);
 
     /*
@@ -32,9 +37,10 @@ public abstract class Watcher {
 
     public abstract void putWatcher(CardInUse cardInUse);
 
-    public void update(Phase newPhase){}
+    public void update(Phase newPhase) {
+    }
 
-    public void disableWatcher(CardInUse cardInUse){    //when probably the card is destroyed
+    public void disableWatcher(CardInUse cardInUse) {    //when probably the card is destroyed
         amWatching.remove(cardInUse);
     }
 
@@ -84,6 +90,14 @@ public abstract class Watcher {
         if (!amWatching.contains(cardInUse)) {
             cardInUse.watchersOfCardInUse.add(this);
             amWatching.add(cardInUse);
+        }
+    }
+
+    public static Watcher createWatcher(String nameWatcher, CardInUse ownerOfWatcher) {
+        switch (nameWatcher) {
+            case "CommandKnightHolyWatcher":
+                return new CommandKnightHolyWatcher(ownerOfWatcher);
+                break;
         }
     }
 
