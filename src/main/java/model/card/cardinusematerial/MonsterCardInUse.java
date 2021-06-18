@@ -114,4 +114,7 @@ public class MonsterCardInUse extends CardInUse {
         sendToGraveYard();
     }
 
+    public void summon() {
+        watchByState(CardState.SUMMON);
+    }
 }

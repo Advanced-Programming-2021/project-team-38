@@ -83,12 +83,13 @@ public class SummonController {
 
     private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         if (monsterCardInUse == null || summonedCards == null) return;
+
+        monsterCardInUse.summon();
+        monsterCardInUse.setACardInCell(monster);
         monsterCardInUse.setInAttackMode(true);
         monsterCardInUse.setFaceUp(true);
-        monsterCardInUse.setThisCard(monster);
         if (!isSpecial) summonedCards.add(monsterCardInUse);
         new SuccessfulAction("", "summoned");
-        //todo : after that, all of the watchers in the world should be called! because some of them may start wathcing us;
     }
 
     private int findNumOfTributes(Monster monster) {
