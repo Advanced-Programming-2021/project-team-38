@@ -61,7 +61,7 @@ public class AdvancedRitualArt extends SpellTrap {
 
         ArrayList<Monster> goodMonsters = myPlayer.getHand().getMonstersOfType(MonsterCardType.RITUAL);
         for (Monster goodMonster : goodMonsters) {
-            if (areEnoughTributesForLevel(getLevel(), myPlayer.getBoard())) return true;
+            if (areEnoughTributesForLevel(goodMonster.getLevel(), myPlayer.getBoard())) return true;
         }
         return false;
     }
@@ -69,11 +69,11 @@ public class AdvancedRitualArt extends SpellTrap {
 
     @Override
     public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) throws PreparationsNotChecked, BeingFull, NotEnoughTributes, AlreadyDoneAction, CantDoActionWithCard {
-        if (!this.areEffectPreparationsDone(myPlayer, rivalPlayer, thisCard, gamePlay))
-            throw new PreparationsNotChecked();
-        boolean isCancelled = controller.handleRitualSummon();
-        if (isCancelled) return;
-        this.setActivated(true);
+//        if (!this.areEffectPreparationsDone(myPlayer, rivalPlayer, thisCard, gamePlay))
+//            throw new PreparationsNotChecked();
+//        boolean isCancelled = controller.handleRitualSummon();
+//        if (isCancelled) return;
+//        this.setActivated(true); //todo
     }
 
 }

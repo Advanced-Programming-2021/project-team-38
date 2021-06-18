@@ -1,5 +1,6 @@
 package model.card.cardinusematerial;
 
+import controller.game.DuelMenuController;
 import controller.game.RoundController;
 import lombok.Getter;
 import lombok.Setter;
@@ -81,12 +82,12 @@ public abstract class CardInUse {
     }
 
     public void watchByState(CardState cardState) {
+        DuelMenuController duelMenuController = this.getBoard().getController();
         for (Watcher watcher : watchersOfCardInUse) {
-            //TODO !!! for negar
             if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
-                watcher.watch(this, CardState.ACTIVE_MY_EFFECT, null);
+                watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
             else
-                watcher.watch(this, cardState, null);
+                watcher.watch(this, cardState, duelMenuController);
         }
     }
 }

@@ -40,7 +40,7 @@ public abstract class Watcher {
 
     public void deleteWatcher() {   //when owner of watcher is destroyed or the watcher can only be used once
         for (CardInUse cardInUse : amWatching) {
-            cardInUse.watchersOfCardInUse.remove(cardInUse);
+            cardInUse.watchersOfCardInUse.remove(this);
             amWatching.remove(cardInUse);
         }
     }

@@ -54,7 +54,9 @@ public class Menu {
             MainMenu.logout();
         else if (command.equals("exit program"))
             LoginMenu.checkMenuCommands(command);
-        else
+        else if (command.startsWith("import card")) {
+
+        } else
             throw new InvalidCommand();
         //todo : the command "card show <card name>" can be used in duel, shop, and deck menus
     }
