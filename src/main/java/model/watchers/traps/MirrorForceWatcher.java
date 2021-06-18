@@ -1,14 +1,15 @@
-package model.watchers;
+package model.watchers.traps;
 
 import controller.game.BattleController;
 import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
+import model.watchers.Watcher;
 
-public class MirrorForceWatcher extends Watcher{
+public class MirrorForceWatcher extends Watcher {
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController) {
+    public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.WANT_TO_ATTACK) {
             if (handleChain()) {
                 BattleController battle = duelMenuController.getBattlePhaseController().battleController;

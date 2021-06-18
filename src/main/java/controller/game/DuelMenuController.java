@@ -294,6 +294,9 @@ public class DuelMenuController {
                 this.roundController.setTurnEnded(true);
         }
         DuelMenu.showPhase(currentPhase.toString());
+        roundController.getCurrentPlayer().getBoard().update();
+        roundController.getRival().getBoard().update();
+        if (currentPhase == Phase.DRAW)     drawPhaseController.run();
     }
 
 

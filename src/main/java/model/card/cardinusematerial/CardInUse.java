@@ -40,11 +40,14 @@ public abstract class CardInUse {
         return thisCard == null;
     }
 
-    public abstract void putInGraveYard();
-
     public void changePosition() {
         isPositionChanged = true; //todo : check with hasti. change position isn't only for face up ( I'm not sure if it's even important for face up change).
         isFaceUp = !isFaceUp;
+    }
+
+    public void faceUpCard() {
+        watchByState(CardState.FACE_UP);
+        isFaceUp = true;
     }
 
     public void setACardInCell(Card card) {
@@ -76,9 +79,9 @@ public abstract class CardInUse {
         for (Watcher watcher : watchersOfCardInUse) {
             //TODO !!! for negar
             if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
-                watcher.watch(CardState.ACTIVE_MY_EFFECT, null);
+                watcher.watch(this, CardState.ACTIVE_MY_EFFECT, null);
             else
-                watcher.watch(cardState, null);
+                watcher.watch(this, cardState, null);
         }
     }
 }

@@ -4,7 +4,6 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
-import model.watchers.watchingexceptions.CancelBattle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +23,7 @@ public abstract class Watcher {
         stack = new ArrayList<>();
     }
 
-    public abstract void watch(CardState cardState, DuelMenuController duelMenuController);
+    public abstract void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController);
 
     /*
     sees if the watcher can be put on cards.
@@ -39,7 +38,7 @@ public abstract class Watcher {
         amWatching.remove(cardInUse);
     }
 
-    public void deleteWatcher() {   //when owner of watcher is destroyed
+    public void deleteWatcher() {   //when owner of watcher is destroyed or the watcher can only be used once
         for (CardInUse cardInUse : amWatching) {
             cardInUse.watchersOfCardInUse.remove(cardInUse);
             amWatching.remove(cardInUse);
@@ -57,7 +56,8 @@ public abstract class Watcher {
     else -> false
      */
     protected static boolean addToStack(Watcher watcher) {
-        if (stack.get(stack.size() - 1).speed <= watcher.speed) {
+        if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
+            //TODO ask user
             stack.add(watcher);
             return true;
         }
@@ -78,6 +78,13 @@ public abstract class Watcher {
     public void trapHasDoneItsEffect() {
         isWatcherActivated = true;
         ownerOfWatcher.sendToGraveYard();
+    }
+
+    public void addWatcherToCardInUse(CardInUse cardInUse) {
+        if (!amWatching.contains(cardInUse)) {
+            cardInUse.watchersOfCardInUse.add(this);
+            amWatching.add(cardInUse);
+        }
     }
 
 }

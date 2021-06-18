@@ -4,11 +4,10 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
-import model.watchers.watchingexceptions.CancelBattle;
 
 public class ChangeOfHeartsWatcher extends Watcher{
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController){
+    public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController){
         if (cardState == CardState.ACTIVE_MY_EFFECT) {
             if (Watcher.addToStack(this)) { //TODO remove
                 ownerOfWatcher.watchByState(CardState.ACTIVE_EFFECT);

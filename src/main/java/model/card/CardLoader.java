@@ -63,7 +63,7 @@ public class CardLoader {
         //load cards which are made by hand -> command knight, suijin, ...
         //remember to call setupmonster or spelltrap for them
         String[] handmadeMonsters = {"Command Knight", "Man-Eater Bug",
-                "Scanner", "Suijin", "Yomi Ship"};
+                "Scanner", "SuijinWatcher", "Yomi Ship"};
 
 
         PreCard preCard = PreCard.findCard("Command Knight");

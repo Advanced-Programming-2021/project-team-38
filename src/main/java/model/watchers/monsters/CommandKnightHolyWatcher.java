@@ -1,5 +1,5 @@
 //finished
-package model.watchers;
+package model.watchers.monsters;
 
 import controller.game.BattleController;
 import controller.game.DuelMenuController;
@@ -7,15 +7,16 @@ import model.CardState;
 import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
-import model.watchers.watchingexceptions.CancelBattle;
+import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
-public class CommandKnightHolyWatcher extends Watcher{
+public class CommandKnightHolyWatcher extends Watcher {
 
     {
         whoToWatch = WhoToWatch.MINE;
     }
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController) {
+    public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
             if (handleChain()) {
                 for (MonsterCardInUse monsterCardInUse : ownerOfWatcher.ownerOfCard.getBoard().getMonsterZone()) {
@@ -38,10 +39,7 @@ public class CommandKnightHolyWatcher extends Watcher{
     public void putWatcher(CardInUse cardInUse) {
         if (ownerOfWatcher == null)     ownerOfWatcher = cardInUse;
 
-        if (!amWatching.contains(cardInUse)) {
-            cardInUse.watchersOfCardInUse.add(this);
-            amWatching.add(cardInUse);
-        }
+        addWatcherToCardInUse(cardInUse);
     }
 
     @Override
