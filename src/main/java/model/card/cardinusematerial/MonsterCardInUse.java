@@ -21,12 +21,14 @@ public class MonsterCardInUse extends CardInUse {
     private boolean isAttacking;    //if it has attacked a rival card in this phase
     private boolean cameOnThisTurn; //if it was drawn in this phase
     private boolean isInAttackMode;
+    public boolean canBeDestroyed;
 
     {
         resetCell();
         defense = 0;
         attack = 0;
         isInAttackMode = true; //it's needed for the first use of "setInAttackMode"
+        canBeDestroyed = true;
         //todo: if the monster is flip summoned, should we be able to change its attackMode after that?
     }
 
@@ -68,12 +70,14 @@ public class MonsterCardInUse extends CardInUse {
         return defense;
     }
 
+    @Override
     public void resetCell() {  //** watch out the come on this turn
         cameOnThisTurn = false;
         isAttacked = false;
         isAttacking = false;
         hasBeenAttacker = false;
         isInAttackMode = false;
+        canBeDestroyed = true;
     }
 
     @Override
@@ -95,7 +99,7 @@ public class MonsterCardInUse extends CardInUse {
 
     public void destroyThis() {
         watchByState(CardState.DESTROY);
-        sendToGraveYard();
+        if (canBeDestroyed)     sendToGraveYard();
     }
 
 }

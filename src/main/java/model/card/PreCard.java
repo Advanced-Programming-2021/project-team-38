@@ -2,11 +2,13 @@ package model.card;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Getter
 public abstract class PreCard {
     protected static HashMap<PreCard, Card> allPreCardsInstances;
+    public ArrayList<String> nameOfWatchers;
     protected String name;
     protected CardType cardType;    // monster or trap or spell
     protected String description;

@@ -47,8 +47,8 @@ public abstract class CardInUse {
 
     public void setACardInCell(Card card) {
         thisCard = card;
-        //TODO
-        card.putBuiltInWatchers(this);
+        card.cardIsBeingSetInCell(this);
+//        card.putBuiltInWatchers(this);
     }
 
     public void resetCell() {
@@ -73,8 +73,8 @@ public abstract class CardInUse {
     public void watchByState(CardState cardState) {
         for (Watcher watcher : watchersOfCardInUse) {
             //TODO !!! for negar
-            if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
-                watcher.watch(this, CardState.ACTIVE_MY_EFFECT, null);
+            if (watcher.ownerOfWatcher != this && cardState == CardState.ACTIVE_MY_EFFECT)
+                watcher.watch(this, CardState.ACTIVE_EFFECT, null);
             else
                 watcher.watch(this, cardState, null);
         }

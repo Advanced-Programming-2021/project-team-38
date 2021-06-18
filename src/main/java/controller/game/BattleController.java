@@ -40,7 +40,7 @@ public class BattleController {
 
         if (!isPreyCardInAttackMode) preyCard.changePosition();
 
-        ((Monster) preyCard.getThisCard()).receiveAttack(this);
+//        ((Monster) preyCard.getThisCard()).receiveAttack(this);
         differenceOfPoints = Math.abs(attackerAttack - preyPoint);
         if (!isPreyCardInAttackMode) {
             Print.print(String.format("opponent’s monster card was %s",

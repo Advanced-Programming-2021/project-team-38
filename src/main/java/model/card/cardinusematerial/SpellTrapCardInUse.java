@@ -3,13 +3,11 @@ package model.card.cardinusematerial;
 
 import lombok.Getter;
 import model.Board;
+import model.CardState;
 
 @Getter
 public class SpellTrapCardInUse extends CardInUse {
-
-
-    @Override
-    public void putInGraveYard() {
-
+    public void activeMyEffect() {
+        watchByState(CardState.ACTIVE_MY_EFFECT);
     }
 }

@@ -15,6 +15,11 @@ public class CommandKnightHolyWatcher extends Watcher {
     {
         whoToWatch = WhoToWatch.MINE;
     }
+
+    public CommandKnightHolyWatcher(CardInUse ownerOfWatcher) {
+        super(ownerOfWatcher);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
