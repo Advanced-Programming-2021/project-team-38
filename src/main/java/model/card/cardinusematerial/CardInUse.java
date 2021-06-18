@@ -45,7 +45,12 @@ public abstract class CardInUse {
         isFaceUp = !isFaceUp;
     }
 
-    public void faceUpCard() {
+    public void setFaceUp(boolean faceUp) {
+        if (faceUp) faceUpCard();
+        else isFaceUp = false;
+    }
+
+    public void faceUpCard() { //note
         watchByState(CardState.FACE_UP);
         isFaceUp = true;
     }

@@ -23,6 +23,7 @@ public class SummonController {
     private final RoundController controller;
     private MonsterCardInUse monsterCardInUse;
     private final Board board;
+    private boolean hasExtraSummonPermission = false;
     ArrayList<CardInUse> summonedCards; //it is generated in the main phase calling this class
 
     public SummonController(MonsterCardInUse monsterCardInUse, Monster monster, RoundController controller, ArrayList<CardInUse> summonedCards) {
@@ -35,14 +36,16 @@ public class SummonController {
     }
 
     public void normal() throws AlreadyDoneAction, NotEnoughTributes {
-        if (numOfNormalSummons != 0) throw new AlreadyDoneAction("summoned");
-        //todo: sometimes the monster's level shouldn't be checked(special effects)
-        if (monster.getLevel() >= 5) tributeSummon(monster);
+        if (numOfNormalSummons != 0) {
+            if (!hasExtraSummonPermission || monster.getLevel() >= 5) throw new AlreadyDoneAction("summoned");
+            else hasExtraSummonPermission = false;
+        }
+        if (monster.getLevel() >= 5) summonWithTribute(monster);
         else putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
         numOfNormalSummons++;
     }
 
-    private void tributeSummon(Monster monster) throws NotEnoughTributes {
+    private void summonWithTribute(Monster monster) throws NotEnoughTributes {
         int tributesNeeded = findNumOfTributes(monster);
         if (board.getNumOfAvailableTributes() < tributesNeeded) {
             throw new NotEnoughTributes();
@@ -87,7 +90,7 @@ public class SummonController {
         monsterCardInUse.summon();
         monsterCardInUse.setACardInCell(monster);
         monsterCardInUse.setInAttackMode(true);
-        monsterCardInUse.setFaceUp(true);
+        monsterCardInUse.faceUpCard();
         if (!isSpecial) summonedCards.add(monsterCardInUse);
         new SuccessfulAction("", "summoned");
     }

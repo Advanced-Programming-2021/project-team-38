@@ -6,9 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Board;
 import model.CardState;
+import model.card.Card;
 import model.card.monster.Monster;
-import model.card.monster.PreMonsterCard;
-import model.watchers.watchingexceptions.CancelBattle;
 
 @Getter
 @Setter
