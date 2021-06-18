@@ -4,12 +4,13 @@ import controller.game.DuelMenuController;
 import controller.game.RoundController;
 import exceptions.*;
 import model.Player;
+import model.card.Card;
 import model.card.PreCard;
 import model.card.cardinusematerial.SpellTrapCardInUse;
-import model.card.monster.PreMonsterCard;
+import model.card.monster.Monster;
 import model.card.spelltrap.SpellTrap;
 
-import static controller.game.SummonController.specialSummonPreCard;
+import static controller.game.SummonController.specialSummon;
 
 public class MonsterReborn extends SpellTrap {
 
@@ -26,16 +27,16 @@ public class MonsterReborn extends SpellTrap {
         String selectCardCommand = duelMenu.askForSth("please select a monster from graveyard");  //TODO bring to view
         boolean isSelectedFromOtherPlayerBoard = selectCardCommand.contains("--opponent");
         duelMenu.selectCard(selectCardCommand);
-        PreCard preCard = gamePlay.getSelectedPreCard();
-        if (preCard == null)
+        Card card = gamePlay.getSelectedCard();
+        if (card == null)
             throw new NoSelectedCard();
-        else if (!(preCard instanceof PreMonsterCard))
+        else if (!(card instanceof Monster))
             throw new NotAppropriateCard("monster");
         else {
-            specialSummonPreCard(preCard, myPlayer);
+            specialSummon((Monster) card, myPlayer);
             if (isSelectedFromOtherPlayerBoard)
-                rivalPlayer.getBoard().getGraveYard().removeCard(preCard);
-            else myPlayer.getBoard().getGraveYard().removeCard(preCard);
+                rivalPlayer.getBoard().getGraveYard().removeCard(card);
+            else myPlayer.getBoard().getGraveYard().removeCard(card);
         }
     }
 }

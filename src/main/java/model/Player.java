@@ -1,5 +1,6 @@
 package model;
 
+import controller.game.RoundController;
 import model.card.PreCard;
 
 public class Player {
@@ -12,6 +13,7 @@ public class Player {
     //    private ArrayList<Card> unusedCards;
     private Hand hand;
     private final User owner;
+    private final RoundController roundController;
 
 
     {
@@ -21,11 +23,12 @@ public class Player {
         board = new Board();
     }
 
-    public Player(User owner) {
+    public Player(User owner, RoundController roundController) {
         this.owner = owner;
         this.name = owner.getNickName();
         this.deck = owner.getActiveDeck();
         this.lifePoint = 8000;
+        this.roundController = roundController;
     }
 
     public User getOwner() {

@@ -11,8 +11,8 @@ import model.Enums.Phase;
 import model.Player;
 import model.User;
 import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
-import model.card.monster.PreMonsterCard;
 import view.Menus.DuelMenu;
 import view.Print;
 
@@ -28,7 +28,7 @@ public class DuelMenuController {
     private User firstUser;
     private User secondUser;
 
-    private final ArrayList<HashMap<User, Integer>> usersLP;
+    private final ArrayList<HashMap<User, Integer>> usersLP; //the i th member of list, is a hashmap that shows the lp of each user in the i th round
     private final ArrayList<User> roundsWinner;
 
     private Phase currentPhase;
@@ -40,7 +40,7 @@ public class DuelMenuController {
     private RoundController roundController;
     private int numOfRounds;
 
-    public DuelMenuController(User firstUser, User secondUser, int numOfRounds) throws NumOfRounds {
+    private DuelMenuController(User firstUser, User secondUser, int numOfRounds) throws NumOfRounds {
         setFirstUser(firstUser);
         setSecondUser(secondUser);
         setNumOfRounds(numOfRounds);
@@ -94,7 +94,7 @@ public class DuelMenuController {
         this.roundController = new RoundController(this.firstUser, this.secondUser, this, roundIndex);
         while (!roundController.isRoundEnded()) {
             while (!roundController.isTurnEnded()) {
-                DuelMenu.checkCommandsInGame();
+                DuelMenu.checkCommandsInRound();
             }
             swapUsers();
         }
@@ -108,7 +108,8 @@ public class DuelMenuController {
     }
 
     private void exchangeCardInDecks(Player player) {
-        String answer = DuelMenu.askQuestion("Dear" + player.getName() + "! Do you want to exchange cards of side deck and main deck?\n" +
+        String answer = DuelMenu.askQuestion("Dear" + player.getName() + "!" +
+                " Do you want to exchange cards of side deck and main deck?\n" +
                 " (no/ from main to side/ from side to main)");
         try {
             switch (answer) {
@@ -198,9 +199,8 @@ public class DuelMenuController {
         this.secondUser = user;
     }
 
-    public void setDrawPhase(DrawPhaseController draw, Phase gamePhase) {
+    public void setDrawPhase(DrawPhaseController draw) {
         this.drawPhaseController = draw;
-        currentPhase = gamePhase;
     }
 
 
@@ -296,18 +296,18 @@ public class DuelMenuController {
         DuelMenu.showPhase(currentPhase.toString());
         roundController.getCurrentPlayer().getBoard().update();
         roundController.getRival().getBoard().update();
-        if (currentPhase == Phase.DRAW)     drawPhaseController.run();
+        if (currentPhase == Phase.DRAW) drawPhaseController.run();
     }
 
 
-    public PreMonsterCard getRitualSummonCommand() {
+    public Monster getRitualSummonCommand() {
         boolean isCancelled = DuelMenu.askToSelectRitualMonsterCard();
         if (isCancelled) return null;
-        if (!(roundController.getSelectedPreCard() instanceof PreMonsterCard)) {
+        if (!(roundController.getSelectedCard() instanceof Monster)) {
             Print.print("you should ritual summon right now");
             return getRitualSummonCommand();
         } else {
-            return (PreMonsterCard) roundController.getSelectedPreCard();
+            return (Monster) roundController.getSelectedCard();
         }
     }
 

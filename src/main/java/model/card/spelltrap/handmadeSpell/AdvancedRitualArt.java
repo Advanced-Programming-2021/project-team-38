@@ -59,9 +59,9 @@ public class AdvancedRitualArt extends SpellTrap {
         this.setController(roundController.getDuelMenuController().getMainPhaseController());
         if (controller == null) return false;
 
-        ArrayList<PreMonsterCard> goodMonsters = myPlayer.getHand().getMonstersOfType(MonsterCardType.RITUAL);
-        for (PreMonsterCard goodMonster : goodMonsters) {
-            if (areEnoughTributesForLevel(goodMonster.getLevel(), myPlayer.getBoard())) return true;
+        ArrayList<Monster> goodMonsters = myPlayer.getHand().getMonstersOfType(MonsterCardType.RITUAL);
+        for (Monster goodMonster : goodMonsters) {
+            if (areEnoughTributesForLevel(getLevel(), myPlayer.getBoard())) return true;
         }
         return false;
     }

@@ -1,14 +1,17 @@
 package model;
 
+import controller.game.DuelMenuController;
 import exceptions.InvalidSelection;
 import exceptions.NoCardFound;
 import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;
-import model.card.PreCard;
+import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
+import model.card.monster.Monster;
+import model.card.spelltrap.SpellTrap;
 import model.watchers.Watcher;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class Board {
     private Player owner;
     private Phase myPhase;
     private Deck deckInUse;
+    private DuelMenuController controller;
 
     {
         this.monsterZone = new MonsterCardInUse[5];
@@ -39,7 +43,7 @@ public class Board {
 
     //TODO !!! negar please
     //TODO set myPhase at start of game
-    public void update(){
+    public void update() {
         myPhase = myPhase.goToNextPhase();
 
         for (Watcher freeWatcher : freeBuiltInWatchers) {
@@ -70,8 +74,8 @@ public class Board {
 
     private void newCells() {
         for (int i = 0; i < 5; i++) {
-            monsterZone[i] = new MonsterCardInUse();
-            spellTrapZone[i] = new SpellTrapCardInUse();
+            monsterZone[i] = new MonsterCardInUse(this);
+            spellTrapZone[i] = new SpellTrapCardInUse(this);
         }
     }
 
@@ -120,5 +124,18 @@ public class Board {
         else cardInUse = spellTrapZone[index - 1];
         if (cardInUse == null) throw new NoCardFound();
         else return cardInUse;
+    }
+
+    public CardInUse getCellOf(Card card) {
+        if (card instanceof Monster) {
+            for (MonsterCardInUse monsterCardInUse : monsterZone) {
+                if (monsterCardInUse.getThisCard().equals((Monster) card)) return monsterCardInUse;
+            }
+        } else if (card instanceof SpellTrap) {
+            for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
+                if (spellTrapCardInUse.getThisCard().equals((SpellTrap) card)) return spellTrapCardInUse;
+            }
+        }
+        return null;
     }
 }

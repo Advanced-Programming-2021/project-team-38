@@ -3,6 +3,7 @@ package controller.game;
 import model.Deck;
 import model.Enums.RoundResult;
 import model.Hand;
+import model.card.Card;
 import model.card.PreCard;
 import view.Print;
 
@@ -11,10 +12,10 @@ import java.util.Collections;
 public class DrawPhaseController {
     public static boolean canDraw = true;
     private final RoundController roundController;
-    private int numOfCardsToAdd;
-    private Deck deck;
-    private boolean isBeginningOfGame;
-    private Hand hand;
+    private final int numOfCardsToAdd;
+    private final Deck deck;
+    private final boolean isBeginningOfGame;
+    private final Hand hand;
 
     public DrawPhaseController(RoundController gamePlay, boolean isBeginningOfGame) {
         this.roundController = gamePlay;
@@ -45,7 +46,8 @@ public class DrawPhaseController {
             for (int i = 0; i < numOfCardsToAdd; i++) {
                 PreCard preCard = deck.getMainCards().get(0);
                 deck.getMainCards().remove(preCard);
-                this.hand.addCard(preCard);
+                Card card = preCard.newCard();
+                this.hand.addCard(card);
             }
         }
     }

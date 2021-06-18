@@ -3,6 +3,7 @@ package model.card.cardinusematerial;
 import controller.game.RoundController;
 import lombok.Getter;
 import lombok.Setter;
+import model.Board;
 import model.CardState;
 import model.Player;
 import model.card.Card;
@@ -15,17 +16,21 @@ import java.util.ArrayList;
 public abstract class CardInUse {
     public ArrayList<Watcher> watchersOfCardInUse;
     public Card thisCard;
-    public Player ownerOfCard; //not assigned yet   TODO
+    public Player ownerOfCard;
     public RoundController roundController;
     public boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false //todo: in the beginning of any turn we should change it to false
     public boolean isFaceUp;
+    protected Board board;
 
+    public CardInUse(Board board) {
+        this.board = board;
+        this.ownerOfCard = board.getOwner();
+    }
 
     {
         isPositionChanged = false;
         isFaceUp = false;
     }
-
 
     public Card getThisCard() {
         return thisCard;
@@ -40,7 +45,12 @@ public abstract class CardInUse {
         isFaceUp = !isFaceUp;
     }
 
-    public void faceUpCard() {
+    public void setFaceUp(boolean faceUp) {
+        if (faceUp) faceUpCard();
+        else isFaceUp = false;
+    }
+
+    public void faceUpCard() { //note
         watchByState(CardState.FACE_UP);
         isFaceUp = true;
     }

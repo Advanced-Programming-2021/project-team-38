@@ -15,11 +15,12 @@ public class Monster extends Card {
     protected PreMonsterCard myPreCard;
     protected boolean canBeNormalSummoned;
     protected int numOfNeededTributes;
+    protected int level;
 
     public Monster(PreCard preCard) {
         super(preCard);
         myPreCard = (PreMonsterCard) preCard;
-        //TODO set canBeNormalSummoned
+        this.level = ((PreMonsterCard) preCard).getLevel();
     }
 
     public Monster setUpMonster() {    //after instance creation it will fill the fields

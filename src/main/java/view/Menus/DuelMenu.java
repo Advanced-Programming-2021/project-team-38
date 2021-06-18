@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 
 public class DuelMenu {
     private static final Scanner scanner;
-    private static DuelMenuController duelMenuController = null;
+    private static DuelMenuController duelMenuController;
 
     static {
         scanner = new Scanner(System.in);
@@ -40,7 +40,7 @@ public class DuelMenu {
         }
     }
 
-    public static void checkCommandsInGame() throws InvalidCommand { //todo: surrender
+    public static void checkCommandsInRound() throws InvalidCommand {
         try {
             String command = scanner.nextLine();
             if (command.equals("select -d"))
@@ -147,7 +147,8 @@ public class DuelMenu {
     }
 
     public static ArrayList<String> getTributeAddresses() {
-        Print.print("Enter the tribute addresses. Note that the sum of their levels should be equal to the ritual monster's level.\n" +
+        Print.print("Enter the tribute addresses." +
+                " Note that the sum of their levels should be equal to the ritual monster's level.\n" +
                 "Enter \"End\" when you were done");
         ArrayList<String> addresses = new ArrayList<>();
         String command;
