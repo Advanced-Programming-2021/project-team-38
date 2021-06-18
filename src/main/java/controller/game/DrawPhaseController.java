@@ -9,6 +9,7 @@ import view.Print;
 import java.util.Collections;
 
 public class DrawPhaseController {
+    public static boolean canDraw = true;
     private final RoundController roundController;
     private int numOfCardsToAdd;
     private Deck deck;
@@ -40,10 +41,12 @@ public class DrawPhaseController {
     }
 
     private void addCardsFromDeckToHand() {
-        for (int i = 0; i < numOfCardsToAdd; i++) {
-            PreCard preCard = deck.getMainCards().get(0);
-            deck.getMainCards().remove(preCard);
-            this.hand.addCard(preCard);
+        if (canDraw) {
+            for (int i = 0; i < numOfCardsToAdd; i++) {
+                PreCard preCard = deck.getMainCards().get(0);
+                deck.getMainCards().remove(preCard);
+                this.hand.addCard(preCard);
+            }
         }
     }
 

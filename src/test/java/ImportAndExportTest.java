@@ -33,7 +33,7 @@ public class ImportAndExportTest {
             @Override
             public void execute() throws Throwable {
                 ImportAndExportMenu.importCard("Command Knight");
-                ImportAndExportMenu.exportCard("Suijin");
+                ImportAndExportMenu.exportCard("SuijinWatcher");
             }
         };
         Assertions.assertThrows(IOException.class,secondCommand);

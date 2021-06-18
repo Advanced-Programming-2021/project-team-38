@@ -1,16 +1,15 @@
 //finished
-package model.watchers;
+package model.watchers.monsters;
 
 import controller.game.DuelMenuController;
 import model.CardState;
-import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
-import model.watchers.watchingexceptions.CancelBattle;
+import model.watchers.Watcher;
 
 public class CommandKnightWatcher extends Watcher {
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController){
+    public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController){
         //nothing
     }
 

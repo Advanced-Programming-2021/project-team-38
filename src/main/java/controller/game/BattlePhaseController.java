@@ -59,14 +59,6 @@ public class BattlePhaseController {
         return gamePlay.getRivalBoard().getFirstEmptyCardInUse(true) == null;
     }
 
-    public String run() {
-        return null;
-    }
-
-    public void setChain(ArrayList<Card> chain) {
-
-    }
-
     public void setSelectedCard(Card selectedCard) {
 
     }

@@ -14,7 +14,7 @@ public class Suijin extends Monster {
 
     public Suijin(PreCard preCard) {
         super(preCard);
-        setName("Suijin");
+        setName("SuijinWatcher");
     }
 
     private boolean canActiveEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {

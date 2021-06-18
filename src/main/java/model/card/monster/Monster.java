@@ -63,17 +63,13 @@ public class Monster extends Card {
         return false;
     }
 
-    public void deactiveEffect(Board myBoard) {
-
-    }
-
 
     //during battle
-    public void destroyThis(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard, int LPDamage) {
-        //can be null every thing except thisCard and myBoard
-        thisCard.putInGraveYard();
-        myBoard.getOwner().decreaseLifePoint(LPDamage);
-    }
+//    public void destroyThis(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard, int LPDamage) {
+//        //can be null every thing except thisCard and myBoard
+//        thisCard.putInGraveYard();
+//        myBoard.getOwner().decreaseLifePoint(LPDamage);
+//    }
 
     public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) { //TODO complete
         return true;

@@ -50,12 +50,9 @@ public class MonsterCardInUse extends CardInUse {
         return hasBeenAttacker;
     }
 
-    public void setAttack(Board playerBoard, int monsterCardAttack) {
-//        attack = playerBoard.getAdditionalAttack() + monsterCardAttack;
-        attack += monsterCardAttack;
-    }
 
-    public void setACardInThisCell(PreMonsterCard preMonsterCard) { //TODO
+    @Override
+    public void setACardInCell(Card card) { //TODO
         resetCell();
         //continue
     }
@@ -80,11 +77,6 @@ public class MonsterCardInUse extends CardInUse {
     }
 
     @Override
-    public void putInGraveYard() {
-
-    }
-
-    @Override
     public void changePosition() {
         super.changePosition();
         if (isFaceUp())
@@ -101,8 +93,7 @@ public class MonsterCardInUse extends CardInUse {
         hasBeenAttacker = true;
     }
 
-    public void destroyThis() throws CancelBattle {
-        //throw exception TODO
+    public void destroyThis() {
         watchByState(CardState.DESTROY);
         sendToGraveYard();
     }

@@ -1,13 +1,13 @@
-package model.watchers;
+package model.watchers.traps;
 
 import controller.game.BattleController;
 import controller.game.DuelMenuController;
 import model.CardState;
-import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
-import model.watchers.watchingexceptions.CancelBattle;
+import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
-public class MagicCylinderWatcher extends Watcher{
+public class MagicCylinderWatcher extends Watcher {
     //trap
 
     public MagicCylinderWatcher() {
@@ -15,7 +15,7 @@ public class MagicCylinderWatcher extends Watcher{
     }
 
     @Override
-    public void watch(CardState cardState, DuelMenuController duelMenuController) {
+    public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.WANT_TO_ATTACK) {
             if (handleChain()) {
                 BattleController battle = duelMenuController.getBattlePhaseController().battleController;
