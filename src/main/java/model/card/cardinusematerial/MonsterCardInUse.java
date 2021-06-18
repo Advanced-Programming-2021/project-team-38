@@ -49,10 +49,6 @@ public class MonsterCardInUse extends CardInUse {
         }
     }
 
-    public void setFaceUp(boolean faceUp) {
-        isFaceUp = faceUp; //todo: watchers should watch!
-    }
-
 
     public boolean hasBeenAttacker() {
         return hasBeenAttacker;
@@ -63,6 +59,13 @@ public class MonsterCardInUse extends CardInUse {
     public void setACardInCell(Card card) { //TODO
         resetCell();
         //continue
+    }
+
+
+    public void flipSummon() {
+        watchByState(CardState.FLIP_SUMMON);
+        faceUpCard();
+        setInAttackMode(true);
     }
 
     /*
@@ -98,7 +101,6 @@ public class MonsterCardInUse extends CardInUse {
     }
 
     public void changeIsAttacking() {   //when the card is attacking
-        //TODO think what to do
         isAttacking = true;
         hasBeenAttacker = true;
     }

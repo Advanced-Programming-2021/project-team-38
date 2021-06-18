@@ -11,6 +11,8 @@ import model.Player;
 import model.User;
 import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
 import view.Print;
 
 @Getter
@@ -25,8 +27,7 @@ public class RoundController {
     private Phase currentPhase;
     private ActionsOnRival actionsOnRival;
 
-    //    private CardInUse selectedCardInUse;
-//    private PreCard selectedPreCard;
+
     private Card selectedCard;
     private boolean isSelectedCardFromRivalBoard;
 
@@ -150,6 +151,47 @@ public class RoundController {
     public Player getMyRival(Player myPlayer) {
         if (currentPlayer == myPlayer)    return rival;
         else    return currentPlayer;
+    }
+
+    public CardInUse findCardsCell(Card card) {
+        for (MonsterCardInUse monsterCardInUse : currentPlayer.getBoard().getMonsterZone()) {
+            if (!monsterCardInUse.isCellEmpty() && monsterCardInUse.thisCard == card)
+                return monsterCardInUse;
+        }
+
+        for (MonsterCardInUse monsterCardInUse : rival.getBoard().getMonsterZone()) {
+            if (!monsterCardInUse.isCellEmpty() && monsterCardInUse.thisCard == card)
+                return monsterCardInUse;
+        }
+
+        for (SpellTrapCardInUse spellTrapCardInUse : currentPlayer.getBoard().getSpellTrapZone()) {
+            if (spellTrapCardInUse.thisCard == card)
+                return spellTrapCardInUse;
+        }
+
+        for (SpellTrapCardInUse spellTrapCardInUse : rival.getBoard().getSpellTrapZone()) {
+            if (spellTrapCardInUse.thisCard == card)
+                return spellTrapCardInUse;
+        }
+
+        if (currentPlayer.getBoard().getFieldCard().thisCard == card) {
+            return currentPlayer.getBoard().getFieldCard();
+        }
+
+        if (rival.getBoard().getFieldCard().thisCard == card) {
+            return rival.getBoard().getFieldCard();
+        }
+
+        return null;
+    }
+
+    public CardInUse selectACard(Player player, ZoneName zoneName, boolean isForRival) {
+        deselectCard();
+
+        Player targetOwnerPlayer = player;
+        if (isForRival)     targetOwnerPlayer = getMyRival(player);
+
+        //check that the card selected has proper conditions
     }
 
 }
