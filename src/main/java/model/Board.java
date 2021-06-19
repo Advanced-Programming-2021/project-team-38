@@ -117,6 +117,7 @@ public class Board {
     }
 
     /* used for selecting cards*/
+    //the indx is between 1 and 5
     public CardInUse getCardInUse(int index, boolean isMonster) throws NoCardFound, InvalidSelection {
         if (index < 1 || index > 5) throw new InvalidSelection();
         CardInUse cardInUse;

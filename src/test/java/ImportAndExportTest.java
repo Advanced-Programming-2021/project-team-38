@@ -1,11 +1,10 @@
-import controller.DeckMenuController;
-import controller.ImportAndExportMenu;
-import exceptions.AlreadyExistingError;
+import controller.ImportExportController;
 import exceptions.InvalidName;
-import exceptions.InvalidName;
-import model.User;
 import model.card.CardLoader;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class ImportAndExportTest {
         Executable firstCommands = new Executable() {
             @Override
             public void execute() throws Throwable {
-                ImportAndExportMenu.importCard("command knight");
+                ImportExportController.importCard("command knight");
             }
         };
         Assertions.assertThrows(InvalidName.class, firstCommands);
@@ -32,8 +31,8 @@ public class ImportAndExportTest {
         Executable secondCommand = new Executable() {
             @Override
             public void execute() throws Throwable {
-                ImportAndExportMenu.importCard("Command Knight");
-                ImportAndExportMenu.exportCard("SuijinWatcher");
+                ImportExportController.importCard("Command Knight");
+                ImportExportController.exportCard("SuijinWatcher");
             }
         };
         Assertions.assertThrows(IOException.class,secondCommand);
@@ -43,10 +42,10 @@ public class ImportAndExportTest {
     @Test
     @DisplayName("import and export new card")
     public void importAndExportNewCardTest() throws InvalidName, IOException {
-        ImportAndExportMenu.importCard("Command Knight");
-        String json =ImportAndExportMenu.exportCard("Command Knight");
+        ImportExportController.importCard("Command Knight");
+        String json = ImportExportController.exportCard("Command Knight");
         Assertions.assertNotNull(json);
-        ImportAndExportMenu.deleteCard("Command Knight");
+        ImportExportController.deleteCard("Command Knight");
 
     }
 

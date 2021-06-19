@@ -9,7 +9,7 @@ import model.card.monster.PreMonsterCard;
 import java.util.ArrayList;
 
 public class Hand {
-    private ArrayList<Card> cardsInHand;
+    private final ArrayList<Card> cardsInHand;
 
     {
         this.cardsInHand = new ArrayList<>();
@@ -47,9 +47,11 @@ public class Hand {
         this.cardsInHand.remove(card);
     }
 
+
+    //the index is between 1 and num of cards in hand (which is less than 6)
     public Card getCardWithNumber(int index) throws InvalidSelection {
         if (index > 0 && index <= cardsInHand.size())
-            return cardsInHand.get(index + 1);
+            return cardsInHand.get(index - 1);
         else throw new InvalidSelection();
     }
 

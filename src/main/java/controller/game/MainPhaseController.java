@@ -88,8 +88,6 @@ public class MainPhaseController {
             throw new CantDoActionWithCard("flip summon");
 
         monsterCardInUse.flipSummon();
-//        monsterCardInUse.setFaceUp(true);
-//        monsterCardInUse.setAttacking(true);
         new SuccessfulAction("", "flip summoned");
     }
 

@@ -34,6 +34,6 @@ public class MagicCylinderWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        for (ownerOfWatcher.)   //TODO put this watcher on all of rivals cards
+//        for (ownerOfWatcher)   //TODO put this watcher on all of rivals cards
     }
 }

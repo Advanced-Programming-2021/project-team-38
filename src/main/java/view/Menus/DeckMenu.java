@@ -4,6 +4,7 @@ import controller.DeckMenuController;
 import controller.RelatedToMenuController;
 import exceptions.*;
 import view.MenuName;
+import view.Print;
 
 public class DeckMenu {
     public static void checkMenuCommands(String command) throws InvalidCommand, WrongMenu {
@@ -41,7 +42,8 @@ public class DeckMenu {
             } else
                 throw new InvalidCommand();
         } catch (AlreadyExistingError | NotExisting | BeingFull | OccurrenceException exception) {
-            System.out.println(exception.getMessage());
+            Print.print(exception.getMessage());
         }
     }
+
 }

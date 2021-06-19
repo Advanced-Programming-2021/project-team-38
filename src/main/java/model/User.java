@@ -15,9 +15,9 @@ public class User implements Comparable<model.User> {
     private String password;
     private String nickName;
         private int score;
-        private HashMap<String, Integer> cardTreasury;   //how many cards do we have of each type?
-        //TODO the hashmap key must be deleted after the value becomes 0
-        private ArrayList<PreCard> preCards;
+    private HashMap<String, Integer> cardTreasury;   //shows how many cards do we have of each type
+    //TODO the hashmap key must be deleted after the value becomes 0
+    private ArrayList<PreCard> preCards;
         private ArrayList<Deck> decks;
         private int balance;
         private Deck activeDeck;
@@ -27,19 +27,20 @@ public class User implements Comparable<model.User> {
             allUsers = new ArrayList<>();
         }
 
-        {
-            cardTreasury = new HashMap<>();
-        }
+    {
+        cardTreasury = new HashMap<>();
+        preCards = new ArrayList<>();
+        decks = new ArrayList<>();
+    }
 
         public User(String username, String password, String nickName) {
             this.username = username;
             this.password = password;
             this.nickName = nickName;
             this.score = 0;
-            this.preCards = new ArrayList<>();
-            this.decks = new ArrayList<>();
             this.balance = 1000; //todo I'm not sure!
             allUsers.add(this);
+
         }
 
         public static User getUserByName(String username) {

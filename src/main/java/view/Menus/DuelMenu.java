@@ -3,6 +3,8 @@ package view.Menus;
 import controller.RelatedToMenuController;
 import controller.game.DuelMenuController;
 import exceptions.*;
+import model.Board;
+import model.CardAddress;
 import view.Menu;
 import view.MenuName;
 import view.messageviewing.Print;
@@ -76,7 +78,7 @@ public class DuelMenu {
                 throw new InvalidCommand();
         } catch (Exception exception) {
             if (exception instanceof InvalidCommand) throw new InvalidCommand();
-            Print.print(exception.getMessage());
+            showException(exception);
         }
     }
 
@@ -140,7 +142,7 @@ public class DuelMenu {
                     duelMenuController.selectCard(command.substring(7));
                     isFine = true;
                 } catch (InvalidSelection | NoCardFound exception) {
-                    Print.print(exception.getMessage());
+                    showException(exception);
                 }
         } while (!isFine);
         return false;
@@ -160,7 +162,8 @@ public class DuelMenu {
         return addresses;
     }
 
-    public static boolean forceGetCommand(String commandToForceEnter, String messageToShow) { //returns true if it's cancelled;
+    //returns true if it's cancelled
+    public static boolean forceGetCommand(String commandToForceEnter, String messageToShow) {
         String command;
         while (true) {
             Print.print("Enter " + commandToForceEnter);
@@ -179,9 +182,35 @@ public class DuelMenu {
             case "DO":
                 return command;
             default:
-                Print.print("you should ritual summon right now");
+                Print.print("You should ritual summon right now");
                 return getRitualManner();
         }
+    }
 
+    //returns null if the user cancels the process
+    public static CardAddress forceGetCardAddress() {
+        Print.print("Enter a card address to select.");
+        while (true) {
+            String enteredAddress = scanner.nextLine();
+            try {
+                if (enteredAddress.equals("cancel")) return null;
+                if (!enteredAddress.startsWith("select")) throw new InvalidCommand();
+                return new CardAddress(enteredAddress);
+            } catch (InvalidSelection invalidSelection) {
+                showException(invalidSelection);
+            } catch (InvalidCommand invalidCommand) {
+                showException(invalidCommand);
+                Print.print("The command must begin with \"select\".");
+            }
+        }
+    }
+
+    public static void showException(Exception exception) {
+        view.Print.print(exception.getMessage());
+    }
+
+    public static void showTemporaryTurnChange(String name, Board board) {
+        Print.print("now it will be " + name + "’s turn");
+        Print.print(board.toString());
     }
 }

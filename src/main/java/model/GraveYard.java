@@ -29,6 +29,7 @@ public class GraveYard {
 
     }
 
+    //card index is between 1 and the size!
     public Card getCard(int cardIndex) throws InvalidSelection {
         if (cardIndex < 1 || cardIndex > this.cardsInGraveYard.size()) throw new InvalidSelection();
         return this.cardsInGraveYard.get(cardIndex - 1);

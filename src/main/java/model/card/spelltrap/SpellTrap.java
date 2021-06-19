@@ -1,7 +1,6 @@
 package model.card.spelltrap;
 
 import controller.game.RoundController;
-import exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 import model.Player;
@@ -27,23 +26,7 @@ public class SpellTrap extends Card {
         return this;
     }
 
-    public boolean areEffectPreparationsDone(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController controller) {
-        return true; //todo: returned something to be able to run!
-    }
-
-    public void activateEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) throws NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException, BeingFull, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction, CantDoActionWithCard {
-
-    }
-
-    public void deactiveEffect(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) {
-
-    }
-
     public void destroyThis(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) {
-
-    }
-
-    public void spinCard() {
 
     }
 

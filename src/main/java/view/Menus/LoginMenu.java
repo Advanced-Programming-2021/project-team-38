@@ -1,5 +1,6 @@
 package view.Menus;
 
+import controller.FileHandler;
 import controller.LoginMenuController;
 import controller.RelatedToMenuController;
 import exceptions.AlreadyExistingError;
@@ -23,6 +24,7 @@ public class LoginMenu {
         else if (command.startsWith("login "))
             login(command.substring(6));
         else if (command.equals("exit program")) {
+            FileHandler.saveUsers();
             Print.print("Good Bye!");
             System.exit(0);
         } else
