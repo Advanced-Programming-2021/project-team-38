@@ -335,4 +335,5 @@ public class DuelMenuController {
         String mannerString = DuelMenu.getRitualManner();
         return MonsterManner.getMonsterManner(mannerString);
     }
+
 }

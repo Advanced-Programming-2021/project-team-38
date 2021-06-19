@@ -22,15 +22,15 @@ public class SelectController {
     private final ArrayList<ZoneName> zoneNames;
     private final RoundController roundController;
     private CardType cardType = null;
-    private final boolean isCurrentPlayerSelecting;
+    private final Player selector;
     int upperLevelBound = 100;
     int lowerLevelBound = 0;
     private ArrayList<MonsterType> monsterTypes;
 
-    public SelectController(ArrayList<ZoneName> zoneNames, RoundController roundController, boolean isCurrentPlayerSelecting) {
+    public SelectController(ArrayList<ZoneName> zoneNames, RoundController roundController, Player selector) {
         this.zoneNames = zoneNames;
         this.roundController = roundController;
-        this.isCurrentPlayerSelecting = isCurrentPlayerSelecting;
+        this.selector = selector;
     }
 
     private void setCardType(CardType cardType) {
@@ -76,7 +76,6 @@ public class SelectController {
         if (!zoneNames.contains(zoneName)) return null;
         Card toReturn;
         boolean isForOpponent = cardAddress.isForOpponent();
-        Player selector = getSelector();
         toReturn = getCardByAddress(cardAddress, zoneName, isForOpponent, selector);
         Print.print("card selected");
 
@@ -92,12 +91,6 @@ public class SelectController {
             }
         }
         return toReturn;
-    }
-
-    private Player getSelector() {
-        Player selector = roundController.getRival();
-        if (isCurrentPlayerSelecting) selector = roundController.getCurrentPlayer();
-        return selector;
     }
 
     private Card getCardByAddress(CardAddress cardAddress, ZoneName zoneName, boolean isForOpponent, Player selector) throws InvalidSelection, NoCardFound {
@@ -136,7 +129,6 @@ public class SelectController {
 
     private HashMap<Card, CardAddress> getPossibleChoices() {
         HashMap<Card, CardAddress> possibleChoices = new HashMap<>();
-        Player selector = getSelector();
         for (ZoneName zoneName : zoneNames) {
             switch (zoneName) {
                 case HAND:

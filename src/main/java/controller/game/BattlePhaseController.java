@@ -4,6 +4,7 @@ package controller.game;
 import exceptions.*;
 import model.Enums.Phase;
 import model.card.Card;
+import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 
 import java.util.ArrayList;
@@ -20,17 +21,18 @@ public class BattlePhaseController {
     public void battleAnnounced(int cellOfCard) throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, NoCardToAttack, CardAttackedBeforeExeption {
         MonsterCardInUse preyCard;
         MonsterCardInUse attacker;
-        if (gamePlay.getSelectedCardInUse().isCellEmpty())
+        CardInUse cardInUse = gamePlay.getSelectedCardInUse();
+        if (cardInUse == null || cardInUse.isCellEmpty())
             throw new NoSelectedCard();
-        else if (!(gamePlay.getSelectedCardInUse() instanceof MonsterCardInUse))
+        else if (!(cardInUse instanceof MonsterCardInUse))
             throw new CardCantAttack();
-        else if (((MonsterCardInUse)gamePlay.getSelectedCardInUse()).isInAttackMode())
+        else if (((MonsterCardInUse) cardInUse).isInAttackMode())
             throw new CardCantAttack();
         else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
             throw new WrongPhaseForAction();
         else if ((preyCard = gamePlay.getActionsOnRival().getRivalMonsterCell(cellOfCard)).isCellEmpty())
             throw new NoCardToAttack();
-        else if ((attacker = (MonsterCardInUse) gamePlay.getSelectedCardInUse()).hasBeenAttacker())
+        else if ((attacker = (MonsterCardInUse) cardInUse).hasBeenAttacker())
             throw new CardAttackedBeforeExeption();
         else
             battleController = new BattleController(gamePlay.getCurrentPlayerBoard(),
@@ -39,15 +41,16 @@ public class BattlePhaseController {
 
     public void attackToLifePoint() throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, CardAttackedBeforeExeption, CantAttackDirectlyException {
         MonsterCardInUse attacker;
-        if (gamePlay.getSelectedCardInUse().isCellEmpty())
+        CardInUse cardInUse = gamePlay.getSelectedCardInUse();
+        if (cardInUse == null || cardInUse.isCellEmpty())
             throw new NoSelectedCard();
-        else if (!(gamePlay.getSelectedCardInUse() instanceof MonsterCardInUse))
+        else if (!(cardInUse instanceof MonsterCardInUse))
             throw new CardCantAttack();
-        else if (((MonsterCardInUse)gamePlay.getSelectedCardInUse()).isInAttackMode())
+        else if (((MonsterCardInUse) cardInUse).isInAttackMode())
             throw new CardCantAttack();
         else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
             throw new WrongPhaseForAction();
-        else if ((attacker = (MonsterCardInUse) gamePlay.getSelectedCardInUse()).hasBeenAttacker())
+        else if ((attacker = (MonsterCardInUse) cardInUse).hasBeenAttacker())
             throw new CardAttackedBeforeExeption();
         else if (!canAttackDirectly())
             throw new CantAttackDirectlyException();

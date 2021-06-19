@@ -13,6 +13,7 @@ import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
+import view.Menus.DuelMenu;
 import view.Print;
 
 @Getter
@@ -188,14 +189,12 @@ public class RoundController {
 
         return null;
     }
-//
-//    public CardInUse selectACard(Player player, ZoneName zoneName, boolean isForRival) {
-//        deselectCard();
-//
-//        Player targetOwnerPlayer = player;
-//        if (isForRival)     targetOwnerPlayer = getMyRival(player);
-//
-//        //check that the card selected has proper conditions
-//    }
 
+    public CardInUse getSelectedCardInUse() {
+        return findCardsCell(selectedCard);
+    }
+
+    public void temporaryTurnChange(Player newCurrent) {
+        DuelMenu.showTemporaryTurnChange(newCurrent.getName(), newCurrent.getBoard());
+    }
 }

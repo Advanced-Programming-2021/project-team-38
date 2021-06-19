@@ -1,10 +1,10 @@
 package view;
 
-import model.card.CardLoader;
+import controller.FileHandler;
 
 public class Main {
     public static void main(String[] args) {
-        CardLoader.loadCsv();
+        FileHandler.loadThings();
         Print.print("Welcome to Yo Gi Oh!");
         Print.print("Enter \"menu help\" whenever needed!");
         Menu.run();

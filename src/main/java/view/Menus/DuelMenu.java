@@ -3,6 +3,7 @@ package view.Menus;
 import controller.RelatedToMenuController;
 import controller.game.DuelMenuController;
 import exceptions.*;
+import model.Board;
 import model.CardAddress;
 import view.Menu;
 import view.MenuName;
@@ -206,5 +207,10 @@ public class DuelMenu {
 
     public static void showException(Exception exception) {
         view.Print.print(exception.getMessage());
+    }
+
+    public static void showTemporaryTurnChange(String name, Board board) {
+        Print.print("now it will be " + name + "’s turn");
+        Print.print(board.toString());
     }
 }

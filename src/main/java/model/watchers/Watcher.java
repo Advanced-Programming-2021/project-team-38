@@ -97,8 +97,9 @@ public abstract class Watcher {
         switch (nameWatcher) {
             case "CommandKnightHolyWatcher":
                 return new CommandKnightHolyWatcher(ownerOfWatcher);
-                break;
+                //todo: to be continued! check if can be handled with using reflection
         }
+        return null;
     }
 
 }
