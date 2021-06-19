@@ -1,5 +1,7 @@
 package model.card.monster;
 
+import java.lang.reflect.Array;
+
 public enum MonsterType {
     BEAST_WARRIOR,
     WARRIOR,
@@ -21,5 +23,6 @@ public enum MonsterType {
     public static MonsterType getEnum(String name) {
         return MonsterType.valueOf(name.replaceAll(" ", "_")
                 .replaceAll("-", "_").toUpperCase());
+
     }
 }

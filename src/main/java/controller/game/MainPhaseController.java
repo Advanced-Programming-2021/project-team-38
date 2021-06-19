@@ -87,8 +87,9 @@ public class MainPhaseController {
         if (monsterCardInUse.isFaceUp() || monsterCardInUse.isInAttackMode())
             throw new CantDoActionWithCard("flip summon");
 
-        monsterCardInUse.setFaceUp(true);
-        monsterCardInUse.setAttacking(true);
+        monsterCardInUse.flipSummon();
+//        monsterCardInUse.setFaceUp(true);
+//        monsterCardInUse.setAttacking(true);
         new SuccessfulAction("", "flip summoned");
     }
 
