@@ -15,11 +15,11 @@ public class User implements Comparable<model.User> {
     private String password;
     private String nickName;
         private int score;
-    private HashMap<String, Integer> cardTreasury;   //shows how many cards do we have of each type
+    private final HashMap<String, Integer> cardTreasury;   //shows how many cards do we have of each type
     //TODO the hashmap key must be deleted after the value becomes 0
-    private ArrayList<PreCard> preCards;
-        private ArrayList<Deck> decks;
-        private int balance;
+//    private ArrayList<PreCard> preCards;
+    private final ArrayList<Deck> decks;
+    private int balance;
         private Deck activeDeck;
         private final static ArrayList<model.User> allUsers;
 
@@ -29,7 +29,7 @@ public class User implements Comparable<model.User> {
 
     {
         cardTreasury = new HashMap<>();
-        preCards = new ArrayList<>();
+//        preCards = new ArrayList<>();
         decks = new ArrayList<>();
     }
 
@@ -90,10 +90,6 @@ public class User implements Comparable<model.User> {
             return score;
         }
 
-        public ArrayList<PreCard> getPreCards() {
-            return preCards;
-        }
-
         public HashMap<String, Integer> getCardTreasury() {
             return cardTreasury;
         }
@@ -148,7 +144,7 @@ public class User implements Comparable<model.User> {
             } else {
                 this.cardTreasury.put(preCard.getName(), 1);
             }
-            this.preCards.add(preCard); //TODO what is this for?
+//            this.preCards.add(preCard); //TODO what is this for?
         }
 
     public void increaseScore(int increasingAmount) {

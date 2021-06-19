@@ -5,11 +5,13 @@ import controller.game.DuelMenuController;
 import exceptions.*;
 import model.Board;
 import model.CardAddress;
+import model.card.Card;
 import view.Menu;
 import view.MenuName;
 import view.messageviewing.Print;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -188,8 +190,9 @@ public class DuelMenu {
     }
 
     //returns null if the user cancels the process
-    public static CardAddress forceGetCardAddress() {
-        Print.print("Enter a card address to select.");
+    public static CardAddress forceGetCardAddress(HashMap<Card, CardAddress> possibleChoices) {
+        showPossibleSelectChoices(possibleChoices);
+        Print.print("Now enter a card address to select. Or enter \"cancel\" to cancel the process.");
         while (true) {
             String enteredAddress = scanner.nextLine();
             try {
@@ -202,6 +205,14 @@ public class DuelMenu {
                 showException(invalidCommand);
                 Print.print("The command must begin with \"select\".");
             }
+        }
+    }
+
+    private static void showPossibleSelectChoices(HashMap<Card, CardAddress> possibleChoices) {
+        Print.print("Possible addresses:");
+        if (possibleChoices.isEmpty()) Print.print("no possible choice");
+        for (Card card : possibleChoices.keySet()) {
+            Print.print("\tcard name : " + card.getName() + "\tcard address : " + possibleChoices.get(card).toString());
         }
     }
 

@@ -13,14 +13,13 @@ import model.card.monster.Monster;
 import model.card.monster.MonsterType;
 import model.card.monster.PreMonsterCard;
 import view.Menus.DuelMenu;
-import view.Print;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
 public class SelectController {
-    private final ArrayList<ZoneName> zoneNames;
+    private ArrayList<ZoneName> zoneNames;
     private final RoundController roundController;
     private CardType cardType = null;
     private final Player selector;
@@ -30,6 +29,7 @@ public class SelectController {
 
     public SelectController(ArrayList<ZoneName> zoneNames, RoundController roundController, Player selector) {
         this.zoneNames = zoneNames;
+        if (zoneNames.isEmpty()) this.zoneNames = null;
         this.roundController = roundController;
         this.selector = selector;
     }
@@ -47,14 +47,14 @@ public class SelectController {
         this.monsterTypes = new ArrayList<>();
         Collections.addAll(this.monsterTypes, monsterTypes);
         if (monsterTypes.length == 0) this.monsterTypes = null;
-
+        if (this.monsterTypes != null) this.cardType = CardType.MONSTER;
     }
 
     //this is the function that should be called if we want to get the card!
     public Card getTheCard() {
         while (true) {
             CardAddress cardAddress = getForcedCardAddress();
-            if (cardAddress == null) return null; //means that the process is canceled by user
+            if (cardAddress == null) return null;//means that the process is canceled by user
             Card toReturn;
             try {
                 toReturn = getCardByAddress(cardAddress);
@@ -71,17 +71,14 @@ public class SelectController {
     }
 
     private CardAddress getForcedCardAddress() {
-        return DuelMenu.forceGetCardAddress();
+        return DuelMenu.forceGetCardAddress(getPossibleChoices());
     }
 
     private Card getCardByAddress(CardAddress cardAddress) throws InvalidSelection, NoCardFound {
         if (cardAddress == null) return null;
         ZoneName zoneName = cardAddress.getZoneName();
         if (!zoneNames.contains(zoneName)) return null;
-        Card toReturn;
-        boolean isForOpponent = cardAddress.isForOpponent();
-        toReturn = getCardByAddress(cardAddress, zoneName, isForOpponent, selector);
-        Print.print("card selected");
+        Card toReturn = switchAndFindCard(cardAddress, zoneName);
 
         /* checking the errors */
         if (cardType != null) {
@@ -89,7 +86,7 @@ public class SelectController {
             if (cardType.equals(CardType.MONSTER)) {
                 Monster returningMonster = (Monster) toReturn;
                 PreMonsterCard preMonster = (PreMonsterCard) returningMonster.getPreCardInGeneral();
-                if (!isLevelBoundFine(returningMonster)) throw new InvalidSelection();
+                if (isLevelBoundWrong(returningMonster)) throw new InvalidSelection();
                 if (monsterTypes != null && !monsterTypes.isEmpty() && !monsterTypes.contains(preMonster.getMonsterType()))
                     throw new InvalidSelection();
             }
@@ -97,7 +94,7 @@ public class SelectController {
         return toReturn;
     }
 
-    private Card getCardByAddress(CardAddress cardAddress, ZoneName zoneName, boolean isForOpponent, Player selector) throws InvalidSelection, NoCardFound {
+    private Card switchAndFindCard(CardAddress cardAddress, ZoneName zoneName) throws InvalidSelection, NoCardFound {
         Card toReturn;
         switch (zoneName) {
             case HAND:
@@ -105,24 +102,32 @@ public class SelectController {
                 toReturn = selector.getHand().getCardWithNumber(cardAddress.getIndex());
                 break;
             case MY_MONSTER_ZONE:
-                if (isForOpponent)
-                    toReturn = roundController.getMyRival(selector).getBoard().getCardInUse(cardAddress.getIndex(), true).getThisCard();
-                else toReturn = selector.getBoard().getCardInUse(cardAddress.getIndex(), true).getThisCard();
+                toReturn = selector.getBoard().getCardInUse(cardAddress.getIndex(), true).getThisCard();
                 break;
             case MY_SPELL_ZONE:
-                if (isForOpponent)
-                    toReturn = roundController.getMyRival(selector).getBoard().getCardInUse(cardAddress.getIndex(), false).getThisCard();
-                else toReturn = selector.getBoard().getCardInUse(cardAddress.getIndex(), false).getThisCard();
+                toReturn = selector.getBoard().getCardInUse(cardAddress.getIndex(), false).getThisCard();
                 break;
             case MY_FIELD:
-                if (isForOpponent)
-                    toReturn = roundController.getMyRival(selector).getBoard().getFieldCard().getThisCard();
-                else toReturn = selector.getBoard().getFieldCard().getThisCard();
+                toReturn = selector.getBoard().getFieldCard().getThisCard();
                 break;
             case MY_GRAVEYARD:
-                if (isForOpponent)
-                    toReturn = roundController.getMyRival(selector).getBoard().getGraveYard().getCard(cardAddress.getIndex());
-                else toReturn = selector.getBoard().getGraveYard().getCard(cardAddress.getIndex());
+                toReturn = selector.getBoard().getGraveYard().getCard(cardAddress.getIndex());
+                break;
+            case RIVAL_MONSTER_ZONE:
+                toReturn = roundController.getMyRival(selector).getBoard().getCardInUse(cardAddress.getIndex(), true).getThisCard();
+                break;
+            case RIVAL_SPELL_ZONE:
+                toReturn = roundController.getMyRival(selector).getBoard().getCardInUse(cardAddress.getIndex(), false).getThisCard();
+                break;
+            case RIVAL_FIELD:
+                toReturn = roundController.getMyRival(selector).getBoard().getFieldCard().getThisCard();
+                break;
+            case RIVAL_GRAVEYARD:
+                toReturn = roundController.getMyRival(selector).getBoard().getGraveYard().getCard(cardAddress.getIndex());
+                break;
+            case MY_DECK:
+                toReturn = selector.getDeck().getMainCards().get(cardAddress.getIndex() - 1).newCard();
+                //cards in graveyard are pre, so we called newCard();
                 break;
             default:
                 throw new InvalidSelection();
@@ -130,6 +135,33 @@ public class SelectController {
         return toReturn;
     }
 
+    private void handleExtraFeatures(HashMap<Card, CardAddress> possibleChoices) {
+        if (cardType != null) {
+            for (Card card : possibleChoices.keySet()) {
+                if (!card.getPreCardInGeneral().getCardType().equals(cardType))
+                    possibleChoices.remove(card);//todo: fine?
+                if (cardType == CardType.MONSTER && monsterTypes != null && !monsterTypes.isEmpty()) {
+                    for (MonsterType monsterType : monsterTypes) {
+                        PreMonsterCard preMonsterCard = ((Monster) card).getMyPreCard();
+                        if (preMonsterCard.getMonsterType() != monsterType) possibleChoices.remove(card);//todo : fine?
+                    }
+                }
+                if (isLevelBoundWrong(card)) possibleChoices.remove(card);
+            }
+
+        }
+    }
+
+    private boolean isLevelBoundWrong(Card card) {
+        if (card instanceof Monster) {
+            Monster monster = (Monster) card;
+            return monster.getLevel() < lowerLevelBound || monster.getLevel() > upperLevelBound;
+        }
+        return true;
+    }
+
+
+    //When we want to show the user the possible choices for selecting, we use this! (in the method getForcedCardAddress)
 
     private HashMap<Card, CardAddress> getPossibleChoices() {
         HashMap<Card, CardAddress> possibleChoices = new HashMap<>();
@@ -148,7 +180,6 @@ public class SelectController {
                     getCardAddressesIn(possibleChoices, "--field ", 1);
                     break;
                 case MY_GRAVEYARD:
-                    //todo  is grave yard supported in cardAddress?
                     getCardAddressesIn(possibleChoices, "--graveYard ", selector.getBoard().getGraveYard().getCardsInGraveYard().size());
                     break;
                 case RIVAL_MONSTER_ZONE:
@@ -163,37 +194,23 @@ public class SelectController {
                 case RIVAL_GRAVEYARD:
                     getCardAddressesIn(possibleChoices, "--graveYard --opponent ", roundController.getMyRival(selector).getBoard().getGraveYard().getCardsInGraveYard().size());
                     break;
+                case MY_DECK:
+                    getCardAddressesIn(possibleChoices, "--deck ", selector.getDeck().getMainCards().size());
+                    break;
             }
         }
         handleExtraFeatures(possibleChoices);
         return possibleChoices;
     }
 
-    private void handleExtraFeatures(HashMap<Card, CardAddress> possibleChoices) {
-        if (cardType != null) {
-            for (Card card : possibleChoices.keySet()) {
-                if (!card.getPreCardInGeneral().getCardType().equals(cardType))
-                    possibleChoices.remove(card);//todo: fine?
+    private void getCardAddressesIn(HashMap<Card, CardAddress> possibleChoices, String zoneNameString, int sizeOfZone) {
+        for (int i = 1; i <= sizeOfZone; i++) {
+            try {
+                CardAddress cardAddress = new CardAddress(zoneNameString + i);
+                possibleChoices.put(getCardByAddress(cardAddress), cardAddress);
+            } catch (InvalidSelection | NoCardFound invalidSelection) {
+                invalidSelection.printStackTrace();
             }
         }
-    }
-
-    private boolean isLevelBoundFine(Card card) {
-        if (card instanceof Monster) {
-            Monster monster = (Monster) card;
-            return monster.getLevel() >= lowerLevelBound && monster.getLevel() <= upperLevelBound;
-        }
-        return false;
-    }
-
-    private void getCardAddressesIn(HashMap<Card, CardAddress> possibleChoices, String zoneNameString, int size) {
-//        for (int i = 1; i <= size; i++) {
-//            try {
-//                CardAddress cardAddress = new CardAddress(zoneNameString + i);
-//                possibleAddresses.add(cardAddress);
-//            } catch (InvalidSelection invalidSelection) {
-//                invalidSelection.printStackTrace();
-//            }
-//        }
     }
 }
