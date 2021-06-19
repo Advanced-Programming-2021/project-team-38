@@ -4,28 +4,37 @@ import exceptions.InvalidSelection;
 
 public enum ZoneName {
     HAND,
-    MONSTER,
-    SPELL,
-    FIELD,
-    GRAVEYARD;
+    MY_MONSTER_ZONE,
+    MY_SPELL_ZONE,
+    MY_FIELD,
+    MY_GRAVEYARD,
+    RIVAL_MONSTER_ZONE,
+    RIVAL_SPELL_ZONE,
+    RIVAL_FIELD,
+    RIVAL_GRAVEYARD;
 
-    public static ZoneName getZoneName(String field) throws InvalidSelection {
+    public static ZoneName getZoneName(String field, boolean isForRival) throws InvalidSelection {
         ZoneName zoneName;
         switch (field) {
             case "hand":
-                zoneName = ZoneName.HAND;
+                if (!isForRival) zoneName = ZoneName.HAND;
+                else throw new InvalidSelection();
                 break;
             case "monster":
-                zoneName = ZoneName.MONSTER;
+                if (!isForRival) zoneName = ZoneName.MY_MONSTER_ZONE;
+                else zoneName = ZoneName.RIVAL_MONSTER_ZONE;
                 break;
             case "spell":
-                zoneName = ZoneName.SPELL;
+                if (!isForRival) zoneName = ZoneName.MY_SPELL_ZONE;
+                else zoneName = ZoneName.RIVAL_SPELL_ZONE;
                 break;
             case "field":
-                zoneName = ZoneName.FIELD;
+                if (!isForRival) zoneName = ZoneName.MY_FIELD;
+                else zoneName = ZoneName.RIVAL_FIELD;
                 break;
             case "graveyard":
-                zoneName = ZoneName.GRAVEYARD;
+                if (!isForRival) zoneName = ZoneName.MY_GRAVEYARD;
+                else zoneName = ZoneName.RIVAL_GRAVEYARD;
                 break;
             default:
                 throw new InvalidSelection();

@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 @Getter
 public class CardAddress {
     ZoneName zoneName;
-    int index;
+    int index; //index is from 1 to the size of the thing!
     boolean isForOpponent;
 
     public CardAddress(String address) throws InvalidSelection {
@@ -25,22 +25,21 @@ public class CardAddress {
                 else throw new InvalidSelection();
             } else {
                 if (zoneName != null) throw new InvalidSelection();
-                zoneName = ZoneName.getZoneName(field);
+                zoneName = ZoneName.getZoneName(field, isForOpponent);
             }
         }
         if (zoneName == null) throw new InvalidSelection();
         try {
             index = Integer.parseInt(address);
         } catch (Exception e) {
-            if (!zoneName.equals(ZoneName.FIELD))
+            if (!zoneName.equals(ZoneName.MY_FIELD))
                 throw new InvalidSelection();
             index = -1;
         }
     }
 
-
-    public MonsterCardInUse getCardInUseInAddress(MonsterCardInUse[] monstersInBoard) throws InvalidSelection {
-        if (zoneName != ZoneName.MONSTER) throw new InvalidSelection();
+    public MonsterCardInUse getMonsterCardInUseInAddress(MonsterCardInUse[] monstersInBoard) throws InvalidSelection {
+        if (zoneName != ZoneName.MY_MONSTER_ZONE) throw new InvalidSelection();
         if (index < 1 || index > 5) throw new InvalidSelection();
         return monstersInBoard[index - 1];
     }

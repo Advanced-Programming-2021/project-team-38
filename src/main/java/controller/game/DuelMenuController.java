@@ -319,7 +319,7 @@ public class DuelMenuController {
         try {
             ArrayList<MonsterCardInUse> tributesInUse = new ArrayList<>();
             for (String tributeAddress : tributeAddresses) {
-                tributesInUse.add(new CardAddress(tributeAddress).getCardInUseInAddress(monstersInBoard));
+                tributesInUse.add(new CardAddress(tributeAddress).getMonsterCardInUseInAddress(monstersInBoard));
             }
             return tributesInUse;
         } catch (InvalidSelection invalidSelection) {

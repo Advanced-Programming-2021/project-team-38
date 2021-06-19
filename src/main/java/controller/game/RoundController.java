@@ -82,18 +82,22 @@ public class RoundController {
                 if (isForOpponent) throw new InvalidSelection();
                 this.selectedCard = currentPlayer.getHand().getCardWithNumber(cardIndex);
                 break;
-            case MONSTER:
+            case MY_MONSTER_ZONE:
+            case RIVAL_MONSTER_ZONE:
                 this.selectedCard = ownerOfToBeSelected.getBoard().getCardInUse(cardIndex, true).getThisCard();
                 break;
-            case SPELL:
+            case MY_SPELL_ZONE:
+            case RIVAL_SPELL_ZONE:
                 this.selectedCard = ownerOfToBeSelected.getBoard().getCardInUse(cardIndex, false).getThisCard();
                 break;
-            case FIELD:
+            case MY_FIELD:
+            case RIVAL_FIELD:
                 Card fieldCard = ownerOfToBeSelected.getBoard().getFieldCard().getThisCard();
                 if (fieldCard == null) throw new NoCardFound();
                 this.selectedCard = fieldCard;
                 break;
-            case GRAVEYARD:
+            case MY_GRAVEYARD:
+            case RIVAL_GRAVEYARD:
                 this.selectedCard = ownerOfToBeSelected.getBoard().getGraveYard().getCard(cardIndex);
                 break;
             default:
@@ -149,8 +153,8 @@ public class RoundController {
     }
 
     public Player getMyRival(Player myPlayer) {
-        if (currentPlayer == myPlayer)    return rival;
-        else    return currentPlayer;
+        if (currentPlayer == myPlayer) return rival;
+        else return currentPlayer;
     }
 
     public CardInUse findCardsCell(Card card) {
@@ -184,14 +188,14 @@ public class RoundController {
 
         return null;
     }
-
-    public CardInUse selectACard(Player player, ZoneName zoneName, boolean isForRival) {
-        deselectCard();
-
-        Player targetOwnerPlayer = player;
-        if (isForRival)     targetOwnerPlayer = getMyRival(player);
-
-        //check that the card selected has proper conditions
-    }
+//
+//    public CardInUse selectACard(Player player, ZoneName zoneName, boolean isForRival) {
+//        deselectCard();
+//
+//        Player targetOwnerPlayer = player;
+//        if (isForRival)     targetOwnerPlayer = getMyRival(player);
+//
+//        //check that the card selected has proper conditions
+//    }
 
 }
