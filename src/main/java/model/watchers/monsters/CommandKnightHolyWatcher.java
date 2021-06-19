@@ -16,8 +16,8 @@ public class CommandKnightHolyWatcher extends Watcher {
         whoToWatch = WhoToWatch.MINE;
     }
 
-    public CommandKnightHolyWatcher(CardInUse ownerOfWatcher) {
-        super(ownerOfWatcher);
+    public CommandKnightHolyWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
     }
 
     @Override
@@ -42,18 +42,6 @@ public class CommandKnightHolyWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        if (ownerOfWatcher == null)     ownerOfWatcher = cardInUse;
-
         addWatcherToCardInUse(cardInUse);
-    }
-
-    @Override
-    public void update(Phase newPhase) {
-
-    }
-
-    @Override
-    public void deleteWatcher() {
-
     }
 }

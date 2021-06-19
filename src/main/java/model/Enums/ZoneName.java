@@ -7,7 +7,8 @@ public enum ZoneName {
     MONSTER,
     SPELL,
     FIELD,
-    GRAVEYARD;
+    GRAVEYARD,
+    SPELL_TRAP;
 
     public static ZoneName getZoneName(String field) throws InvalidSelection {
         ZoneName zoneName;

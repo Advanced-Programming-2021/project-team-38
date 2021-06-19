@@ -10,7 +10,7 @@ public class TexChangerWatcher extends Watcher {
     MarshmallonHolyWatcher secondaryWatcher;
 
     public TexChangerWatcher(CardInUse ownerOfWatcher) {
-        super(ownerOfWatcher);
+        super(ownerOfWatcher, );
     }
 
     @Override
