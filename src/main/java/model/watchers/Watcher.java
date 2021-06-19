@@ -61,7 +61,7 @@ public abstract class Watcher {
             cardInUse.watchersOfCardInUse.remove(this);
             amWatching.remove(cardInUse);
         }
-        if (isDisposable)   dispose();
+//        if (isDisposable)   dispose();
     }
 
     protected static void emptyStack() {
@@ -106,9 +106,9 @@ public abstract class Watcher {
         }
     }
 
-    public void dispose() {
-        ownerOfWatcher.thisCard.builtInWatchers.remove(this);
-    }
+//    public void dispose() {
+//        ownerOfWatcher.thisCard.builtInWatchers.remove(this);
+//    }
 
     public static Watcher createWatcher(String nameWatcher, CardInUse ownerOfWatcher) {
         switch (nameWatcher) {
@@ -117,6 +117,9 @@ public abstract class Watcher {
             case "YamiFirst":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);
         }
+
+        System.out.println("wrong name");
+        return null;
     }
 
     public static CardInUse[] uniteArrays(CardInUse[] a, CardInUse[] b) {
@@ -127,13 +130,13 @@ public abstract class Watcher {
         return (CardInUse[]) set.toArray();
     }
 
-    public CardInUse[] theTargetCells(ZoneName zoneName) {
+    public CardInUse[] theTargetCells(Zone zoneName) {
         if (whoToWatch == WhoToWatch.ALL) {
             switch (zoneName) {
                 case MONSTER:
                     return uniteArrays(roundController.getCurrentPlayer().getBoard().getMonsterZone(),
                             roundController.getRivalBoard().getMonsterZone());
-                case SPELL_TRAP:
+                case SPELL:
                     return uniteArrays(roundController.getCurrentPlayerBoard().getSpellTrapZone(),
                         roundController.getRivalBoard().getSpellTrapZone());
             }
@@ -141,7 +144,7 @@ public abstract class Watcher {
             switch (zoneName) {
                 case MONSTER:
                     return ownerOfWatcher.getBoard().getMonsterZone();
-                case SPELL_TRAP:
+                case SPELL:
                     return ownerOfWatcher.getBoard().getSpellTrapZone();
             }
         } else if (whoToWatch == WhoToWatch.RIVALS) {
@@ -149,7 +152,7 @@ public abstract class Watcher {
             switch (zoneName) {
                 case MONSTER:
                     return myRival.getBoard().getMonsterZone();
-                case SPELL_TRAP:
+                case SPELL:
                     return myRival.getBoard().getSpellTrapZone();
             }
         }

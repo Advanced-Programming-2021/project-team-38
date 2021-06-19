@@ -16,13 +16,14 @@ public class AdvancedRitualArtWatcher extends Watcher {
         if (cardState == CardState.ACTIVE_MY_EFFECT) {
             if (handleChain()) {
                 //
+                isWatcherActivated = true;
             }
         }
     }
 
     @Override
     public boolean canPutWatcher() {
-        return true;
+        return !isWatcherActivated;
     }
 
     @Override

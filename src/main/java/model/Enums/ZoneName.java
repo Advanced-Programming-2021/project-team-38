@@ -8,6 +8,7 @@ public enum ZoneName {
     MY_SPELL_ZONE,
     MY_FIELD,
     MY_GRAVEYARD,
+    MY_DECK,
     RIVAL_MONSTER_ZONE,
     RIVAL_SPELL_ZONE,
     RIVAL_FIELD,

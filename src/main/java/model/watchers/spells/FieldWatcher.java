@@ -2,13 +2,13 @@ package model.watchers.spells;
 
 import controller.game.DuelMenuController;
 import model.CardState;
-import model.Enums.ZoneName;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.MonsterType;
 import model.card.monster.PreMonsterCard;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
+import model.watchers.Zone;
 
 public class FieldWatcher extends Watcher {
     MonsterType[] affected;
@@ -16,7 +16,7 @@ public class FieldWatcher extends Watcher {
     int defenseAdded;
 
 
-    //continuous
+    //continuous-FIELD
     public FieldWatcher(CardInUse ownerOfWatcher, MonsterType[] affected, int attackAdded, int defenseAdded, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
         this.affected = affected;
@@ -52,7 +52,7 @@ public class FieldWatcher extends Watcher {
     }
 
     public void watchTheFieldAffected() {
-        CardInUse[] unionOfMonsters = theTargetCells(ZoneName.MONSTER);
+        CardInUse[] unionOfMonsters = theTargetCells(Zone.MONSTER);
         for (CardInUse cardInUse : unionOfMonsters) {
             if (!cardInUse.isCellEmpty()) {
                 MonsterType theMonsterType = ((PreMonsterCard) cardInUse.thisCard.preCardInGeneral).getMonsterType();
@@ -75,6 +75,5 @@ public class FieldWatcher extends Watcher {
             ((MonsterCardInUse) cardInUse).addToAttack(attackAdded * -1);
             ((MonsterCardInUse) cardInUse).addToDefense(defenseAdded * -1);
         }
-        dispose();
     }
 }

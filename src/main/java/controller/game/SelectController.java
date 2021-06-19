@@ -33,7 +33,7 @@ public class SelectController {
         this.selector = selector;
     }
 
-    private void setCardType(CardType cardType) {
+    public void setCardType(CardType cardType) {
         this.cardType = cardType;
     }
 

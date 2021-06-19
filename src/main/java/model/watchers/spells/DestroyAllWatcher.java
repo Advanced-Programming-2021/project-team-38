@@ -2,17 +2,17 @@ package model.watchers.spells;
 
 import controller.game.DuelMenuController;
 import model.CardState;
-import model.Enums.ZoneName;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
+import model.watchers.Zone;
 
 //disposable
 public class DestroyAllWatcher extends Watcher {
 
-    ZoneName zoneAffected;
+    Zone zoneAffected;
 
-    public DestroyAllWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch, ZoneName zone) {
+    public DestroyAllWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch, Zone zone) {
         super(ownerOfWatcher, whoToWatch);
         zoneAffected = zone;
         isDisposable = true;
