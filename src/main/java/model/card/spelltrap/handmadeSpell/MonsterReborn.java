@@ -10,8 +10,6 @@ import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.card.monster.Monster;
 import model.card.spelltrap.SpellTrap;
 
-import static controller.game.SummonController.specialSummon;
-
 public class MonsterReborn extends SpellTrap {
 
     public MonsterReborn(PreCard preCard) {
@@ -33,7 +31,7 @@ public class MonsterReborn extends SpellTrap {
         else if (!(card instanceof Monster))
             throw new NotAppropriateCard("monster");
         else {
-            specialSummon((Monster) card, myPlayer);
+//            specialSummon((Monster) card, myPlayer);
             if (isSelectedFromOtherPlayerBoard)
                 rivalPlayer.getBoard().getGraveYard().removeCard(card);
             else myPlayer.getBoard().getGraveYard().removeCard(card);

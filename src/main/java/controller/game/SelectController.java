@@ -16,6 +16,7 @@ import view.Menus.DuelMenu;
 import view.Print;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SelectController {
@@ -33,7 +34,7 @@ public class SelectController {
         this.selector = selector;
     }
 
-    private void setCardType(CardType cardType) {
+    public void setCardType(CardType cardType) {
         this.cardType = cardType;
     }
 
@@ -42,8 +43,11 @@ public class SelectController {
         this.upperLevelBound = upperLevelBound;
     }
 
-    public void setMonsterTypes(ArrayList<MonsterType> monsterTypes) {
-        this.monsterTypes = monsterTypes;
+    public void setMonsterTypes(MonsterType[] monsterTypes) {
+        this.monsterTypes = new ArrayList<>();
+        Collections.addAll(this.monsterTypes, monsterTypes);
+        if (monsterTypes.length == 0) this.monsterTypes = null;
+
     }
 
     //this is the function that should be called if we want to get the card!
@@ -86,7 +90,7 @@ public class SelectController {
                 Monster returningMonster = (Monster) toReturn;
                 PreMonsterCard preMonster = (PreMonsterCard) returningMonster.getPreCardInGeneral();
                 if (!isLevelBoundFine(returningMonster)) throw new InvalidSelection();
-                if (monsterTypes != null && !monsterTypes.contains(preMonster.getMonsterType()))
+                if (monsterTypes != null && !monsterTypes.isEmpty() && !monsterTypes.contains(preMonster.getMonsterType()))
                     throw new InvalidSelection();
             }
         }

@@ -114,12 +114,13 @@ public class SummonController {
 
 
     //todo: its not good because it is static , (kollan it should be changed)
-    public static void specialSummon(Monster monster, Player player) throws BeingFull {
+    public static void specialSummon(Monster monster, Player player, RoundController roundController) throws BeingFull {
         if (player == null || monster == null) return;
         Board playerBoard = player.getBoard();
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
         putMonsterInUse(monster, true, monsterCardInUse, null);
+        roundController.getDuelMenuController().getMainPhaseController().getSummonedInThisPhase().add(monsterCardInUse);
     }
 }
 
