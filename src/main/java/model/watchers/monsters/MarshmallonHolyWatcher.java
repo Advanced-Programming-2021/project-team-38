@@ -8,7 +8,7 @@ import model.watchers.Watcher;
 
 public class MarshmallonHolyWatcher extends Watcher {
     public MarshmallonHolyWatcher(CardInUse ownerOfWatcher) {
-        super(ownerOfWatcher);
+        super(ownerOfWatcher, );
     }
 
     @Override

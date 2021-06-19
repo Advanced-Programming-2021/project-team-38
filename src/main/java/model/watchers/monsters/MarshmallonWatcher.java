@@ -12,7 +12,7 @@ public class MarshmallonWatcher extends Watcher {
     boolean isFaceDownInBattle;
 
     public MarshmallonWatcher(CardInUse ownerOfWatcher) {
-        super(ownerOfWatcher);
+        super(ownerOfWatcher, );
     }
 
     @Override

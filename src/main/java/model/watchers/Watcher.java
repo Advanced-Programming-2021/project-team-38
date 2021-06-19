@@ -1,16 +1,26 @@
 package model.watchers;
 
 import controller.game.DuelMenuController;
+import controller.game.RoundController;
+import lombok.Setter;
 import model.CardState;
 import model.Enums.Phase;
+import model.Enums.ZoneName;
+import model.Player;
 import model.card.cardinusematerial.CardInUse;
+import model.card.monster.MonsterType;
 import model.watchers.monsters.CommandKnightHolyWatcher;
+import model.watchers.spells.FieldWatcher;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public abstract class Watcher {
     public static HashMap<String, Watcher> allWatchers;
+    @Setter public static RoundController roundController;  //TODO set At the first of game
     public static ArrayList<Watcher> stack;
     public WhoToWatch whoToWatch;
     public ArrayList<CardInUse> amWatching;
@@ -18,14 +28,16 @@ public abstract class Watcher {
     public CardInUse ownerOfWatcher;
     protected static boolean isInChainMode = false;
     public int speed = 1;
+    public boolean isDisposable = false;
 
     static {
         allWatchers = new HashMap<>();
         stack = new ArrayList<>();
     }
 
-    public Watcher(CardInUse ownerOfWatcher) {
+    public Watcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         this.ownerOfWatcher = ownerOfWatcher;
+        this.whoToWatch = whoToWatch;
     }
 
     public abstract void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController);
@@ -49,6 +61,7 @@ public abstract class Watcher {
             cardInUse.watchersOfCardInUse.remove(this);
             amWatching.remove(cardInUse);
         }
+//        if (isDisposable)   dispose();
     }
 
     protected static void emptyStack() {
@@ -93,12 +106,59 @@ public abstract class Watcher {
         }
     }
 
+//    public void dispose() {
+//        ownerOfWatcher.thisCard.builtInWatchers.remove(this);
+//    }
+
     public static Watcher createWatcher(String nameWatcher, CardInUse ownerOfWatcher) {
         switch (nameWatcher) {
             case "CommandKnightHolyWatcher":
-                return new CommandKnightHolyWatcher(ownerOfWatcher);
-                //todo: to be continued! check if can be handled with using reflection
+                return new CommandKnightHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "YamiFirst":
+                return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);
         }
+
+        System.out.println("wrong name");
+        return null;
+    }
+
+    public static CardInUse[] uniteArrays(CardInUse[] a, CardInUse[] b) {
+        HashSet<CardInUse> set = new HashSet<>();
+        set.addAll(Arrays.asList(a));
+        set.addAll(Arrays.asList(b));
+
+        return (CardInUse[]) set.toArray();
+    }
+
+    public CardInUse[] theTargetCells(Zone zoneName) {
+        if (whoToWatch == WhoToWatch.ALL) {
+            switch (zoneName) {
+                case MONSTER:
+                    return uniteArrays(roundController.getCurrentPlayer().getBoard().getMonsterZone(),
+                            roundController.getRivalBoard().getMonsterZone());
+                case SPELL:
+                    return uniteArrays(roundController.getCurrentPlayerBoard().getSpellTrapZone(),
+                        roundController.getRivalBoard().getSpellTrapZone());
+            }
+        } else if (whoToWatch == WhoToWatch.MINE) {
+            switch (zoneName) {
+                case MONSTER:
+                    return ownerOfWatcher.getBoard().getMonsterZone();
+                case SPELL:
+                    return ownerOfWatcher.getBoard().getSpellTrapZone();
+            }
+        } else if (whoToWatch == WhoToWatch.RIVALS) {
+            Player myRival = roundController.getMyRival(ownerOfWatcher.getOwnerOfCard());
+            switch (zoneName) {
+                case MONSTER:
+                    return myRival.getBoard().getMonsterZone();
+                case SPELL:
+                    return myRival.getBoard().getSpellTrapZone();
+            }
+        }
+
+        //TODO remove sout
+        System.out.println("who to watch is null");
         return null;
     }
 
