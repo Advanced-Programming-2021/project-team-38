@@ -197,4 +197,9 @@ public class RoundController {
     public void temporaryTurnChange(Player newCurrent) {
         DuelMenu.showTemporaryTurnChange(newCurrent.getName(), newCurrent.getBoard());
     }
+
+    public boolean wantToActivateCard(String cardName) {
+        return DuelMenuController.askQuestion(
+                "Do you want to activate" + cardName + " ?(Y/N)").equals("Y");
+    }
 }

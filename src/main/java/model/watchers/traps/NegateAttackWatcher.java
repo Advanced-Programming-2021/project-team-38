@@ -5,6 +5,7 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
+import model.watchers.Zone;
 
 public class NegateAttackWatcher extends Watcher {
     @Override
@@ -26,6 +27,9 @@ public class NegateAttackWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        //put on all of rival's cards
+        CardInUse[] rivalMonsters = theTargetCells(Zone.MONSTER);
+        for (CardInUse rivalMonster : rivalMonsters) {
+            addWatcherToCardInUse(rivalMonster);
+        }
     }
 }

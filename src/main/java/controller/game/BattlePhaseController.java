@@ -14,6 +14,12 @@ public class BattlePhaseController {
     public RoundController gamePlay;
     public BattleController battleController;
 
+    public ArrayList<CardInUse> attackedInThisTurn;
+
+    {
+        attackedInThisTurn = new ArrayList<>();
+    }
+
     public BattlePhaseController(RoundController gamePlay) {
         this.gamePlay = gamePlay;
     }
@@ -32,11 +38,13 @@ public class BattlePhaseController {
             throw new WrongPhaseForAction();
         else if ((preyCard = gamePlay.getActionsOnRival().getRivalMonsterCell(cellOfCard)).isCellEmpty())
             throw new NoCardToAttack();
-        else if ((attacker = (MonsterCardInUse) cardInUse).hasBeenAttacker())
+        else if (attackedInThisTurn.contains(attacker = (MonsterCardInUse) cardInUse))
             throw new CardAttackedBeforeExeption();
-        else
+        else {
             battleController = new BattleController(gamePlay.getCurrentPlayerBoard(),
                     gamePlay.getRivalBoard(), attacker, preyCard);
+            attackedInThisTurn.add(attacker);
+        }
     }
 
     public void attackToLifePoint() throws NoSelectedCard, CardCantAttack, WrongPhaseForAction, CardAttackedBeforeExeption, CantAttackDirectlyException {

@@ -1,3 +1,4 @@
+//finish
 package model.watchers.traps;
 
 import controller.game.BattleController;
@@ -6,13 +7,15 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
+import model.watchers.Zone;
 
 public class MagicCylinderWatcher extends Watcher {
+
+    public MagicCylinderWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
     //trap
 
-    public MagicCylinderWatcher() {
-        whoToWatch = WhoToWatch.RIVALS;
-    }
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
@@ -34,6 +37,9 @@ public class MagicCylinderWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-//        for (ownerOfWatcher)   //TODO put this watcher on all of rivals cards
+        CardInUse[] rivalMonsters = theTargetCells(Zone.MONSTER);
+        for (CardInUse rivalMonster : rivalMonsters) {
+            addWatcherToCardInUse(rivalMonster);
+        }
     }
 }

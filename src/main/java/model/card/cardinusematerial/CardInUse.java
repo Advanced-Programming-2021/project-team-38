@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Board;
 import model.CardState;
+import model.Enums.Phase;
 import model.Player;
 import model.card.Card;
 import model.watchers.Watcher;
@@ -89,6 +90,13 @@ public abstract class CardInUse {
                 watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
             else
                 watcher.watch(this, cardState, duelMenuController);
+        }
+    }
+
+    public void updateCard() {
+        if (!isCellEmpty())     thisCard.putBuiltInWatchers(this);
+        if (board.getMyPhase() == Phase.END || board.getMyPhase() == Phase.END_RIVAL) {
+            isPositionChanged = false;
         }
     }
 }

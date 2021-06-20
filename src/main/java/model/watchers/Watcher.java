@@ -20,13 +20,15 @@ import java.util.HashSet;
 
 public abstract class Watcher {
     public static HashMap<String, Watcher> allWatchers;
-    @Setter public static RoundController roundController;  //TODO set At the first of game
+    @Setter
+    public static RoundController roundController;  //TODO set At the first of game
     public static ArrayList<Watcher> stack;
     public WhoToWatch whoToWatch;
     public ArrayList<CardInUse> amWatching;
     public boolean isWatcherActivated = false;
     public CardInUse ownerOfWatcher;
     protected static boolean isInChainMode = false;
+    public boolean firstOfStack = false;
     public int speed = 1;
     public boolean isDisposable = false;
 
@@ -76,9 +78,12 @@ public abstract class Watcher {
      */
     protected static boolean addToStack(Watcher watcher) {
         if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
-            //TODO ask user
-            stack.add(watcher);
-            return true;
+            if (stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
+                roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
+            if (roundController.wantToActivateCard(watcher.ownerOfWatcher.thisCard.getName())) {
+                stack.add(watcher);
+                return true;
+            }
         }
 
         return false;
@@ -138,7 +143,7 @@ public abstract class Watcher {
                             roundController.getRivalBoard().getMonsterZone());
                 case SPELL:
                     return uniteArrays(roundController.getCurrentPlayerBoard().getSpellTrapZone(),
-                        roundController.getRivalBoard().getSpellTrapZone());
+                            roundController.getRivalBoard().getSpellTrapZone());
             }
         } else if (whoToWatch == WhoToWatch.MINE) {
             switch (zoneName) {

@@ -5,17 +5,17 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
+import model.watchers.Zone;
+import model.watchers.spells.DestroyAllWatcher;
 
 public class TorrentialTributeWatcher extends Watcher {
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.SUMMON || cardState == CardState.FLIP_SUMMON) {
             if (handleChain()) {
-                for (MonsterCardInUse monsterCardInUse : theCard.ownerOfCard.getBoard().getMonsterZone()) {
-                    monsterCardInUse.sendToGraveYard();
-                }
-
-                //for rooye male harif
+                new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.ALL, Zone.MONSTER).watch(
+                        theCard, CardState.ACTIVE_MY_EFFECT, null);
                 trapHasDoneItsEffect();
             }
         }
@@ -28,6 +28,9 @@ public class TorrentialTributeWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        //put on every monster card
+        CardInUse[] allMonsters = theTargetCells(Zone.MONSTER);
+        for (CardInUse monster : allMonsters) {
+            addWatcherToCardInUse(monster);
+        }
     }
 }

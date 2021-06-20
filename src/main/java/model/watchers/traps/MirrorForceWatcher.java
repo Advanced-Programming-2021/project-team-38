@@ -6,6 +6,7 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
+import model.watchers.Zone;
 
 public class MirrorForceWatcher extends Watcher {
     @Override
@@ -30,6 +31,9 @@ public class MirrorForceWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        //TODO for rooye rivals monster card
+        CardInUse[] rivalMonsters = theTargetCells(Zone.MONSTER);
+        for (CardInUse rivalMonster : rivalMonsters) {
+            addWatcherToCardInUse(rivalMonster);
+        }
     }
 }

@@ -22,7 +22,7 @@ public class MainPhaseController {
     private final RoundController controller;
 
 
-    private final ArrayList<CardInUse> summonedInThisPhase; //used in handling the flip summon. can be used for some effects of cards
+    public final ArrayList<CardInUse> summonedInThisPhase; //used in handling the flip summon. can be used for some effects of cards
 
     {
         summonedInThisPhase = new ArrayList<>();

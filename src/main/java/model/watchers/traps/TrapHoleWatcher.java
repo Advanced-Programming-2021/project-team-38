@@ -5,6 +5,7 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
+import model.watchers.Zone;
 
 public class TrapHoleWatcher extends Watcher {
     @Override
@@ -26,7 +27,10 @@ public class TrapHoleWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        //put on all of rival's monster cards
+        CardInUse[] rivalMonsters = theTargetCells(Zone.MONSTER);
+        for (CardInUse rivalMonster : rivalMonsters) {
+            addWatcherToCardInUse(rivalMonster);
+        }
     }
 
     public boolean cardInUseHasWatcherCondition(CardInUse cardInUse) {

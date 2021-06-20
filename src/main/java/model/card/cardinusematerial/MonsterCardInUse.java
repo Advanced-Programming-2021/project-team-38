@@ -13,9 +13,9 @@ import model.card.monster.Monster;
 @Setter
 public class MonsterCardInUse extends CardInUse {
     private int attack, defense;
-    private boolean hasBeenAttacker; //if it has attacked another card in this turn
-    private boolean isAttacked; //if it has been attacked in this phase
-    private boolean isAttacking;    //if it has attacked a rival card in this phase
+//    private boolean hasBeenAttacker; //if it has attacked another card in this turn
+//    private boolean isAttacked; //if it has been attacked in this phase
+//    private boolean isAttacking;    //if it has attacked a rival card in this phase
     private boolean cameOnThisTurn; //if it was drawn in this phase
     private boolean isInAttackMode;
     public boolean canBeDestroyed;
@@ -49,10 +49,10 @@ public class MonsterCardInUse extends CardInUse {
         }
     }
 
-
-    public boolean hasBeenAttacker() {
-        return hasBeenAttacker;
-    }
+//
+//    public boolean hasBeenAttacker() {
+//        return hasBeenAttacker;
+//    }
 
 
     @Override
@@ -82,9 +82,9 @@ public class MonsterCardInUse extends CardInUse {
     @Override
     public void resetCell() {  //** watch out the come on this turn
         cameOnThisTurn = false;
-        isAttacked = false;
-        isAttacking = false;
-        hasBeenAttacker = false;
+//        isAttacked = false;
+//        isAttacking = false;
+//        hasBeenAttacker = false;
         isInAttackMode = false;
         canBeDestroyed = true;
     }
@@ -96,14 +96,14 @@ public class MonsterCardInUse extends CardInUse {
             ((Monster)thisCard).spinCard();
     }
 
-    public void changeIsAttacked() {    //when the card is attacked
-        isAttacked = true;
-    }
+//    public void changeIsAttacked() {    //when the card is attacked
+//        isAttacked = true;
+//    }
 
-    public void changeIsAttacking() {   //when the card is attacking
-        isAttacking = true;
-        hasBeenAttacker = true;
-    }
+//    public void changeIsAttacking() {   //when the card is attacking
+//        isAttacking = true;
+//        hasBeenAttacker = true;
+//    }
 
     public void destroyThis() {
         watchByState(CardState.DESTROY);
