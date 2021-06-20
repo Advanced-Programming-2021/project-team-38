@@ -139,11 +139,11 @@ public class SelectController {
         if (cardType != null) {
             for (Card card : possibleChoices.keySet()) {
                 if (!card.getPreCardInGeneral().getCardType().equals(cardType))
-                    possibleChoices.remove(card);//todo: fine?
+                    possibleChoices.remove(card);
                 if (cardType == CardType.MONSTER && monsterTypes != null && !monsterTypes.isEmpty()) {
                     for (MonsterType monsterType : monsterTypes) {
                         PreMonsterCard preMonsterCard = ((Monster) card).getMyPreCard();
-                        if (preMonsterCard.getMonsterType() != monsterType) possibleChoices.remove(card);//todo : fine?
+                        if (preMonsterCard.getMonsterType() != monsterType) possibleChoices.remove(card);
                     }
                 }
                 if (isLevelBoundWrong(card)) possibleChoices.remove(card);

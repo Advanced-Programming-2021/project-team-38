@@ -5,9 +5,14 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
 public class NegateAttackWatcher extends Watcher {
+    public NegateAttackWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.WANT_TO_ATTACK) {

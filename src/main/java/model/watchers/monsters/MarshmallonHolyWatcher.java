@@ -5,10 +5,12 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
 public class MarshmallonHolyWatcher extends Watcher {
-    public MarshmallonHolyWatcher(CardInUse ownerOfWatcher) {
-        super(ownerOfWatcher, );
+
+    public MarshmallonHolyWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
     }
 
     @Override

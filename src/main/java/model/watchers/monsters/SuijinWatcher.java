@@ -7,10 +7,15 @@ import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
 public class SuijinWatcher extends Watcher {
     MonsterCardInUse attacker;
     int attackerPoint;
+
+    public SuijinWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
 
 
     @Override

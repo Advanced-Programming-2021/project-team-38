@@ -7,6 +7,7 @@ import model.card.monster.MonsterType;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 
+//Sword-dark - Black - United - Magnum
 public class EquipActivationWatcher extends Watcher {
 
     EquipWatcher secondaryWatcher;

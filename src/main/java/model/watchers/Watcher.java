@@ -10,6 +10,7 @@ import model.Player;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.MonsterType;
 import model.watchers.monsters.CommandKnightHolyWatcher;
+import model.watchers.monsters.CommandKnightWatcher;
 import model.watchers.spells.FieldWatcher;
 
 import java.lang.reflect.InvocationTargetException;
@@ -77,12 +78,14 @@ public abstract class Watcher {
     else -> false
      */
     protected static boolean addToStack(Watcher watcher) {
-        if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
-            if (stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
-                roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
-            if (roundController.wantToActivateCard(watcher.ownerOfWatcher.thisCard.getName())) {
-                stack.add(watcher);
-                return true;
+        if (!stack.contains(watcher)) {
+            if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
+                if (stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
+                    roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
+                if (roundController.wantToActivateCard(watcher.ownerOfWatcher.thisCard.getName())) {
+                    stack.add(watcher);
+                    return true;
+                }
             }
         }
 
@@ -119,6 +122,8 @@ public abstract class Watcher {
         switch (nameWatcher) {
             case "CommandKnightHolyWatcher":
                 return new CommandKnightHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "CommandKnightWatcher":
+                return new CommandKnightWatcher(ownerOfWatcher, WhoToWatch.MINE);
             case "YamiFirst":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);
         }

@@ -12,7 +12,7 @@ public class ShopMenuTest {
         Assertions.assertThrows(InvalidName.class, new Executable() {
             @Override
             public void execute() throws Throwable {
-                System.out.println("hi"); //todo : what should I do !?
+                System.out.println("hi");
             }
         });
     }

@@ -6,9 +6,15 @@ import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.PreMonsterCard;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
 public class TheCalculatorWatcher extends Watcher {
     int increasingRatio = 300;
+
+    public TheCalculatorWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         //nothing

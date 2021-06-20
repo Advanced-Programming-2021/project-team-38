@@ -5,9 +5,14 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
 public class TrapHoleWatcher extends Watcher {
+    public TrapHoleWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.SUMMON || cardState == CardState.FLIP_SUMMON) {

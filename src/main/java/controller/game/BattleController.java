@@ -31,7 +31,7 @@ public class BattleController {
         preyCard.watchByState(CardState.IS_ATTACKED);
         isPreyCardInAttackMode = preyCard.isInAttackMode();
         if (canBattleHappen) {
-            preyCard.isCellEmpty();
+            preyCard.isCellEmpty(); //TODO
             run();
         }
         else System.out.println("this battle can't happen");

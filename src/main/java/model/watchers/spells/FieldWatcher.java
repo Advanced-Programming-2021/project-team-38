@@ -10,6 +10,7 @@ import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
+//YamiFirst - YamiSec - Forest - Closed Forest - Umiiruka -
 public class FieldWatcher extends Watcher {
     MonsterType[] affected;
     int attackAdded;

@@ -4,8 +4,12 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
 public class AdvancedRitualArtWatcher extends Watcher {
+    public AdvancedRitualArtWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
 //    public AdvancedRitualArtWatcher(CardInUse ownerOfWatcher) {
 //        super(ownerOfWatcher);
 //        whoToWatch = WhoToWatch.MINE;
@@ -15,7 +19,7 @@ public class AdvancedRitualArtWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.ACTIVE_MY_EFFECT) {
             if (handleChain()) {
-                //
+                //TODO
                 isWatcherActivated = true;
             }
         }

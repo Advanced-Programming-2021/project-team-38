@@ -10,6 +10,10 @@ import model.watchers.Zone;
 import model.watchers.spells.DestroyAllWatcher;
 
 public class TorrentialTributeWatcher extends Watcher {
+    public TorrentialTributeWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.SUMMON || cardState == CardState.FLIP_SUMMON) {

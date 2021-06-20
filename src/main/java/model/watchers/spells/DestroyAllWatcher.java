@@ -8,6 +8,7 @@ import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
 //disposable
+//Raigeki - Harpie - Dark Hole
 public class DestroyAllWatcher extends Watcher {
 
     Zone zoneAffected;

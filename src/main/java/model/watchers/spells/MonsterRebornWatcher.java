@@ -9,14 +9,18 @@ import model.Enums.ZoneName;
 import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.Monster;
-import model.card.monster.MonsterType;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 import view.Menus.DuelMenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MonsterRebornWatcher extends Watcher {
+    public MonsterRebornWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.ACTIVE_MY_EFFECT) {

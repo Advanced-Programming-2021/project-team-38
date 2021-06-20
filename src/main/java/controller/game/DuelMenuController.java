@@ -233,7 +233,7 @@ public class DuelMenuController {
         mainPhaseController.changePosition(isToBeAttackMode);
     }
 
-    public void attack(int number) throws WrongPhaseForAction, CardAttackedBeforeExeption, CardCantAttack, NoCardToAttack, NoSelectedCard {
+    public void attack(int number) throws WrongPhaseForAction, CardAttackedBeforeExeption, CardCantAttack, NoCardToAttack, NoSelectedCard, InvalidSelection, NoCardFound {
         if (!currentPhase.equals(Phase.BATTLE))
             throw new WrongPhaseForAction();
 

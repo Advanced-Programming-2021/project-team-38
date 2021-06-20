@@ -6,8 +6,13 @@ import model.CardState;
 import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 
 public class TimeSealWatcher extends Watcher {
+    public TimeSealWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         //nothing

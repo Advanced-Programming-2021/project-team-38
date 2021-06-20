@@ -6,6 +6,10 @@ import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
 
 public class ChangeOfHeartsWatcher extends Watcher{
+    public ChangeOfHeartsWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
+    }
+
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController){
         if (cardState == CardState.ACTIVE_MY_EFFECT) {

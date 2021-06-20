@@ -12,6 +12,7 @@ import model.card.cardinusematerial.CardInUse;
 import model.card.monster.Monster;
 import model.card.monster.MonsterType;
 import model.watchers.Watcher;
+import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 import view.Menus.DuelMenu;
 
@@ -21,15 +22,16 @@ import java.util.Arrays;
 public class TexChangerWatcher extends Watcher {
     MarshmallonHolyWatcher secondaryWatcher;
 
-    public TexChangerWatcher(CardInUse ownerOfWatcher) {
-        super(ownerOfWatcher, );
+    public TexChangerWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
+        super(ownerOfWatcher, whoToWatch);
     }
+
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
             if (secondaryWatcher == null) {
-                secondaryWatcher = new MarshmallonHolyWatcher(ownerOfWatcher);
+                secondaryWatcher = new MarshmallonHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
                 secondaryWatcher.watch(theCard, cardState, duelMenuController);
                 summonAppropriateMonsterCard();
             }

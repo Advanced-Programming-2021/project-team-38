@@ -1,5 +1,7 @@
 package controller.game;
 
+import exceptions.InvalidSelection;
+import exceptions.NoCardFound;
 import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
@@ -22,8 +24,8 @@ class ActionsOnRival {
 //            Print.print("graveyard empty");
 //    }
 
-    public MonsterCardInUse getRivalMonsterCell(int cellNo) {
-        return gamePlay.getRivalBoard().getMonsterZone()[cellNo];
+    public MonsterCardInUse getRivalMonsterCell(int cellNo) throws InvalidSelection, NoCardFound {
+        return (MonsterCardInUse) gamePlay.getRivalBoard().getCardInUse(cellNo, true);
     }
 
     public Card selectedCard() {
