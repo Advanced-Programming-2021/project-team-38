@@ -1,8 +1,8 @@
 package model;
 
 import controller.game.DuelMenuController;
-import exceptions.InvalidSelection;
-import exceptions.NoCardFound;
+import view.exceptions.InvalidSelection;
+import view.exceptions.NoCardFound;
 import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;

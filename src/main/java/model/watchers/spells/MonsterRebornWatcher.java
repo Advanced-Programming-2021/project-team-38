@@ -3,7 +3,7 @@ package model.watchers.spells;
 import controller.game.DuelMenuController;
 import controller.game.SelectController;
 import controller.game.SummonController;
-import exceptions.BeingFull;
+import view.exceptions.BeingFull;
 import model.CardState;
 import model.Enums.ZoneName;
 import model.card.CardType;

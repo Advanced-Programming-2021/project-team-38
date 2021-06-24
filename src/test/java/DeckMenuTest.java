@@ -2,7 +2,7 @@
 
 import controller.DeckMenuController;
 import controller.ShopMenuController;
-import exceptions.*;
+import view.exceptions.*;
 import model.User;
 import model.Deck;
 import model.card.CardLoader;

@@ -1,7 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
-import exceptions.InvalidName;
+import view.exceptions.InvalidName;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.monster.PreMonsterCard;

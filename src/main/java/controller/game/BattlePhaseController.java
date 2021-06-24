@@ -1,7 +1,7 @@
 package controller.game;
 
 
-import exceptions.*;
+import view.exceptions.*;
 import model.Enums.Phase;
 import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
@@ -58,7 +58,7 @@ public class BattlePhaseController {
             throw new CardCantAttack();
         else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
             throw new WrongPhaseForAction();
-        else if ((attacker = (MonsterCardInUse) cardInUse).hasBeenAttacker())
+        else if (attackedInThisTurn.contains(attacker = (MonsterCardInUse) cardInUse))
             throw new CardAttackedBeforeExeption();
         else if (!canAttackDirectly())
             throw new CantAttackDirectlyException();

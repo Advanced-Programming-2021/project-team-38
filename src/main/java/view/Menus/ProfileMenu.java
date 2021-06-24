@@ -2,7 +2,7 @@ package view.Menus;
 
 import controller.ProfileMenuController;
 import controller.RelatedToMenuController;
-import exceptions.*;
+import view.exceptions.*;
 import view.MenuName;
 
 public class ProfileMenu {

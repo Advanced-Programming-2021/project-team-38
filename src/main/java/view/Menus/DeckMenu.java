@@ -2,7 +2,7 @@ package view.Menus;
 
 import controller.DeckMenuController;
 import controller.RelatedToMenuController;
-import exceptions.*;
+import view.exceptions.*;
 import view.MenuName;
 import view.Print;
 

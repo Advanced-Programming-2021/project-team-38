@@ -1,6 +1,6 @@
 package controller.game;
 
-import exceptions.*;
+import view.exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;

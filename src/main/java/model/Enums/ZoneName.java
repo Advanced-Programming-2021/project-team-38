@@ -1,6 +1,6 @@
 package model.Enums;
 
-import exceptions.InvalidSelection;
+import view.exceptions.InvalidSelection;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 

@@ -1,9 +1,9 @@
 package view.Menus;
 
 import controller.RelatedToMenuController;
-import exceptions.InvalidCommand;
-import exceptions.MenuNavigationError;
-import exceptions.NeedToLogin;
+import view.exceptions.InvalidCommand;
+import view.exceptions.MenuNavigationError;
+import view.exceptions.NeedToLogin;
 
 public class RelatedToMenu {
 

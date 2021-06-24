@@ -1,6 +1,6 @@
 package controller;
 
-import exceptions.*;
+import view.exceptions.*;
 import model.User;
 
 import java.util.Objects;

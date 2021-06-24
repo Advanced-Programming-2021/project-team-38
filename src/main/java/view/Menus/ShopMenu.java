@@ -2,10 +2,10 @@ package view.Menus;
 
 import controller.RelatedToMenuController;
 import controller.ShopMenuController;
-import exceptions.InvalidCommand;
-import exceptions.InvalidName;
-import exceptions.NotEnoughMoney;
-import exceptions.WrongMenu;
+import view.exceptions.InvalidCommand;
+import view.exceptions.InvalidName;
+import view.exceptions.NotEnoughMoney;
+import view.exceptions.WrongMenu;
 import view.MenuName;
 import view.messageviewing.Print;
 

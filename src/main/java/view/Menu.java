@@ -1,10 +1,10 @@
 package view;
 
 import controller.RelatedToMenuController;
-import exceptions.InvalidCommand;
-import exceptions.MenuNavigationError;
-import exceptions.NeedToLogin;
-import exceptions.WrongMenu;
+import view.exceptions.InvalidCommand;
+import view.exceptions.MenuNavigationError;
+import view.exceptions.NeedToLogin;
+import view.exceptions.WrongMenu;
 import view.Menus.*;
 
 import java.util.Scanner;

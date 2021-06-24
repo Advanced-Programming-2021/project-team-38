@@ -1,7 +1,7 @@
 package controller.game;
 
 
-import exceptions.*;
+import view.exceptions.*;
 import model.Player;
 import model.card.Card;
 import model.card.CardType;

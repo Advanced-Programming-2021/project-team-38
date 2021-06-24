@@ -1,9 +1,9 @@
 package model;
 
-import exceptions.BeingFull;
-import exceptions.InvalidName;
-import exceptions.NotExisting;
-import exceptions.OccurrenceException;
+import view.exceptions.BeingFull;
+import view.exceptions.InvalidName;
+import view.exceptions.NotExisting;
+import view.exceptions.OccurrenceException;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.spelltrap.CardStatus;

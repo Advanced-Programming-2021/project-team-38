@@ -1,6 +1,6 @@
 import controller.ShopMenuController;
-import exceptions.InvalidName;
-import exceptions.NotEnoughMoney;
+import view.exceptions.InvalidName;
+import view.exceptions.NotEnoughMoney;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;

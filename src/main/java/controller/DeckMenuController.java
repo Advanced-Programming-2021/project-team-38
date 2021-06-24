@@ -1,6 +1,6 @@
 package controller;
 
-import exceptions.*;
+import view.exceptions.*;
 import model.Deck;
 import model.User;
 import model.card.PreCard;

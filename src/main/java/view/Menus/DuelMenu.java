@@ -2,7 +2,7 @@ package view.Menus;
 
 import controller.RelatedToMenuController;
 import controller.game.DuelMenuController;
-import exceptions.*;
+import view.exceptions.*;
 import model.Board;
 import model.CardAddress;
 import model.card.Card;

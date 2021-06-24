@@ -1,7 +1,7 @@
 package view.Menus;
 
 import controller.ImportExportController;
-import exceptions.InvalidName;
+import view.exceptions.InvalidName;
 import view.messageviewing.Print;
 
 import java.io.IOException;
