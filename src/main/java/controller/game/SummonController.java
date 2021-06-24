@@ -86,7 +86,6 @@ public class SummonController {
 
     private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         if (monsterCardInUse == null || summonedCards == null) return;
-
         monsterCardInUse.summon();
         monsterCardInUse.setACardInCell(monster);
         monsterCardInUse.setInAttackMode(true);

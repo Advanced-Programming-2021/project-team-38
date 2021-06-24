@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Board;
 import model.CardState;
-import model.watchers.watchingexceptions.CancelBattle;
+import model.card.cardinusematerial.MonsterCardInUse;
 import view.Print;
 import view.messageviewing.Winner;
-import model.card.cardinusematerial.MonsterCardInUse;
-import model.card.monster.Monster;
 
 @Getter
 @Setter
