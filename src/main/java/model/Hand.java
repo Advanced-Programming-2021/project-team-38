@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.InvalidSelection;
+import view.exceptions.InvalidSelection;
 import model.card.Card;
 import model.card.monster.Monster;
 import model.card.monster.MonsterCardType;

@@ -3,10 +3,10 @@ package view.Menus;
 import controller.FileHandler;
 import controller.LoginMenuController;
 import controller.RelatedToMenuController;
-import exceptions.AlreadyExistingError;
-import exceptions.InvalidCommand;
-import exceptions.LoginError;
-import exceptions.WrongMenu;
+import view.exceptions.AlreadyExistingError;
+import view.exceptions.InvalidCommand;
+import view.exceptions.LoginError;
+import view.exceptions.WrongMenu;
 import view.MenuName;
 import view.Print;
 

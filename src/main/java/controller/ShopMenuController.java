@@ -1,7 +1,7 @@
 package controller;
 
-import exceptions.InvalidName;
-import exceptions.NotEnoughMoney;
+import view.exceptions.InvalidName;
+import view.exceptions.NotEnoughMoney;
 import model.User;
 import model.card.PreCard;
 import view.messageviewing.SuccessfulAction;

@@ -3,20 +3,23 @@
 package model.card;
 
 import com.opencsv.CSVReader;
-import lombok.Getter;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
-import model.card.monster.mosterswitheffect.CommandKnight;
-import model.card.monster.mosterswitheffect.ManEaterBug;
 import model.card.spelltrap.PreSpellTrapCard;
 import model.card.spelltrap.SpellTrap;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class CardLoader {
+    static HashMap<String, ArrayList<String>> cardsWatchers;
+
+    static {
+        cardsWatchers = new HashMap<>();
+    }
 
     public static void loadCsv() {
         //Monster csv
@@ -47,7 +50,7 @@ public class CardLoader {
 
     public static void setCards() {
         HashMap<PreCard, Card> preCardInstances = PreCard.getAllPreCardsInstances();
-        loadHandmadeCards(preCardInstances);
+//        loadHandmadeCards(preCardInstances);
 
         for (PreCard preCard : preCardInstances.keySet()) {
             if (preCardInstances.get(preCard) == null) {
@@ -59,17 +62,17 @@ public class CardLoader {
         }
     }
 
-    private static void loadHandmadeCards(HashMap<PreCard, Card> preCardInstances) {
-        //load cards which are made by hand -> command knight, suijin, ...
-        //remember to call setupmonster or spelltrap for them
-        String[] handmadeMonsters = {"Command Knight", "Man-Eater Bug",
-                "Scanner", "SuijinWatcher", "Yomi Ship"};
-
-
-        PreCard preCard = PreCard.findCard("Command Knight");
-        preCardInstances.put(preCard, new CommandKnight(preCard));
-        preCard = PreCard.findCard("Man-Eater Bug");
-        preCardInstances.put(preCard, new ManEaterBug(preCard));
-        //...
-    }
+//    private static void loadHandmadeCards(HashMap<PreCard, Card> preCardInstances) {
+//        //load cards which are made by hand -> command knight, suijin, ...
+//        //remember to call setupmonster or spelltrap for them
+//        String[] handmadeMonsters = {"Command Knight", "Man-Eater Bug",
+//                "Scanner", "SuijinWatcher", "Yomi Ship"};
+//
+//
+//        PreCard preCard = PreCard.findCard("Command Knight");
+//        preCardInstances.put(preCard, new CommandKnight(preCard));
+//        preCard = PreCard.findCard("Man-Eater Bug");
+//        preCardInstances.put(preCard, new ManEaterBug(preCard));
+//        //...
+//    }
 }

@@ -3,7 +3,7 @@ package model.watchers.monsters;
 import controller.game.DuelMenuController;
 import controller.game.SelectController;
 import controller.game.SummonController;
-import exceptions.BeingFull;
+import view.exceptions.BeingFull;
 import model.CardState;
 import model.Enums.Phase;
 import model.Enums.ZoneName;
@@ -13,7 +13,6 @@ import model.card.monster.Monster;
 import model.card.monster.MonsterType;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
-import model.watchers.Zone;
 import view.Menus.DuelMenu;
 
 import java.util.ArrayList;

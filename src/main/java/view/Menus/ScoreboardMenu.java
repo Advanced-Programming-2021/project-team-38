@@ -2,8 +2,8 @@ package view.Menus;
 
 import controller.RelatedToMenuController;
 import controller.ScoreBoardMenuController;
-import exceptions.InvalidCommand;
-import exceptions.WrongMenu;
+import view.exceptions.InvalidCommand;
+import view.exceptions.WrongMenu;
 import view.MenuName;
 
 public class ScoreboardMenu {

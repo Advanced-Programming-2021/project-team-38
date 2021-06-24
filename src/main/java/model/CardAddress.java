@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.InvalidSelection;
+import view.exceptions.InvalidSelection;
 import lombok.Getter;
 import model.Enums.ZoneName;
 import model.card.cardinusematerial.MonsterCardInUse;

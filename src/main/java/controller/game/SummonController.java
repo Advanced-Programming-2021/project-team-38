@@ -3,7 +3,7 @@
 package controller.game;
 
 
-import exceptions.*;
+import view.exceptions.*;
 import model.Board;
 import model.Player;
 import model.card.cardinusematerial.CardInUse;

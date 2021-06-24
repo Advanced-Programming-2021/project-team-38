@@ -1,5 +1,5 @@
 import controller.ImportExportController;
-import exceptions.InvalidName;
+import view.exceptions.InvalidName;
 import model.card.CardLoader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,8 +1,8 @@
 package controller.game;
 
 
-import exceptions.InvalidSelection;
-import exceptions.NoCardFound;
+import view.exceptions.InvalidSelection;
+import view.exceptions.NoCardFound;
 import model.CardAddress;
 import model.Enums.ZoneName;
 import model.Player;

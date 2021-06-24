@@ -3,7 +3,7 @@
 package controller.game;
 
 import controller.LoginMenuController;
-import exceptions.*;
+import view.exceptions.*;
 import lombok.Getter;
 import model.CardAddress;
 import model.Deck;

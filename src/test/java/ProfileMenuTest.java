@@ -2,7 +2,7 @@
 
 
 import controller.ProfileMenuController;
-import exceptions.*;
+import view.exceptions.*;
 import model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

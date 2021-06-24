@@ -1,7 +1,7 @@
 package controller.game;
 
-import exceptions.InvalidSelection;
-import exceptions.NoCardFound;
+import view.exceptions.InvalidSelection;
+import view.exceptions.NoCardFound;
 import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;

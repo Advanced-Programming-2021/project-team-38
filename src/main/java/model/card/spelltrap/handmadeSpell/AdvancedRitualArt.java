@@ -2,7 +2,7 @@ package model.card.spelltrap.handmadeSpell;
 
 import controller.game.MainPhaseController;
 import controller.game.RoundController;
-import exceptions.*;
+import view.exceptions.*;
 import model.Board;
 import model.Player;
 import model.card.Card;
