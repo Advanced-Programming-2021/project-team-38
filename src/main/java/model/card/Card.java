@@ -1,6 +1,7 @@
 package model.card;
 
 import lombok.Getter;
+import model.GraveYard;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
 
@@ -59,5 +60,9 @@ public abstract class Card {
         }
 
         putBuiltInWatchers(cardInUse);
+    }
+
+    public void beVictim(GraveYard graveYard) {
+        graveYard.addCard(this);
     }
 }

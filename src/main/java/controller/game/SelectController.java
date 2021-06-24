@@ -1,8 +1,6 @@
 package controller.game;
 
 
-import view.exceptions.InvalidSelection;
-import view.exceptions.NoCardFound;
 import model.CardAddress;
 import model.Enums.ZoneName;
 import model.Player;
@@ -10,9 +8,13 @@ import model.card.Card;
 import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.Monster;
+import model.card.monster.MonsterCardType;
 import model.card.monster.MonsterType;
 import model.card.monster.PreMonsterCard;
 import view.Menus.DuelMenu;
+import view.exceptions.CantDoActionWithCard;
+import view.exceptions.InvalidSelection;
+import view.exceptions.NoCardFound;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +28,7 @@ public class SelectController {
     int upperLevelBound = 100;
     int lowerLevelBound = 0;
     private ArrayList<MonsterType> monsterTypes;
+    private boolean isRitual = false;
 
     public SelectController(ArrayList<ZoneName> zoneNames, RoundController roundController, Player selector) {
         this.zoneNames = zoneNames;
@@ -50,6 +53,13 @@ public class SelectController {
         if (this.monsterTypes != null) this.cardType = CardType.MONSTER;
     }
 
+    public void setIfRitual(boolean isRitual) {
+        this.isRitual = isRitual;
+        if (isRitual) {
+            setCardType(CardType.MONSTER);
+        }
+    }
+
     //this is the function that should be called if we want to get the card!
     public Card getTheCard() {
         while (true) {
@@ -60,7 +70,7 @@ public class SelectController {
                 toReturn = getCardByAddress(cardAddress);
                 if (toReturn != null) return toReturn;
                 else throw new InvalidSelection();
-            } catch (InvalidSelection | NoCardFound invalidSelection) {
+            } catch (InvalidSelection | NoCardFound | CantDoActionWithCard invalidSelection) {
                 DuelMenu.showException(invalidSelection);
             }
         }
@@ -74,7 +84,8 @@ public class SelectController {
         return DuelMenu.forceGetCardAddress(getPossibleChoices());
     }
 
-    private Card getCardByAddress(CardAddress cardAddress) throws InvalidSelection, NoCardFound {
+    //the validity of card is also checked here
+    private Card getCardByAddress(CardAddress cardAddress) throws InvalidSelection, NoCardFound, CantDoActionWithCard {
         if (cardAddress == null) return null;
         ZoneName zoneName = cardAddress.getZoneName();
         if (!zoneNames.contains(zoneName)) return null;
@@ -86,6 +97,10 @@ public class SelectController {
             if (cardType.equals(CardType.MONSTER)) {
                 Monster returningMonster = (Monster) toReturn;
                 PreMonsterCard preMonster = (PreMonsterCard) returningMonster.getPreCardInGeneral();
+                if (isRitual) {
+                    if (!preMonster.getMonsterCardType().equals(MonsterCardType.RITUAL))
+                        throw new CantDoActionWithCard("ritual summon");
+                }
                 if (isLevelBoundWrong(returningMonster)) throw new InvalidSelection();
                 if (monsterTypes != null && !monsterTypes.isEmpty() && !monsterTypes.contains(preMonster.getMonsterType()))
                     throw new InvalidSelection();
@@ -208,8 +223,8 @@ public class SelectController {
             try {
                 CardAddress cardAddress = new CardAddress(zoneNameString + i);
                 possibleChoices.put(getCardByAddress(cardAddress), cardAddress);
-            } catch (InvalidSelection | NoCardFound invalidSelection) {
-                invalidSelection.printStackTrace();
+            } catch (InvalidSelection | NoCardFound | CantDoActionWithCard invalidSelection) {
+                DuelMenu.showException(invalidSelection);
             }
         }
     }

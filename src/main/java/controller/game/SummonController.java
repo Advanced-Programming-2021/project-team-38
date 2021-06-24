@@ -3,7 +3,6 @@
 package controller.game;
 
 
-import view.exceptions.*;
 import model.Board;
 import model.Player;
 import model.card.cardinusematerial.CardInUse;
@@ -12,6 +11,7 @@ import model.card.monster.Monster;
 import model.card.monster.MonsterCardType;
 import model.card.monster.MonsterManner;
 import model.card.monster.PreMonsterCard;
+import view.exceptions.*;
 import view.messageviewing.Print;
 import view.messageviewing.SuccessfulAction;
 
@@ -66,7 +66,8 @@ public class SummonController {
 
     public void ritualSummon(ArrayList<MonsterCardInUse> tributes) throws CantDoActionWithCard {
         PreMonsterCard preMonster = (PreMonsterCard) monster.getPreCardInGeneral();
-        if (!preMonster.getType().equals(MonsterCardType.RITUAL)) throw new CantDoActionWithCard("ritual summon");
+        if (!preMonster.getMonsterCardType().equals(MonsterCardType.RITUAL))
+            throw new CantDoActionWithCard("ritual summon");
         for (MonsterCardInUse tribute : tributes) {
             controller.sendToGraveYard(tribute);
         }

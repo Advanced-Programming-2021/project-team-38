@@ -1,10 +1,10 @@
 package model;
 
-import view.exceptions.InvalidSelection;
 import model.card.Card;
 import model.card.monster.Monster;
 import model.card.monster.MonsterCardType;
 import model.card.monster.PreMonsterCard;
+import view.exceptions.InvalidSelection;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class Hand {
         for (Card card : cardsInHand) {
             if (card instanceof Monster) {
                 PreMonsterCard preMonsterCard = (PreMonsterCard) (card.getPreCardInGeneral());
-                if (preMonsterCard.getType().equals(monsterCardType)) monsters.add((Monster) card);
+                if (preMonsterCard.getMonsterCardType().equals(monsterCardType)) monsters.add((Monster) card);
             }
         }
         return monsters;
