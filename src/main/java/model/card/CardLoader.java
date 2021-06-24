@@ -2,6 +2,8 @@
 
 package model.card;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVReader;
 import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
@@ -10,6 +12,9 @@ import model.card.spelltrap.SpellTrap;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +23,7 @@ public class CardLoader {
     static HashMap<String, ArrayList<String>> cardsWatchers;
 
     static {
-        cardsWatchers = new HashMap<>();
+        setCardsWatchers();
     }
 
     public static void loadCsv() {
@@ -59,6 +64,17 @@ public class CardLoader {
                 else
                     preCardInstances.put(preCard, new SpellTrap(preCard).setUpSpellTrap());
             }
+        }
+    }
+
+    public static void setCardsWatchers() {
+        try {
+            String json = new String(Files.readAllBytes(Paths.get("cards.json")));
+            Type type = new TypeToken<HashMap<String, ArrayList<String>>>() {
+            }.getType();
+            cardsWatchers = new Gson().fromJson(json, type);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
