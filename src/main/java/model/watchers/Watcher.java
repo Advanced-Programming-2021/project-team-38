@@ -126,6 +126,13 @@ public abstract class Watcher {
                 return new CommandKnightWatcher(ownerOfWatcher, WhoToWatch.MINE);
             case "YamiFirst":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);
+            case "YamiSec":
+                return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FAIRY}, -200, -200, WhoToWatch.ALL);
+            case "Forest":
+                return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.INSECT, MonsterType.BEAST_WARRIOR, MonsterType.BEAST}, 200, 200, WhoToWatch.ALL);
+            case "Umiiruka":
+                return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.AQUA}, 500, -400, WhoToWatch.ALL);
+
         }
 
         System.out.println("wrong name");

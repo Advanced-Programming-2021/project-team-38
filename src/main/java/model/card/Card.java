@@ -54,7 +54,7 @@ public abstract class Card {
     }
 
     public void cardIsBeingSetInCell(CardInUse cardInUse) {
-        for (String nameOfWatcher : preCardInGeneral.nameOfWatchers) {
+        for (String nameOfWatcher : CardLoader.cardsWatchers.get(name)) {
             builtInWatchers.add(Watcher.createWatcher(nameOfWatcher, cardInUse));
         }
 

@@ -19,7 +19,6 @@ public abstract class CardInUse {
     public ArrayList<Watcher> watchersOfCardInUse;
     public Card thisCard;
     public Player ownerOfCard;
-//    public RoundController roundController;
     public boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false //todo: in the beginning of any turn we should change it to false
     public boolean isFaceUp;
     protected Board board;

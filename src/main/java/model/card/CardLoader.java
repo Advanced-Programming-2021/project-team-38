@@ -42,7 +42,7 @@ public class CardLoader {
 
         //SpellTrap csv
         //Name, Type, Icon (Property), Description, Status, Price
-        try (CSVReader csvReader = new CSVReader(new FileReader("SpellTrap.csv"));) {
+        try (CSVReader csvReader = new CSVReader(new FileReader("SpellTrap.csv"))) {
             String[] values = null;
             csvReader.readNext();
             while ((values = csvReader.readNext()) != null) {
@@ -77,18 +77,4 @@ public class CardLoader {
             e.printStackTrace();
         }
     }
-
-//    private static void loadHandmadeCards(HashMap<PreCard, Card> preCardInstances) {
-//        //load cards which are made by hand -> command knight, suijin, ...
-//        //remember to call setupmonster or spelltrap for them
-//        String[] handmadeMonsters = {"Command Knight", "Man-Eater Bug",
-//                "Scanner", "SuijinWatcher", "Yomi Ship"};
-//
-//
-//        PreCard preCard = PreCard.findCard("Command Knight");
-//        preCardInstances.put(preCard, new CommandKnight(preCard));
-//        preCard = PreCard.findCard("Man-Eater Bug");
-//        preCardInstances.put(preCard, new ManEaterBug(preCard));
-//        //...
-//    }
 }
