@@ -44,6 +44,7 @@ public class FieldWatcher extends Watcher {
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
+        if (!isWatcherActivated)    watch(cardInUse, CardState.ACTIVE_MY_EFFECT, null);
         addWatcherToCardInUse(cardInUse);
         optionalUpdate();
     }
