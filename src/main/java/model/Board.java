@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;
 import model.card.Card;
+import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 @Getter
 @Setter
 public class Board {
-    GraveYard graveYard;
+    private GraveYard graveYard;
 
     private MonsterCardInUse[] monsterZone;
     private SpellTrapCardInUse[] spellTrapZone;
@@ -31,14 +32,17 @@ public class Board {
     private int additionalDefense;
     private Player owner;
     private Phase myPhase;
-    private Deck deckInUse;
     private DuelMenuController controller;
 
     {
-        this.monsterZone = new MonsterCardInUse[5];
-        this.spellTrapZone = new SpellTrapCardInUse[5];
-        newCells();
+        monsterZone = new MonsterCardInUse[5];
+        spellTrapZone = new SpellTrapCardInUse[5];
         graveYard = new GraveYard();
+    }
+
+    public Board(Player owner) {
+        this.owner = owner;
+        newCells();
     }
 
     //TODO !!! negar please
@@ -130,7 +134,7 @@ public class Board {
     public CardInUse getCellOf(Card card) {
         if (card instanceof Monster) {
             for (MonsterCardInUse monsterCardInUse : monsterZone) {
-                if (monsterCardInUse.getThisCard().equals((Monster) card)) return monsterCardInUse;
+                if (monsterCardInUse.getThisCard().equals(card)) return monsterCardInUse;
             }
         } else if (card instanceof SpellTrap) {
             for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
@@ -143,4 +147,63 @@ public class Board {
     public void updateAfterAction() {
 
     }
+
+    @Override
+    public String toString() {
+        if (controller.getRoundController().getCurrentPlayer() == this.owner) //todo: fine?
+            return myTurnString();
+        else
+            return rivalTurnString();
+    }
+
+    private String myTurnString() {
+        StringBuilder myBoard = new StringBuilder();
+        String horizontalBoarder = "_".repeat(30);
+        myBoard.append(horizontalBoarder).append("\n");
+
+        if (fieldCell.thisCard == null) myBoard.append("E ");
+        else myBoard.append("O ");
+        myBoard.append("\t".repeat(6));
+
+        myBoard.append(makeTwoBits(graveYard.getNumOfCards())).append("\n");
+
+        myBoard.append("  \t");
+        for (MonsterCardInUse monsterCardInUse : monsterZone) {
+            myBoard.append(monsterCardInUse.toString()).append("\t");
+        }
+        myBoard.append("\n  \t");
+        for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
+            myBoard.append(spellTrapCardInUse.toString()).append("\t");
+        }
+
+        myBoard.append("\n").append("\t".repeat(6)).append(makeTwoBits(owner.getDeck().getNumOfMainCards()));
+        myBoard.append(owner.getHand().toString()).append("\n");
+        myBoard.append("nick name : ").append(owner.getName()).append("life point : ").append(owner.getLifePoint());
+        myBoard.append("\n").append(horizontalBoarder);
+
+        return myBoard.toString();
+    }
+
+
+    private String rivalTurnString() {
+        return null;
+    }
+
+    private String makeTwoBits(int number) {
+        String toReturn = String.valueOf(number);
+        if (number < 10) toReturn = "0" + number;
+        return toReturn;
+    }
+
+
+    public static void main(String[] args) {
+        User user = new User("negar", "123", "negi");
+        Player player = new Player(user, null);
+        MonsterCardInUse[] monsterZone = player.getBoard().getMonsterZone();
+        monsterZone[0].setThisCard(new Monster(PreCard.findCard("Command Knight")));
+        monsterZone[2].setThisCard(new Monster(PreCard.findCard("Command Knight")));
+        monsterZone[1].setThisCard(new Monster(PreCard.findCard("Command Knight")));
+        System.out.println(player.getBoard());
+    }
 }
+

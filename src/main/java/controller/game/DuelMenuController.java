@@ -9,7 +9,6 @@ import model.Deck;
 import model.Enums.Phase;
 import model.Player;
 import model.User;
-import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
 import view.Menus.DuelMenu;
 import view.Print;
@@ -283,7 +282,7 @@ public class DuelMenuController {
                 this.standByPhaseController = new StandByPhaseController(roundController);
                 break;
             case MAIN_1:
-            case MAIN_2:
+                //in case MAIN_2 the controller is the same as MAIN_1
                 this.mainPhaseController = new MainPhaseController(roundController);
                 break;
             case BATTLE:
@@ -299,16 +298,16 @@ public class DuelMenuController {
     }
 
 
-    public Monster getRitualSummonCommand() {
-        boolean isCancelled = DuelMenu.askToSelectRitualMonsterCard();
-        if (isCancelled) return null;
-        if (!(roundController.getSelectedCard() instanceof Monster)) {
-            Print.print("you should ritual summon right now");
-            return getRitualSummonCommand();
-        } else {
-            return (Monster) roundController.getSelectedCard();
-        }
-    }
+//    public Monster getRitualSummonCommand() {
+//        boolean isCancelled = DuelMenu.askToSelectRitualMonsterCard();
+//        if (isCancelled) return null;
+//        if (!(roundController.getSelectedCard() instanceof Monster)) {
+//            Print.print("you should ritual summon right now");
+//            return getRitualSummonCommand();
+//        } else {
+//            return (Monster) roundController.getSelectedCard();
+//        }
+//    }
 
     public boolean askToEnterSummon() {
         return DuelMenu.forceGetCommand("summon", "you should ritual summon right now");

@@ -15,7 +15,6 @@ public class SpellTrap extends Card {
     protected PreSpellTrapCard myPreCard;
     private boolean isActivated;
 
-
     public SpellTrap(PreCard preCard) {
         super(preCard);
         myPreCard = (PreSpellTrapCard) preCard;

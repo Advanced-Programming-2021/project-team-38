@@ -33,13 +33,16 @@ public class GraveYard {
         return count;
     }
 
+    public int getNumOfCards() {
+        return cardsInGraveYard.size();
+    }
 
     public void removeCard(Card card) {
         cardsInGraveYard.remove(card);
     }
 
     public void showMonsters() {
-
+//todo
     }
 
     //card index is between 1 and the size!
@@ -50,9 +53,9 @@ public class GraveYard {
 
     @Override
     public String toString() {
-        String showGraveyard = new String();
+        String showGraveyard = "";
         for (Card card : cardsInGraveYard) {
-            showGraveyard.concat(card.toString());
+            showGraveyard = showGraveyard.concat(card.toString() + " ");
         }
         return showGraveyard;
     }

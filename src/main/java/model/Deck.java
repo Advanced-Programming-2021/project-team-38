@@ -1,14 +1,14 @@
 package model;
 
-import view.exceptions.BeingFull;
-import view.exceptions.InvalidName;
-import view.exceptions.NotExisting;
-import view.exceptions.OccurrenceException;
 import model.card.CardType;
 import model.card.PreCard;
 import model.card.spelltrap.CardStatus;
 import model.card.spelltrap.PreSpellTrapCard;
 import view.Print;
+import view.exceptions.BeingFull;
+import view.exceptions.InvalidName;
+import view.exceptions.NotExisting;
+import view.exceptions.OccurrenceException;
 import view.messageviewing.SuccessfulAction;
 
 import java.util.ArrayList;
@@ -19,16 +19,19 @@ import java.util.stream.Collectors;
 
 public class Deck {
     private String name;
-    private ArrayList<PreCard> mainCards;
-    private ArrayList<PreCard> sideCards;
+    private final ArrayList<PreCard> mainCards;
+    private final ArrayList<PreCard> sideCards;
     private User owner;
-//    private boolean isNumOfCardsValid;
+
+    {
+        this.mainCards = new ArrayList<>();
+        this.sideCards = new ArrayList<>();
+    }
+
 
     public Deck(String name, User owner) {
         setOwner(owner);
         this.name = name;
-        this.mainCards = new ArrayList<>();
-        this.sideCards = new ArrayList<>();
     }
 
     public static boolean isDeckInvalid(Deck deck) {
@@ -59,6 +62,9 @@ public class Deck {
         this.owner = owner;
     }
 
+    public int getNumOfMainCards() {
+        return mainCards.size();
+    }
 //    public void setNumOfCardsValid(boolean numOfCardsValid) {
 //        isNumOfCardsValid = numOfCardsValid;
 //    }
