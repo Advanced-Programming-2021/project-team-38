@@ -21,8 +21,8 @@ public abstract class CardInUse {
     public ArrayList<Watcher> watchersOfCardInUse;
     public Card thisCard;
     public Player ownerOfCard;
-    public boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false //todo: in the beginning of any turn we should change it to false
-    public boolean isFaceUp;
+    public boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false
+    private boolean isFaceUp;
     protected Board board;
 
     public CardInUse(Board board) {
@@ -44,14 +44,12 @@ public abstract class CardInUse {
         return thisCard == null;
     }
 
-//    public void changePosition() {
-//        isPositionChanged = true; //todo : check with hasti. change position isn't only for face up ( I'm not sure if it's even important for face up change).
-//        isFaceUp = !isFaceUp;
-//    }
-
     public void faceUpCard() { //note
-        watchByState(CardState.FACE_UP);
-        isFaceUp = true;
+        if (!isFaceUp) {
+            watchByState(CardState.FACE_UP);
+            isFaceUp = true;
+            isPositionChanged = true;
+        }
     }
 
     public void setACardInCell(Card card) {

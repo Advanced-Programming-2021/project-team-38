@@ -13,10 +13,6 @@ import model.card.monster.Monster;
 @Setter
 public class MonsterCardInUse extends CardInUse {
     private int attack, defense;
-//    private boolean hasBeenAttacker; //if it has attacked another card in this turn
-//    private boolean isAttacked; //if it has been attacked in this phase
-//    private boolean isAttacking;    //if it has attacked a rival card in this phase
-//    private boolean cameOnThisTurn; //if it was drawn in this phase
     private boolean isInAttackMode;
     public boolean canBeDestroyed;
 
@@ -75,8 +71,7 @@ public class MonsterCardInUse extends CardInUse {
     }
 
     @Override
-    public void resetCell() {  //** watch out the come on this turn
-//        cameOnThisTurn = false;
+    public void resetCell() {
         isInAttackMode = false;
         canBeDestroyed = true;
         setAttack(0);
@@ -84,12 +79,6 @@ public class MonsterCardInUse extends CardInUse {
         super.resetCell();
     }
 
-//    @Override
-//    public void changePosition() {
-//        super.changePosition();
-//        if (isFaceUp())
-//            ((Monster)thisCard).spinCard();
-//    }
 
     public void destroyThis() {
         watchByState(CardState.DESTROY);

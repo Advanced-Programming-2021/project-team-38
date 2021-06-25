@@ -201,4 +201,9 @@ public class RoundController {
         return DuelMenuController.askQuestion(
                 "Do you want to activate" + cardName + " ?(Y/N)").equals("Y");
     }
+
+    public boolean arrangeAlternateBattle() {
+        return DuelMenuController.askQuestion("your battle was canceled.\n" +
+                "Do you want to start a new battle with this card? (Y/N)").equals("Y");
+    }
 }

@@ -21,7 +21,7 @@ public class MarshmallonWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
             theBattleAgainstMe = duelMenuController.getBattlePhaseController().battleController;
-            isFaceDownInBattle = !theBattleAgainstMe.getPreyCard().isFaceUp;
+            isFaceDownInBattle = !theBattleAgainstMe.getPreyCard().isFaceUp();
         }
 
         if (cardState == CardState.DESTROY) {
