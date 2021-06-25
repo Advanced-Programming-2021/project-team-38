@@ -42,7 +42,7 @@ public class SpellTrap extends Card {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
+    public Object clone() {
         return new SpellTrap(preCardInGeneral);
     }
 }

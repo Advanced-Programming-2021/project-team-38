@@ -8,6 +8,7 @@ import model.CardState;
 import model.Enums.Phase;
 import model.Player;
 import model.card.Card;
+import model.card.spelltrap.SpellTrap;
 import model.watchers.Watcher;
 
 import java.util.ArrayList;
@@ -92,8 +93,14 @@ public abstract class CardInUse {
         }
     }
 
+    public void activateMyEffect() {
+        if (thisCard == null) return;
+        watchByState(CardState.ACTIVE_EFFECT);
+        ((SpellTrap) thisCard).setActivated(true);
+    }
+
     public void updateCard() {
-        if (!isCellEmpty())     thisCard.putBuiltInWatchers(this);
+        if (!isCellEmpty()) thisCard.putBuiltInWatchers(this);
         if (board.getMyPhase() == Phase.END || board.getMyPhase() == Phase.END_RIVAL) {
             isPositionChanged = false;
         }

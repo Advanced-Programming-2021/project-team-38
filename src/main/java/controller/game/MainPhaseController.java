@@ -3,7 +3,6 @@ package controller.game;
 
 import model.Player;
 import model.card.Card;
-import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -100,7 +99,7 @@ public class MainPhaseController {
     private void setMonster(Monster selectedCard) throws BeingFull, AlreadyDoneAction {
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) player.getBoard().getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
-        if (!summonedInThisPhase.isEmpty()) throw new AlreadyDoneAction("summoned/set");//todo: fine?( in tests )
+        if (!summonedInThisPhase.isEmpty()) throw new AlreadyDoneAction("summoned/set");
 
         monsterCardInUse.setACardInCell(selectedCard);
         monsterCardInUse.setFaceUp(false);
@@ -112,121 +111,57 @@ public class MainPhaseController {
         SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
-//        SpellTrap spellTrap = (SpellTrap) selectedCard.newCard();
         spellTrapCardInUse.setThisCard(selectedCard);
         spellTrapCardInUse.setFaceUp(false);
         new SuccessfulAction("", "set");
         //todo: the spell or trap card in use should be face down. but will it be needed?
     }
 
+    //todo: I think "of currentplayer " isn't needed. check with hasti
     public void activateEffect(boolean ofCurrentPlayer)
             throws NoSelectedCard, ActivateEffectNotSpell, CantDoActionWithCard, BeingFull, SpellPreparation, AlreadyActivatedEffect, NoCardFound, InvalidTributeAddress, NotAppropriateCard, CloneNotSupportedException, InvalidSelection, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
 
         Card selectedCard = getSelectedCard();
-        if (!selectedCard.getPreCardInGeneral().getCardType().equals(CardType.SPELL))
-            throw new ActivateEffectNotSpell();
+        if (!(selectedCard instanceof SpellTrap)) throw new ActivateEffectNotSpell();
         if (ofCurrentPlayer && player.getHand().doesContainCard(selectedCard)) {
             activateEffectFromHand((SpellTrap) selectedCard);
         } else activateEffectFromBoard(ofCurrentPlayer);
     }
 
     private void activateEffectFromBoard(boolean ofCurrentPlayer)
-            throws CantDoActionWithCard, NoSelectedCard, ActivateEffectNotSpell, AlreadyActivatedEffect, SpellPreparation, CloneNotSupportedException, BeingFull, NotAppropriateCard, InvalidSelection, InvalidTributeAddress, NoCardFound, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
+            throws NoSelectedCard, ActivateEffectNotSpell, AlreadyActivatedEffect, SpellPreparation, CloneNotSupportedException, BeingFull, NotAppropriateCard, InvalidSelection, InvalidTributeAddress, NoCardFound, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
         Card selectedCard = getSelectedCard();
         if (!(selectedCard instanceof SpellTrap)) throw new ActivateEffectNotSpell();
-//        SpellTrapCardInUse spellInUse = (SpellTrapCardInUse) cardInUse;
         SpellTrap spellCard = (SpellTrap) selectedCard;
+        SpellTrapCardInUse cardInUse = (SpellTrapCardInUse) this.controller.getSelectedCardInUse();
 
-        if (spellCard.isActivated()) throw new AlreadyActivatedEffect(); //todo: check with hasti
+        if (spellCard.isActivated()) throw new AlreadyActivatedEffect();
+        cardInUse.activateMyEffect();
 
-        Player activator, activatorRival;
-        if (ofCurrentPlayer) {
-            activator = controller.getCurrentPlayer();
-            activatorRival = controller.getRival();
-        } else {
-            activator = controller.getRival();
-            activatorRival = controller.getCurrentPlayer();
-        }
-
-//        if (!spellCard.areEffectPreparationsDone(activator, activatorRival, spellInUse, controller)) {
-//            if (spellCard.getName().equals("Advanced Ritual Art")) throw new InvalidRitualPreparations();
-//            throw new SpellPreparation();
-//        }
-//
-//        spellCard.activateEffect(activator, activatorRival, spellInUse, controller);
-//        if (spellCard.isShouldDieAfterActivated())
-//            this.controller.sendToGraveYard(spellInUse); //todo: check with hasti!
-
-//            Print.print("spell activated"); //todo: check if needed
+        Print.print("spell " + spellCard.name + "  is activated");
     }
 
-    //the input is either a filed spell or a spell that we should first set and then acivate
-    private void activateEffectFromHand(SpellTrap spell) throws BeingFull, SpellPreparation, NotAppropriateCard, NoSelectedCard, InvalidTributeAddress, NoCardFound, InvalidSelection, CloneNotSupportedException, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction, CantDoActionWithCard {
+    //the input is either a field spell or a spell that we should first set and then activate
+    private void activateEffectFromHand(SpellTrap spell) throws BeingFull {
         if (spell == null) return;
         if (spell.getMyPreCard().getIcon().equals(CardIcon.FIELD)) {
             //it is a field spell inside hand and we want to send it to the field zone
-            CardInUse fieldCell = player.getBoard().getFieldCard();
+            CardInUse fieldCell = player.getBoard().getFieldCell();
             if (fieldCell != null) {
+                fieldCell.resetCell();
                 fieldCell.sendToGraveYard();
             }
-            player.getBoard().getFieldCard().setACardInCell(spell);
+            player.getBoard().getFieldCell().resetCell();
+            player.getBoard().getFieldCell().setACardInCell(spell);
+
         } else {
             //the spell is in hand and we should send it to the board and activate it
             SpellTrapCardInUse spellInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
             if (spellInUse == null) throw new BeingFull("spell card zone");
 
-//            if (!spell.areEffectPreparationsDone(controller.getCurrentPlayer(), controller.getRival(), spellInUse, controller)) {
-//                if (spellCard.getName().equals("Advanced Ritual Art")) throw new InvalidRitualPreparations();
-//                throw new SpellPreparation();
-//            }
             spellInUse.setACardInCell(spell);
-            Print.print("spell activated"); //todo: check if needed
+            spellInUse.activateMyEffect();
+            Print.print("spell activated");
         }
     }
-
-
-    //returns true if the ritual summon is cancelled
-//    public boolean handleRitualSummon() throws BeingFull, CantDoActionWithCard {
-//        Monster monster = this.controller.getDuelMenuController().getRitualSummonCommand();
-//        if (monster == null) return true;
-//        if (controller.getDuelMenuController().askToEnterSummon()) return true;
-//        ArrayList<MonsterCardInUse> tributeMonsters;
-//        while (true) {
-//            tributeMonsters = this.controller.getDuelMenuController().getRitualTributes();
-//            if (tributeMonsters == null) return true;
-//            if (areTributeLevelsFine(tributeMonsters, monster.getLevel())) break;
-//            Print.print("Selected monsters don’t match with ritual summon requirements!");
-//        }
-//        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) controller.getCurrentPlayer().getBoard().getFirstEmptyCardInUse(true);
-//        if (monsterCardInUse == null) throw new BeingFull("monster card zone");
-//
-//        SummonController summonController = new SummonController(monsterCardInUse, monster, controller, this.summonedInThisPhase);
-//        summonController.ritualSummon(tributeMonsters);
-//        return false;
-//    }
-
-//    private boolean areTributeLevelsFine(ArrayList<MonsterCardInUse> tributeMonsters, int level) {
-//        if (tributeMonsters == null) return false;
-//        ArrayList<Integer> levels = new ArrayList<>();
-//        for (MonsterCardInUse monsterCardInUse : tributeMonsters) {
-//            Card card = monsterCardInUse.getThisCard();
-//            if (card instanceof Monster) {
-//                PreMonsterCard preMonsterCard = (PreMonsterCard) monsterCardInUse.getThisCard().getPreCardInGeneral();
-//                levels.add(preMonsterCard.getLevel());
-//            }
-//        }
-//        return canFindSubsetOfSum(levels, level);
-//    }
-//
-//
-//    private boolean canFindSubsetOfSum(ArrayList<Integer> set, int sum) {
-//        if (sum < 0) return false;
-//        if (sum == 0) return true;
-//        if (set.isEmpty()) return false;
-//        int element = set.get(0);
-//        if (element < 0) return false;
-//        set.remove(element);
-//        if (canFindSubsetOfSum(set, sum)) return true;
-//        return canFindSubsetOfSum(set, sum - element);
-//    }
 }

@@ -1,6 +1,5 @@
 package controller.game;
 
-import view.exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
@@ -15,6 +14,7 @@ import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
 import view.Menus.DuelMenu;
 import view.Print;
+import view.exceptions.*;
 
 @Getter
 @Setter
@@ -93,7 +93,7 @@ public class RoundController {
                 break;
             case MY_FIELD:
             case RIVAL_FIELD:
-                Card fieldCard = ownerOfToBeSelected.getBoard().getFieldCard().getThisCard();
+                Card fieldCard = ownerOfToBeSelected.getBoard().getFieldCell().getThisCard();
                 if (fieldCard == null) throw new NoCardFound();
                 this.selectedCard = fieldCard;
                 break;
@@ -179,12 +179,12 @@ public class RoundController {
                 return spellTrapCardInUse;
         }
 
-        if (currentPlayer.getBoard().getFieldCard().thisCard == card) {
-            return currentPlayer.getBoard().getFieldCard();
+        if (currentPlayer.getBoard().getFieldCell().thisCard == card) {
+            return currentPlayer.getBoard().getFieldCell();
         }
 
-        if (rival.getBoard().getFieldCard().thisCard == card) {
-            return rival.getBoard().getFieldCard();
+        if (rival.getBoard().getFieldCell().thisCard == card) {
+            return rival.getBoard().getFieldCell();
         }
 
         return null;

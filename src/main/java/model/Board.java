@@ -1,8 +1,6 @@
 package model;
 
 import controller.game.DuelMenuController;
-import view.exceptions.InvalidSelection;
-import view.exceptions.NoCardFound;
 import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;
@@ -13,6 +11,8 @@ import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.card.monster.Monster;
 import model.card.spelltrap.SpellTrap;
 import model.watchers.Watcher;
+import view.exceptions.InvalidSelection;
+import view.exceptions.NoCardFound;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class Board {
 
     private MonsterCardInUse[] monsterZone;
     private SpellTrapCardInUse[] spellTrapZone;
-    private SpellTrapCardInUse fieldCard;   //TODO !!! check updated with new program
+    private SpellTrapCardInUse fieldCell;   //TODO !!! check updated with new program
 
     //watchers which are only available in areWatchingMe Cards. -> scanner, changeOfHearts
     private ArrayList<Watcher> freeBuiltInWatchers;
@@ -62,7 +62,7 @@ public class Board {
             }
         }
 
-        for (Watcher builtInWatcher : fieldCard.thisCard.builtInWatchers) {
+        for (Watcher builtInWatcher : fieldCell.thisCard.builtInWatchers) {
             builtInWatcher.update(myPhase);
         }
     }
@@ -138,5 +138,9 @@ public class Board {
             }
         }
         return null;
+    }
+
+    public void updateAfterAction() {
+
     }
 }

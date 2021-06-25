@@ -5,7 +5,6 @@ import controller.game.RoundController;
 import lombok.Setter;
 import model.CardState;
 import model.Enums.Phase;
-import model.Enums.ZoneName;
 import model.Player;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.MonsterType;
@@ -13,7 +12,6 @@ import model.watchers.monsters.CommandKnightHolyWatcher;
 import model.watchers.monsters.CommandKnightWatcher;
 import model.watchers.spells.FieldWatcher;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -108,6 +106,7 @@ public abstract class Watcher {
     }
 
     public void addWatcherToCardInUse(CardInUse cardInUse) {
+        if (cardInUse == null) return;
         if (!amWatching.contains(cardInUse)) {
             cardInUse.watchersOfCardInUse.add(this);
             amWatching.add(cardInUse);
