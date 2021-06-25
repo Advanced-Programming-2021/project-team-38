@@ -20,16 +20,16 @@ public abstract class Card {
 
     }
 
-    public Card getInstance() { //TODO to be complete
-        return null;
-    }
-
-    public void setInstance(Card instance) {
-        this.instance = instance;
-    }
-
-    @Override
-    public abstract Object clone() throws CloneNotSupportedException;
+//    public Card getInstance() {
+//        return null;
+//    }
+//
+//    public void setInstance(Card instance) {
+//        this.instance = instance;
+//    }
+//
+//    @Override
+//    public abstract Object clone() throws CloneNotSupportedException;
 
 
     public String getName() {

@@ -55,7 +55,6 @@ public class CardLoader {
 
     public static void setCards() {
         HashMap<PreCard, Card> preCardInstances = PreCard.getAllPreCardsInstances();
-//        loadHandmadeCards(preCardInstances);
 
         for (PreCard preCard : preCardInstances.keySet()) {
             if (preCardInstances.get(preCard) == null) {
