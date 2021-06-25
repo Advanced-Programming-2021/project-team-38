@@ -60,15 +60,14 @@ public abstract class CardInUse {
 
     public void resetCell() {
         isPositionChanged = false;
-        thisCard = null;
         isFaceUp = false;
         for (Watcher watcher : watchersOfCardInUse) {
             watcher.disableWatcher(this);
         }
 
         watchersOfCardInUse = new ArrayList<>();
-        assert thisCard != null;
-        thisCard.theCardIsBeingDeleted();
+        if (thisCard != null)
+            thisCard.theCardIsBeingDeleted();
         thisCard = null;
     }
 
@@ -115,7 +114,6 @@ public abstract class CardInUse {
             else mannerString = mannerString + "H";
             return mannerString;
         } else {
-            SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) this;
             if (isFaceUp) return "O ";
             else return "H ";
         }

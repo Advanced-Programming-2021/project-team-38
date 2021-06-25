@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Enums.Phase;
 import model.card.Card;
-import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
@@ -16,6 +15,7 @@ import view.exceptions.InvalidSelection;
 import view.exceptions.NoCardFound;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -81,6 +81,7 @@ public class Board {
             monsterZone[i] = new MonsterCardInUse(this);
             spellTrapZone[i] = new SpellTrapCardInUse(this);
         }
+        fieldCell = new SpellTrapCardInUse(this);
     }
 
     public void addToAllMonsterCellsAttack(int amount) { //amount can be negative too
@@ -148,45 +149,55 @@ public class Board {
 
     }
 
-    @Override
-    public String toString() {
-        if (controller.getRoundController().getCurrentPlayer() == this.owner) //todo: fine?
-            return myTurnString();
-        else
-            return rivalTurnString();
-    }
 
     private String myTurnString() {
         StringBuilder myBoard = new StringBuilder();
-        String horizontalBoarder = "_".repeat(30);
-        myBoard.append(horizontalBoarder).append("\n");
+        String horizontalBoarder = "_".repeat(26);
+        myBoard.append("\t").append(horizontalBoarder).append("\n\t");
 
         if (fieldCell.thisCard == null) myBoard.append("E ");
         else myBoard.append("O ");
         myBoard.append("\t".repeat(6));
 
-        myBoard.append(makeTwoBits(graveYard.getNumOfCards())).append("\n");
+        myBoard.append(makeTwoBits(graveYard.getNumOfCards())).append("\t\n\t");
 
+        ArrayList<Integer> priorities = new ArrayList<>(Arrays.asList(5, 3, 1, 2, 4));
         myBoard.append("  \t");
-        for (MonsterCardInUse monsterCardInUse : monsterZone) {
-            myBoard.append(monsterCardInUse.toString()).append("\t");
-        }
-        myBoard.append("\n  \t");
-        for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
-            myBoard.append(spellTrapCardInUse.toString()).append("\t");
-        }
+        myBoard.append(makeZone(priorities, monsterZone));
+        myBoard.append("\t\n\t  \t");
+        myBoard.append(makeZone(priorities, spellTrapZone));
 
-        myBoard.append("\n").append("\t".repeat(6)).append(makeTwoBits(owner.getDeck().getNumOfMainCards()));
-        myBoard.append(owner.getHand().toString()).append("\n");
-        myBoard.append("nick name : ").append(owner.getName()).append("life point : ").append(owner.getLifePoint());
-        myBoard.append("\n").append(horizontalBoarder);
+
+        if (owner.getDeck() != null)
+            myBoard.append("\t\n\t").append("\t".repeat(6)).append(makeTwoBits(owner.getDeck().getNumOfMainCards()));
+        myBoard.append(owner.getHand().toString()).append("\t\n\n\t\t");
+        myBoard.append(owner.getName()).append(" : ").append(owner.getLifePoint());
+        myBoard.append("\n\t").append(horizontalBoarder);
 
         return myBoard.toString();
     }
 
-
     private String rivalTurnString() {
-        return null;
+        StringBuilder rivalBoard = new StringBuilder();
+        String horizontalBoarder = "_".repeat(26);
+        rivalBoard.append("\t").append(horizontalBoarder).append("\n\t");
+        rivalBoard.append(owner.getName()).append(" : ").append(owner.getLifePoint()).append("\n\t\t");
+        rivalBoard.append(owner.getHand().toString()).append("\n\t");
+        if (owner.getDeck() != null)
+            rivalBoard.append(makeTwoBits(owner.getDeck().getNumOfMainCards())).append("\n\t");
+
+        ArrayList<Integer> priorities = new ArrayList<>(Arrays.asList(4, 2, 1, 3, 5));
+        rivalBoard.append("  \t");
+        rivalBoard.append(makeZone(priorities, spellTrapZone));
+        rivalBoard.append("\t\n\t  \t");
+        rivalBoard.append(makeZone(priorities, monsterZone));
+
+        rivalBoard.append("\n\t");
+        rivalBoard.append(makeTwoBits(graveYard.getNumOfCards())).append("\t".repeat(6));
+        rivalBoard.append(fieldCell.toString());
+        rivalBoard.append("\n\t").append(horizontalBoarder);
+
+        return rivalBoard.toString();
     }
 
     private String makeTwoBits(int number) {
@@ -195,15 +206,22 @@ public class Board {
         return toReturn;
     }
 
-
-    public static void main(String[] args) {
-        User user = new User("negar", "123", "negi");
-        Player player = new Player(user, null);
-        MonsterCardInUse[] monsterZone = player.getBoard().getMonsterZone();
-        monsterZone[0].setThisCard(new Monster(PreCard.findCard("Command Knight")));
-        monsterZone[2].setThisCard(new Monster(PreCard.findCard("Command Knight")));
-        monsterZone[1].setThisCard(new Monster(PreCard.findCard("Command Knight")));
-        System.out.println(player.getBoard());
+    private String makeZone(ArrayList<Integer> priorities, CardInUse[] zoneCards) {
+        String toReturn = "";
+        for (Integer priority : priorities) {
+            toReturn = toReturn.concat(zoneCards[priority - 1].toString()) + "\t";
+        }
+        return toReturn;
     }
+
+    @Override
+    public String toString() {
+        if (controller == null) return myTurnString();
+        if (controller.getRoundController().getCurrentPlayer() == this.owner) //todo: fine?
+            return myTurnString();
+        else
+            return rivalTurnString();
+    }
+
 }
 
