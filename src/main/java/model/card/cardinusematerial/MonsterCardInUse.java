@@ -16,7 +16,7 @@ public class MonsterCardInUse extends CardInUse {
 //    private boolean hasBeenAttacker; //if it has attacked another card in this turn
 //    private boolean isAttacked; //if it has been attacked in this phase
 //    private boolean isAttacking;    //if it has attacked a rival card in this phase
-    private boolean cameOnThisTurn; //if it was drawn in this phase
+//    private boolean cameOnThisTurn; //if it was drawn in this phase
     private boolean isInAttackMode;
     public boolean canBeDestroyed;
 
@@ -50,9 +50,10 @@ public class MonsterCardInUse extends CardInUse {
     }
 
     @Override
-    public void setACardInCell(Card card) { //TODO
-        resetCell();
-        //continue
+    public void setACardInCell(Card card) {
+        this.attack = ((Monster) card).getRawAttack();
+        this.defense = ((Monster) card).getRawDefense();
+        super.setACardInCell(card);
     }
 
 
@@ -75,12 +76,12 @@ public class MonsterCardInUse extends CardInUse {
 
     @Override
     public void resetCell() {  //** watch out the come on this turn
-        cameOnThisTurn = false;
-//        isAttacked = false;
-//        isAttacking = false;
-//        hasBeenAttacker = false;
+//        cameOnThisTurn = false;
         isInAttackMode = false;
         canBeDestroyed = true;
+        setAttack(0);
+        setDefense(0);
+        super.resetCell();
     }
 
     @Override
@@ -89,15 +90,6 @@ public class MonsterCardInUse extends CardInUse {
         if (isFaceUp())
             ((Monster)thisCard).spinCard();
     }
-
-//    public void changeIsAttacked() {    //when the card is attacked
-//        isAttacked = true;
-//    }
-
-//    public void changeIsAttacking() {   //when the card is attacking
-//        isAttacking = true;
-//        hasBeenAttacker = true;
-//    }
 
     public void destroyThis() {
         watchByState(CardState.DESTROY);

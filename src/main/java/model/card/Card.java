@@ -20,24 +20,13 @@ public abstract class Card {
 
     }
 
-//    public Card getInstance() {
-//        return null;
-//    }
-//
-//    public void setInstance(Card instance) {
-//        this.instance = instance;
-//    }
-//
-//    @Override
-//    public abstract Object clone() throws CloneNotSupportedException;
-
 
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = preCardInGeneral.getName();
     }
 
     public void putBuiltInWatchers(CardInUse cardInUse) {

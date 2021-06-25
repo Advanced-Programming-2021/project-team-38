@@ -25,7 +25,7 @@ public class PreSpellTrapCard extends PreCard {
 
     @Override
     public Card newCard() {
-        return null;
+        return new SpellTrap(this);
     }
 
 }

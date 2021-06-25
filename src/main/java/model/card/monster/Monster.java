@@ -56,38 +56,12 @@ public class Monster extends Card {
         return myPreCard.getDefense();
     }
 
-    public void activeEffect(Board playerBoard, Board rivalBoard, MonsterCardInUse monsterCardInUse, CardInUse rivalCard) {
-
-    }
-
-    public boolean canActiveEffect(Board rivalBoard, Board myBoard, MonsterCardInUse rivalCard, MonsterCardInUse thisCard) {
-        return false;
-    }
-
-
-    //during battle
-//    public void destroyThis(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard, int LPDamage) {
-//        //can be null every thing except thisCard and myBoard
-//        thisCard.putInGraveYard();
-//        myBoard.getOwner().decreaseLifePoint(LPDamage);
-//    }
-
-    public boolean canReceiveAttack(Board attackerBoard, Board myBoard, MonsterCardInUse attacker, MonsterCardInUse thisCard) { //TODO complete
-        return true;
-    }
-
-    //returns
-    public void receiveAttack(BattleController battleController) {
-
-    }
-    // end during battle
-
     @Override
     public Object clone() throws CloneNotSupportedException {
         return new Monster(preCardInGeneral);
     }
 
     public void spinCard() {
-
+    //TODO what for?
     }
 }

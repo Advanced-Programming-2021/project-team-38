@@ -37,7 +37,7 @@ public class PreMonsterCard extends PreCard {
 
     @Override
     public Card newCard() {
-        return null;
+        return new Monster(this);
     }
 
 }
