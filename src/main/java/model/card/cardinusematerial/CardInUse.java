@@ -1,7 +1,6 @@
 package model.card.cardinusematerial;
 
 import controller.game.DuelMenuController;
-import controller.game.RoundController;
 import lombok.Getter;
 import lombok.Setter;
 import model.Board;
@@ -31,6 +30,7 @@ public abstract class CardInUse {
     {
         isPositionChanged = false;
         isFaceUp = false;
+        watchersOfCardInUse = new ArrayList<>();
     }
 
     public Card getThisCard() {

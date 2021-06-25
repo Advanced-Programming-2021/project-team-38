@@ -2,12 +2,12 @@ package view.Menus;
 
 import controller.RelatedToMenuController;
 import controller.game.DuelMenuController;
-import view.exceptions.*;
 import model.Board;
 import model.CardAddress;
 import model.card.Card;
 import view.Menu;
 import view.MenuName;
+import view.exceptions.*;
 import view.messageviewing.Print;
 
 import java.util.ArrayList;
@@ -176,6 +176,7 @@ public class DuelMenu {
         }
     }
 
+    //you can't cancel this one!
     public static String getRitualManner() {
         Print.print("Enter a manner for the ritual monster (OO/DO)");
         String command = scanner.nextLine();

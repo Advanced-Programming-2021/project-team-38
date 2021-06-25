@@ -3,7 +3,6 @@ package model.watchers.spells;
 import controller.game.DuelMenuController;
 import controller.game.SelectController;
 import controller.game.SummonController;
-import view.exceptions.BeingFull;
 import model.CardState;
 import model.Enums.ZoneName;
 import model.card.CardType;
@@ -12,6 +11,7 @@ import model.card.monster.Monster;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import view.Menus.DuelMenu;
+import view.exceptions.BeingFull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +49,7 @@ public class MonsterRebornWatcher extends Watcher {
         if (ownerOfWatcher.getBoard().getFirstEmptyCardInUse(true) != null) {
             try {
                 SummonController.specialSummon((Monster) selectController.getTheCard(),
-                        ownerOfWatcher.getOwnerOfCard(), roundController);
+                        ownerOfWatcher.getOwnerOfCard(), roundController, false);
             } catch (BeingFull beingFull) {
                 DuelMenu.showException(beingFull);
             }

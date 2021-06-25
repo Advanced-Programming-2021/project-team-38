@@ -4,6 +4,7 @@ package controller.game;
 
 
 import model.Board;
+import model.CardAddress;
 import model.Player;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
@@ -54,7 +55,7 @@ public class SummonController {
             String address = DuelMenuController.askQuestion("Enter the index of a card to tribute:");
             try {
                 payTributeFromBoard(address);
-            } catch (InvalidTributeAddress invalidAddress) {
+            } catch (InvalidTributeAddress | InvalidSelection invalidAddress) {
                 if (address.equals("cancel")) return;
                 Print.print(invalidAddress.getMessage());
                 i--;
@@ -86,12 +87,12 @@ public class SummonController {
     }
 
     private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
-        if (monsterCardInUse == null || summonedCards == null) return;
+        if (monsterCardInUse == null) return;
         monsterCardInUse.summon();
         monsterCardInUse.setACardInCell(monster);
         monsterCardInUse.setInAttackMode(true);
         monsterCardInUse.faceUpCard();
-        if (!isSpecial) summonedCards.add(monsterCardInUse);
+        if (!isSpecial && summonedCards != null) summonedCards.add(monsterCardInUse);
         new SuccessfulAction("", "summoned");
     }
 
@@ -99,28 +100,38 @@ public class SummonController {
         return monster.getNumOfNeededTributes();
     }
 
-    private void payTributeFromBoard(String address) throws InvalidTributeAddress {
-        int tributeIndex;
-        try {
-            tributeIndex = Integer.parseInt(address);
-        } catch (Exception e) {
-            throw new InvalidTributeAddress();
-        }
-        if (tributeIndex < 1 || tributeIndex > 5) throw new InvalidTributeAddress();
-        Monster tributeMonster = (Monster) board.getMonsterZone()[tributeIndex - 1].getThisCard();
-        if (tributeMonster == null) throw new InvalidTributeAddress();
-        controller.sendToGraveYard(board.getMonsterZone()[tributeIndex - 1]);
+    private void payTributeFromBoard(String address) throws InvalidTributeAddress, InvalidSelection {
+        CardAddress cardAddress = new CardAddress(address);
+        CardInUse cardInUse = cardAddress.getMonsterCardInUseInAddress(board.getMonsterZone());
+        if (cardInUse == null) throw new InvalidTributeAddress();
+        if (!(cardInUse.getThisCard() instanceof Monster)) throw new InvalidTributeAddress();
+        controller.sendToGraveYard(cardInUse);
     }
 
 
-    //todo: its not good because it is static , (kollan it should be changed)
-    public static void specialSummon(Monster monster, Player player, RoundController roundController) throws BeingFull {
+    public static void specialSummon(Monster monster, Player player, RoundController roundController, boolean shouldGetMonsterManner) throws BeingFull {
         if (player == null || monster == null) return;
         Board playerBoard = player.getBoard();
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
         putMonsterInUse(monster, true, monsterCardInUse, null);
         roundController.getDuelMenuController().getMainPhaseController().getSummonedInThisPhase().add(monsterCardInUse);
+
+        if (shouldGetMonsterManner) {
+            MonsterManner monsterManner = roundController.getDuelMenuController().getRitualManner();
+            switch (monsterManner) {
+                case DEFENSIVE_HIDDEN: //it won't happen
+                case DEFENSIVE_OCCUPIED:
+                    monsterCardInUse.faceUpCard();
+                    monsterCardInUse.setInAttackMode(false);
+                    break;
+
+                case OFFENSIVE_OCCUPIED:
+                    monsterCardInUse.faceUpCard();
+                    monsterCardInUse.setInAttackMode(true);
+                    break;
+            }
+        }
     }
 }
 
