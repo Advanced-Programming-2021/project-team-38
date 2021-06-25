@@ -3,18 +3,17 @@
 package controller.game;
 
 import controller.LoginMenuController;
-import view.exceptions.*;
 import lombok.Getter;
 import model.CardAddress;
 import model.Deck;
 import model.Enums.Phase;
 import model.Player;
 import model.User;
-import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
 import view.Menus.DuelMenu;
 import view.Print;
+import view.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -308,22 +307,6 @@ public class DuelMenuController {
             return getRitualSummonCommand();
         } else {
             return (Monster) roundController.getSelectedCard();
-        }
-    }
-
-    public ArrayList<MonsterCardInUse> getTributes() {
-        MonsterCardInUse[] monstersInBoard = roundController.getCurrentPlayer().getBoard().getMonsterZone();
-
-        ArrayList<String> tributeAddresses = DuelMenu.getTributeAddresses();
-        if (tributeAddresses == null) return null;
-        try {
-            ArrayList<MonsterCardInUse> tributesInUse = new ArrayList<>();
-            for (String tributeAddress : tributeAddresses) {
-                tributesInUse.add(new CardAddress(tributeAddress).getMonsterCardInUseInAddress(monstersInBoard));
-            }
-            return tributesInUse;
-        } catch (InvalidSelection invalidSelection) {
-            return getTributes();
         }
     }
 

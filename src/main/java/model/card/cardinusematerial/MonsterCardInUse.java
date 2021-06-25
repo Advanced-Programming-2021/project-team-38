@@ -49,12 +49,6 @@ public class MonsterCardInUse extends CardInUse {
         }
     }
 
-//
-//    public boolean hasBeenAttacker() {
-//        return hasBeenAttacker;
-//    }
-
-
     @Override
     public void setACardInCell(Card card) { //TODO
         resetCell();

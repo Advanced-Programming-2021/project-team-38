@@ -3,7 +3,6 @@ package model.watchers.monsters;
 import controller.game.DuelMenuController;
 import controller.game.SelectController;
 import controller.game.SummonController;
-import view.exceptions.BeingFull;
 import model.CardState;
 import model.Enums.Phase;
 import model.Enums.ZoneName;
@@ -14,6 +13,7 @@ import model.card.monster.MonsterType;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import view.Menus.DuelMenu;
+import view.exceptions.BeingFull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +63,7 @@ public class TexChangerWatcher extends Watcher {
         if (ownerOfWatcher.getBoard().getFirstEmptyCardInUse(true) != null) {
             try {
                 SummonController.specialSummon((Monster) selectController.getTheCard(),
-                        ownerOfWatcher.getOwnerOfCard(), roundController);
+                        ownerOfWatcher.getOwnerOfCard(), roundController, false);
             } catch (BeingFull beingFull) {
                 DuelMenu.showException(beingFull);
             }

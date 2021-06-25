@@ -1,7 +1,6 @@
 package controller.game;
 
 
-import view.exceptions.*;
 import model.Player;
 import model.card.Card;
 import model.card.CardType;
@@ -9,9 +8,9 @@ import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.card.monster.Monster;
-import model.card.monster.PreMonsterCard;
 import model.card.spelltrap.CardIcon;
 import model.card.spelltrap.SpellTrap;
+import view.exceptions.*;
 import view.messageviewing.Print;
 import view.messageviewing.SuccessfulAction;
 
@@ -181,54 +180,53 @@ public class MainPhaseController {
 //                throw new SpellPreparation();
 //            }
             spellInUse.setACardInCell(spell);
-//            spellCard.activateEffect(controller.getCurrentPlayer(), controller.getRival(), spellInUse, controller); //todo: check with hasti
             Print.print("spell activated"); //todo: check if needed
         }
     }
 
 
     //returns true if the ritual summon is cancelled
-    public boolean handleRitualSummon() throws BeingFull, CantDoActionWithCard {
-        Monster monster = this.controller.getDuelMenuController().getRitualSummonCommand();
-        if (monster == null) return true;
-        if (controller.getDuelMenuController().askToEnterSummon()) return true;
-        ArrayList<MonsterCardInUse> tributeMonsters;
-        while (true) {
-            tributeMonsters = this.controller.getDuelMenuController().getTributes();
-            if (tributeMonsters == null) return true;
-            if (areTributeLevelsFine(tributeMonsters, monster.getLevel())) break;
-            Print.print("Selected monsters don’t match with ritual summon requirements!");
-        }
-        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) controller.getCurrentPlayer().getBoard().getFirstEmptyCardInUse(true);
-        if (monsterCardInUse == null) throw new BeingFull("monster card zone");
+//    public boolean handleRitualSummon() throws BeingFull, CantDoActionWithCard {
+//        Monster monster = this.controller.getDuelMenuController().getRitualSummonCommand();
+//        if (monster == null) return true;
+//        if (controller.getDuelMenuController().askToEnterSummon()) return true;
+//        ArrayList<MonsterCardInUse> tributeMonsters;
+//        while (true) {
+//            tributeMonsters = this.controller.getDuelMenuController().getRitualTributes();
+//            if (tributeMonsters == null) return true;
+//            if (areTributeLevelsFine(tributeMonsters, monster.getLevel())) break;
+//            Print.print("Selected monsters don’t match with ritual summon requirements!");
+//        }
+//        MonsterCardInUse monsterCardInUse = (MonsterCardInUse) controller.getCurrentPlayer().getBoard().getFirstEmptyCardInUse(true);
+//        if (monsterCardInUse == null) throw new BeingFull("monster card zone");
+//
+//        SummonController summonController = new SummonController(monsterCardInUse, monster, controller, this.summonedInThisPhase);
+//        summonController.ritualSummon(tributeMonsters);
+//        return false;
+//    }
 
-        SummonController summonController = new SummonController(monsterCardInUse, monster, controller, this.summonedInThisPhase);
-        summonController.ritualSummon(tributeMonsters);
-        return false;
-    }
-
-    private boolean areTributeLevelsFine(ArrayList<MonsterCardInUse> tributeMonsters, int level) {
-        if (tributeMonsters == null) return false;
-        ArrayList<Integer> levels = new ArrayList<>();
-        for (MonsterCardInUse monsterCardInUse : tributeMonsters) {
-            Card card = monsterCardInUse.getThisCard();
-            if (card instanceof Monster) {
-                PreMonsterCard preMonsterCard = (PreMonsterCard) monsterCardInUse.getThisCard().getPreCardInGeneral();
-                levels.add(preMonsterCard.getLevel());
-            }
-        }
-        return canFindSubsetOfSum(levels, level);
-    }
-
-
-    private boolean canFindSubsetOfSum(ArrayList<Integer> set, int sum) {
-        if (sum < 0) return false;
-        if (sum == 0) return true;
-        if (set.isEmpty()) return false;
-        int element = set.get(0);
-        if (element < 0) return false;
-        set.remove(element);
-        if (canFindSubsetOfSum(set, sum)) return true;
-        return canFindSubsetOfSum(set, sum - element);
-    }
+//    private boolean areTributeLevelsFine(ArrayList<MonsterCardInUse> tributeMonsters, int level) {
+//        if (tributeMonsters == null) return false;
+//        ArrayList<Integer> levels = new ArrayList<>();
+//        for (MonsterCardInUse monsterCardInUse : tributeMonsters) {
+//            Card card = monsterCardInUse.getThisCard();
+//            if (card instanceof Monster) {
+//                PreMonsterCard preMonsterCard = (PreMonsterCard) monsterCardInUse.getThisCard().getPreCardInGeneral();
+//                levels.add(preMonsterCard.getLevel());
+//            }
+//        }
+//        return canFindSubsetOfSum(levels, level);
+//    }
+//
+//
+//    private boolean canFindSubsetOfSum(ArrayList<Integer> set, int sum) {
+//        if (sum < 0) return false;
+//        if (sum == 0) return true;
+//        if (set.isEmpty()) return false;
+//        int element = set.get(0);
+//        if (element < 0) return false;
+//        set.remove(element);
+//        if (canFindSubsetOfSum(set, sum)) return true;
+//        return canFindSubsetOfSum(set, sum - element);
+//    }
 }

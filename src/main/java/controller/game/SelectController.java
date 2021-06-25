@@ -28,7 +28,8 @@ public class SelectController {
     int upperLevelBound = 100;
     int lowerLevelBound = 0;
     private ArrayList<MonsterType> monsterTypes;
-    private boolean isRitual = false;
+    private boolean isRitual = false; // used in ritual summon
+    private boolean isNormal = false; // it means that the selected card should be a normal monster (it is set in the monsterCardType)
 
     public SelectController(ArrayList<ZoneName> zoneNames, RoundController roundController, Player selector) {
         this.zoneNames = zoneNames;
@@ -57,6 +58,15 @@ public class SelectController {
         this.isRitual = isRitual;
         if (isRitual) {
             setCardType(CardType.MONSTER);
+            isNormal = false;
+        }
+    }
+
+    public void setIfNormal(boolean isNormal) {
+        this.isNormal = true;
+        if (isNormal) {
+            setCardType(CardType.MONSTER);
+            isRitual = false;
         }
     }
 
@@ -100,6 +110,10 @@ public class SelectController {
                 if (isRitual) {
                     if (!preMonster.getMonsterCardType().equals(MonsterCardType.RITUAL))
                         throw new CantDoActionWithCard("ritual summon");
+                }
+                if (isNormal) {
+                    if (!preMonster.getMonsterCardType().equals(MonsterCardType.NORMAL))
+                        throw new CantDoActionWithCard("pay tribute with");
                 }
                 if (isLevelBoundWrong(returningMonster)) throw new InvalidSelection();
                 if (monsterTypes != null && !monsterTypes.isEmpty() && !monsterTypes.contains(preMonster.getMonsterType()))
@@ -155,13 +169,21 @@ public class SelectController {
             for (Card card : possibleChoices.keySet()) {
                 if (!card.getPreCardInGeneral().getCardType().equals(cardType))
                     possibleChoices.remove(card);
-                if (cardType == CardType.MONSTER && monsterTypes != null && !monsterTypes.isEmpty()) {
-                    for (MonsterType monsterType : monsterTypes) {
-                        PreMonsterCard preMonsterCard = ((Monster) card).getMyPreCard();
-                        if (preMonsterCard.getMonsterType() != monsterType) possibleChoices.remove(card);
+                if (cardType == CardType.MONSTER) {
+                    PreMonsterCard preMonsterCard = ((Monster) card).getMyPreCard();
+                    if (monsterTypes != null && !monsterTypes.isEmpty()) {
+                        for (MonsterType monsterType : monsterTypes) {
+                            if (preMonsterCard.getMonsterType() != monsterType) possibleChoices.remove(card);
+                        }
                     }
+                    if (isRitual) {
+                        if (preMonsterCard.getMonsterCardType() != MonsterCardType.RITUAL) possibleChoices.remove(card);
+                    }
+                    if (isNormal) {
+                        if (preMonsterCard.getMonsterCardType() != MonsterCardType.NORMAL) possibleChoices.remove(card);
+                    }
+                    if (isLevelBoundWrong(card)) possibleChoices.remove(card);
                 }
-                if (isLevelBoundWrong(card)) possibleChoices.remove(card);
             }
 
         }
