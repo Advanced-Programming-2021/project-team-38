@@ -137,7 +137,7 @@ public class SelectController {
                 toReturn = selector.getBoard().getCardInUse(cardAddress.getIndex(), false).getThisCard();
                 break;
             case MY_FIELD:
-                toReturn = selector.getBoard().getFieldCard().getThisCard();
+                toReturn = selector.getBoard().getFieldCell().getThisCard();
                 break;
             case MY_GRAVEYARD:
                 toReturn = selector.getBoard().getGraveYard().getCard(cardAddress.getIndex());
@@ -149,7 +149,7 @@ public class SelectController {
                 toReturn = roundController.getMyRival(selector).getBoard().getCardInUse(cardAddress.getIndex(), false).getThisCard();
                 break;
             case RIVAL_FIELD:
-                toReturn = roundController.getMyRival(selector).getBoard().getFieldCard().getThisCard();
+                toReturn = roundController.getMyRival(selector).getBoard().getFieldCell().getThisCard();
                 break;
             case RIVAL_GRAVEYARD:
                 toReturn = roundController.getMyRival(selector).getBoard().getGraveYard().getCard(cardAddress.getIndex());
