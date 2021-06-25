@@ -20,7 +20,7 @@ import java.util.HashSet;
 public abstract class Watcher {
     public static HashMap<String, Watcher> allWatchers;
     @Setter
-    public static RoundController roundController;  //TODO set At the first of game
+    public static RoundController roundController;
     public static ArrayList<Watcher> stack;
     public WhoToWatch whoToWatch;
     public ArrayList<CardInUse> amWatching;

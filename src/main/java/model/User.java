@@ -38,7 +38,7 @@ public class User implements Comparable<model.User> {
             this.password = password;
             this.nickName = nickName;
             this.score = 0;
-            this.balance = 1000; //todo I'm not sure!
+            this.balance = 100000; //todo I'm not sure!
             allUsers.add(this);
 
         }

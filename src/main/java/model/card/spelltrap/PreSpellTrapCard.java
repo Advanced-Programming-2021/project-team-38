@@ -20,7 +20,7 @@ public class PreSpellTrapCard extends PreCard {
         status = CardStatus.getEnum(cardData[4]);
         price = Integer.parseInt(cardData[5]);
 
-        allPreCardsInstances.put(this, null);
+        allPreCards.add(this);
     }
 
     @Override

@@ -2,9 +2,8 @@
 
 import controller.DeckMenuController;
 import controller.ShopMenuController;
-import view.exceptions.*;
-import model.User;
 import model.Deck;
+import model.User;
 import model.card.CardLoader;
 import model.card.PreCard;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import view.exceptions.*;
 
 public class DeckMenuTest {  //controller
     User user;
@@ -22,7 +22,7 @@ public class DeckMenuTest {  //controller
         DeckMenuController.setUser(user);
         DeckMenuController.createDeck("deck1");
         CardLoader.loadCsv();
-        CardLoader.setCards();
+//        CardLoader.setCards();
     }
 
     @Test

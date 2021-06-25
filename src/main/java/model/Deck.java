@@ -35,7 +35,7 @@ public class Deck {
     }
 
     public static boolean isDeckInvalid(Deck deck) {
-        return false;//todo
+        return deck.mainCards.size() < 40;
     }
 
     public String getName() {
@@ -187,7 +187,7 @@ public class Deck {
 
     @Override
     public String toString() {
-        return getName() + "main deck " + mainCards.size() + ", side deck "
-                + sideCards.size() + ", valid/invalid?";
+        return "\t" + getName() + "main deck " + mainCards.size() + ", side deck "
+                + sideCards.size() + ", " + "validity : " + !isDeckInvalid(this);
     }
 }

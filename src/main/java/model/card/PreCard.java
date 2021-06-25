@@ -3,30 +3,29 @@ package model.card;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Getter
 public abstract class PreCard {
-    protected static HashMap<PreCard, Card> allPreCardsInstances;
-//    public ArrayList<String> nameOfWatchers;
+    protected static ArrayList<PreCard> allPreCards;
+    //    public ArrayList<String> nameOfWatchers;
     protected String name;
     protected CardType cardType;    // monster or trap or spell
     protected String description;
     protected int price;
 
     static {
-        allPreCardsInstances = new HashMap<>();
+        allPreCards = new ArrayList<>();
     }
 
-    public static HashMap<PreCard, Card> getAllPreCardsInstances() {
-        return allPreCardsInstances;
+    public static ArrayList<PreCard> getAllPreCards() {
+        return allPreCards;
     }
 
     public abstract Card newCard();
 
     public static PreCard findCard(String name) {
-        for (PreCard preCard : allPreCardsInstances.keySet()) {
-            if (preCard.getName().equals(name))
+        for (PreCard preCard : allPreCards) {
+            if ((preCard.getName().toUpperCase()).equals(name.toUpperCase())) //todo: check
                 return preCard;
         }
         return null;

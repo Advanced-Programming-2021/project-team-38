@@ -5,10 +5,8 @@ package model.card;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVReader;
-import model.card.monster.Monster;
 import model.card.monster.PreMonsterCard;
 import model.card.spelltrap.PreSpellTrapCard;
-import model.card.spelltrap.SpellTrap;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,6 +32,7 @@ public class CardLoader {
             csvReader.readNext();
             while ((values = csvReader.readNext()) != null) {
                 new PreMonsterCard(values);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,19 +49,6 @@ public class CardLoader {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void setCards() {
-        HashMap<PreCard, Card> preCardInstances = PreCard.getAllPreCardsInstances();
-
-        for (PreCard preCard : preCardInstances.keySet()) {
-            if (preCardInstances.get(preCard) == null) {
-                if (preCard.getCardType() == CardType.MONSTER)
-                    preCardInstances.put(preCard, new Monster(preCard).setUpMonster());
-                else
-                    preCardInstances.put(preCard, new SpellTrap(preCard).setUpSpellTrap());
-            }
         }
     }
 

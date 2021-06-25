@@ -18,14 +18,10 @@ public class Monster extends Card {
         myPreCard = (PreMonsterCard) preCard;
         if (preCard != null)
             this.level = ((PreMonsterCard) preCard).getLevel();
+        setNumOfTributes();
+
     }
 
-    public Monster setUpMonster() {    //after instance creation it will fill the fields
-        setName(myPreCard.getName());
-        setNumOfTributes(); //todo: fine? check with hasti
-        instance = this;
-        return this;
-    }
 
     protected void setNumOfTributes() {
         int level = myPreCard.getLevel();

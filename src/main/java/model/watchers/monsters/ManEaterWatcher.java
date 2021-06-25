@@ -10,7 +10,7 @@ import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class ManEaterWatcher extends Watcher {
 
@@ -39,7 +39,7 @@ public class ManEaterWatcher extends Watcher {
     }
 
     public MonsterCardInUse selectMonsterCardInUse() {
-        SelectController selectController = new SelectController(new ArrayList<>(Arrays.asList(
+        SelectController selectController = new SelectController(new ArrayList<>(Collections.singletonList(
                 ZoneName.RIVAL_MONSTER_ZONE)), roundController, ownerOfWatcher.getOwnerOfCard());
 
         return (MonsterCardInUse) selectController.getTheCardInUse();

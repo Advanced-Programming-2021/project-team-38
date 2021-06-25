@@ -10,6 +10,7 @@ import model.Enums.Phase;
 import model.Player;
 import model.User;
 import model.card.monster.MonsterManner;
+import model.watchers.Watcher;
 import view.Menus.DuelMenu;
 import view.Print;
 import view.exceptions.*;
@@ -70,6 +71,7 @@ public class DuelMenuController {
         if (secondUser.getActiveDeck() == null) throw new NoActiveDeck(secondUser.getUsername());
         if (Deck.isDeckInvalid(firstUser.getActiveDeck())) throw new InvalidDeck(firstUser.getUsername());
         if (Deck.isDeckInvalid(secondUser.getActiveDeck())) throw new InvalidDeck(secondUser.getUsername());
+        //todo num of cards in deck <= num of cards!
         return true;
     }
 
@@ -90,6 +92,7 @@ public class DuelMenuController {
 
     private void runOneRound(int roundIndex) throws InvalidCommand, InvalidName, NoActiveDeck, InvalidDeck {
         this.roundController = new RoundController(this.firstUser, this.secondUser, this, roundIndex);
+        Watcher.roundController = this.roundController;
         while (!roundController.isRoundEnded()) {
             while (!roundController.isTurnEnded()) {
                 DuelMenu.checkCommandsInRound();

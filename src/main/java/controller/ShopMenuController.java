@@ -1,9 +1,9 @@
 package controller;
 
-import view.exceptions.InvalidName;
-import view.exceptions.NotEnoughMoney;
 import model.User;
 import model.card.PreCard;
+import view.exceptions.InvalidName;
+import view.exceptions.NotEnoughMoney;
 import view.messageviewing.SuccessfulAction;
 
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ public class ShopMenuController {
     }
 
     public static String showAllCards() {
-        ArrayList<PreCard> allPreCards = (ArrayList<PreCard>) PreCard.getAllPreCardsInstances().keySet(); //todo: what is the error?!
+        ArrayList<PreCard> allPreCards = PreCard.getAllPreCards();
         ArrayList<String> cards = new ArrayList<>();
         for (PreCard preCard : allPreCards) {
-            cards.add(preCard.getName() + ": " + preCard.getDescription());
+            cards.add("\t" + preCard.getName() + " : " + preCard.getPrice());
         }
         Collections.sort(cards);
         StringBuilder cardsToShow = new StringBuilder();

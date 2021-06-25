@@ -72,9 +72,9 @@ public class DeckMenuController {
         if (targetDeck == null)
             throw new NotExisting("deck", deckName);
         else if (side && !targetDeck.getSideCards().contains(targetPreCard))
-            throw new NotExisting("card", cardName);    //TODO add the side or main thing
+            throw new NotExisting("card", cardName);
         else if (!side && !targetDeck.getMainCards().contains(targetPreCard))
-            throw new NotExisting("card", cardName);    //TODO add the side or main thing
+            throw new NotExisting("card", cardName);
         else
             targetDeck.removeCard(targetPreCard, side);
     }

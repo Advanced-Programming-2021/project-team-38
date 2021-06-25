@@ -11,8 +11,8 @@ public class PreMonsterCard extends PreCard {
     private int defense;
     private int attack;
     private final MonsterCardType monsterCardType;    //The ritual type is checked in summon
-    private MonsterType monsterType;    //nemidoonam
-    private CardAttribute attribute;    //property of card that is sometimes important for it's effects
+    private final MonsterType monsterType;    //nemidoonam
+    private final CardAttribute attribute;    //property of card that is sometimes important for it's effects
 
     public PreMonsterCard(String[] cardData) {
         //Name,Level,Attribute, Monster Type , Card Type ,Atk,Def,Description,Price
@@ -27,7 +27,7 @@ public class PreMonsterCard extends PreCard {
         price = Integer.parseInt(cardData[8]);
         cardType = CardType.MONSTER;
 
-        allPreCardsInstances.put(this, null);
+        allPreCards.add(this);
     }
 
     public String getName() {
