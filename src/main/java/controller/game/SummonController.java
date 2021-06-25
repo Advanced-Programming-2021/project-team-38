@@ -9,9 +9,7 @@ import model.Player;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
-import model.card.monster.MonsterCardType;
 import model.card.monster.MonsterManner;
-import model.card.monster.PreMonsterCard;
 import view.exceptions.*;
 import view.messageviewing.Print;
 import view.messageviewing.SuccessfulAction;
@@ -65,26 +63,26 @@ public class SummonController {
         putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
     }
 
-    public void ritualSummon(ArrayList<MonsterCardInUse> tributes) throws CantDoActionWithCard {
-        PreMonsterCard preMonster = (PreMonsterCard) monster.getPreCardInGeneral();
-        if (!preMonster.getMonsterCardType().equals(MonsterCardType.RITUAL))
-            throw new CantDoActionWithCard("ritual summon");
-        for (MonsterCardInUse tribute : tributes) {
-            controller.sendToGraveYard(tribute);
-        }
-        MonsterManner monsterManner = controller.getDuelMenuController().getRitualManner();
-        putMonsterInUse(monster, true, this.monsterCardInUse, summonedCards);
-        switch (monsterManner) { //todo: it should be a function inside the monster itself( because watchers watch this!)
-            case DEFENSIVE_OCCUPIED:
-                monsterCardInUse.setFaceUp(true);
-                monsterCardInUse.setInAttackMode(false);
-                break;
-            case OFFENSIVE_OCCUPIED:
-                monsterCardInUse.setFaceUp(true);
-                monsterCardInUse.setInAttackMode(true);
-                break;
-        }
-    }
+//    public void ritualSummon(ArrayList<MonsterCardInUse> tributes) throws CantDoActionWithCard {
+//        PreMonsterCard preMonster = (PreMonsterCard) monster.getPreCardInGeneral();
+//        if (!preMonster.getMonsterCardType().equals(MonsterCardType.RITUAL))
+//            throw new CantDoActionWithCard("ritual summon");
+//        for (MonsterCardInUse tribute : tributes) {
+//            controller.sendToGraveYard(tribute);
+//        }
+//        MonsterManner monsterManner = controller.getDuelMenuController().getRitualManner();
+//        putMonsterInUse(monster, true, this.monsterCardInUse, summonedCards);
+//        switch (monsterManner) {
+//            case DEFENSIVE_OCCUPIED:
+//                monsterCardInUse.setFaceUp(true);
+//                monsterCardInUse.setInAttackMode(false);
+//                break;
+//            case OFFENSIVE_OCCUPIED:
+//                monsterCardInUse.setFaceUp(true);
+//                monsterCardInUse.setInAttackMode(true);
+//                break;
+//        }
+//    }
 
     private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         if (monsterCardInUse == null) return;

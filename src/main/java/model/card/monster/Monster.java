@@ -1,13 +1,9 @@
 package model.card.monster;
 
-import controller.game.BattleController;
 import lombok.Getter;
 import lombok.Setter;
-import model.Board;
 import model.card.Card;
 import model.card.PreCard;
-import model.card.cardinusematerial.CardInUse;
-import model.card.cardinusematerial.MonsterCardInUse;
 
 @Getter
 @Setter
@@ -20,7 +16,8 @@ public class Monster extends Card {
     public Monster(PreCard preCard) {
         super(preCard);
         myPreCard = (PreMonsterCard) preCard;
-        this.level = ((PreMonsterCard) preCard).getLevel();
+        if (preCard != null)
+            this.level = ((PreMonsterCard) preCard).getLevel();
     }
 
     public Monster setUpMonster() {    //after instance creation it will fill the fields
@@ -62,6 +59,6 @@ public class Monster extends Card {
     }
 
     public void spinCard() {
-    //TODO what for?
+        //TODO what for?
     }
 }

@@ -57,6 +57,6 @@ public class Hand {
 
     @Override
     public String toString() {
-        return "c  ".repeat(cardsInHand.size());
+        return "c\t".repeat(cardsInHand.size());
     }
 }

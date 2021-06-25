@@ -17,4 +17,16 @@ public enum MonsterManner {
                 return null;
         }
     }
+
+    public String getMannerString() {
+        switch (this) {
+            case DEFENSIVE_OCCUPIED:
+                return "DO";
+            case DEFENSIVE_HIDDEN:
+                return "DH";
+            case OFFENSIVE_OCCUPIED:
+                return "OO";
+        }
+        return null;
+    }
 }

@@ -8,6 +8,7 @@ import model.CardState;
 import model.Enums.Phase;
 import model.Player;
 import model.card.Card;
+import model.card.monster.Monster;
 import model.card.spelltrap.SpellTrap;
 import model.watchers.Watcher;
 
@@ -47,12 +48,6 @@ public abstract class CardInUse {
         isFaceUp = !isFaceUp;
     }
 
-//    public void setFaceUp(boolean faceUp) {
-//        if (faceUp) faceUpCard();
-//        else isFaceUp = false;
-//    }
-
-
     public void faceUpCard() { //note
         watchByState(CardState.FACE_UP);
         isFaceUp = true;
@@ -65,15 +60,14 @@ public abstract class CardInUse {
 
     public void resetCell() {
         isPositionChanged = false;
-        thisCard = null;
         isFaceUp = false;
         for (Watcher watcher : watchersOfCardInUse) {
             watcher.disableWatcher(this);
         }
 
         watchersOfCardInUse = new ArrayList<>();
-        assert thisCard != null;
-        thisCard.theCardIsBeingDeleted();
+        if (thisCard != null)
+            thisCard.theCardIsBeingDeleted();
         thisCard = null;
     }
 
@@ -95,13 +89,33 @@ public abstract class CardInUse {
     public void activateMyEffect() {
         if (thisCard == null) return;
         watchByState(CardState.ACTIVE_EFFECT);
-        ((SpellTrap) thisCard).setActivated(true);
+        if (thisCard instanceof SpellTrap) {
+            ((SpellTrap) thisCard).setActivated(true);
+            faceUpCard();
+        }
     }
 
     public void updateCard() {
         if (!isCellEmpty()) thisCard.putBuiltInWatchers(this);
         if (board.getMyPhase() == Phase.END || board.getMyPhase() == Phase.END_RIVAL) {
             isPositionChanged = false;
+        }
+    }
+
+    //used in showing the board
+    @Override
+    public String toString() {
+        if (thisCard == null) return "E ";
+        else if (thisCard instanceof Monster) {
+            String mannerString = "D";
+            MonsterCardInUse monsterCardInUse = (MonsterCardInUse) this;
+            if (monsterCardInUse.isInAttackMode()) mannerString = "O";
+            if (monsterCardInUse.isFaceUp()) mannerString = mannerString + "O";
+            else mannerString = mannerString + "H";
+            return mannerString;
+        } else {
+            if (isFaceUp) return "O ";
+            else return "H ";
         }
     }
 }
