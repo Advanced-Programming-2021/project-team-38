@@ -1,11 +1,11 @@
 package view;
 
 import controller.RelatedToMenuController;
+import view.Menus.*;
 import view.exceptions.InvalidCommand;
 import view.exceptions.MenuNavigationError;
 import view.exceptions.NeedToLogin;
 import view.exceptions.WrongMenu;
-import view.Menus.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -48,7 +48,7 @@ public class Menu {
             try {
                 DuelMenu.checkMenuCommands(command.substring(5));
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Print.print(e.getMessage());
             }
         } else if (command.equals("user logout"))
             MainMenu.logout();

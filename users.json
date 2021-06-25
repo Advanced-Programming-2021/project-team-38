@@ -1,0 +1,20 @@
+[
+  {
+    "username": "\u003cusername\u003e",
+    "password": "\u003cpassword\u003e",
+    "nickName": "alli",
+    "score": 0,
+    "cardTreasury": {},
+    "decks": [],
+    "balance": 100000
+  },
+  {
+    "username": "otherUsername",
+    "password": "\u003cpassword\u003e",
+    "nickName": "secondAli",
+    "score": 0,
+    "cardTreasury": {},
+    "decks": [],
+    "balance": 100000
+  }
+]

@@ -9,6 +9,7 @@ import model.Deck;
 import model.Enums.Phase;
 import model.Player;
 import model.User;
+import model.card.PreCard;
 import model.card.monster.MonsterManner;
 import model.watchers.Watcher;
 import view.Menus.DuelMenu;
@@ -16,6 +17,7 @@ import view.Print;
 import view.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -67,12 +69,23 @@ public class DuelMenuController {
     private static boolean isGameValid(User firstUser, User secondUser) throws InvalidName, NoActiveDeck, InvalidDeck {
         if (firstUser == null || secondUser == null)
             throw new InvalidName("user", "username");
-        if (firstUser.getActiveDeck() == null) throw new NoActiveDeck(firstUser.getUsername());
-        if (secondUser.getActiveDeck() == null) throw new NoActiveDeck(secondUser.getUsername());
-        if (Deck.isDeckInvalid(firstUser.getActiveDeck())) throw new InvalidDeck(firstUser.getUsername());
-        if (Deck.isDeckInvalid(secondUser.getActiveDeck())) throw new InvalidDeck(secondUser.getUsername());
-        //todo num of cards in deck <= num of cards!
+        checkValidityOfUser(firstUser);
+        checkValidityOfUser(secondUser);
         return true;
+    }
+
+    private static void checkValidityOfUser(User user) throws NoActiveDeck, InvalidDeck {
+        Deck deck = user.getActiveDeck();
+        if (deck == null) throw new NoActiveDeck(user.getUsername());
+        if (Deck.isDeckInvalid(deck)) throw new InvalidDeck(user.getUsername());
+        ArrayList<PreCard> allCards = new ArrayList<>();
+        allCards.addAll(deck.getMainCards());
+        allCards.addAll(deck.getSideCards());
+        for (PreCard preCard : allCards) {
+            if (Collections.frequency(deck.getMainCards(), preCard) + Collections.frequency(deck.getSideCards(), preCard)
+                    > user.getCardTreasury().get(preCard.getName()))
+                throw new InvalidDeck(user.getUsername());
+        }
     }
 
 

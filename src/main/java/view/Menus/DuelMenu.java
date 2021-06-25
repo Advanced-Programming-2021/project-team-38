@@ -34,8 +34,8 @@ public class DuelMenu {
 
     private static void sendNewDuelRequest(String command) throws InvalidCommand, InvalidName, NumOfRounds, InvalidDeck, NoActiveDeck {
         if (duelMenuController == null) {
-            String secondUserName = getSecondUserNameInCommand(command.substring(9));
-            int numOfRounds = getNumOfRounds(command.substring(9));
+            String secondUserName = getSecondUserNameInCommand(command);
+            int numOfRounds = getNumOfRounds(command);
             duelMenuController = DuelMenuController.newDuel(secondUserName, numOfRounds);
             while (duelMenuController != null && duelMenuController.isIsAnyGameRunning()) {
                 duelMenuController.runMatch();
@@ -86,7 +86,7 @@ public class DuelMenu {
 
     private static int getNumOfRounds(String command) throws InvalidCommand {
         command = command.concat(" ");
-        Matcher matcher = Menu.getCommandMatcher(command, "--round (<round>\\d+) ");
+        Matcher matcher = Menu.getCommandMatcher(command, "--rounds (?<round>\\d+) ");
         if (matcher.find()) {
             return Integer.parseInt(matcher.group("round"));
         } else throw new InvalidCommand();
@@ -94,7 +94,7 @@ public class DuelMenu {
 
     private static String getSecondUserNameInCommand(String command) throws InvalidCommand {
         command = command.concat(" ");
-        Matcher matcher = Menu.getCommandMatcher(command, "--second-player (<username>\\S+) ");
+        Matcher matcher = Menu.getCommandMatcher(command, "--second-player (?<username>\\S+) ");
         if (matcher.find()) {
             return matcher.group("username");
         } else {

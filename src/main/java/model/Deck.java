@@ -21,7 +21,6 @@ public class Deck {
     private String name;
     private final ArrayList<PreCard> mainCards;
     private final ArrayList<PreCard> sideCards;
-    private User owner;
 
     {
         this.mainCards = new ArrayList<>();
@@ -29,8 +28,7 @@ public class Deck {
     }
 
 
-    public Deck(String name, User owner) {
-        setOwner(owner);
+    public Deck(String name) {
         this.name = name;
     }
 
@@ -50,16 +48,8 @@ public class Deck {
         return sideCards;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public int getNumOfMainCards() {
@@ -77,6 +67,9 @@ public class Deck {
     //start
     public void showDeck(boolean side) {
         Print.print(this.getName());
+        if (side)
+            Print.print("Side deck:");
+        else Print.print("Main deck");
         sortAndFilter(side);
     }
 
@@ -95,16 +88,19 @@ public class Deck {
                         collect(Collectors.toList());
         Print.print("Monsters:");
         for (PreCard preCard : monsterCards) {
-            Print.print(preCard.toString());
+            Print.print("\t" + preCard.toString());
         }
+        if (monsterCards.isEmpty()) Print.print("\tEmpty!");
 
         List<PreCard> spellTrapCards = preCards.stream()
                 .filter(p -> p.getCardType() != CardType.MONSTER).
                         collect(Collectors.toList());
         Print.print("Spell and Traps:");
         for (PreCard preCard : spellTrapCards) {
-            Print.print(preCard.toString());
+            Print.print("\t" + preCard.toString());
         }
+        if (spellTrapCards.isEmpty()) Print.print("\tEmpty!");
+
     }
     //the end
 
@@ -187,7 +183,7 @@ public class Deck {
 
     @Override
     public String toString() {
-        return "\t" + getName() + "main deck " + mainCards.size() + ", side deck "
+        return "\t" + getName() + ", main deck " + mainCards.size() + ", side deck "
                 + sideCards.size() + ", " + "validity : " + !isDeckInvalid(this);
     }
 }
