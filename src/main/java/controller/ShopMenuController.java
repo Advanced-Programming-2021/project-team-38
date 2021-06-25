@@ -8,10 +8,8 @@ import view.messageviewing.SuccessfulAction;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 public class ShopMenuController {
-    private static HashMap<String, Integer> allCards; //todo:  Why did we need this? (I'm negar!)
     private static User user;
 
     public static void setUser(User user) {
@@ -22,7 +20,7 @@ public class ShopMenuController {
         ArrayList<PreCard> allPreCards = PreCard.getAllPreCards();
         ArrayList<String> cards = new ArrayList<>();
         for (PreCard preCard : allPreCards) {
-            cards.add("\t" + preCard.getName() + " : " + preCard.getPrice());
+            cards.add("\t" + preCard.getName() + " ".repeat(40 - preCard.getName().length()) + preCard.getPrice());
         }
         Collections.sort(cards);
         StringBuilder cardsToShow = new StringBuilder();

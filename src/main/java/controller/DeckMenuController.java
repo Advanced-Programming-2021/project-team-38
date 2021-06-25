@@ -21,7 +21,7 @@ public class DeckMenuController {
         if (user.findDeckByName(deckName) != null)
             throw new AlreadyExistingError("deck", "name", deckName);
         else {
-            user.addDeck(new Deck(deckName, user));
+            user.addDeck(new Deck(deckName));
             new SuccessfulAction("deck", "created");
         }
     }
@@ -118,7 +118,7 @@ public class DeckMenuController {
     }
 
     public static void showCards() {
-        user.printMyCards();
+        Print.print(user.getMyCardsForPrint());
     }
 
 }
