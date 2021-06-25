@@ -40,7 +40,10 @@ public class SummonController {
             else hasExtraSummonPermission = false;
         }
         if (monster.getLevel() >= 5) summonWithTribute(monster);
-        else putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
+        else {
+            putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
+            board.getOwner().getHand().removeCard(monster);
+        }
         numOfNormalSummons++;
     }
 
@@ -60,29 +63,9 @@ public class SummonController {
             }
         }
         monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
+        board.getOwner().getHand().removeCard(monster);
         putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
     }
-
-//    public void ritualSummon(ArrayList<MonsterCardInUse> tributes) throws CantDoActionWithCard {
-//        PreMonsterCard preMonster = (PreMonsterCard) monster.getPreCardInGeneral();
-//        if (!preMonster.getMonsterCardType().equals(MonsterCardType.RITUAL))
-//            throw new CantDoActionWithCard("ritual summon");
-//        for (MonsterCardInUse tribute : tributes) {
-//            controller.sendToGraveYard(tribute);
-//        }
-//        MonsterManner monsterManner = controller.getDuelMenuController().getRitualManner();
-//        putMonsterInUse(monster, true, this.monsterCardInUse, summonedCards);
-//        switch (monsterManner) {
-//            case DEFENSIVE_OCCUPIED:
-//                monsterCardInUse.setFaceUp(true);
-//                monsterCardInUse.setInAttackMode(false);
-//                break;
-//            case OFFENSIVE_OCCUPIED:
-//                monsterCardInUse.setFaceUp(true);
-//                monsterCardInUse.setInAttackMode(true);
-//                break;
-//        }
-//    }
 
     private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
         if (monsterCardInUse == null) return;

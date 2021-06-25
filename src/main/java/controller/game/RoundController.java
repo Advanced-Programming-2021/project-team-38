@@ -36,7 +36,6 @@ public class RoundController {
     private boolean isTurnEnded;
     private int roundIndex; //0,1,2
 
-
     private DuelMenuController duelMenuController;
 
     {

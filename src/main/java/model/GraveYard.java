@@ -41,10 +41,6 @@ public class GraveYard {
         cardsInGraveYard.remove(card);
     }
 
-    public void showMonsters() {
-//todo
-    }
-
     //card index is between 1 and the size!
     public Card getCard(int cardIndex) throws InvalidSelection {
         if (cardIndex < 1 || cardIndex > this.cardsInGraveYard.size()) throw new InvalidSelection();
@@ -53,11 +49,14 @@ public class GraveYard {
 
     @Override
     public String toString() {
-        String showGraveyard = "";
-        for (Card card : cardsInGraveYard) {
-            showGraveyard = showGraveyard.concat(card.toString() + " ");
+        StringBuilder showGraveyard = new StringBuilder();
+        for (int i = 1; i <= cardsInGraveYard.size(); i++) {
+            showGraveyard.append("\t").append(i).append(". ").append(cardsInGraveYard.get(i - 1)).append("\n");
         }
-        return showGraveyard;
+        if (cardsInGraveYard.isEmpty()) {
+            showGraveyard.append("graveyard empty");
+        }
+        return showGraveyard.toString();
     }
 
 }

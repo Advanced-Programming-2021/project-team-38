@@ -297,18 +297,6 @@ public class DuelMenuController {
         if (currentPhase == Phase.DRAW) drawPhaseController.run();
     }
 
-
-//    public Monster getRitualSummonCommand() {
-//        boolean isCancelled = DuelMenu.askToSelectRitualMonsterCard();
-//        if (isCancelled) return null;
-//        if (!(roundController.getSelectedCard() instanceof Monster)) {
-//            Print.print("you should ritual summon right now");
-//            return getRitualSummonCommand();
-//        } else {
-//            return (Monster) roundController.getSelectedCard();
-//        }
-//    }
-
     public boolean askToEnterSummon() {
         return DuelMenu.forceGetCommand("summon", "you should ritual summon right now");
     }

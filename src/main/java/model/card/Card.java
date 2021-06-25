@@ -54,4 +54,9 @@ public abstract class Card {
     public void beVictim(GraveYard graveYard) {
         graveYard.addCard(this);
     }
+
+    @Override
+    public String toString() {
+        return preCardInGeneral.toString();
+    }
 }
