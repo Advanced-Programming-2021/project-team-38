@@ -8,8 +8,8 @@ import model.Enums.Phase;
 import model.Player;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.MonsterType;
-import model.watchers.monsters.CommandKnightHolyWatcher;
-import model.watchers.monsters.CommandKnightWatcher;
+import model.watchers.monsters.*;
+import model.watchers.spells.AdvancedRitualArtWatcher;
 import model.watchers.spells.FieldWatcher;
 import model.watchers.traps.*;
 
@@ -124,6 +124,16 @@ public abstract class Watcher {
                 return new CommandKnightHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
             case "CommandKnightWatcher":
                 return new CommandKnightWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "ManEaterWatcher":
+                return new ManEaterWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "MarshmallonHolyWatcher":
+                return new MarshmallonHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "MarshmallonWatcher":
+                return new MarshmallonWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "SuijinWatcher":
+                return new SuijinWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "AdvancedRitualArtWatcher":
+                return new AdvancedRitualArtWatcher(ownerOfWatcher, WhoToWatch.MINE);
             //Field spell
             case "YamiFirst":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);

@@ -56,7 +56,6 @@ public abstract class CardInUse {
     public void setACardInCell(Card card) {
         thisCard = card;
         card.cardIsBeingSetInCell(this);
-//        card.putBuiltInWatchers(this);
     }
 
     public void resetCell() {
@@ -68,7 +67,7 @@ public abstract class CardInUse {
         }
 
         watchersOfCardInUse = new ArrayList<>();
-        assert thisCard != null;    //TODO what is it doing?
+        assert thisCard != null;
         thisCard.theCardIsBeingDeleted();
         thisCard = null;
     }

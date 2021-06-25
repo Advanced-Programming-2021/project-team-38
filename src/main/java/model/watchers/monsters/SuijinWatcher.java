@@ -9,6 +9,7 @@ import model.card.cardinusematerial.MonsterCardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 
+//TODO suijin secondry watcher which tracks addToAttack and addToDefense
 public class SuijinWatcher extends Watcher {
     MonsterCardInUse attacker;
     int attackerPoint;
