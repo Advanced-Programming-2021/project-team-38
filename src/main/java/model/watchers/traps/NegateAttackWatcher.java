@@ -11,6 +11,7 @@ import model.watchers.Zone;
 public class NegateAttackWatcher extends Watcher {
     public NegateAttackWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
+        speed = 3;
     }
 
     @Override

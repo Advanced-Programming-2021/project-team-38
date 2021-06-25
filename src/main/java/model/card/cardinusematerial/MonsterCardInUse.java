@@ -84,12 +84,12 @@ public class MonsterCardInUse extends CardInUse {
         super.resetCell();
     }
 
-    @Override
-    public void changePosition() {
-        super.changePosition();
-        if (isFaceUp())
-            ((Monster)thisCard).spinCard();
-    }
+//    @Override
+//    public void changePosition() {
+//        super.changePosition();
+//        if (isFaceUp())
+//            ((Monster)thisCard).spinCard();
+//    }
 
     public void destroyThis() {
         watchByState(CardState.DESTROY);

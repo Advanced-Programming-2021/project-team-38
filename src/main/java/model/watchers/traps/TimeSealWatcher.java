@@ -11,6 +11,7 @@ import model.watchers.WhoToWatch;
 public class TimeSealWatcher extends Watcher {
     public TimeSealWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
+        speed = 2;
     }
 
     @Override

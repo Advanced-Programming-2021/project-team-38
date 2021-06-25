@@ -13,6 +13,7 @@ import model.card.spelltrap.SpellTrap;
 import model.watchers.Watcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -43,10 +44,10 @@ public abstract class CardInUse {
         return thisCard == null;
     }
 
-    public void changePosition() {
-        isPositionChanged = true; //todo : check with hasti. change position isn't only for face up ( I'm not sure if it's even important for face up change).
-        isFaceUp = !isFaceUp;
-    }
+//    public void changePosition() {
+//        isPositionChanged = true; //todo : check with hasti. change position isn't only for face up ( I'm not sure if it's even important for face up change).
+//        isFaceUp = !isFaceUp;
+//    }
 
     public void faceUpCard() { //note
         watchByState(CardState.FACE_UP);
@@ -100,6 +101,7 @@ public abstract class CardInUse {
         if (board.getMyPhase() == Phase.END || board.getMyPhase() == Phase.END_RIVAL) {
             isPositionChanged = false;
         }
+        Collections.sort(watchersOfCardInUse);
     }
 
     //used in showing the board

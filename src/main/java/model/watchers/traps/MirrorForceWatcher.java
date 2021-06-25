@@ -12,6 +12,7 @@ import model.watchers.Zone;
 public class MirrorForceWatcher extends Watcher {
     public MirrorForceWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
+        speed = 2;
     }
 
     @Override

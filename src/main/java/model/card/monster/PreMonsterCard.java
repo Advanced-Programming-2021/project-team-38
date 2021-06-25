@@ -7,9 +7,9 @@ import model.card.PreCard;
 
 @Getter
 public class PreMonsterCard extends PreCard {
-    private int level;  //for number of tributes when summoned,
-    private int defense;
-    private int attack;
+    private final int level;  //for number of tributes when summoned,
+    private final int defense;
+    private final int attack;
     private final MonsterCardType monsterCardType;    //The ritual type is checked in summon
     private final MonsterType monsterType;    //nemidoonam
     private final CardAttribute attribute;    //property of card that is sometimes important for it's effects

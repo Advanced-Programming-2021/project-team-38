@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public abstract class Watcher {
+public abstract class Watcher implements Comparable{
     public static HashMap<String, Watcher> allWatchers;
     @Setter
     public static RoundController roundController;
@@ -218,4 +218,20 @@ public abstract class Watcher {
         return null;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        Watcher secWatcher = (Watcher) o;
+        if (this.whoToWatch == WhoToWatch.MINE)
+            return 1;
+        else if (this.whoToWatch == WhoToWatch.RIVALS)
+            return -1;
+        else {
+            if (secWatcher.whoToWatch == WhoToWatch.MINE)
+                return -1;
+            else if (secWatcher.whoToWatch == WhoToWatch.RIVALS)
+                return 1;
+            else
+                return 0;
+        }
+    }
 }

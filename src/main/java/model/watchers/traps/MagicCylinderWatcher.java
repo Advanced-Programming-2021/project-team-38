@@ -13,6 +13,7 @@ public class MagicCylinderWatcher extends Watcher {
 
     public MagicCylinderWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
+        speed = 2;
     }
     //trap
 

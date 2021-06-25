@@ -11,6 +11,7 @@ import model.watchers.Zone;
 public class TrapHoleWatcher extends Watcher {
     public TrapHoleWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
+        speed = 2;
     }
 
     @Override

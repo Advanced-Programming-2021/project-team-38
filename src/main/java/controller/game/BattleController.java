@@ -7,8 +7,6 @@ import model.CardState;
 import model.card.cardinusematerial.MonsterCardInUse;
 import view.Print;
 import view.messageviewing.Winner;
-import model.card.cardinusematerial.MonsterCardInUse;
-import model.card.monster.Monster;
 
 @Getter
 @Setter
@@ -38,17 +36,15 @@ public class BattleController {
     }
 
     private void run() {
-//        preyCard.changeIsAttacked();
-//        attacker.changeIsAttacking();
 
-        if (!isPreyCardInAttackMode) preyCard.changePosition();
-
-//        ((Monster) preyCard.getThisCard()).receiveAttack(this);
-        differenceOfPoints = Math.abs(attackerAttack - preyPoint);
-        if (!isPreyCardInAttackMode) {
+        if (!preyCard.isFaceUp()) {
+            preyCard.faceUpCard();
             Print.print(String.format("opponent’s monster card was %s",
                     preyCard.getThisCard().getName()));
         }
+
+        differenceOfPoints = Math.abs(attackerAttack - preyPoint);
+
         if (attackerAttack > preyPoint) {
             attackerWins();
         } else if (attackerAttack == preyPoint) {
@@ -62,12 +58,10 @@ public class BattleController {
         if (isPreyCardInAttackMode) {
             preyCard.destroyThis();
             preyBoard.getOwner().decreaseLifePoint(differenceOfPoints);
-//            ((Monster) preyCard.getThisCard()).destroyThis(attackerBoard, preyBoard, attacker, preyCard, differenceOfPoints);
             Winner.setWinner(Winner.AGAINST_A_WINS, differenceOfPoints);
         } else {
             Winner winner = Winner.AGAINST_D_WINS;
             preyCard.destroyThis();
-//            ((Monster) preyCard.getThisCard()).destroyThis(attackerBoard, preyBoard, attacker, preyCard, 0);
             Winner.setWinner(winner, differenceOfPoints);
         }
     }
@@ -76,7 +70,6 @@ public class BattleController {
         if (isPreyCardInAttackMode) {
             attacker.destroyThis();
             attackerBoard.getOwner().decreaseLifePoint(differenceOfPoints);
-//            ((Monster) attacker.getThisCard()).destroyThis(attackerBoard, preyBoard, attacker, preyCard, differenceOfPoints);
             Winner.setWinner(Winner.AGAINST_A_LOSE, differenceOfPoints);
         } else {
             Winner winner = Winner.AGAINST_D_LOSE;
@@ -89,8 +82,6 @@ public class BattleController {
         if (isPreyCardInAttackMode) {
             attacker.destroyThis();
             preyCard.destroyThis();
-//            ((Monster) preyCard.getThisCard()).destroyThis(attackerBoard, preyBoard, attacker, preyCard, 0);
-//            ((Monster) attacker.getThisCard()).destroyThis(null, attackerBoard, null, attacker, 0);
             Winner.setWinner(Winner.AGAINST_A_NONE, differenceOfPoints);
         } else {
             Winner winner = Winner.AGAINST_D_NONE;

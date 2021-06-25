@@ -12,6 +12,7 @@ import model.watchers.spells.DestroyAllWatcher;
 public class TorrentialTributeWatcher extends Watcher {
     public TorrentialTributeWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
+        speed = 2;
     }
 
     @Override
