@@ -69,6 +69,8 @@ public class Board {
         for (Watcher builtInWatcher : fieldCell.thisCard.builtInWatchers) {
             builtInWatcher.update(myPhase);
         }
+
+        updateAfterAction();
     }
 
 
@@ -146,7 +148,15 @@ public class Board {
     }
 
     public void updateAfterAction() {
+        for (MonsterCardInUse monsterCardInUse : monsterZone) {
+            monsterCardInUse.updateCard();
+        }
 
+        for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
+            spellTrapCardInUse.updateCard();
+        }
+
+        fieldCell.updateCard();
     }
 
 

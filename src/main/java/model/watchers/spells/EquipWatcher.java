@@ -12,6 +12,7 @@ import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
+//United - Magnum - Black - Sword-dark
 public class EquipWatcher extends Watcher {
 
     MonsterCardInUse guardedCard;
@@ -25,30 +26,42 @@ public class EquipWatcher extends Watcher {
         this.attackAdded = attackAdded;
         this.defenseAdded = defenseAdded;
         this.whoToWatch = whoToWatch;
-        selectToWatch();
     }
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
-        //nothing
+        if (cardState == CardState.ACTIVE_MY_EFFECT && guardedCard == null) {
+            if (handleChain()) {
+                selectToWatch();
+                isWatcherActivated = true;
+            }
+        }
     }
 
     @Override
     public boolean canPutWatcher() {
-        return false;
+        return true;
     }
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-
+        addWatcherToCardInUse(cardInUse);
     }
 
     private void selectToWatch() {
         SelectController selectController = new SelectController(ZoneName.getZoneNamesByZone(Zone.MONSTER, WhoToWatch.ALL), roundController, ownerOfWatcher.getOwnerOfCard());
-        selectController.setMonsterTypes(affected);
+        if (affected != null)   selectController.setMonsterTypes(affected);
         selectController.setCardType(CardType.MONSTER);
         guardedCard = (MonsterCardInUse) selectController.getTheCardInUse();
         addWatcherToCardInUse(guardedCard);
+        addTheEquipAmount();
+    }
+
+    public void addTheEquipAmount() {
+        if (guardedCard != null) {
+            guardedCard.addToAttack(attackAdded);
+            guardedCard.addToDefense(defenseAdded);
+        }
     }
 
     @Override
