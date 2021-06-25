@@ -11,6 +11,7 @@ import model.card.monster.MonsterType;
 import model.watchers.monsters.CommandKnightHolyWatcher;
 import model.watchers.monsters.CommandKnightWatcher;
 import model.watchers.spells.FieldWatcher;
+import model.watchers.traps.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,6 +124,7 @@ public abstract class Watcher {
                 return new CommandKnightHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
             case "CommandKnightWatcher":
                 return new CommandKnightWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            //Field spell
             case "YamiFirst":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);
             case "YamiSec":
@@ -131,7 +133,19 @@ public abstract class Watcher {
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.INSECT, MonsterType.BEAST_WARRIOR, MonsterType.BEAST}, 200, 200, WhoToWatch.ALL);
             case "Umiiruka":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.AQUA}, 500, -400, WhoToWatch.ALL);
-
+            //traps
+            case "MagicCylinderWatcher":
+                return new MagicCylinderWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
+            case "MirrorForceWatcher":
+                return new MirrorForceWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
+            case "TrapHoleWatcher":
+                return new TrapHoleWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
+            case "TorrentialTributeWatcher":
+                return new TorrentialTributeWatcher(ownerOfWatcher, WhoToWatch.ALL);
+            case "TimeSealWatcher":
+                return new TimeSealWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
+            case "NegateAttackWatcher":
+                return new NegateAttackWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
         }
 
         System.out.println("wrong name");
