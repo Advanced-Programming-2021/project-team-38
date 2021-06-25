@@ -9,8 +9,7 @@ import model.Player;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.MonsterType;
 import model.watchers.monsters.*;
-import model.watchers.spells.AdvancedRitualArtWatcher;
-import model.watchers.spells.FieldWatcher;
+import model.watchers.spells.*;
 import model.watchers.traps.*;
 
 import java.util.ArrayList;
@@ -63,7 +62,6 @@ public abstract class Watcher {
             cardInUse.watchersOfCardInUse.remove(this);
             amWatching.remove(cardInUse);
         }
-//        if (isDisposable)   dispose();
     }
 
     protected static void emptyStack() {
@@ -132,8 +130,24 @@ public abstract class Watcher {
                 return new MarshmallonWatcher(ownerOfWatcher, WhoToWatch.MINE);
             case "SuijinWatcher":
                 return new SuijinWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "TexChangerWatcher":
+                return new TexChangerWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "TheCalculatorWatcher":
+                return new TheCalculatorWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "YomiShipWatcher":
+                return new YomiShipWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            //spells
             case "AdvancedRitualArtWatcher":
                 return new AdvancedRitualArtWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            //equips
+            case "Sword-dark":
+                return new EquipWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.SPELLCASTER, MonsterType.FIEND}, 400, -200, WhoToWatch.ALL);
+            case "Black":
+                return new EquipWatcher(ownerOfWatcher, null, 500, 0, WhoToWatch.ALL);
+            case "United":
+                return new UnitedWatcher(ownerOfWatcher, null, 800, 800, WhoToWatch.ALL);
+            case "Magnum":
+                return new MagnumWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.WARRIOR}, 0, 0, WhoToWatch.ALL);
             //Field spell
             case "YamiFirst":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.FIEND, MonsterType.SPELLCASTER}, 200, 200, WhoToWatch.ALL);
@@ -143,6 +157,8 @@ public abstract class Watcher {
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.INSECT, MonsterType.BEAST_WARRIOR, MonsterType.BEAST}, 200, 200, WhoToWatch.ALL);
             case "Umiiruka":
                 return new FieldWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.AQUA}, 500, -400, WhoToWatch.ALL);
+            case "ClosedForest":
+                return new ClosedForestWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.BEAST, MonsterType.BEAST_WARRIOR}, 100, 0, WhoToWatch.MINE);
             //traps
             case "MagicCylinderWatcher":
                 return new MagicCylinderWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
@@ -158,7 +174,7 @@ public abstract class Watcher {
                 return new NegateAttackWatcher(ownerOfWatcher, WhoToWatch.RIVALS);
         }
 
-        System.out.println("wrong name");
+        System.out.println("wrong name " + nameWatcher);
         return null;
     }
 
