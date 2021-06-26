@@ -9,7 +9,6 @@ import model.Enums.Phase;
 import model.Player;
 import model.card.Card;
 import model.card.monster.Monster;
-import model.card.spelltrap.SpellTrap;
 import model.watchers.Watcher;
 
 import java.util.ArrayList;
@@ -82,15 +81,6 @@ public abstract class CardInUse {
                 watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
             else
                 watcher.watch(this, cardState, duelMenuController);
-        }
-    }
-
-    public void activateMyEffect() {
-        if (thisCard == null) return;
-        watchByState(CardState.ACTIVE_EFFECT);
-        if (thisCard instanceof SpellTrap) {
-            ((SpellTrap) thisCard).setActivated(true);
-            faceUpCard();
         }
     }
 

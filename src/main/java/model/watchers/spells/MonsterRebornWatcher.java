@@ -50,6 +50,7 @@ public class MonsterRebornWatcher extends Watcher {
             try {
                 SummonController.specialSummon((Monster) selectController.getTheCard(),
                         ownerOfWatcher.getOwnerOfCard(), roundController, false);
+                ownerOfWatcher.getBoard().getGraveYard().removeCard(selectController.getTheCard());
             } catch (BeingFull beingFull) {
                 DuelMenu.showException(beingFull);
             }

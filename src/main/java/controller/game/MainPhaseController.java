@@ -146,14 +146,14 @@ public class MainPhaseController {
         if (spell == null) return;
         if (spell.getMyPreCard().getIcon().equals(CardIcon.FIELD)) {
             //it is a field spell inside hand and we want to send it to the field zone
-            CardInUse fieldCell = player.getBoard().getFieldCell();
+            SpellTrapCardInUse fieldCell = player.getBoard().getFieldCell();
             if (fieldCell != null) {
                 fieldCell.resetCell();
                 fieldCell.sendToGraveYard();
+                fieldCell.resetCell();
+                fieldCell.setACardInCell(spell);
+                fieldCell.activateMyEffect();
             }
-            player.getBoard().getFieldCell().resetCell();
-            player.getBoard().getFieldCell().setACardInCell(spell);
-
         } else {
             //the spell is in hand and we should send it to the board and activate it
             SpellTrapCardInUse spellInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);

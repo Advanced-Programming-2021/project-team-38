@@ -3,12 +3,22 @@ package model.card.cardinusematerial;
 
 import lombok.Getter;
 import model.Board;
+import model.CardState;
+import model.card.spelltrap.SpellTrap;
 
 @Getter
 public class SpellTrapCardInUse extends CardInUse {
-    //TODO active effect is not written
+
     public SpellTrapCardInUse(Board board) {
         super(board);
     }
 
+    public void activateMyEffect() {
+        if (thisCard == null) return;
+        watchByState(CardState.ACTIVE_EFFECT);
+        if (thisCard instanceof SpellTrap) {
+            ((SpellTrap) thisCard).setActivated(true);
+            faceUpCard();
+        }
+    }
 }
