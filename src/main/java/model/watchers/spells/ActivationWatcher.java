@@ -5,25 +5,23 @@ import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
-import model.watchers.Zone;
 
-//disposable
-//Raigeki - Harpie - Dark Hole
-public class DestroyAllWatcher extends SpellsWithActivation {
+public class ActivationWatcher extends Watcher {
+    Watcher upperWatcher;
+    boolean isDeleted = false;
 
-    Zone zoneAffected;
-
-    public DestroyAllWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch, Zone zone) {
+    public ActivationWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch, Watcher upperWatcher) {
         super(ownerOfWatcher, whoToWatch);
-        zoneAffected = zone;
-        isDisposable = true;
+        this.upperWatcher = upperWatcher;
+        this.speed = upperWatcher.speed;
+        putWatcher(ownerOfWatcher);
     }
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
-        if (cardState == CardState.TRIGGERED) {
+        if (cardState == CardState.ACTIVE_MY_EFFECT) {
             if (handleChain()) {
-                watchTheFieldAffected();
+                upperWatcher.watch(theCard, CardState.TRIGGERED, duelMenuController);
                 isWatcherActivated = true;
             }
         }
@@ -39,12 +37,10 @@ public class DestroyAllWatcher extends SpellsWithActivation {
         addWatcherToCardInUse(cardInUse);
     }
 
-    public void watchTheFieldAffected() {
-        CardInUse[] toBeDestroyed = theTargetCells(zoneAffected);
-        for (CardInUse cardInUse : toBeDestroyed) {
-            cardInUse.sendToGraveYard();
-        }
-
-        deleteWatcher();
+    @Override
+    public void deleteWatcher() {
+        super.deleteWatcher();
+        isDeleted = true;
+        upperWatcher.deleteWatcher();
     }
 }
