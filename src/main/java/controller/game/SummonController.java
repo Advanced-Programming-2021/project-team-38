@@ -41,6 +41,7 @@ public class SummonController {
         }
         if (monster.getLevel() >= 5) summonWithTribute(monster);
         else {
+            board.getOwner().getHand().removeCard(monster);
             putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards, controller);
             board.getOwner().getHand().removeCard(monster);
         }
@@ -93,6 +94,7 @@ public class SummonController {
     }
 
 
+    //any one who calls this, should remove the monster from the current place
     public static void specialSummon(Monster monster, Player player, RoundController roundController, boolean shouldGetMonsterManner) throws BeingFull {
         if (player == null || monster == null) return;
         Board playerBoard = player.getBoard();
