@@ -72,6 +72,7 @@ public class MainPhaseController {
             if (!monsterCardInUse.isInAttackMode() || !monsterCardInUse.isFaceUp()) throw new AlreadyInWantedPosition();
             monsterCardInUse.setInAttackMode(false);
         }
+        controller.updateBoards();
     }
 
     public void flipSummon() throws NoSelectedCard, CantDoActionWithCard {
@@ -87,6 +88,7 @@ public class MainPhaseController {
 
         monsterCardInUse.flipSummon();
         new SuccessfulAction("", "flip summoned");
+        controller.updateBoards();
     }
 
     public void setCard() throws NoSelectedCard, CantDoActionWithCard, BeingFull, AlreadyDoneAction {
@@ -94,6 +96,7 @@ public class MainPhaseController {
         if (!player.getHand().doesContainCard(selectedCard)) throw new CantDoActionWithCard("set");
         if (selectedCard instanceof Monster) setMonster((Monster) selectedCard);
         if (selectedCard instanceof SpellTrap) setSpellTrap((SpellTrap) selectedCard);
+        controller.updateBoards();
     }
 
     private void setMonster(Monster selectedCard) throws BeingFull, AlreadyDoneAction {
@@ -105,6 +108,7 @@ public class MainPhaseController {
         monsterCardInUse.setFaceUp(false);
         monsterCardInUse.setInAttackMode(false);
         new SuccessfulAction("", "set");
+        controller.updateBoards();
     }
 
     private void setSpellTrap(SpellTrap selectedCard) throws BeingFull {
@@ -114,22 +118,25 @@ public class MainPhaseController {
         spellTrapCardInUse.setThisCard(selectedCard);
         spellTrapCardInUse.setFaceUp(false);
         new SuccessfulAction("", "set");
+        controller.updateBoards();
+
         //todo: the spell or trap card in use should be face down. but will it be needed?
     }
 
     //todo: I think "of currentplayer " isn't needed. check with hasti
     public void activateEffect(boolean ofCurrentPlayer)
-            throws NoSelectedCard, ActivateEffectNotSpell, CantDoActionWithCard, BeingFull, SpellPreparation, AlreadyActivatedEffect, NoCardFound, InvalidTributeAddress, NotAppropriateCard, CloneNotSupportedException, InvalidSelection, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
+            throws NoSelectedCard, ActivateEffectNotSpell, BeingFull, AlreadyActivatedEffect {
 
         Card selectedCard = getSelectedCard();
         if (!(selectedCard instanceof SpellTrap)) throw new ActivateEffectNotSpell();
         if (ofCurrentPlayer && player.getHand().doesContainCard(selectedCard)) {
             activateEffectFromHand((SpellTrap) selectedCard);
         } else activateEffectFromBoard(ofCurrentPlayer);
+        controller.updateBoards();
     }
 
     private void activateEffectFromBoard(boolean ofCurrentPlayer)
-            throws NoSelectedCard, ActivateEffectNotSpell, AlreadyActivatedEffect, SpellPreparation, CloneNotSupportedException, BeingFull, NotAppropriateCard, InvalidSelection, InvalidTributeAddress, NoCardFound, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
+            throws NoSelectedCard, ActivateEffectNotSpell, AlreadyActivatedEffect {
         Card selectedCard = getSelectedCard();
         if (!(selectedCard instanceof SpellTrap)) throw new ActivateEffectNotSpell();
         SpellTrap spellCard = (SpellTrap) selectedCard;
@@ -139,6 +146,8 @@ public class MainPhaseController {
         cardInUse.activateMyEffect();
 
         Print.print("spell " + spellCard.name + "  is activated");
+        controller.updateBoards();
+
     }
 
     //the input is either a field spell or a spell that we should first set and then activate
@@ -162,6 +171,7 @@ public class MainPhaseController {
             spellInUse.setACardInCell(spell);
             spellInUse.activateMyEffect();
             Print.print("spell activated");
+            controller.updateBoards();
         }
     }
 }

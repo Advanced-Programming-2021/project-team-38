@@ -41,7 +41,7 @@ public class SummonController {
         }
         if (monster.getLevel() >= 5) summonWithTribute(monster);
         else {
-            putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
+            putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards, controller);
             board.getOwner().getHand().removeCard(monster);
         }
         numOfNormalSummons++;
@@ -64,17 +64,19 @@ public class SummonController {
         }
         monsterCardInUse = (MonsterCardInUse) board.getFirstEmptyCardInUse(true);
         board.getOwner().getHand().removeCard(monster);
-        putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards);
+        putMonsterInUse(monster, false, this.monsterCardInUse, this.summonedCards, this.controller);
     }
 
-    private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards) {
+    private static void putMonsterInUse(Monster monster, boolean isSpecial, MonsterCardInUse monsterCardInUse, ArrayList<CardInUse> summonedCards, RoundController roundController) {
         if (monsterCardInUse == null) return;
         monsterCardInUse.summon();
         monsterCardInUse.setACardInCell(monster);
         monsterCardInUse.setInAttackMode(true);
         monsterCardInUse.faceUpCard();
         if (!isSpecial && summonedCards != null) summonedCards.add(monsterCardInUse);
+        roundController.updateBoards();
         new SuccessfulAction("", "summoned");
+
     }
 
     private int findNumOfTributes(Monster monster) {
@@ -87,6 +89,7 @@ public class SummonController {
         if (cardInUse == null) throw new InvalidTributeAddress();
         if (!(cardInUse.getThisCard() instanceof Monster)) throw new InvalidTributeAddress();
         controller.sendToGraveYard(cardInUse);
+        controller.updateBoards();
     }
 
 
@@ -95,7 +98,7 @@ public class SummonController {
         Board playerBoard = player.getBoard();
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
-        putMonsterInUse(monster, true, monsterCardInUse, null);
+        putMonsterInUse(monster, true, monsterCardInUse, null, roundController); //todo: why null
         roundController.getDuelMenuController().getMainPhaseController().getSummonedInThisPhase().add(monsterCardInUse);
 
         if (shouldGetMonsterManner) {

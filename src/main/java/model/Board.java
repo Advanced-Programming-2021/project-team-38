@@ -37,13 +37,14 @@ public class Board {
     {
         monsterZone = new MonsterCardInUse[5];
         spellTrapZone = new SpellTrapCardInUse[5];
-        graveYard = new GraveYard();
     }
 
     public Board(Player owner, DuelMenuController controller) {
         this.owner = owner;
         this.controller = controller;
         newCells();
+        graveYard = new GraveYard(this);
+
     }
 
     //TODO !!! negar please
@@ -87,22 +88,12 @@ public class Board {
         fieldCell = new SpellTrapCardInUse(this);
     }
 
-    public void addToAllMonsterCellsAttack(int amount) { //amount can be negative too
-        for (MonsterCardInUse monsterCardInUse : monsterZone) {
-            monsterCardInUse.addToAttack(amount);
-        }
-    }
-
     public boolean isMonsterZoneFull() {
         return getFirstEmptyCardInUse(true) == null;
     }
 
     public boolean isSpellTrapZoneFull() {
         return getFirstEmptyCardInUse(false) == null;
-    }
-
-    public void addToAdditionalAttack(int amount) {     //maybe not useful
-        additionalAttack += amount;
     }
 
     public CardInUse getFirstEmptyCardInUse(boolean isMonster) {
@@ -142,7 +133,7 @@ public class Board {
             }
         } else if (card instanceof SpellTrap) {
             for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
-                if (spellTrapCardInUse.getThisCard().equals((SpellTrap) card)) return spellTrapCardInUse;
+                if (spellTrapCardInUse.getThisCard().equals(card)) return spellTrapCardInUse;
             }
         }
         return null;
@@ -161,7 +152,7 @@ public class Board {
     }
 
 
-    private String myTurnString() {
+    public String myTurnString() {
         StringBuilder myBoard = new StringBuilder();
         String horizontalBoarder = "_".repeat(26);
         myBoard.append("\t").append(horizontalBoarder).append("\n\t");
@@ -188,7 +179,7 @@ public class Board {
         return myBoard.toString();
     }
 
-    private String rivalTurnString() {
+    public String rivalTurnString() {
         StringBuilder rivalBoard = new StringBuilder();
         String horizontalBoarder = "_".repeat(26);
         rivalBoard.append("\t").append(horizontalBoarder).append("\n\t");

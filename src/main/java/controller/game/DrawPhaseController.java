@@ -38,7 +38,6 @@ public class DrawPhaseController {
             addCardsFromDeckToHand();
             activeDrawEffects();
         }
-
     }
 
     private void addCardsFromDeckToHand() {
@@ -49,6 +48,7 @@ public class DrawPhaseController {
                 Card card = preCard.newCard();
                 this.hand.addCard(card);
             }
+            roundController.updateBoards();
         }
     }
 

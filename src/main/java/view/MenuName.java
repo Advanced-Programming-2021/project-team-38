@@ -81,7 +81,8 @@ public enum MenuName {
                         "activate effect\n" +
                         "show graveyard\n" +
                         "card show --selected\n" +
-                        "surrender\n";
+                        "surrender\n" +
+                        "show board\n";
             //todo: it would be better if we could show related commands of each phase
             case MAIN:
                 return "user logout\n" +

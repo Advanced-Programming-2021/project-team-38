@@ -58,6 +58,8 @@ public class AdvancedRitualArtWatcher extends Watcher {
         for (Monster tribute : tributes) {
             tribute.beVictim(graveYard);
         }
+        roundController.updateBoards();
+
     }
 
     private Monster getMonsterToSummon() {

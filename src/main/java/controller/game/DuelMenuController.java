@@ -324,4 +324,10 @@ public class DuelMenuController {
         return MonsterManner.getMonsterManner(mannerString);
     }
 
+    public void showBoard() {
+        if (roundController != null) {
+            showBoard();
+        }
+    }
+
 }

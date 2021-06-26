@@ -26,7 +26,7 @@ public abstract class Card {
     }
 
     public void setName(String name) {
-        this.name = preCardInGeneral.getName();
+        this.name = name;
     }
 
     public void putBuiltInWatchers(CardInUse cardInUse) {

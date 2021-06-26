@@ -52,11 +52,8 @@ public class Player {
         return this.hand;
     }
 
-    public void increaseLifePoint(int increasingAmount) {
-        this.lifePoint += increasingAmount;
-    }
-
     public void decreaseLifePoint(int decreasingAmount) {
         this.lifePoint -= decreasingAmount;
+        roundController.updateBoards();
     }
 }
