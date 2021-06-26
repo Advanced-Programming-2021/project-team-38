@@ -20,8 +20,8 @@ import model.card.spelltrap.PreSpellTrapCard;
 
 public class Deck {
     private String name;
-    private final ArrayList<PreCard> mainCards;
-    private final ArrayList<PreCard> sideCards;
+    private ArrayList<PreCard> mainCards;
+    private ArrayList<PreCard> sideCards;
 
     {
         this.mainCards = new ArrayList<>();
@@ -180,5 +180,13 @@ public class Deck {
     public String toString() {
         return "\t" + getName() + ", main deck " + mainCards.size() + ", side deck "
                 + sideCards.size() + ", " + "validity : " + !isDeckInvalid(this);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Deck newDeck = new Deck(this.name);
+        newDeck.mainCards = new ArrayList<>(this.mainCards);
+        newDeck.sideCards = new ArrayList<>(this.sideCards);
+        return newDeck;
     }
 }

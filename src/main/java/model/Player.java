@@ -1,30 +1,30 @@
 package model;
 
 import controller.game.RoundController;
+import model.card.PreCard;
 
 public class Player {
     //TODO clone the deck when game is started
 
     private final String name;
-    private final Deck deck;
     private int lifePoint;
     private final Board board;
     private final Hand hand;
     private final User owner;
     private final RoundController roundController;
+    private Deck deck;
 
 
     {
         this.hand = new Hand();
-//        this.unusedCards = new ArrayList<>();
     }
 
     public Player(User owner, RoundController roundController) {
         this.owner = owner;
         this.name = owner.getNickName();
-        this.deck = owner.getActiveDeck();
         this.lifePoint = 8000;
         this.roundController = roundController;
+        createDeck();
         this.board = new Board(this, roundController.getDuelMenuController());
     }
 
@@ -58,5 +58,22 @@ public class Player {
 
     public void decreaseLifePoint(int decreasingAmount) {
         this.lifePoint -= decreasingAmount;
+    }
+
+    public void createDeck() {
+        try {
+            this.deck = (Deck) owner.getActiveDeck().clone();
+
+            for (PreCard mainCard : deck.getMainCards()) {
+                owner.removeCardFromTreasury(mainCard.getName());
+            }
+
+            for (PreCard sideCard : deck.getSideCards()) {
+                owner.removeCardFromTreasury(sideCard.getName());
+            }
+
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -44,8 +44,7 @@ public class DrawPhaseController {
     private void addCardsFromDeckToHand() {
         if (canDraw) {
             for (int i = 0; i < numOfCardsToAdd; i++) {
-                PreCard preCard = deck.getMainCards().get(0);
-                deck.getMainCards().remove(preCard);
+                PreCard preCard = deck.getMainCards().remove(0);
                 Card card = preCard.newCard();
                 this.hand.addCard(card);
             }

@@ -71,6 +71,7 @@ public abstract class CardInUse {
 
     public void sendToGraveYard() {
         watchByState(CardState.SENT_TO_GRAVEYARD);
+        board.getGraveYard().addCard(thisCard);
         resetCell();
     }
 

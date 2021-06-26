@@ -39,7 +39,6 @@ public class AdvancedRitualArtWatcher extends Watcher {
     }
 
     private void handleRitualSummon() throws BeingFull, InvalidTributeAddress {
-
         Monster monster = getMonsterToSummon();
         if (monster == null) return;
 

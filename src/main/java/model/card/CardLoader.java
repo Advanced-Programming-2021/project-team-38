@@ -32,7 +32,6 @@ public class CardLoader {
             csvReader.readNext();
             while ((values = csvReader.readNext()) != null) {
                 new PreMonsterCard(values);
-
             }
         } catch (IOException e) {
             e.printStackTrace();

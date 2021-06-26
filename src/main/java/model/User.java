@@ -151,6 +151,12 @@ public class User implements Comparable<User> {
         }
     }
 
+    public void removeCardFromTreasury(String nameOfCard) {
+        int numOfCard = this.cardTreasury.get(nameOfCard) - 1;
+        this.cardTreasury.put(nameOfCard, numOfCard);
+        if (numOfCard == 0) this.cardTreasury.remove(nameOfCard);
+    }
+
     public void increaseScore(int increasingAmount) {
         this.score += increasingAmount;
     }
