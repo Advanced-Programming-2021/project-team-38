@@ -72,7 +72,7 @@ public class Board {
             builtInWatcher.update(myPhase);
         }
 
-        updateAfterAction();
+//        updateAfterAction();
     }
 
 

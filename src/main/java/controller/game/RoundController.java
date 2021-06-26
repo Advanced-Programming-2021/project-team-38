@@ -59,7 +59,7 @@ public class RoundController {
 
     public void setCurrentPhase(Phase currentPhase) {
         this.currentPhase = currentPhase;
-        if (currentPhase == Phase.END) setTurnEnded(true);
+//        if (currentPhase == Phase.END) setTurnEnded(true);
 
     }
 
@@ -71,6 +71,7 @@ public class RoundController {
         Player hold = this.currentPlayer;
         this.currentPlayer = rival;
         this.rival = hold;
+        setTurnEnded(false);
     }
 
     public void updateBoards() {

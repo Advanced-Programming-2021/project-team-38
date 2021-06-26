@@ -99,7 +99,7 @@ public class DuelMenuController {
 
     /*match actions*/
 
-    public void runMatch() throws InvalidCommand, InvalidDeck, NoActiveDeck, InvalidName {
+    public void runMatch() throws InvalidDeck, NoActiveDeck, InvalidName {
         this.roundController = new RoundController(this.firstUser, this.secondUser, this, 0);
         playHeadOrTails();
         for (int i = 0; i < numOfRounds; i++) {
@@ -123,6 +123,7 @@ public class DuelMenuController {
                 DuelMenu.checkCommandsInRound();
             }
             swapPlayers();
+            nextPhase();
         }
         roundController.announceRoundWinner();
     }
@@ -320,7 +321,9 @@ public class DuelMenuController {
                     break;
                 case END:
                     this.roundController.setTurnEnded(true);
-                    break;
+                    DuelMenu.showPhase(currentPhase.toString());
+                    roundController.updateBoards();
+                    return;
                 case MAIN_2:
                     break;
             }
@@ -331,7 +334,7 @@ public class DuelMenuController {
         roundController.setCurrentPhase(currentPhase);
 
         DuelMenu.showPhase(currentPhase.toString());
-//        roundController.updateBoards();
+        roundController.updateBoards();
         if (currentPhase == Phase.DRAW) drawPhaseController.run();
     }
 
@@ -346,7 +349,7 @@ public class DuelMenuController {
 
     public void showBoard() {
         if (roundController != null) {
-            showBoard();
+            roundController.showBoard();
         }
     }
 
