@@ -320,6 +320,9 @@ public class DuelMenuController {
                     break;
                 case END:
                     this.roundController.setTurnEnded(true);
+                    break;
+                case MAIN_2:
+                    break;
             }
         } else {
             this.currentPhase = Phase.DRAW;
