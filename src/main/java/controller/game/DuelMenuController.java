@@ -291,7 +291,10 @@ public class DuelMenuController {
         return roundController.showGraveYard(ofCurrentPlayer);
     }
 
-    public void showCard() {//todo
+    public void showCard() throws NoSelectedCard {
+        if (roundController != null && roundController.isAnyCardSelected())
+            Print.print(roundController.getSelectedCard().toString());
+        else throw new NoSelectedCard();
     }
 
     public void surrender() {
