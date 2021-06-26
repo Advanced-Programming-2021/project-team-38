@@ -34,9 +34,8 @@ public class BattleController {
         if (canBattleHappen && !attacker.isCellEmpty()) {
             if (preyCard.isCellEmpty() || summonedCardsLength > mainPhase.summonedInThisPhase.size())
                 battlePhaseController.reArrangeBattle(attacker);
-            else    run();
-        }
-        else System.out.println("this battle can't happen");
+            else run();
+        } else System.out.println("this battle can't happen");
     }
 
     private void run() {
@@ -46,7 +45,6 @@ public class BattleController {
             Print.print(String.format("opponent’s monster card was %s",
                     preyCard.getThisCard().getName()));
         }
-
         differenceOfPoints = Math.abs(attackerAttack - preyPoint);
 
         if (attackerAttack > preyPoint) {
@@ -56,6 +54,7 @@ public class BattleController {
         } else {
             preyWins();
         }
+        preyBoard.getController().getRoundController().updateBoards();
     }
 
     private void attackerWins() {

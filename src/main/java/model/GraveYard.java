@@ -8,10 +8,16 @@ import java.util.ArrayList;
 
 public class GraveYard {
     private final ArrayList<Card> cardsInGraveYard;
+    private final Board board;
 
     public ArrayList<Card> getCardsInGraveYard() {
         return cardsInGraveYard;
     }
+
+    public GraveYard(Board board) {
+        this.board = board;
+    }
+
 
     {
         cardsInGraveYard = new ArrayList<>();
@@ -20,7 +26,7 @@ public class GraveYard {
     public void addCard(Card card) {
         if (card != null) {
             cardsInGraveYard.add(card);
-            //todo : show that it has gone to graveyard
+            board.getController().getRoundController().updateBoards();
         }
     }
 

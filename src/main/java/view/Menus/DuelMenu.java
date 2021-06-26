@@ -55,7 +55,7 @@ public class DuelMenu {
                 duelMenuController.summonMonster(false);
             else if (command.equals("set"))
                 duelMenuController.setCard();
-            else if (command.startsWith("set -- position "))
+            else if (command.startsWith("set --position "))
                 duelMenuController.changePosition(command.substring(16).equals("attack"));
             else if (command.equals("flip-summon"))
                 duelMenuController.summonMonster(true);
@@ -76,12 +76,31 @@ public class DuelMenu {
                 duelMenuController.nextPhase();
             else if (command.equals("surrender"))
                 duelMenuController.surrender();
+            else if (command.equals("show board"))
+                duelMenuController.showBoard();
+            else if (command.equals("menu help"))
+                showHelp();
             else
                 throw new InvalidCommand();
         } catch (Exception exception) {
             if (exception instanceof InvalidCommand) throw new InvalidCommand();
             showException(exception);
         }
+    }
+
+    private static void showHelp() {
+        Print.print("select <card address>\n" +
+                "select -d\n" +
+                "summon\n" +
+                "set\n" +
+                "set --position attack/defense\n" +
+                "flip summon\n" +
+                "attack <number>\n" +
+                "activate effect\n" +
+                "show graveyard\n" +
+                "card show --selected\n" +
+                "surrender\n" +
+                "show board\n");
     }
 
     private static int getNumOfRounds(String command) throws InvalidCommand {
@@ -221,8 +240,9 @@ public class DuelMenu {
         view.Print.print(exception.getMessage());
     }
 
-    public static void showTemporaryTurnChange(String name, Board board) {
+    public static void showTemporaryTurnChange(String name, Board newCurrentBoard, Board newRivalBoard) {
         Print.print("now it will be " + name + "’s turn");
-        Print.print(board.toString());
+        Print.print(newRivalBoard.rivalTurnString());
+        Print.print(newCurrentBoard.myTurnString());
     }
 }

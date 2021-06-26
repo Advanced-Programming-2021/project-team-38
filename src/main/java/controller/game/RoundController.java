@@ -61,6 +61,20 @@ public class RoundController {
         this.rival = hold;
     }
 
+    public void updateBoards() {
+        currentPlayer.getBoard().updateAfterAction();
+        rival.getBoard().updateAfterAction();
+        if (currentPlayer.getLifePoint() <= 0) {
+            if (rival.getLifePoint() <= 0) {
+                setRoundWinner(RoundResult.DRAW);
+            } else setRoundWinner(RoundResult.RIVAL_WON);
+        }
+        if (rival.getLifePoint() <= 0) {
+            setRoundWinner(RoundResult.CURRENT_WON);
+        }
+        showBoard();
+    }
+
 
     /*  getters and setters and stuff  */
     public boolean isAnyCardSelected() {
@@ -155,7 +169,8 @@ public class RoundController {
     }
 
     public void sendToGraveYard(CardInUse cardInUse) {
-//        cardInUse.sendToGraveYard();
+        cardInUse.sendToGraveYard();
+        updateBoards();
     }
 
     public Player getMyRival(Player myPlayer) {
@@ -200,7 +215,7 @@ public class RoundController {
     }
 
     public void temporaryTurnChange(Player newCurrent) {
-        DuelMenu.showTemporaryTurnChange(newCurrent.getName(), newCurrent.getBoard());
+        DuelMenu.showTemporaryTurnChange(newCurrent.getName(), newCurrent.getBoard(), getMyRival(newCurrent).getBoard());
     }
 
     public boolean wantToActivateCard(String cardName) {

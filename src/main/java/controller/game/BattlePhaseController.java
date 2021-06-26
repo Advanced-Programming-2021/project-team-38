@@ -1,16 +1,14 @@
 package controller.game;
 
 
+import model.Enums.Phase;
 import model.Enums.ZoneName;
 import model.card.CardType;
-import view.exceptions.*;
-import model.Enums.Phase;
-import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
+import view.exceptions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class BattlePhaseController {
@@ -78,6 +76,7 @@ public class BattlePhaseController {
             throw new CantAttackDirectlyException();
         else
             gamePlay.getRival().decreaseLifePoint(attacker.getAttack());
+        gamePlay.updateBoards();
     }
 
     private boolean canAttackDirectly() {   //complete
@@ -85,7 +84,4 @@ public class BattlePhaseController {
     }
 
 
-    private String declareEnd() {
-        return null;
-    }
 }
