@@ -38,6 +38,8 @@ public class DuelMenuController {
     private StandByPhaseController standByPhaseController;
     private DrawPhaseController drawPhaseController;
 
+    private boolean canHaveBattlePhase = false;
+
     private RoundController roundController;
     private int numOfRounds;
 
@@ -312,7 +314,9 @@ public class DuelMenuController {
                     this.mainPhaseController = new MainPhaseController(roundController);
                     break;
                 case BATTLE:
-                    this.battlePhaseController = new BattlePhaseController(roundController);
+                    if (!canHaveBattlePhase)
+                        nextPhase();
+                    else this.battlePhaseController = new BattlePhaseController(roundController);
                     break;
                 case END:
                     this.roundController.setTurnEnded(true);

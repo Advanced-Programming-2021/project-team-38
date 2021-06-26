@@ -100,7 +100,7 @@ public class SummonController {
         Board playerBoard = player.getBoard();
         MonsterCardInUse monsterCardInUse = (MonsterCardInUse) playerBoard.getFirstEmptyCardInUse(true);
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
-        putMonsterInUse(monster, true, monsterCardInUse, null, roundController); //todo: why null
+        putMonsterInUse(monster, true, monsterCardInUse, roundController.getDuelMenuController().getMainPhaseController().getSummonedInThisPhase(), roundController);
         roundController.getDuelMenuController().getMainPhaseController().getSummonedInThisPhase().add(monsterCardInUse);
 
         if (shouldGetMonsterManner) {
