@@ -315,6 +315,7 @@ public class DuelMenuController {
                     break;
                 case BATTLE:
                     if (!canHaveBattlePhase) {
+                        canHaveBattlePhase = true;
                         nextPhase();
                         return;
                     } else this.battlePhaseController = new BattlePhaseController(roundController);
