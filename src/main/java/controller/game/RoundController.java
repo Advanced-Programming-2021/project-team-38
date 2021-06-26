@@ -24,6 +24,7 @@ public class RoundController {
     private Player rival;
     private Player winner;
     private Player loser;
+    private boolean isDraw = false;
 
     private Phase currentPhase;
     private ActionsOnRival actionsOnRival;
@@ -175,13 +176,18 @@ public class RoundController {
                 loser = currentPlayer;
                 break;
             case DRAW:
-                //todo
+                isDraw = true;
                 break;
         }
     }
 
     public void announceRoundWinner() {
-        if (winner == null || loser == null) return;//todo!
+        //todo: draw isn't complete but:
+        if (isDraw) {
+            Print.print("Draw!");
+            return;
+        }
+        if (winner == null || loser == null) return;
         this.duelMenuController.handleRoundWinner(winner.getOwner(), loser.getOwner(), winner.getLifePoint(), loser.getLifePoint(), 1, 0, this.roundIndex);
         //todo: not sure what to put as the scores!
     }

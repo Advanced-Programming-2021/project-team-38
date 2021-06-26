@@ -17,8 +17,9 @@ import view.messageviewing.SuccessfulAction;
 import java.util.ArrayList;
 
 public class SummonController {
+
     private final Monster monster;
-    private int numOfNormalSummons;
+    private static int numOfNormalSummons = 0;
     private final RoundController controller;
     private MonsterCardInUse monsterCardInUse;
     private final Board board;
@@ -27,11 +28,14 @@ public class SummonController {
 
     public SummonController(MonsterCardInUse monsterCardInUse, Monster monster, RoundController controller, ArrayList<CardInUse> summonedCards) {
         this.monster = monster;
-        this.numOfNormalSummons = 0;
         this.controller = controller;
         this.monsterCardInUse = monsterCardInUse;
         this.board = controller.getCurrentPlayerBoard();
         this.summonedCards = summonedCards;
+    }
+
+    public static void resetNumOfNormalSummons() {
+        numOfNormalSummons = 0;
     }
 
     public void normal() throws AlreadyDoneAction, NotEnoughTributes {

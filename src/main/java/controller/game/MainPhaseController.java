@@ -29,6 +29,7 @@ public class MainPhaseController {
     public MainPhaseController(RoundController controller) {
         this.controller = controller;
         this.player = controller.getCurrentPlayer();
+        SummonController.resetNumOfNormalSummons();
     }
 
 
