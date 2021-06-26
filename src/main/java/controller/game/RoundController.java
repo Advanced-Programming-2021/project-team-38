@@ -52,8 +52,8 @@ public class RoundController {
         currentPlayer.getBoard().setMyPhase(Phase.DRAW);
         rival = new Player(secondUser, this);
         rival.getBoard().setMyPhase(Phase.DRAW_RIVAL);
-        currentPhase = Phase.DRAW;
-        duelMenuController.setDrawPhase(new DrawPhaseController(this, true));
+//        currentPhase = Phase.DRAW;
+//        duelMenuController.setDrawPhase(new DrawPhaseController(this, true));
         this.roundIndex = roundIndex;
     }
 

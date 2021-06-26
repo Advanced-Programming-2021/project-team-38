@@ -2,10 +2,14 @@
   {
     "username": "ali",
     "password": "234",
-    "nickName": "s",
+    "nickName": "Ali",
     "score": 0,
     "cardTreasury": {
-      "Command Knight": 3
+      "Command Knight": 3,
+      "Yomi Ship": 9,
+      "Magic Cylinder": 7,
+      "Man-Eater Bug": 7,
+      "Dark Hole": 1
     },
     "decks": [
       {
@@ -40,12 +44,90 @@
               "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
               "price": 2100
             }
+          },
+          {
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
+            "INSTANCE": {
+              "level": 3,
+              "defense": 1400,
+              "attack": 800,
+              "monsterCardType": "EFFECT",
+              "monsterType": "AQUA",
+              "attribute": "WATER",
+              "name": "Yomi Ship",
+              "cardType": "MONSTER",
+              "description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+              "price": 1700
+            }
+          },
+          {
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
+            "INSTANCE": {
+              "level": 3,
+              "defense": 1400,
+              "attack": 800,
+              "monsterCardType": "EFFECT",
+              "monsterType": "AQUA",
+              "attribute": "WATER",
+              "name": "Yomi Ship",
+              "cardType": "MONSTER",
+              "description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+              "price": 1700
+            }
+          },
+          {
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
+            "INSTANCE": {
+              "level": 3,
+              "defense": 1400,
+              "attack": 800,
+              "monsterCardType": "EFFECT",
+              "monsterType": "AQUA",
+              "attribute": "WATER",
+              "name": "Yomi Ship",
+              "cardType": "MONSTER",
+              "description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+              "price": 1700
+            }
+          },
+          {
+            "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+            "INSTANCE": {
+              "status": "UNLIMITED",
+              "icon": "NORMAL",
+              "name": "Magic Cylinder",
+              "cardType": "TRAP",
+              "description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+              "price": 2000
+            }
+          },
+          {
+            "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+            "INSTANCE": {
+              "status": "UNLIMITED",
+              "icon": "NORMAL",
+              "name": "Magic Cylinder",
+              "cardType": "TRAP",
+              "description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+              "price": 2000
+            }
+          },
+          {
+            "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+            "INSTANCE": {
+              "status": "UNLIMITED",
+              "icon": "NORMAL",
+              "name": "Magic Cylinder",
+              "cardType": "TRAP",
+              "description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+              "price": 2000
+            }
           }
         ],
         "sideCards": []
       }
     ],
-    "balance": 97900,
+    "balance": 91200,
     "activeDeck": {
       "name": "234",
       "mainCards": [
@@ -78,6 +160,84 @@
             "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
             "price": 2100
           }
+        },
+        {
+          "CLASSNAME": "model.card.monster.PreMonsterCard",
+          "INSTANCE": {
+            "level": 3,
+            "defense": 1400,
+            "attack": 800,
+            "monsterCardType": "EFFECT",
+            "monsterType": "AQUA",
+            "attribute": "WATER",
+            "name": "Yomi Ship",
+            "cardType": "MONSTER",
+            "description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+            "price": 1700
+          }
+        },
+        {
+          "CLASSNAME": "model.card.monster.PreMonsterCard",
+          "INSTANCE": {
+            "level": 3,
+            "defense": 1400,
+            "attack": 800,
+            "monsterCardType": "EFFECT",
+            "monsterType": "AQUA",
+            "attribute": "WATER",
+            "name": "Yomi Ship",
+            "cardType": "MONSTER",
+            "description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+            "price": 1700
+          }
+        },
+        {
+          "CLASSNAME": "model.card.monster.PreMonsterCard",
+          "INSTANCE": {
+            "level": 3,
+            "defense": 1400,
+            "attack": 800,
+            "monsterCardType": "EFFECT",
+            "monsterType": "AQUA",
+            "attribute": "WATER",
+            "name": "Yomi Ship",
+            "cardType": "MONSTER",
+            "description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+            "price": 1700
+          }
+        },
+        {
+          "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+          "INSTANCE": {
+            "status": "UNLIMITED",
+            "icon": "NORMAL",
+            "name": "Magic Cylinder",
+            "cardType": "TRAP",
+            "description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+            "price": 2000
+          }
+        },
+        {
+          "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+          "INSTANCE": {
+            "status": "UNLIMITED",
+            "icon": "NORMAL",
+            "name": "Magic Cylinder",
+            "cardType": "TRAP",
+            "description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+            "price": 2000
+          }
+        },
+        {
+          "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+          "INSTANCE": {
+            "status": "UNLIMITED",
+            "icon": "NORMAL",
+            "name": "Magic Cylinder",
+            "cardType": "TRAP",
+            "description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+            "price": 2000
+          }
         }
       ],
       "sideCards": []
@@ -86,8 +246,8 @@
   {
     "username": "akbar",
     "password": "234",
-    "nickName": "t",
-    "score": 0,
+    "nickName": "Akbar",
+    "score": 1000,
     "cardTreasury": {
       "Command Knight": 3
     },
@@ -129,7 +289,7 @@
         "sideCards": []
       }
     ],
-    "balance": 97900,
+    "balance": 98900,
     "activeDeck": {
       "name": "234",
       "mainCards": [

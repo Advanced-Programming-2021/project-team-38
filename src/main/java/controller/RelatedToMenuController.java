@@ -14,13 +14,16 @@ public class RelatedToMenuController {
     public static MenuName currentMenu;
     private static boolean programEnded = false;
 
-    static {
-        currentMenu = MenuName.LOGIN;
-    }
+//    static {
+//        setCurrentMenu(MenuName.LOGIN);
+//    }
 
     public static void setCurrentMenu(MenuName menuName) {
         currentMenu = menuName;
-        Print.print("current menu: " + currentMenu.stringMenu());
+        Print.print("_______________________________");
+
+        Print.print("\tcurrent menu: " + currentMenu.stringMenu());
+        Print.print("_______________________________");
     }
 
     public static void enterMenu(String name) throws InvalidCommand, MenuNavigationError, NeedToLogin {
@@ -33,7 +36,7 @@ public class RelatedToMenuController {
         if (currentMenu == newMenu)
             throw new MenuNavigationError();
         else if (currentMenu == MenuName.LOGIN && newMenu == MenuName.MAIN) {
-            if (LoginMenuController.getCurrentUser() != null) currentMenu = newMenu;
+            if (LoginMenuController.getCurrentUser() != null) setCurrentMenu(newMenu);
             else throw new NeedToLogin();
         } else if (currentMenu == MenuName.MAIN && newMenu != MenuName.LOGIN)
             setCurrentMenu(newMenu);
@@ -73,11 +76,10 @@ public class RelatedToMenuController {
         Matcher matcher = pattern.matcher(command);
         if (!matcher.find())
             return null;
+        else if (matcher.groupCount() == 0)
+            return matcher.group(0);
         else
-            if (matcher.groupCount() == 0)
-                return matcher.group(0);
-            else
-                return matcher.group(1);
+            return matcher.group(1);
     }
 
 }

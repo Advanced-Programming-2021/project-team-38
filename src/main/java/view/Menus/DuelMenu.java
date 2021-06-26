@@ -24,7 +24,7 @@ public class DuelMenu {
     }
 
     public static void checkMenuCommands(String command)
-            throws InvalidCommand, WrongMenu, InvalidDeck, InvalidName, NoActiveDeck, NumOfRounds {
+            throws InvalidCommand, WrongMenu, InvalidDeck, InvalidName, NoActiveDeck, NumOfRounds, InvalidThing {
         if (RelatedToMenuController.isMenuFalse(MenuName.DUEL))
             throw new WrongMenu();
         if (command.contains("--new")) {
@@ -32,8 +32,8 @@ public class DuelMenu {
         } else throw new InvalidCommand();
     }
 
-    private static void sendNewDuelRequest(String command) throws InvalidCommand, InvalidName, NumOfRounds, InvalidDeck, NoActiveDeck {
-        if (duelMenuController == null) {
+    private static void sendNewDuelRequest(String command) throws InvalidCommand, InvalidName, NumOfRounds, InvalidDeck, NoActiveDeck, InvalidThing {
+        if (duelMenuController == null || duelMenuController.getRoundController() == null) {
             String secondUserName = getSecondUserNameInCommand(command);
             int numOfRounds = getNumOfRounds(command);
             duelMenuController = DuelMenuController.newDuel(secondUserName, numOfRounds);

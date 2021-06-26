@@ -19,6 +19,7 @@ public class Menu {
     }
 
     public static void run() {
+        RelatedToMenuController.setCurrentMenu(MenuName.LOGIN);
         boolean isProgramEnded = false;
         while (!isProgramEnded) {
             try {

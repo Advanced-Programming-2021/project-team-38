@@ -171,7 +171,7 @@ public class Board {
 
 
         if (owner.getDeck() != null)
-            myBoard.append("\t\n\t").append("\t".repeat(6)).append(makeTwoBits(owner.getDeck().getNumOfMainCards()));
+            myBoard.append("\t\n\t").append("\t".repeat(6)).append(makeTwoBits(owner.getDeck().getNumOfMainCards())).append("\n\t\t");
         myBoard.append(owner.getHand().toString()).append("\t\n\n\t\t");
         myBoard.append(owner.getName()).append(" : ").append(owner.getLifePoint());
         myBoard.append("\n\t").append(horizontalBoarder);

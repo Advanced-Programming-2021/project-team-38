@@ -5,7 +5,6 @@ import model.Enums.RoundResult;
 import model.Hand;
 import model.card.Card;
 import model.card.PreCard;
-import view.Print;
 
 import java.util.Collections;
 
@@ -27,7 +26,6 @@ public class DrawPhaseController {
     }
 
     public void run() {
-        Print.print("phase: draw phase");
         if (isBeginningOfGame) {
             Collections.shuffle(this.deck.getMainCards());
         }
@@ -43,6 +41,10 @@ public class DrawPhaseController {
     private void addCardsFromDeckToHand() {
         if (canDraw) {
             for (int i = 0; i < numOfCardsToAdd; i++) {
+                if (checkLoss()) {
+                    roundController.setRoundWinner(RoundResult.RIVAL_WON);
+                    return;
+                }
                 PreCard preCard = deck.getMainCards().remove(0);
                 Card card = preCard.newCard();
                 this.hand.addCard(card);

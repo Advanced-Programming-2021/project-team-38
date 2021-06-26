@@ -9,21 +9,6 @@ public enum MenuName {
     DUEL,
     MAIN;
 
-//    String name;
-
-//    public static MenuName searchForMenuName(String name) {
-//        for (MenuName menuName : MenuName.values()) {
-//            if (menuName.toString().equals(name.toUpperCase()))
-//                return menuName;
-//        }
-//
-//        return null;
-//    }
-
-//    MenuName(String name) {
-//        this.name = name;
-//    }
-
 
     public String stringMenu() {
         switch (this) {
@@ -70,20 +55,19 @@ public enum MenuName {
                 return "scoreboard show";
             case DUEL:
                 return "duel --new --second-player <player2 username> --rounds <1/3>\n" +
-                        "duel --new --ai --rounds <1/3>\n" +
-                        "select <card address>\n" +
-                        "summon\n" +
-                        "set\n" +
-                        "set -- position attack/defense\n" +
-                        "flip-summon\n" +
-                        "attack <number>\n" +
-                        "attack direct\n" +
-                        "activate effect\n" +
-                        "show graveyard\n" +
-                        "card show --selected\n" +
-                        "surrender\n" +
-                        "show board\n";
-            //todo: it would be better if we could show related commands of each phase
+                        "duel --new --ai --rounds <1/3>\n";
+//                        "select <card address>\n" +
+//                        "summon\n" +
+//                        "set\n" +
+//                        "set -- position attack/defense\n" +
+//                        "flip-summon\n" +
+//                        "attack <number>\n" +
+//                        "attack direct\n" +
+//                        "activate effect\n" +
+//                        "show graveyard\n" +
+//                        "card show --selected\n" +
+//                        "surrender\n" +
+//                        "show board\n";
             case MAIN:
                 return "user logout\n" +
                         "menu exit\n" +
