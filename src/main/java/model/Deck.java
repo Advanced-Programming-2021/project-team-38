@@ -34,7 +34,7 @@ public class Deck {
     }
 
     public static boolean isDeckInvalid(Deck deck) {
-        return deck.mainCards.size() < 2;
+        return deck.mainCards.size() < 8;
         //todo: the number should be 40. I just wanted to run!
     }
 
