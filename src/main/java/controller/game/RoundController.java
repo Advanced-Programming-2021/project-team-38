@@ -57,11 +57,14 @@ public class RoundController {
         this.roundIndex = roundIndex;
     }
 
-    public void setTurnEnded(boolean isRoundEnded) {
-        if (isRoundEnded) {
-            currentPhase = null;
-        }
-        this.isRoundEnded = isRoundEnded;
+    public void setCurrentPhase(Phase currentPhase) {
+        this.currentPhase = currentPhase;
+        if (currentPhase == Phase.END) setTurnEnded(true);
+
+    }
+
+    public void setTurnEnded(boolean isTurnEnded) {
+        this.isTurnEnded = isTurnEnded;
     }
 
     public void swapPlayers() {

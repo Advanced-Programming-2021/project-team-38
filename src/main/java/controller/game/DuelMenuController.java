@@ -120,7 +120,6 @@ public class DuelMenuController {
         Watcher.roundController = this.roundController;
         while (!roundController.isRoundEnded()) {
             while (!roundController.isTurnEnded()) {
-//                roundController.showBoard();
                 DuelMenu.checkCommandsInRound();
             }
             swapPlayers();
@@ -268,7 +267,7 @@ public class DuelMenuController {
         battlePhaseController.attackToLifePoint();
     }
 
-    public void activateEffect() throws WrongPhaseForAction, NoSelectedCard, ActivateEffectNotSpell, BeingFull, SpellPreparation, AlreadyActivatedEffect, CantDoActionWithCard, NotAppropriateCard, InvalidTributeAddress, NoCardFound, CloneNotSupportedException, InvalidSelection, InvalidRitualPreparations, PreparationsNotChecked, NotEnoughTributes, AlreadyDoneAction {
+    public void activateEffect() throws WrongPhaseForAction, NoSelectedCard, ActivateEffectNotSpell, BeingFull, AlreadyActivatedEffect {
         if (!currentPhase.equals(Phase.MAIN_1) && !currentPhase.equals(Phase.MAIN_2))
             throw new WrongPhaseForAction();
         mainPhaseController.activateEffect(true);
@@ -314,9 +313,10 @@ public class DuelMenuController {
                     this.mainPhaseController = new MainPhaseController(roundController);
                     break;
                 case BATTLE:
-                    if (!canHaveBattlePhase)
+                    if (!canHaveBattlePhase) {
                         nextPhase();
-                    else this.battlePhaseController = new BattlePhaseController(roundController);
+                        return;
+                    } else this.battlePhaseController = new BattlePhaseController(roundController);
                     break;
                 case END:
                     this.roundController.setTurnEnded(true);
@@ -331,7 +331,7 @@ public class DuelMenuController {
         roundController.setCurrentPhase(currentPhase);
 
         DuelMenu.showPhase(currentPhase.toString());
-        roundController.updateBoards();
+//        roundController.updateBoards();
         if (currentPhase == Phase.DRAW) drawPhaseController.run();
     }
 
