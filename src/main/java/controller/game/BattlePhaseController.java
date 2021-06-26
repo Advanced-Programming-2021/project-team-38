@@ -34,7 +34,7 @@ public class BattlePhaseController {
             throw new NoSelectedCard();
         else if (!(cardInUse instanceof MonsterCardInUse))
             throw new CardCantAttack();
-        else if (((MonsterCardInUse) cardInUse).isInAttackMode())
+        else if (!((MonsterCardInUse) cardInUse).isInAttackMode())
             throw new CardCantAttack();
         else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
             throw new WrongPhaseForAction();

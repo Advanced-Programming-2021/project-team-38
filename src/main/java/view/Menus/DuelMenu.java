@@ -62,7 +62,7 @@ public class DuelMenu {
             else if (command.equals("attack direct"))
                 duelMenuController.attackDirect();
             else if (command.startsWith("attack ")) {
-                Matcher matcher = Menu.getCommandMatcher(command.substring(7), "(%d)");
+                Matcher matcher = Menu.getCommandMatcher(command.substring(7), "(\\d)");
                 if (matcher.find()) duelMenuController.attack(Integer.parseInt(matcher.group()));
             } else if (command.equals("activate effect"))
                 duelMenuController.activateEffect();
