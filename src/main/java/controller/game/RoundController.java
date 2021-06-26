@@ -83,7 +83,7 @@ public class RoundController {
         if (rival.getLifePoint() <= 0) {
             setRoundWinner(RoundResult.CURRENT_WON);
         }
-
+        showBoard(); //todo: check with hasti
         currentPlayer.getBoard().updateAfterAction();
         rival.getBoard().updateAfterAction();
     }

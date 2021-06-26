@@ -10,6 +10,8 @@ import model.Enums.Phase;
 import model.Player;
 import model.User;
 import model.card.PreCard;
+import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
 import model.watchers.Watcher;
 import view.Menus.DuelMenu;
@@ -291,7 +293,13 @@ public class DuelMenuController {
 
     public void showCard() throws NoSelectedCard {
         if (roundController != null && roundController.isAnyCardSelected()) {
-            Print.print(roundController.getSelectedCard().toString());
+            MonsterCardInUse monsterCardInUse = (MonsterCardInUse) roundController.getSelectedCardInUse();
+            if (monsterCardInUse != null) {
+                Monster monster = (Monster) monsterCardInUse.getThisCard();
+                if (monster != null) {
+                    Print.print(monster.getName() + " - attack : " + monsterCardInUse.getAttack() + " defense : " + monsterCardInUse.getDefense() + "\n\t" + monster.getMyPreCard().getDescription());
+                }
+            } else Print.print(roundController.getSelectedCard().toString());
         } else throw new NoSelectedCard();
     }
 
