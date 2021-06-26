@@ -4,17 +4,112 @@
     "password": "\u003cpassword\u003e",
     "nickName": "alli",
     "score": 0,
-    "cardTreasury": {},
-    "decks": [],
-    "balance": 100000
+    "cardTreasury": {
+      "Command Knight": 4
+    },
+    "decks": [
+      {
+        "name": "\u003cdeck name\u003e",
+        "mainCards": [],
+        "sideCards": []
+      }
+    ],
+    "balance": 97900
   },
   {
     "username": "otherUsername",
     "password": "\u003cpassword\u003e",
     "nickName": "secondAli",
     "score": 0,
-    "cardTreasury": {},
-    "decks": [],
-    "balance": 100000
+    "cardTreasury": {
+      "Command Knight": 12
+    },
+    "decks": [
+      {
+        "name": "\u003cdeck name\u003e",
+        "mainCards": [
+          {
+            "level": 4,
+            "defense": 1000,
+            "attack": 1000,
+            "monsterCardType": "EFFECT",
+            "monsterType": "WARRIOR",
+            "attribute": "FIRE",
+            "name": "Command Knight",
+            "cardType": "MONSTER",
+            "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+            "price": 2100
+          },
+          {
+            "level": 4,
+            "defense": 1000,
+            "attack": 1000,
+            "monsterCardType": "EFFECT",
+            "monsterType": "WARRIOR",
+            "attribute": "FIRE",
+            "name": "Command Knight",
+            "cardType": "MONSTER",
+            "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+            "price": 2100
+          },
+          {
+            "level": 4,
+            "defense": 1000,
+            "attack": 1000,
+            "monsterCardType": "EFFECT",
+            "monsterType": "WARRIOR",
+            "attribute": "FIRE",
+            "name": "Command Knight",
+            "cardType": "MONSTER",
+            "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+            "price": 2100
+          }
+        ],
+        "sideCards": []
+      }
+    ],
+    "balance": 97900,
+    "activeDeck": {
+      "name": "\u003cdeck name\u003e",
+      "mainCards": [
+        {
+          "level": 4,
+          "defense": 1000,
+          "attack": 1000,
+          "monsterCardType": "EFFECT",
+          "monsterType": "WARRIOR",
+          "attribute": "FIRE",
+          "name": "Command Knight",
+          "cardType": "MONSTER",
+          "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+          "price": 2100
+        },
+        {
+          "level": 4,
+          "defense": 1000,
+          "attack": 1000,
+          "monsterCardType": "EFFECT",
+          "monsterType": "WARRIOR",
+          "attribute": "FIRE",
+          "name": "Command Knight",
+          "cardType": "MONSTER",
+          "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+          "price": 2100
+        },
+        {
+          "level": 4,
+          "defense": 1000,
+          "attack": 1000,
+          "monsterCardType": "EFFECT",
+          "monsterType": "WARRIOR",
+          "attribute": "FIRE",
+          "name": "Command Knight",
+          "cardType": "MONSTER",
+          "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+          "price": 2100
+        }
+      ],
+      "sideCards": []
+    }
   }
 ]

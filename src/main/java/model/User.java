@@ -149,7 +149,6 @@ public class User implements Comparable<User> {
         } else {
             this.cardTreasury.put(preCard.getName(), 1);
         }
-//            this.preCards.add(preCard); //TODO what is this for?
     }
 
     public void increaseScore(int increasingAmount) {

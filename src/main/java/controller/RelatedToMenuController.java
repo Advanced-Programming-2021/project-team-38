@@ -1,9 +1,9 @@
 package controller;
 
+import view.MenuName;
 import view.exceptions.InvalidCommand;
 import view.exceptions.MenuNavigationError;
 import view.exceptions.NeedToLogin;
-import view.MenuName;
 import view.messageviewing.Print;
 
 import java.util.regex.Matcher;
@@ -20,7 +20,7 @@ public class RelatedToMenuController {
 
     public static void setCurrentMenu(MenuName menuName) {
         currentMenu = menuName;
-        System.out.println("current menu: " + currentMenu.stringMenu());
+        Print.print("current menu: " + currentMenu.stringMenu());
     }
 
     public static void enterMenu(String name) throws InvalidCommand, MenuNavigationError, NeedToLogin {
@@ -48,6 +48,7 @@ public class RelatedToMenuController {
             setCurrentMenu(MenuName.LOGIN);
         else
             setCurrentMenu(MenuName.MAIN);
+        FileHandler.saveUsers();
     }
 
     public static boolean isProgramEnded() {
@@ -63,20 +64,8 @@ public class RelatedToMenuController {
         Print.print(currentMenu.MenuHelp());
     }
 
-    public static void setProgramEnded(boolean isEnded) {
-        programEnded = isEnded;
-    }
-
-    public static MenuName getCurrentMenu() {
-        return currentMenu;
-    }
-
     public static boolean isMenuFalse(MenuName menuName) {
         return currentMenu != menuName;
-    }
-
-    public static boolean hasProgramEnded() {
-        return programEnded;
     }
 
     public static String getCommandString(String command, String regex) {
