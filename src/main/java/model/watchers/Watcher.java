@@ -118,6 +118,7 @@ public abstract class Watcher implements Comparable{
 
     public static Watcher createWatcher(String nameWatcher, CardInUse ownerOfWatcher) {
         switch (nameWatcher) {
+            //monsters
             case "CommandKnightHolyWatcher":
                 return new CommandKnightHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
             case "CommandKnightWatcher":
@@ -139,6 +140,14 @@ public abstract class Watcher implements Comparable{
             //spells
             case "AdvancedRitualArtWatcher":
                 return new AdvancedRitualArtWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            case "Dark Hole":
+                return new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.ALL, Zone.MONSTER);
+            case "Harpie":
+                return new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.RIVALS, Zone.SPELL);
+            case "Raigeki":
+                return new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.RIVALS, Zone.MONSTER);
+            case "MonsterRebornWatcher":
+                return new MonsterRebornWatcher(ownerOfWatcher, WhoToWatch.ALL);
             //equips
             case "Sword-dark":
                 return new EquipWatcher(ownerOfWatcher, new MonsterType[]{MonsterType.SPELLCASTER, MonsterType.FIEND}, 400, -200, WhoToWatch.ALL);

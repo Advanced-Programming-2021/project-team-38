@@ -18,9 +18,12 @@ public class BattleController {
     private int attackerAttack, preyPoint;
     public boolean canBattleHappen = true;
 
-    public BattleController(Board attackerBoard, Board preyBoard, MonsterCardInUse attacker, MonsterCardInUse preyCard) {
-        this.attackerBoard = attackerBoard;
-        this.preyBoard = preyBoard;
+    public BattleController(MonsterCardInUse attacker, MonsterCardInUse preyCard,
+                            BattlePhaseController battlePhaseController) {
+        MainPhaseController mainPhase = preyBoard.getController().getMainPhaseController();
+        int summonedCardsLength = mainPhase.summonedInThisPhase.size();
+        this.attackerBoard = attacker.getBoard();
+        this.preyBoard = preyCard.getBoard();
         this.attacker = attacker;
         this.preyCard = preyCard;
         attackerAttack = attacker.getAttack();
@@ -28,9 +31,10 @@ public class BattleController {
         attacker.watchByState(CardState.WANT_TO_ATTACK);
         preyCard.watchByState(CardState.IS_ATTACKED);
         isPreyCardInAttackMode = preyCard.isInAttackMode();
-        if (canBattleHappen) {
-            preyCard.isCellEmpty(); //TODO
-            run();
+        if (canBattleHappen && !attacker.isCellEmpty()) {
+            if (preyCard.isCellEmpty() || summonedCardsLength > mainPhase.summonedInThisPhase.size())
+                battlePhaseController.reArrangeBattle(attacker);
+            else    run();
         }
         else System.out.println("this battle can't happen");
     }

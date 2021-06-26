@@ -19,29 +19,4 @@ public class SpellTrap extends Card {
         super(preCard);
         myPreCard = (PreSpellTrapCard) preCard;
     }
-
-    public SpellTrap setUpSpellTrap() {    //after instance creation it will fill the fields
-        setName(myPreCard.getName());
-        return this;
-    }
-
-    public void destroyThis(Player myPlayer, Player rivalPlayer, SpellTrapCardInUse thisCard, RoundController gamePlay) {
-
-    }
-
-    public void watch(MonsterCardInUse monsterCardInUse, Player myPlayer, Player rivalPlayer) {
-
-    }
-
-
-    @Override
-    public void setName(String name) {
-        if (getName() == null)
-            super.setName(name);
-    }
-
-    @Override
-    public Object clone() {
-        return new SpellTrap(preCardInGeneral);
-    }
 }

@@ -1,9 +1,8 @@
 package model;
 
+
 import model.card.CardType;
-import model.card.PreCard;
 import model.card.spelltrap.CardStatus;
-import model.card.spelltrap.PreSpellTrapCard;
 import view.Print;
 import view.exceptions.BeingFull;
 import view.exceptions.InvalidName;
@@ -16,6 +15,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import model.card.PreCard;
+import model.card.spelltrap.PreSpellTrapCard;
 
 public class Deck {
     private String name;
@@ -56,15 +57,7 @@ public class Deck {
     public int getNumOfMainCards() {
         return mainCards.size();
     }
-//    public void setNumOfCardsValid(boolean numOfCardsValid) {
-//        isNumOfCardsValid = numOfCardsValid;
-//    }
-//
-//    public boolean isNumOfCardsValid() {
-//        return isNumOfCardsValid;
-//    }
 
-    //    print a deck by its side
     //start
     public void showDeck(boolean side) {
         Print.print(this.getName());
@@ -85,7 +78,7 @@ public class Deck {
 
     private void filterAndPrint(ArrayList<PreCard> preCards) {
         List<PreCard> monsterCards = preCards.stream()
-                .filter(p -> p.getCardType() == CardType.MONSTER).
+                .filter(p -> p.getCardType().equals(CardType.MONSTER)).
                         collect(Collectors.toList());
         Print.print("Monsters:");
         for (PreCard preCard : monsterCards) {
@@ -94,7 +87,7 @@ public class Deck {
         if (monsterCards.isEmpty()) Print.print("\tEmpty!");
 
         List<PreCard> spellTrapCards = preCards.stream()
-                .filter(p -> p.getCardType() != CardType.MONSTER).
+                .filter(p -> p.getCardType().equals(CardType.MONSTER)).
                         collect(Collectors.toList());
         Print.print("Spell and Traps:");
         for (PreCard preCard : spellTrapCards) {
@@ -164,8 +157,9 @@ public class Deck {
     private int findLimitOfCard(String nameOfCard) {
         int limit = 1; // for when card is limited
         PreSpellTrapCard preSTCard = (PreSpellTrapCard) PreCard.findCard(nameOfCard);
-        if (preSTCard == null || preSTCard.getStatus() == CardStatus.UNLIMITED)
+        if (preSTCard == null || preSTCard.getStatus().equals(CardStatus.UNLIMITED)) {
             limit = 3;
+        }
 
         return limit;
     }

@@ -17,7 +17,7 @@ public abstract class Card {
 
     public Card(PreCard preCard) {
         preCardInGeneral = preCard;
-
+        setName(preCard.getName());
     }
 
 

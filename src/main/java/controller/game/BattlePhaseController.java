@@ -1,6 +1,8 @@
 package controller.game;
 
 
+import model.Enums.ZoneName;
+import model.card.CardType;
 import view.exceptions.*;
 import model.Enums.Phase;
 import model.card.Card;
@@ -8,6 +10,8 @@ import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class BattlePhaseController {
 
@@ -41,9 +45,19 @@ public class BattlePhaseController {
         else if (attackedInThisTurn.contains(attacker = (MonsterCardInUse) cardInUse))
             throw new CardAttackedBeforeExeption();
         else {
-            battleController = new BattleController(gamePlay.getCurrentPlayerBoard(),
-                    gamePlay.getRivalBoard(), attacker, preyCard);
+            battleController = new BattleController(attacker, preyCard, this);
             attackedInThisTurn.add(attacker);
+        }
+    }
+
+    public void reArrangeBattle(MonsterCardInUse attacker) {
+        if (gamePlay.arrangeAlternateBattle()) {
+            SelectController selectController = new SelectController(new ArrayList<>(Collections.singletonList(ZoneName.RIVAL_MONSTER_ZONE)), gamePlay, attacker.getOwnerOfCard());
+            selectController.setCardType(CardType.MONSTER);
+            MonsterCardInUse preyCard = (MonsterCardInUse) selectController.getTheCardInUse();
+            if (preyCard != null)
+                battleController = new BattleController(attacker, preyCard, this);
+            //TODO else : print that battle was canceled
         }
     }
 
@@ -70,39 +84,8 @@ public class BattlePhaseController {
         return gamePlay.getRivalBoard().getFirstEmptyCardInUse(true) == null;
     }
 
-    public void setSelectedCard(Card selectedCard) {
-
-    }
-
-    public ArrayList<Card> getChain() {
-        return null;
-    }
-
-    public Card getSelectedCard() {
-        return null;
-    }
-
-
-    private void controlDamage(Card attackReceiver) {
-
-    }
 
     private String declareEnd() {
         return null;
     }
-
-
-
-    private boolean isPossibleToAttack() {
-        return true;
-    }
-
-    public boolean canAddCardToChain(Card card) {
-        return true;
-    }
-
-    public void addToChain(Card card) {
-    }
-
-
 }

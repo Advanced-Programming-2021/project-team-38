@@ -16,10 +16,8 @@ public class Monster extends Card {
     public Monster(PreCard preCard) {
         super(preCard);
         myPreCard = (PreMonsterCard) preCard;
-        if (preCard != null)
-            this.level = ((PreMonsterCard) preCard).getLevel();
+        this.level = ((PreMonsterCard) preCard).getLevel();
         setNumOfTributes();
-
     }
 
 
@@ -28,12 +26,6 @@ public class Monster extends Card {
         if (level <= 4) numOfNeededTributes = 0;
         else if (level <= 6) numOfNeededTributes = 1;
         else numOfNeededTributes = 2;
-    }
-
-    @Override
-    public void setName(String name) {
-        if (getName() == null)
-            super.setName(name);
     }
 
     public Monster getCard() {
@@ -47,14 +39,5 @@ public class Monster extends Card {
 
     public int getRawDefense() {
         return myPreCard.getDefense();
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return new Monster(preCardInGeneral);
-    }
-
-    public void spinCard() {
-        //TODO what for?
     }
 }
