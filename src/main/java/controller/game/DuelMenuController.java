@@ -288,9 +288,9 @@ public class DuelMenuController {
     }
 
     public void showCard() throws NoSelectedCard {
-        if (roundController != null && roundController.isAnyCardSelected())
+        if (roundController != null && roundController.isAnyCardSelected()) {
             Print.print(roundController.getSelectedCard().toString());
-        else throw new NoSelectedCard();
+        } else throw new NoSelectedCard();
     }
 
     public void surrender() {

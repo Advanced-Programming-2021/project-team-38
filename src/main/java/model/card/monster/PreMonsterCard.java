@@ -40,4 +40,8 @@ public class PreMonsterCard extends PreCard {
         return new Monster(this);
     }
 
+    @Override
+    public String toString() {
+        return name + " : " + "attack : " + attack + " defense : " + defense + " price : " + price + " \n\t" + description;
+    }
 }

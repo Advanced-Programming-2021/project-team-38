@@ -88,4 +88,6 @@ public class MonsterCardInUse extends CardInUse {
     public void summon() {
         watchByState(CardState.SUMMON);
     }
+
+
 }
