@@ -28,10 +28,8 @@ public class FieldWatcher extends SpellsWithActivation {
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.TRIGGERED) {
-            if (handleChain()) {
                 watchTheFieldAffected();
                 isWatcherActivated = true;
-            }
         }
     }
 

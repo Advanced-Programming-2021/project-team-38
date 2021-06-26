@@ -74,8 +74,6 @@ public class RoundController {
     }
 
     public void updateBoards() {
-        currentPlayer.getBoard().updateAfterAction();
-        rival.getBoard().updateAfterAction();
         if (currentPlayer.getLifePoint() <= 0) {
             if (rival.getLifePoint() <= 0) {
                 setRoundWinner(RoundResult.DRAW);
@@ -84,7 +82,9 @@ public class RoundController {
         if (rival.getLifePoint() <= 0) {
             setRoundWinner(RoundResult.CURRENT_WON);
         }
-        showBoard();
+
+        currentPlayer.getBoard().updateAfterAction();
+        rival.getBoard().updateAfterAction();
     }
 
 
@@ -99,6 +99,11 @@ public class RoundController {
 
     public Board getRivalBoard() {
         return rival.getBoard();
+    }
+
+    public void updateAfterChangePhase() {
+        currentPlayer.getBoard().update();
+        rival.getBoard().update();
     }
 
 

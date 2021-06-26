@@ -16,16 +16,13 @@ public class DestroyAllWatcher extends SpellsWithActivation {
     public DestroyAllWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch, Zone zone) {
         super(ownerOfWatcher, whoToWatch);
         zoneAffected = zone;
-        isDisposable = true;
     }
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.TRIGGERED) {
-            if (handleChain()) {
-                watchTheFieldAffected();
-                isWatcherActivated = true;
-            }
+            watchTheFieldAffected();
+            isWatcherActivated = true;
         }
     }
 

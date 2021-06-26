@@ -37,6 +37,7 @@ public class Board {
     {
         monsterZone = new MonsterCardInUse[5];
         spellTrapZone = new SpellTrapCardInUse[5];
+        freeBuiltInWatchers = new ArrayList<>();
     }
 
     public Board(Player owner, DuelMenuController controller) {
@@ -47,8 +48,7 @@ public class Board {
 
     }
 
-    //TODO !!! negar please
-    //TODO set myPhase at start of game
+
     public void update() {
         myPhase = myPhase.goToNextPhase();
 
@@ -57,22 +57,26 @@ public class Board {
         }
 
         for (MonsterCardInUse monsterCardInUse : monsterZone) {
-            for (Watcher builtInWatcher : monsterCardInUse.thisCard.builtInWatchers) {
-                builtInWatcher.update(myPhase);
+            if (!monsterCardInUse.isCellEmpty()) {
+                for (Watcher builtInWatcher : monsterCardInUse.thisCard.builtInWatchers) {
+                    builtInWatcher.update(myPhase);
+                }
             }
         }
 
         for (SpellTrapCardInUse spellTrapCardInUse : spellTrapZone) {
-            for (Watcher builtInWatcher : spellTrapCardInUse.thisCard.builtInWatchers) {
-                builtInWatcher.update(myPhase);
+            if (!spellTrapCardInUse.isCellEmpty()) {
+                for (Watcher builtInWatcher : spellTrapCardInUse.thisCard.builtInWatchers) {
+                    builtInWatcher.update(myPhase);
+                }
             }
         }
 
-        for (Watcher builtInWatcher : fieldCell.thisCard.builtInWatchers) {
-            builtInWatcher.update(myPhase);
+        if (!fieldCell.isCellEmpty()) {
+            for (Watcher builtInWatcher : fieldCell.thisCard.builtInWatchers) {
+                builtInWatcher.update(myPhase);
+            }
         }
-
-        updateAfterAction();
     }
 
 
