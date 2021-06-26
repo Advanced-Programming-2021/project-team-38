@@ -1,10 +1,10 @@
 package model;
 
-import view.exceptions.InvalidSelection;
 import lombok.Getter;
 import model.Enums.ZoneName;
 import model.card.cardinusematerial.MonsterCardInUse;
 import view.Menu;
+import view.exceptions.InvalidSelection;
 
 import java.util.regex.Matcher;
 
@@ -17,7 +17,7 @@ public class CardAddress {
     public CardAddress(String address) throws InvalidSelection {
         address = address.concat(" ");
         isForOpponent = false;
-        Matcher flagMatcher = Menu.getCommandMatcher(address, "--(<field>\\S+) ");
+        Matcher flagMatcher = Menu.getCommandMatcher(address, "--(?<field>\\S+) ");
         while (flagMatcher.find()) {
             String field = flagMatcher.group("field");
             if (field.equals("opponent")) {
@@ -27,9 +27,12 @@ public class CardAddress {
                 if (zoneName != null) throw new InvalidSelection();
                 zoneName = ZoneName.getZoneName(field, isForOpponent);
             }
+            address = address.replace(field, "");
         }
         if (zoneName == null) throw new InvalidSelection();
         try {
+            address = address.replaceAll(" ", "");
+            address = address.replaceAll("-", "");
             index = Integer.parseInt(address);
         } catch (Exception e) {
             if (!zoneName.equals(ZoneName.MY_FIELD))
