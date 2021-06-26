@@ -291,7 +291,8 @@ public class DuelMenuController {
         return roundController.showGraveYard(ofCurrentPlayer);
     }
 
-    public void showCard() {//todo
+    public void showCard() {
+
     }
 
     public void surrender() {
