@@ -40,8 +40,9 @@ public class Board {
         graveYard = new GraveYard();
     }
 
-    public Board(Player owner) {
+    public Board(Player owner, DuelMenuController controller) {
         this.owner = owner;
+        this.controller = controller;
         newCells();
     }
 
@@ -191,7 +192,7 @@ public class Board {
         StringBuilder rivalBoard = new StringBuilder();
         String horizontalBoarder = "_".repeat(26);
         rivalBoard.append("\t").append(horizontalBoarder).append("\n\t");
-        rivalBoard.append(owner.getName()).append(" : ").append(owner.getLifePoint()).append("\n\t\t");
+        rivalBoard.append("\t").append(owner.getName()).append(" : ").append(owner.getLifePoint()).append("\n\t\t");
         rivalBoard.append(owner.getHand().toString()).append("\n\t");
         if (owner.getDeck() != null)
             rivalBoard.append(makeTwoBits(owner.getDeck().getNumOfMainCards())).append("\n\t");
@@ -226,7 +227,7 @@ public class Board {
 
     @Override
     public String toString() {
-        if (controller == null) return myTurnString();
+//        if (controller == null) return myTurnString();
         if (controller.getRoundController().getCurrentPlayer() == this.owner) //todo: fine?
             return myTurnString();
         else

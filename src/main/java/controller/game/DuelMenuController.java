@@ -108,17 +108,19 @@ public class DuelMenuController {
         Watcher.roundController = this.roundController;
         while (!roundController.isRoundEnded()) {
             while (!roundController.isTurnEnded()) {
+                roundController.showBoard();
                 DuelMenu.checkCommandsInRound();
             }
-            swapUsers();
+            players();
         }
         roundController.announceRoundWinner();
     }
 
-    private void swapUsers() {
-        User hold = this.firstUser;
-        this.firstUser = this.secondUser;
-        this.secondUser = hold;
+    private void players() {
+//        User hold = this.firstUser;
+//        this.firstUser = this.secondUser;
+//        this.secondUser = hold;
+        roundController.swapPlayers();
     }
 
     private void exchangeCardInDecks(Player player) {
@@ -191,7 +193,7 @@ public class DuelMenuController {
 
     public void playHeadOrTails() {
         boolean isHead = Math.random() < 0.5;
-        if (isHead) swapUsers();
+        if (isHead) players();
         DuelMenu.showHeadOrTails(isHead, firstUser.getUsername(), secondUser.getUsername());
     }
 

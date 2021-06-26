@@ -47,12 +47,18 @@ public class RoundController {
 
     public RoundController(User firstUser, User secondUser, DuelMenuController duelMenuController, int roundIndex)
             throws InvalidDeck, InvalidName, NoActiveDeck {
+        this.duelMenuController = duelMenuController;
         currentPlayer = new Player(firstUser, this);
         rival = new Player(secondUser, this);
         currentPhase = Phase.DRAW;
-        this.duelMenuController = duelMenuController;
         duelMenuController.setDrawPhase(new DrawPhaseController(this, true));
         this.roundIndex = roundIndex;
+    }
+
+    public void swapPlayers() {
+        Player hold = this.currentPlayer;
+        this.currentPlayer = rival;
+        this.rival = hold;
     }
 
 
@@ -205,5 +211,10 @@ public class RoundController {
     public boolean arrangeAlternateBattle() {
         return DuelMenuController.askQuestion("your battle was canceled.\n" +
                 "Do you want to start a new battle with this card? (Y/N)").equals("Y");
+    }
+
+    public void showBoard() {
+        Print.print(rival.getBoard().toString());
+        Print.print(currentPlayer.getBoard().toString());
     }
 }

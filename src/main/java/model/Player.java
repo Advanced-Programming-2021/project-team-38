@@ -25,7 +25,7 @@ public class Player {
         this.deck = owner.getActiveDeck();
         this.lifePoint = 8000;
         this.roundController = roundController;
-        this.board = new Board(this);
+        this.board = new Board(this, roundController.getDuelMenuController());
     }
 
     public User getOwner() {
