@@ -98,6 +98,7 @@ public class DuelMenuController {
     /*match actions*/
 
     public void runMatch() throws InvalidCommand, InvalidDeck, NoActiveDeck, InvalidName {
+        this.roundController = new RoundController(this.firstUser, this.secondUser, this, 0);
         playHeadOrTails();
         for (int i = 0; i < numOfRounds; i++) {
             runOneRound(i);
@@ -110,7 +111,8 @@ public class DuelMenuController {
     }
 
     private void runOneRound(int roundIndex) throws InvalidCommand, InvalidName, NoActiveDeck, InvalidDeck {
-        this.roundController = new RoundController(this.firstUser, this.secondUser, this, roundIndex);
+        if (roundIndex != 0)
+            this.roundController = new RoundController(this.firstUser, this.secondUser, this, roundIndex);
         nextPhase();
 
         Watcher.roundController = this.roundController;
