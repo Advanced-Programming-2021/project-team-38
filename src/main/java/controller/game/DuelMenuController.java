@@ -9,7 +9,9 @@ import model.Deck;
 import model.Enums.Phase;
 import model.Player;
 import model.User;
+import model.card.Card;
 import model.card.PreCard;
+import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
@@ -293,14 +295,29 @@ public class DuelMenuController {
 
     public void showCard() throws NoSelectedCard {
         if (roundController != null && roundController.isAnyCardSelected()) {
+            Card card = roundController.getSelectedCard();
+            if (!canSeeCard(roundController.getCurrentPlayer(), card)) {
+                Print.print("You can't view this card!");
+                return;
+            }
             MonsterCardInUse monsterCardInUse = (MonsterCardInUse) roundController.getSelectedCardInUse();
             if (monsterCardInUse != null) {
                 Monster monster = (Monster) monsterCardInUse.getThisCard();
                 if (monster != null) {
                     Print.print(monster.getName() + " - attack : " + monsterCardInUse.getAttack() + " defense : " + monsterCardInUse.getDefense() + "\n\t" + monster.getMyPreCard().getDescription());
                 }
-            } else Print.print(roundController.getSelectedCard().toString());
+            } else Print.print(card.toString());
         } else throw new NoSelectedCard();
+    }
+
+    private boolean canSeeCard(Player player, Card card) {
+        CardInUse cardInUse = getRoundController().findCardsCell(card);
+        if (cardInUse == null) {
+            return player.getHand().doesContainCard(card);
+        } else {
+            if (cardInUse.getBoard().getOwner() == player) return true;
+            return cardInUse.isFaceUp();
+        }
     }
 
     public void surrender() {
