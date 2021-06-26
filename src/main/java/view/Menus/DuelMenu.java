@@ -44,7 +44,7 @@ public class DuelMenu {
         }
     }
 
-    public static void checkCommandsInRound() throws InvalidCommand {
+    public static void checkCommandsInRound() {
         try {
             String command = scanner.nextLine();
             if (command.equals("select -d"))
@@ -83,7 +83,7 @@ public class DuelMenu {
             else
                 throw new InvalidCommand();
         } catch (Exception exception) {
-            if (exception instanceof InvalidCommand) throw new InvalidCommand();
+//            if (exception instanceof InvalidCommand) throw new InvalidCommand();
             showException(exception);
         }
     }
@@ -150,9 +150,9 @@ public class DuelMenu {
     }
 
     public static void showPhase(String phaseName) {
-        Print.print("_______________________________");
+        Print.print("___________________________________");
         Print.print("phase: " + phaseName);
-        Print.print("_______________________________");
+        Print.print("___________________________________");
 
     }
 

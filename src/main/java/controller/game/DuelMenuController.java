@@ -110,7 +110,7 @@ public class DuelMenuController {
         announceWinnerOfMatch();
     }
 
-    private void runOneRound(int roundIndex) throws InvalidCommand, InvalidName, NoActiveDeck, InvalidDeck {
+    private void runOneRound(int roundIndex) throws InvalidName, NoActiveDeck, InvalidDeck {
         if (roundIndex != 0)
             this.roundController = new RoundController(this.firstUser, this.secondUser, this, roundIndex);
         nextPhase();
@@ -231,10 +231,6 @@ public class DuelMenuController {
 
     public static String askQuestion(String questionToAsk) {
         return DuelMenu.askQuestion(questionToAsk);
-    }
-
-    public String askForSth(String wanted) throws InvalidTributeAddress, NoCardFound, InvalidSelection {
-        return DuelMenu.askForSth(wanted);
     }
 
     public void summonMonster(boolean isFlip) throws WrongPhaseForAction, CantDoActionWithCard, UnableToChangePosition, NoSelectedCard, BeingFull, AlreadyDoneAction, NotEnoughTributes {

@@ -87,7 +87,6 @@ public class RoundController {
 
     /*  getters and setters and stuff  */
     public boolean isAnyCardSelected() {
-//        return !(this.selectedPreCard == null && this.selectedCardInUse == null);
         return this.selectedCard != null;
     }
 
