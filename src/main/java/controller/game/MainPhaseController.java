@@ -104,17 +104,18 @@ public class MainPhaseController {
         if (monsterCardInUse == null) throw new BeingFull("monster card zone");
         if (!summonedInThisPhase.isEmpty()) throw new AlreadyDoneAction("summoned/set");
 
+        player.getHand().removeCard(selectedCard);
         monsterCardInUse.setACardInCell(selectedCard);
         monsterCardInUse.setFaceUp(false);
         monsterCardInUse.setInAttackMode(false);
         new SuccessfulAction("", "set");
-        controller.updateBoards();
     }
 
     private void setSpellTrap(SpellTrap selectedCard) throws BeingFull {
         SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
+        player.getHand().removeCard(selectedCard);
         spellTrapCardInUse.setThisCard(selectedCard);
         spellTrapCardInUse.setFaceUp(false);
         new SuccessfulAction("", "set");

@@ -42,6 +42,7 @@ public class DuelMenuController {
 
     private RoundController roundController;
     private int numOfRounds;
+    boolean hasSecondPlayerTurnStarted = false;
 
     private DuelMenuController(User firstUser, User secondUser, int numOfRounds) throws NumOfRounds {
         setFirstUser(firstUser);
@@ -123,6 +124,10 @@ public class DuelMenuController {
                 DuelMenu.checkCommandsInRound();
             }
             swapPlayers();
+            if (!hasSecondPlayerTurnStarted) {
+                currentPhase = null;
+                hasSecondPlayerTurnStarted = true;
+            }
             nextPhase();
         }
         roundController.announceRoundWinner();
@@ -224,11 +229,6 @@ public class DuelMenuController {
         this.secondUser = user;
     }
 
-    public void setDrawPhase(DrawPhaseController draw) {
-        this.drawPhaseController = draw;
-    }
-
-
     /* actions in a round*/
 
     public static String askQuestion(String questionToAsk) {
@@ -300,7 +300,6 @@ public class DuelMenuController {
     }
 
     public void nextPhase() {
-        boolean shouldUpdateBoard = true;
         if (currentPhase != null) {
             this.currentPhase = currentPhase.goToNextGamePhase();
             switch (Objects.requireNonNull(currentPhase)) {
@@ -323,8 +322,7 @@ public class DuelMenuController {
                 case END:
                     this.roundController.setTurnEnded(true);
                     DuelMenu.showPhase(currentPhase.toString());
-                    if (shouldUpdateBoard)  roundController.updateAfterChangePhase();
-
+                    roundController.updateAfterChangePhase();
                     return;
                 case MAIN_2:
                     break;
@@ -332,12 +330,11 @@ public class DuelMenuController {
         } else {
             this.currentPhase = Phase.DRAW;
             this.drawPhaseController = new DrawPhaseController(roundController, true);
-            shouldUpdateBoard = false;
         }
         roundController.setCurrentPhase(currentPhase);
 
         DuelMenu.showPhase(currentPhase.toString());
-        if (shouldUpdateBoard)  roundController.updateAfterChangePhase();
+        roundController.updateAfterChangePhase();
         if (currentPhase == Phase.DRAW) drawPhaseController.run();
     }
 
@@ -352,7 +349,7 @@ public class DuelMenuController {
 
     public void showBoard() {
         if (roundController != null) {
-            showBoard();
+            roundController.showBoard();
         }
     }
 
