@@ -31,10 +31,8 @@ public class EquipWatcher extends SpellsWithActivation {
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.TRIGGERED && guardedCard == null) {
-            if (handleChain()) {
                 selectToWatch();
                 isWatcherActivated = true;
-            }
         }
     }
 

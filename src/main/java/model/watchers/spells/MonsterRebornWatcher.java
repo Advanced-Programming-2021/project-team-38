@@ -24,10 +24,8 @@ public class MonsterRebornWatcher extends SpellsWithActivation {
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.TRIGGERED) {
-            if (handleChain()) {
                 summonAppropriateMonster();
                 isWatcherActivated = true;
-            }
         }
     }
 

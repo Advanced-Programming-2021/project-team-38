@@ -6,8 +6,10 @@ import lombok.Setter;
 import model.CardState;
 import model.Enums.Phase;
 import model.Player;
+import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.MonsterType;
+import model.card.spelltrap.PreSpellTrapCard;
 import model.watchers.monsters.*;
 import model.watchers.spells.*;
 import model.watchers.traps.*;
@@ -17,7 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public abstract class Watcher implements Comparable{
+public abstract class Watcher implements Comparable {
     public static HashMap<String, Watcher> allWatchers;
     @Setter
     public static RoundController roundController;
@@ -29,7 +31,6 @@ public abstract class Watcher implements Comparable{
     protected static boolean isInChainMode = false;
     public boolean firstOfStack = false;
     public int speed = 1;
-    public boolean isDisposable = false;
 
     static {
         allWatchers = new HashMap<>();
@@ -69,9 +70,10 @@ public abstract class Watcher implements Comparable{
     }
 
     protected static void emptyStack() {
-        if (stack.size() > 0) {
-            stack = new ArrayList<>();
-        }
+        if (stack.size() > 0)
+            stack.remove(stack.size() - 1);
+        else
+            System.out.println("bug bug stack empty");  //TODO remove
     }
 
     /*
@@ -83,7 +85,18 @@ public abstract class Watcher implements Comparable{
             if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
                 if (stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
                     roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
-                if (roundController.wantToActivateCard(watcher.ownerOfWatcher.thisCard.getName())) {
+                if (watcher.ownerOfWatcher.thisCard.preCardInGeneral instanceof PreSpellTrapCard) {
+                    PreSpellTrapCard preSpellTrapCard = (PreSpellTrapCard) watcher.ownerOfWatcher.thisCard.preCardInGeneral;
+                    if (preSpellTrapCard.getCardType() == CardType.TRAP) {
+                        if (roundController.wantToActivateCard(watcher.ownerOfWatcher.thisCard.getName())) {
+                            stack.add(watcher);
+                            return true;
+                        }
+                    } else {
+                        stack.add(watcher);
+                        return true;
+                    }
+                } else {
                     stack.add(watcher);
                     return true;
                 }
@@ -116,9 +129,6 @@ public abstract class Watcher implements Comparable{
         }
     }
 
-//    public void dispose() {
-//        ownerOfWatcher.thisCard.builtInWatchers.remove(this);
-//    }
 
     public static Watcher createWatcher(String nameWatcher, CardInUse ownerOfWatcher) {
         switch (nameWatcher) {

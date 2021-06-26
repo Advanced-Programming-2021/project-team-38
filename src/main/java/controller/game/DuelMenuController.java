@@ -300,6 +300,7 @@ public class DuelMenuController {
     }
 
     public void nextPhase() {
+        boolean shouldUpdateBoard = true;
         if (currentPhase != null) {
             this.currentPhase = currentPhase.goToNextGamePhase();
             switch (Objects.requireNonNull(currentPhase)) {
@@ -322,7 +323,8 @@ public class DuelMenuController {
                 case END:
                     this.roundController.setTurnEnded(true);
                     DuelMenu.showPhase(currentPhase.toString());
-                    roundController.updateBoards();
+                    if (shouldUpdateBoard)  roundController.updateAfterChangePhase();
+
                     return;
                 case MAIN_2:
                     break;
@@ -330,11 +332,12 @@ public class DuelMenuController {
         } else {
             this.currentPhase = Phase.DRAW;
             this.drawPhaseController = new DrawPhaseController(roundController, true);
+            shouldUpdateBoard = false;
         }
         roundController.setCurrentPhase(currentPhase);
 
         DuelMenu.showPhase(currentPhase.toString());
-        roundController.updateBoards();
+        if (shouldUpdateBoard)  roundController.updateAfterChangePhase();
         if (currentPhase == Phase.DRAW) drawPhaseController.run();
     }
 
@@ -349,7 +352,7 @@ public class DuelMenuController {
 
     public void showBoard() {
         if (roundController != null) {
-            roundController.showBoard();
+            showBoard();
         }
     }
 
