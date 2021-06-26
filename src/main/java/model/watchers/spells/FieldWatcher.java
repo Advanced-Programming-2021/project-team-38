@@ -10,8 +10,8 @@ import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
-//YamiFirst - YamiSec - Forest - Closed Forest - Umiiruka -
-public class FieldWatcher extends Watcher {
+//YamiFirst - YamiSec - Forest - ClosedForest - Umiiruka -
+public class FieldWatcher extends SpellsWithActivation {
     MonsterType[] affected;
     int attackAdded;
     int defenseAdded;
@@ -23,13 +23,11 @@ public class FieldWatcher extends Watcher {
         this.affected = affected;
         this.attackAdded = attackAdded;
         this.defenseAdded = defenseAdded;
-        this.whoToWatch = whoToWatch;
-        isDisposable = true;
     }
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
-        if (cardState == CardState.ACTIVE_MY_EFFECT) {
+        if (cardState == CardState.TRIGGERED) {
             if (handleChain()) {
                 watchTheFieldAffected();
                 isWatcherActivated = true;
@@ -38,14 +36,12 @@ public class FieldWatcher extends Watcher {
     }
 
     @Override
-    public boolean canPutWatcher() {
-        return true;
+    public boolean canPutWatcher() {    //continuous
+        return isWatcherActivated;
     }
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        if (!isWatcherActivated)    watch(cardInUse, CardState.ACTIVE_MY_EFFECT, null);
-        addWatcherToCardInUse(cardInUse);
         optionalUpdate();
     }
 
@@ -55,18 +51,16 @@ public class FieldWatcher extends Watcher {
 
     public void watchTheFieldAffected() {
         CardInUse[] unionOfMonsters = theTargetCells(Zone.MONSTER);
-        for (CardInUse cardInUse : unionOfMonsters) {
+        for (CardInUse cardInUse : unionOfMonsters)
             if (!cardInUse.isCellEmpty()) {
                 MonsterType theMonsterType = ((PreMonsterCard) cardInUse.thisCard.preCardInGeneral).getMonsterType();
-                for (MonsterType monsterType : affected) {
+                for (MonsterType monsterType : affected)
                     if (theMonsterType == monsterType && !amWatching.contains(cardInUse)) {
                         addWatcherToCardInUse(cardInUse);
                         ((MonsterCardInUse) cardInUse).addToAttack(attackAdded);
                         ((MonsterCardInUse) cardInUse).addToDefense(defenseAdded);
                     }
-                }
             }
-        }
     }
 
     @Override
@@ -77,5 +71,7 @@ public class FieldWatcher extends Watcher {
             ((MonsterCardInUse) cardInUse).addToAttack(attackAdded * -1);
             ((MonsterCardInUse) cardInUse).addToDefense(defenseAdded * -1);
         }
+
+        if (!activationWatcher.isDeleted) activationWatcher.deleteWatcher();
     }
 }

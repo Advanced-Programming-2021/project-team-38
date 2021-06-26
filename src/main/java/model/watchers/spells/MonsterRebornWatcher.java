@@ -16,14 +16,14 @@ import view.exceptions.BeingFull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MonsterRebornWatcher extends Watcher {
+public class MonsterRebornWatcher extends SpellsWithActivation {
     public MonsterRebornWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
     }
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
-        if (cardState == CardState.ACTIVE_MY_EFFECT) {
+        if (cardState == CardState.TRIGGERED) {
             if (handleChain()) {
                 summonAppropriateMonster();
                 isWatcherActivated = true;
@@ -34,7 +34,7 @@ public class MonsterRebornWatcher extends Watcher {
     @Override
     public boolean canPutWatcher() {
         return !isWatcherActivated;
-    }
+    }   //disposable
 
     @Override
     public void putWatcher(CardInUse cardInUse) {

@@ -13,7 +13,7 @@ import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
 //United - Magnum - Black - Sword-dark
-public class EquipWatcher extends Watcher {
+public class EquipWatcher extends SpellsWithActivation {
 
     MonsterCardInUse guardedCard;
     MonsterType[] affected;
@@ -30,7 +30,7 @@ public class EquipWatcher extends Watcher {
 
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
-        if (cardState == CardState.ACTIVE_MY_EFFECT && guardedCard == null) {
+        if (cardState == CardState.TRIGGERED && guardedCard == null) {
             if (handleChain()) {
                 selectToWatch();
                 isWatcherActivated = true;
@@ -40,17 +40,17 @@ public class EquipWatcher extends Watcher {
 
     @Override
     public boolean canPutWatcher() {
-        return true;
+        return isWatcherActivated && guardedCard == null;
     }
 
     @Override
     public void putWatcher(CardInUse cardInUse) {
-        addWatcherToCardInUse(cardInUse);
+
     }
 
     private void selectToWatch() {
         SelectController selectController = new SelectController(ZoneName.getZoneNamesByZone(Zone.MONSTER, WhoToWatch.ALL), roundController, ownerOfWatcher.getOwnerOfCard());
-        if (affected != null)   selectController.setMonsterTypes(affected);
+        if (affected != null) selectController.setMonsterTypes(affected);
         selectController.setCardType(CardType.MONSTER);
         guardedCard = (MonsterCardInUse) selectController.getTheCardInUse();
         addWatcherToCardInUse(guardedCard);
@@ -67,5 +67,15 @@ public class EquipWatcher extends Watcher {
     @Override
     public void disableWatcher(CardInUse cardInUse) {
         deleteWatcher();
+    }
+
+    @Override
+    public void deleteWatcher() {
+        if (guardedCard != null) {
+            guardedCard.addToAttack(attackAdded * -1);
+            guardedCard.addToDefense(defenseAdded * -1);
+        }
+
+        super.deleteWatcher();
     }
 }

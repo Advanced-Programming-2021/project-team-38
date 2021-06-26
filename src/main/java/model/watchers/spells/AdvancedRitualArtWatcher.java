@@ -23,7 +23,6 @@ public class AdvancedRitualArtWatcher extends Watcher {
 
     public AdvancedRitualArtWatcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         super(ownerOfWatcher, whoToWatch);
-        whoToWatch = WhoToWatch.MINE;
     }
 
     @Override
