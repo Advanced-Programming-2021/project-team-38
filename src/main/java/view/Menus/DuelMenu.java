@@ -89,7 +89,8 @@ public class DuelMenu {
     }
 
     private static void showHelp() {
-        Print.print("select <card address>\n" +
+        Print.print("next phase\n" +
+                "select <card address>\n" +
                 "select -d\n" +
                 "summon\n" +
                 "set\n" +
@@ -149,25 +150,28 @@ public class DuelMenu {
     }
 
     public static void showPhase(String phaseName) {
+        Print.print("_______________________________");
         Print.print("phase: " + phaseName);
+        Print.print("_______________________________");
+
     }
 
-    public static boolean askToSelectRitualMonsterCard() { //returns true if the process if cancelled
-        Print.print("Please select a card for ritual summon and summon it.");
-        boolean isFine = false;
-        do {
-            String command = scanner.nextLine();
-            if (command.equals("cancel")) return true;
-            if (command.startsWith("select "))
-                try {
-                    duelMenuController.selectCard(command.substring(7));
-                    isFine = true;
-                } catch (InvalidSelection | NoCardFound exception) {
-                    showException(exception);
-                }
-        } while (!isFine);
-        return false;
-    }
+//    public static boolean askToSelectRitualMonsterCard() { //returns true if the process if cancelled
+//        Print.print("Please select a card for ritual summon and summon it.");
+//        boolean isFine = false;
+//        do {
+//            String command = scanner.nextLine();
+//            if (command.equals("cancel")) return true;
+//            if (command.startsWith("select "))
+//                try {
+//                    duelMenuController.selectCard(command.substring(7));
+//                    isFine = true;
+//                } catch (InvalidSelection | NoCardFound exception) {
+//                    showException(exception);
+//                }
+//        } while (!isFine);
+//        return false;
+//    }
 
     public static ArrayList<String> getTributeAddresses() {
         Print.print("Enter the tribute addresses." +

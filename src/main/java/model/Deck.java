@@ -2,7 +2,9 @@ package model;
 
 
 import model.card.CardType;
+import model.card.PreCard;
 import model.card.spelltrap.CardStatus;
+import model.card.spelltrap.PreSpellTrapCard;
 import view.Print;
 import view.exceptions.BeingFull;
 import view.exceptions.InvalidName;
@@ -15,8 +17,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import model.card.PreCard;
-import model.card.spelltrap.PreSpellTrapCard;
 
 public class Deck {
     private String name;
@@ -34,7 +34,7 @@ public class Deck {
     }
 
     public static boolean isDeckInvalid(Deck deck) {
-        return deck.mainCards.size() < 2;
+        return deck.mainCards.size() < 8;
         //todo: the number should be 40. I just wanted to run!
     }
 
