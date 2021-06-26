@@ -15,6 +15,10 @@ public abstract class Card {
     public boolean shouldDieAfterActivated = false;
     public ArrayList<Watcher> builtInWatchers;
 
+    {
+        builtInWatchers = new ArrayList<>();
+    }
+
     public Card(PreCard preCard) {
         preCardInGeneral = preCard;
         setName(preCard.getName());
@@ -44,8 +48,10 @@ public abstract class Card {
     }
 
     public void cardIsBeingSetInCell(CardInUse cardInUse) {
-        for (String nameOfWatcher : CardLoader.cardsWatchers.get(name)) {
-            builtInWatchers.add(Watcher.createWatcher(nameOfWatcher, cardInUse));
+        if (CardLoader.cardsWatchers.containsKey(name)) {
+            for (String nameOfWatcher : CardLoader.cardsWatchers.get(name)) {
+                builtInWatchers.add(Watcher.createWatcher(nameOfWatcher, cardInUse));
+            }
         }
 
         putBuiltInWatchers(cardInUse);

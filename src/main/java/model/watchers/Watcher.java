@@ -36,6 +36,10 @@ public abstract class Watcher implements Comparable{
         stack = new ArrayList<>();
     }
 
+    {
+        amWatching = new ArrayList<>();
+    }
+
     public Watcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         this.ownerOfWatcher = ownerOfWatcher;
         this.whoToWatch = whoToWatch;
