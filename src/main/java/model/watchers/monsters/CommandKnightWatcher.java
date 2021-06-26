@@ -27,7 +27,7 @@ public class CommandKnightWatcher extends Watcher {
     @Override
     public void putWatcher(CardInUse cardInUse) {
         for (MonsterCardInUse monsterCardInUse : ownerOfWatcher.ownerOfCard.getBoard().getMonsterZone()) {
-            if (!amWatching.contains(monsterCardInUse)) {
+            if (!monsterCardInUse.isCellEmpty() && !amWatching.contains(monsterCardInUse)) {
                 monsterCardInUse.addToAttack(400);
                 monsterCardInUse.watchersOfCardInUse.add(this);
                 amWatching.add(monsterCardInUse);

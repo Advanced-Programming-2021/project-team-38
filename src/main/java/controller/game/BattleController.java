@@ -20,12 +20,13 @@ public class BattleController {
 
     public BattleController(MonsterCardInUse attacker, MonsterCardInUse preyCard,
                             BattlePhaseController battlePhaseController) {
-        MainPhaseController mainPhase = preyBoard.getController().getMainPhaseController();
-        int summonedCardsLength = mainPhase.summonedInThisPhase.size();
         this.attackerBoard = attacker.getBoard();
         this.preyBoard = preyCard.getBoard();
         this.attacker = attacker;
         this.preyCard = preyCard;
+        MainPhaseController mainPhase = preyBoard.getController().getMainPhaseController();
+        preyBoard.getController().getBattlePhaseController().battleController = this;
+        int summonedCardsLength = mainPhase.summonedInThisPhase.size();
         attackerAttack = attacker.getAttack();
         preyPoint = preyCard.appropriatePointAtBattle();
         attacker.watchByState(CardState.WANT_TO_ATTACK);

@@ -83,7 +83,7 @@ public abstract class Watcher implements Comparable {
     protected static boolean addToStack(Watcher watcher) {
         if (!stack.contains(watcher)) {
             if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
-                if (stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
+                if (stack.size() !=0 && stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
                     roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
                 if (watcher.ownerOfWatcher.thisCard.preCardInGeneral instanceof PreSpellTrapCard) {
                     PreSpellTrapCard preSpellTrapCard = (PreSpellTrapCard) watcher.ownerOfWatcher.thisCard.preCardInGeneral;
@@ -123,7 +123,7 @@ public abstract class Watcher implements Comparable {
 
     public void addWatcherToCardInUse(CardInUse cardInUse) {
         if (cardInUse == null) return;
-        if (!amWatching.contains(cardInUse)) {
+        if (!cardInUse.isCellEmpty() && !amWatching.contains(cardInUse)) {
             cardInUse.watchersOfCardInUse.add(this);
             amWatching.add(cardInUse);
         }

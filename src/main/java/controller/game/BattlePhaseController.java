@@ -6,6 +6,7 @@ import model.Enums.ZoneName;
 import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
+import view.messageviewing.Print;
 import view.exceptions.*;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class BattlePhaseController {
             MonsterCardInUse preyCard = (MonsterCardInUse) selectController.getTheCardInUse();
             if (preyCard != null)
                 battleController = new BattleController(attacker, preyCard, this);
-            //TODO else : print that battle was canceled
+            else    Print.print(Print.cancelBattle);
         }
     }
 
@@ -66,7 +67,7 @@ public class BattlePhaseController {
             throw new NoSelectedCard();
         else if (!(cardInUse instanceof MonsterCardInUse))
             throw new CardCantAttack();
-        else if (((MonsterCardInUse) cardInUse).isInAttackMode())
+        else if (!((MonsterCardInUse) cardInUse).isInAttackMode())
             throw new CardCantAttack();
         else if (gamePlay.getCurrentPhase() != Phase.BATTLE)
             throw new WrongPhaseForAction();
