@@ -16,10 +16,7 @@ import view.Menus.DuelMenu;
 import view.Print;
 import view.exceptions.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 
 @Getter
@@ -82,11 +79,16 @@ public class DuelMenuController {
         allCards.addAll(deck.getMainCards());
         allCards.addAll(deck.getSideCards());
         for (PreCard preCard : allCards) {
-            if (Collections.frequency(deck.getMainCards(), preCard) + Collections.frequency(deck.getSideCards(), preCard)
+            if (Collections.frequency(allCards, preCard)
                     > user.getCardTreasury().get(preCard.getName()))
                 throw new InvalidDeck(user.getUsername());
         }
     }
+
+//    public static void main(String[] args) {
+//        ArrayList<PreCard> hello = new ArrayList<>(Arrays.asList(PreCard.findCard("Command Knight"), PreCard.findCard("Command Knight")));
+//        System.out.println(Collections.frequency(hello, PreCard.findCard("Command Knight")));
+//    }
 
 
     /*match actions*/

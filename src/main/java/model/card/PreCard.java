@@ -3,11 +3,11 @@ package model.card;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Getter
 public abstract class PreCard {
     protected static ArrayList<PreCard> allPreCards;
-    //    public ArrayList<String> nameOfWatchers;
     protected String name;
     protected CardType cardType;    // monster or trap or spell
     protected String description;
@@ -36,4 +36,16 @@ public abstract class PreCard {
         return getName() + ": " + getDescription();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PreCard)) return false;
+        PreCard preCard = (PreCard) o;
+        return name.equals(preCard.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
