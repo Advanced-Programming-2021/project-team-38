@@ -35,7 +35,7 @@ public class TorrentialTributeWatcher extends Watcher {
     public void putWatcher(CardInUse cardInUse) {
         CardInUse[] allMonsters = theTargetCells(Zone.MONSTER);
         for (CardInUse monster : allMonsters) {
-            addWatcherToCardInUse(monster);
+            addWatcherToCardInUseGeneral(monster);
         }
     }
 }

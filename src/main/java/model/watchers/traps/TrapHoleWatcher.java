@@ -35,7 +35,7 @@ public class TrapHoleWatcher extends Watcher {
     public void putWatcher(CardInUse cardInUse) {
         CardInUse[] rivalMonsters = theTargetCells(Zone.MONSTER);
         for (CardInUse rivalMonster : rivalMonsters) {
-            addWatcherToCardInUse(rivalMonster);
+            addWatcherToCardInUseGeneral(rivalMonster);
         }
     }
 

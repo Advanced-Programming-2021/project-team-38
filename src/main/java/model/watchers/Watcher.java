@@ -121,6 +121,14 @@ public abstract class Watcher implements Comparable {
         ownerOfWatcher.sendToGraveYard();
     }
 
+    public void addWatcherToCardInUseGeneral(CardInUse cardInUse) {
+        if (cardInUse == null) return;
+        if (!amWatching.contains(cardInUse)) {
+            cardInUse.watchersOfCardInUse.add(this);
+            amWatching.add(cardInUse);
+        }
+    }
+
     public void addWatcherToCardInUse(CardInUse cardInUse) {
         if (cardInUse == null) return;
         if (!cardInUse.isCellEmpty() && !amWatching.contains(cardInUse)) {
