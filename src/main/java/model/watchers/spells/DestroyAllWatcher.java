@@ -41,7 +41,7 @@ public class DestroyAllWatcher extends SpellsWithActivation {
             if (!cardInUse.isCellEmpty())
                 cardInUse.sendToGraveYard();
         }
-
         deleteWatcher();
+        spellTrapHasDoneItsEffect();
     }
 }

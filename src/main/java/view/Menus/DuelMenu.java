@@ -235,7 +235,7 @@ public class DuelMenu {
     }
 
     private static void showPossibleSelectChoices(HashMap<Card, CardAddress> possibleChoices) {
-        Print.print("Possible addresses:");
+        Print.print("Choose one of the possible addresses:");
         if (possibleChoices.isEmpty()) Print.print("no possible choice");
         for (Card card : possibleChoices.keySet()) {
             Print.print("\tcard name : " + card.getName() + "\tcard address : " + possibleChoices.get(card).toString());
