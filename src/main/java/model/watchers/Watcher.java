@@ -31,7 +31,7 @@ public abstract class Watcher implements Comparable {
     protected static boolean isInChainMode = false;
     public boolean firstOfStack = false;
     public int speed = 1;
-    public boolean isDeleted;
+    public boolean isDeleted = false;
 
     static {
         allWatchers = new HashMap<>();
