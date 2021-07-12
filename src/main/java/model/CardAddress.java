@@ -16,17 +16,20 @@ public class CardAddress {
 
     public CardAddress(String address) throws InvalidSelection {
         address = address.concat(" ");
-        isForOpponent = false;
+        isForOpponent = address.contains("--opponent");
         Matcher flagMatcher = Menu.getCommandMatcher(address, "--(?<field>\\S+) ");
         while (flagMatcher.find()) {
             String field = flagMatcher.group("field");
-            if (field.equals("opponent")) {
-                if (!isForOpponent) isForOpponent = true;
-                else throw new InvalidSelection();
-            } else {
-                if (zoneName != null) throw new InvalidSelection();
+//            if (field.equals("opponent")) {
+//                if (!isForOpponent) {
+//                    isForOpponent = true;
+//                }
+//                else throw new InvalidSelection();
+//            } else {
+//            if (zoneName != null) throw new InvalidSelection();
+            if (!field.equals("opponent"))
                 zoneName = ZoneName.getZoneName(field, isForOpponent);
-            }
+//            }
             address = address.replace(field, "");
         }
         if (zoneName == null) throw new InvalidSelection();

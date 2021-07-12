@@ -36,9 +36,4 @@ public class ChangeOfHeartsWatcher extends Watcher{
     public void update(Phase newPhase) {
 
     }
-
-    @Override
-    public void deleteWatcher() {
-
-    }
 }

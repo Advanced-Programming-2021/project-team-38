@@ -31,6 +31,7 @@ public abstract class Watcher implements Comparable {
     protected static boolean isInChainMode = false;
     public boolean firstOfStack = false;
     public int speed = 1;
+    public boolean isDeleted;
 
     static {
         allWatchers = new HashMap<>();
@@ -65,8 +66,9 @@ public abstract class Watcher implements Comparable {
     public void deleteWatcher() {   //when owner of watcher is destroyed or the watcher can only be used once
         for (CardInUse cardInUse : amWatching) {
             cardInUse.watchersOfCardInUse.remove(this);
-            amWatching.remove(cardInUse);
         }
+        amWatching = new ArrayList<>();
+        isDeleted = true;
     }
 
     protected static void emptyStack() {
@@ -83,7 +85,7 @@ public abstract class Watcher implements Comparable {
     protected static boolean addToStack(Watcher watcher) {
         if (!stack.contains(watcher)) {
             if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
-                if (stack.size() !=0 && stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
+                if (stack.size() != 0 && stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
                     roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
                 if (watcher.ownerOfWatcher.thisCard.preCardInGeneral instanceof PreSpellTrapCard) {
                     PreSpellTrapCard preSpellTrapCard = (PreSpellTrapCard) watcher.ownerOfWatcher.thisCard.preCardInGeneral;
@@ -214,7 +216,9 @@ public abstract class Watcher implements Comparable {
         set.addAll(Arrays.asList(a));
         set.addAll(Arrays.asList(b));
 
-        return (CardInUse[]) set.toArray();
+        CardInUse[] unitedArray = new CardInUse[set.size()];
+        set.toArray(unitedArray);
+        return unitedArray;
     }
 
     public CardInUse[] theTargetCells(Zone zoneName) {

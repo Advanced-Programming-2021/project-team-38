@@ -223,12 +223,13 @@ public class DuelMenu {
             try {
                 if (enteredAddress.equals("cancel")) return null;
                 if (!enteredAddress.startsWith("select")) throw new InvalidCommand();
+                enteredAddress = enteredAddress.substring(7);
                 return new CardAddress(enteredAddress);
             } catch (InvalidSelection invalidSelection) {
                 showException(invalidSelection);
             } catch (InvalidCommand invalidCommand) {
                 showException(invalidCommand);
-                Print.print("The command must begin with \"select\".");
+                Print.print("The command must begin with \"select \".");
             }
         }
     }

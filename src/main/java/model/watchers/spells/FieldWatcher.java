@@ -6,7 +6,6 @@ import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.MonsterType;
 import model.card.monster.PreMonsterCard;
-import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
@@ -65,11 +64,11 @@ public class FieldWatcher extends SpellsWithActivation {
     public void deleteWatcher() {
         for (CardInUse cardInUse : amWatching) {
             cardInUse.watchersOfCardInUse.remove(this);
-            amWatching.remove(cardInUse);
             ((MonsterCardInUse) cardInUse).addToAttack(attackAdded * -1);
             ((MonsterCardInUse) cardInUse).addToDefense(defenseAdded * -1);
         }
-
+        super.deleteWatcher();
         if (!activationWatcher.isDeleted) activationWatcher.deleteWatcher();
+
     }
 }

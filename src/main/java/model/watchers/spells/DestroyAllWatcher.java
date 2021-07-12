@@ -3,7 +3,6 @@ package model.watchers.spells;
 import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
-import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
@@ -39,7 +38,8 @@ public class DestroyAllWatcher extends SpellsWithActivation {
     public void watchTheFieldAffected() {
         CardInUse[] toBeDestroyed = theTargetCells(zoneAffected);
         for (CardInUse cardInUse : toBeDestroyed) {
-            cardInUse.sendToGraveYard();
+            if (!cardInUse.isCellEmpty())
+                cardInUse.sendToGraveYard();
         }
 
         deleteWatcher();

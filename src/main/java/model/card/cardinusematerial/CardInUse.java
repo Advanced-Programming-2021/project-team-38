@@ -13,6 +13,7 @@ import model.watchers.Watcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 @Getter
 @Setter
@@ -82,12 +83,25 @@ public abstract class CardInUse {
 
     public void watchByState(CardState cardState) {
         DuelMenuController duelMenuController = this.getBoard().getController();
-        for (Watcher watcher : watchersOfCardInUse) {
+
+        for (Iterator<Watcher> it = watchersOfCardInUse.iterator(); it.hasNext(); ) {
+            Watcher watcher = it.next();
             if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
                 watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
             else
                 watcher.watch(this, cardState, duelMenuController);
+            if (watcher.isDeleted) {
+                it.remove();
+            }
         }
+//
+//        for (Watcher watcher : watchersOfCardInUse) {
+//            if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
+//                watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
+//            else
+//                watcher.watch(this, cardState, duelMenuController);
+//        }
+
     }
 
     public void updateCard() {
