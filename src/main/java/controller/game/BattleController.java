@@ -5,6 +5,7 @@ import lombok.Setter;
 import model.Board;
 import model.CardState;
 import model.card.cardinusematerial.MonsterCardInUse;
+import view.Menus.DuelMenu;
 import view.Print;
 import view.messageviewing.Winner;
 
@@ -36,13 +37,23 @@ public class BattleController {
             if (preyCard.isCellEmpty() || summonedCardsLength > mainPhase.summonedInThisPhase.size())
                 battlePhaseController.reArrangeBattle(attacker);
             else run();
-        } else System.out.println("this battle can't happen");
+        } else DuelMenu.showException(new Exception("this battle can't happen"));
+    }
+
+    public BattleController(MonsterCardInUse attacker, BattlePhaseController battlePhaseController) {
+        this.attackerBoard = attacker.getBoard();
+        this.attacker = attacker;
+        attackerBoard.getController().getBattlePhaseController().battleController = this;
+        attacker.watchByState(CardState.WANT_TO_ATTACK);
+        if (canBattleHappen && !attacker.isCellEmpty()) {
+            battlePhaseController.gamePlay.getRival().decreaseLifePoint(attacker.getAttack());
+        } else DuelMenu.showException(new Exception("this battle can't happen"));
     }
 
     private void run() {
 
         if (!preyCard.isFaceUp()) {
-            preyCard.faceUpCard();
+            preyCard.flipSummon();
             Print.print(String.format("opponent’s monster card was %s",
                     preyCard.getThisCard().getName()));
         }

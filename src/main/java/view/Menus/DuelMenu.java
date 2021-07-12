@@ -80,11 +80,12 @@ public class DuelMenu {
                 duelMenuController.showBoard();
             else if (command.equals("menu help"))
                 showHelp();
+            else if (command.equals("hand"))
+                duelMenuController.showHand();
             else
                 throw new InvalidCommand();
-        } catch (Exception exception) {
-//            if (exception instanceof InvalidCommand) throw new InvalidCommand();
-            showException(exception);
+        } catch (NoCardToAttack | ActivateEffectNotSpell | AlreadyInWantedPosition | AlreadyActivatedEffect | NotEnoughTributes | WrongPhaseForAction | CantAttackDirectlyException | UnableToChangePosition | AlreadyDoneAction | NoCardFound | CardAttackedBeforeExeption | BeingFull | InvalidSelection | CantDoActionWithCard | CardCantAttack | InvalidCommand | NoSelectedCard e) {
+            showException(e);
         }
     }
 

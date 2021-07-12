@@ -220,10 +220,10 @@ public class SelectController {
                     getCardAddressesIn(possibleChoices, "--graveYard ", selector.getBoard().getGraveYard().getCardsInGraveYard().size());
                     break;
                 case RIVAL_MONSTER_ZONE:
-                    getCardAddressesIn(possibleChoices, "--monster --opponent", roundController.getMyRival(selector).getBoard().getMonsterZone().length);
+                    getCardAddressesIn(possibleChoices, "--monster --opponent ", roundController.getMyRival(selector).getBoard().getMonsterZone().length);
                     break;
                 case RIVAL_SPELL_ZONE:
-                    getCardAddressesIn(possibleChoices, "--spell --opponent", roundController.getMyRival(selector).getBoard().getSpellTrapZone().length);
+                    getCardAddressesIn(possibleChoices, "--spell --opponent ", roundController.getMyRival(selector).getBoard().getSpellTrapZone().length);
                     break;
                 case RIVAL_FIELD:
                     getCardAddressesIn(possibleChoices, "--field --opponent ", 1);
@@ -244,7 +244,9 @@ public class SelectController {
         for (int i = 1; i <= sizeOfZone; i++) {
             try {
                 CardAddress cardAddress = new CardAddress(zoneNameString + i);
-                possibleChoices.put(getCardByAddress(cardAddress), cardAddress);
+                Card card = getCardByAddress(cardAddress);
+                if (card != null)
+                    possibleChoices.put(card, cardAddress);
             } catch (InvalidSelection | NoCardFound | CantDoActionWithCard invalidSelection) {
                 DuelMenu.showException(invalidSelection);
             }

@@ -2,10 +2,7 @@ package view;
 
 import controller.RelatedToMenuController;
 import view.Menus.*;
-import view.exceptions.InvalidCommand;
-import view.exceptions.MenuNavigationError;
-import view.exceptions.NeedToLogin;
-import view.exceptions.WrongMenu;
+import view.exceptions.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -24,14 +21,14 @@ public class Menu {
         while (!isProgramEnded) {
             try {
                 Menu.checkMenuCommands();
-            } catch (InvalidCommand | MenuNavigationError | WrongMenu | NeedToLogin exception) {
+            } catch (InvalidCommand | MenuNavigationError | WrongMenu | NeedToLogin | InvalidDeck | InvalidName | InvalidThing | NoActiveDeck | NumOfRounds exception) {
                 Print.print(exception.getMessage());
             }
             isProgramEnded = RelatedToMenuController.isProgramEnded();
         }
     }
 
-    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu, NeedToLogin {
+    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu, NeedToLogin, InvalidDeck, InvalidName, InvalidThing, NoActiveDeck, NumOfRounds {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));
@@ -46,11 +43,7 @@ public class Menu {
         else if (command.startsWith("shop "))
             ShopMenu.checkMenuCommands(command.substring(5));
         else if (command.startsWith("duel ")) {
-            try {
-                DuelMenu.checkMenuCommands(command.substring(5));
-            } catch (Exception e) {
-                Print.print(e.getMessage());
-            }
+            DuelMenu.checkMenuCommands(command.substring(5));
         } else if (command.equals("user logout"))
             MainMenu.logout();
         else if (command.equals("exit program"))
@@ -59,7 +52,7 @@ public class Menu {
 
         } else
             throw new InvalidCommand();
-        //todo : the command "card show <card name>" can be used in duel, shop, and deck menus
+        //todo : the command "card show <card name>" can be used in shop, and deck menus
     }
 
     public static Matcher getCommandMatcher(String input, String regex) {

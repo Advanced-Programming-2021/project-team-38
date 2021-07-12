@@ -252,17 +252,17 @@ public abstract class Watcher implements Comparable {
     @Override
     public int compareTo(Object o) {
         Watcher secWatcher = (Watcher) o;
-        if (this.whoToWatch == WhoToWatch.MINE)
+        if (this.whoToWatch == secWatcher.whoToWatch)
+            return 0;
+        else if (this.whoToWatch == WhoToWatch.MINE)
             return 1;
         else if (this.whoToWatch == WhoToWatch.RIVALS)
             return -1;
         else {
             if (secWatcher.whoToWatch == WhoToWatch.MINE)
                 return -1;
-            else if (secWatcher.whoToWatch == WhoToWatch.RIVALS)
-                return 1;
             else
-                return 0;
+                return 1;
         }
     }
 }

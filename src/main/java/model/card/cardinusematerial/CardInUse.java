@@ -21,7 +21,7 @@ public abstract class CardInUse {
     public Card thisCard;
     public Player ownerOfCard;
     public boolean isPositionChanged;  //if card manner was changed in a turn ->true then ->false
-    private boolean isFaceUp;
+    protected boolean isFaceUp;
     protected Board board;
 
     public CardInUse(Board board) {
@@ -51,6 +51,10 @@ public abstract class CardInUse {
         }
     }
 
+    public void summonFaceUply() {
+        isFaceUp = true;
+    }
+
     public void setACardInCell(Card card) {
         thisCard = card;
         card.cardIsBeingSetInCell(this);
@@ -72,6 +76,7 @@ public abstract class CardInUse {
     public void sendToGraveYard() {
         watchByState(CardState.SENT_TO_GRAVEYARD);
         board.getGraveYard().addCard(thisCard);
+        System.out.println(thisCard.getName() + " is sent to graveyard");    //TODO remove
         resetCell();
     }
 

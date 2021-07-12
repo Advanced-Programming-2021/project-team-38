@@ -4,11 +4,8 @@ package controller.game;
 
 import controller.LoginMenuController;
 import lombok.Getter;
-import model.CardAddress;
-import model.Deck;
+import model.*;
 import model.Enums.Phase;
-import model.Player;
-import model.User;
 import model.card.Card;
 import model.card.PreCard;
 import model.card.cardinusematerial.CardInUse;
@@ -90,6 +87,8 @@ public class DuelMenuController {
         allCards.addAll(deck.getMainCards());
         allCards.addAll(deck.getSideCards());
         for (PreCard preCard : allCards) {
+            if (!user.getCardTreasury().containsKey(preCard.getName()))
+                throw new InvalidDeck(user.getUsername());
             if (Collections.frequency(allCards, preCard)
                     > user.getCardTreasury().get(preCard.getName()))
                 throw new InvalidDeck(user.getUsername());
@@ -379,4 +378,10 @@ public class DuelMenuController {
         }
     }
 
+    public void showHand() {
+        Hand hand = roundController.getCurrentPlayer().getHand();
+        for (Card card : hand.getCardsInHand()) {
+            System.out.println(card.getName());
+        }
+    }
 }

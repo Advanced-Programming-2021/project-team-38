@@ -40,8 +40,8 @@ public class SummonController {
 
     public void normal() throws AlreadyDoneAction, NotEnoughTributes {
         if (numOfNormalSummons != 0) {
-            if (!hasExtraSummonPermission || monster.getLevel() >= 5) throw new AlreadyDoneAction("summoned");
-            else hasExtraSummonPermission = false;
+//            if (!hasExtraSummonPermission || monster.getLevel() >= 5) throw new AlreadyDoneAction("summoned");
+//            else hasExtraSummonPermission = false;
         }
         if (monster.getLevel() >= 5) summonWithTribute(monster);
         else {
@@ -77,7 +77,7 @@ public class SummonController {
         monsterCardInUse.summon();
         monsterCardInUse.setACardInCell(monster);
         monsterCardInUse.setInAttackMode(true);
-        monsterCardInUse.faceUpCard();
+        monsterCardInUse.summonFaceUply();
         if (!isSpecial && summonedCards != null) summonedCards.add(monsterCardInUse);
         roundController.updateBoards();
         new SuccessfulAction("", "summoned");
@@ -112,12 +112,12 @@ public class SummonController {
             switch (monsterManner) {
                 case DEFENSIVE_HIDDEN: //it won't happen
                 case DEFENSIVE_OCCUPIED:
-                    monsterCardInUse.faceUpCard();
+                    monsterCardInUse.summonFaceUply();
                     monsterCardInUse.setInAttackMode(false);
                     break;
 
                 case OFFENSIVE_OCCUPIED:
-                    monsterCardInUse.faceUpCard();
+                    monsterCardInUse.summonFaceUply();
                     monsterCardInUse.setInAttackMode(true);
                     break;
             }

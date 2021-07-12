@@ -117,8 +117,7 @@ public class MainPhaseController {
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
         player.getHand().removeCard(selectedCard);
-        spellTrapCardInUse.setThisCard(selectedCard);
-        spellTrapCardInUse.setFaceUp(false);
+        spellTrapCardInUse.setACardInCell(selectedCard);
         new SuccessfulAction("", "set");
         controller.updateBoards();
 

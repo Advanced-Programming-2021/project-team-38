@@ -42,6 +42,10 @@ public class ManEaterWatcher extends Watcher {
         SelectController selectController = new SelectController(new ArrayList<>(Collections.singletonList(
                 ZoneName.RIVAL_MONSTER_ZONE)), roundController, ownerOfWatcher.getOwnerOfCard());
 
-        return (MonsterCardInUse) selectController.getTheCardInUse();
+        CardInUse selectedCardCell = selectController.getTheCardInUse();
+        if (selectedCardCell != null)
+            return (MonsterCardInUse) selectedCardCell;
+
+        return null;
     }
 }
