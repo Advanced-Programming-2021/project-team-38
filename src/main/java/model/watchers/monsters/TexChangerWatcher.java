@@ -6,6 +6,7 @@ import controller.game.SummonController;
 import model.CardState;
 import model.Enums.Phase;
 import model.Enums.ZoneName;
+import model.card.Card;
 import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.monster.Monster;
@@ -62,9 +63,12 @@ public class TexChangerWatcher extends Watcher {
         selectController.setCardType(CardType.MONSTER);
         if (ownerOfWatcher.getBoard().getFirstEmptyCardInUse(true) != null) {
             try {
-                SummonController.specialSummon((Monster) selectController.getTheCard(),
-                        ownerOfWatcher.getOwnerOfCard(), roundController, false);
-                ownerOfWatcher.getBoard().getGraveYard().removeCard(selectController.getTheCard());
+                Card selected = selectController.getTheCard();
+                if (selected != null) {
+                    SummonController.specialSummon((Monster) selected,
+                            ownerOfWatcher.getOwnerOfCard(), roundController, false);
+                    ownerOfWatcher.getBoard().getGraveYard().removeCard(selected);
+                }
             } catch (BeingFull beingFull) {
                 DuelMenu.showException(beingFull);
             }
