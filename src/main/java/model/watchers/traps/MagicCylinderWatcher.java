@@ -27,7 +27,7 @@ public class MagicCylinderWatcher extends Watcher {
                 battle.canBattleHappen = false;
                 int damage = battle.getAttacker().getAttack();
                 battle.getAttackerBoard().getOwner().decreaseLifePoint(damage);
-                trapHasDoneItsEffect();
+                spellTrapHasDoneItsEffect();
             }
         }
     }

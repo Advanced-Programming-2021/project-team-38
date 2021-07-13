@@ -26,7 +26,7 @@ public class MirrorForceWatcher extends Watcher {
                     if (!monsterCardInUse.isCellEmpty() && monsterCardInUse.isInAttackMode())
                         monsterCardInUse.sendToGraveYard();
                 }
-                trapHasDoneItsEffect();
+                spellTrapHasDoneItsEffect();
             }
         }
     }

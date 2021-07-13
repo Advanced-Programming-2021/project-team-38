@@ -21,7 +21,7 @@ public class TrapHoleWatcher extends Watcher {
             if (cardInUseHasWatcherCondition(theCard)) {
                 if (handleChain()) {
                     theCard.sendToGraveYard();
-                    trapHasDoneItsEffect();
+                    spellTrapHasDoneItsEffect();
                 }
             }
         }

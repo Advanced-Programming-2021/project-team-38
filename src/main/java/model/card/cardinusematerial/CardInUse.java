@@ -13,7 +13,6 @@ import model.watchers.Watcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 @Getter
 @Setter
@@ -102,7 +101,7 @@ public abstract class CardInUse {
         Collections.sort(watchersOfCardInUse);
     }
 
-    //used in showing the board
+    //used in showing the boarddele
     @Override
     public String toString() {
         if (thisCard == null) return "E ";

@@ -1,6 +1,7 @@
 package controller.game;
 
 
+import model.Enums.Phase;
 import model.Player;
 import model.card.Card;
 import model.card.cardinusematerial.CardInUse;
@@ -67,6 +68,14 @@ public class MainPhaseController {
 
         if (monsterCardInUse.isPositionChanged()) throw new AlreadyDoneAction("changed this card position");
 
+        if (controller.getCurrentPhase() == Phase.MAIN_2) {
+            BattlePhaseController battle = controller.getDuelMenuController().getBattlePhaseController();
+            if (battle != null) {
+                ArrayList<CardInUse> alreadyAttacked = battle.attackedInThisTurn;
+                if (alreadyAttacked.contains(cardInUse))
+                    throw new CantDoActionWithCard("change position after attacking with");
+            }
+        }
         if (isToBeAttackMode) {
             if (monsterCardInUse.isInAttackMode() || !monsterCardInUse.isFaceUp()) throw new AlreadyInWantedPosition();
             monsterCardInUse.setInAttackMode(true);

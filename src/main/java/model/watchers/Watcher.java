@@ -122,7 +122,7 @@ public abstract class Watcher implements Comparable {
         return false;
     }
 
-    public void trapHasDoneItsEffect() {
+    public void spellTrapHasDoneItsEffect() {
         isWatcherActivated = true;
         ownerOfWatcher.sendToGraveYard();
     }

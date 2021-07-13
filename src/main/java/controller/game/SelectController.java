@@ -247,8 +247,8 @@ public class SelectController {
                 Card card = getCardByAddress(cardAddress);
                 if (card != null)
                     possibleChoices.put(card, cardAddress);
-            } catch (InvalidSelection | NoCardFound | CantDoActionWithCard invalidSelection) {
-                DuelMenu.showException(invalidSelection);
+            } catch (InvalidSelection | CantDoActionWithCard | NoCardFound ignored) {
+                //it's ignored because the address is not given by the user
             }
         }
     }
