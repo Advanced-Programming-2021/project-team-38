@@ -41,6 +41,8 @@ public class ManEaterWatcher extends Watcher {
     }
 
     public MonsterCardInUse selectMonsterCardInUse() {
+        if (roundController.getCurrentPlayer() != ownerOfWatcher.ownerOfCard)
+            roundController.temporaryTurnChange(ownerOfWatcher.ownerOfCard);
         SelectController selectController = new SelectController(new ArrayList<>(Collections.singletonList(
                 ZoneName.RIVAL_MONSTER_ZONE)), roundController, ownerOfWatcher.getOwnerOfCard());
 

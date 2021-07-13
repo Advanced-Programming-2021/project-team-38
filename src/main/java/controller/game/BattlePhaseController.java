@@ -6,8 +6,8 @@ import model.Enums.ZoneName;
 import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
-import view.messageviewing.Print;
 import view.exceptions.*;
+import view.messageviewing.Print;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,7 +56,7 @@ public class BattlePhaseController {
             MonsterCardInUse preyCard = (MonsterCardInUse) selectController.getTheCardInUse();
             if (preyCard != null)
                 battleController = new BattleController(attacker, preyCard, this);
-            else    Print.print(Print.cancelBattle);
+            else Print.print(Print.cancelBattle);
         }
     }
 

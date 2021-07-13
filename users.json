@@ -3,22 +3,22 @@
     "username": "ali",
     "password": "234",
     "nickName": "Ali",
-    "score": 1000,
+    "score": 2000,
     "cardTreasury": {
       "Yomi Ship": 57,
       "Beast King Barbaros": 4,
       "Man-Eater Bug": 67,
-      "Texchanger": 3,
-      "Dark Hole": 9,
+      "Texchanger": 1,
+      "Dark Hole": 7,
       "Suijin": 8,
-      "Command Knight": 5,
+      "Command Knight": 3,
       "Gate Guardian": 1,
       "The Calculator": 5,
-      "Magic Cylinder": 34,
+      "Magic Cylinder": 32,
       "Mirror Force": 2,
       "Marshmallon": 4,
-      "Leotron": 5,
-      "Haniwa": 5,
+      "Leotron": 3,
+      "Haniwa": 1,
       "Forest": 2
     },
     "decks": [
@@ -126,7 +126,7 @@
         "sideCards": []
       }
     ],
-    "balance": 92300,
+    "balance": 93400,
     "activeDeck": {
       "name": "234",
       "mainCards": [
@@ -246,22 +246,22 @@
     "username": "akbar",
     "password": "234",
     "nickName": "Akbar",
-    "score": 2000,
+    "score": 3000,
     "cardTreasury": {
       "Yomi Ship": 57,
       "Beast King Barbaros": 4,
       "Man-Eater Bug": 67,
-      "Texchanger": 3,
-      "Dark Hole": 9,
+      "Texchanger": 1,
+      "Dark Hole": 7,
       "Suijin": 8,
-      "Command Knight": 5,
+      "Command Knight": 3,
       "Gate Guardian": 1,
       "The Calculator": 5,
-      "Magic Cylinder": 34,
+      "Magic Cylinder": 32,
       "Mirror Force": 2,
       "Marshmallon": 4,
-      "Leotron": 5,
-      "Haniwa": 5,
+      "Leotron": 3,
+      "Haniwa": 1,
       "Forest": 2
     },
     "decks": [
@@ -369,7 +369,7 @@
         "sideCards": []
       }
     ],
-    "balance": 100000,
+    "balance": 101100,
     "activeDeck": {
       "name": "234",
       "mainCards": [

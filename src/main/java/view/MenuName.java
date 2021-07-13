@@ -35,10 +35,11 @@ public enum MenuName {
         switch (this) {
             case LOGIN:
                 return "user create --username <username> --nickname <nickname> --password <password>\n" +
-                        "user login --username <username> --password <password>";
+                        "user login --username <username> --password <password>\n";
             case SHOP:
                 return "shop buy <card name>\n" +
-                        "shop show --all";
+                        "shop show --all\n" +
+                        "card show <card name>\n";
             case PROFILE:
                 return "profile change --nickname <nickname>\n" +
                         "profile change --password --current <current password> --new <new password>\n";
@@ -50,9 +51,10 @@ public enum MenuName {
                         "deck rm-card --card <card name> --deck <deck name> --side(optional)\n" +
                         "deck show --all\n" +
                         "deck show --deck-name <deck name> --side(Opt)\n" +
-                        "deck show --cards\n";
+                        "deck show --cards\n" +
+                        "card show <card name>\n";
             case SCOREBOARD:
-                return "scoreboard show";
+                return "scoreboard show\n";
             case DUEL:
                 return "duel --new --second-player <player2 username> --rounds <1/3>\n" +
                         "duel --new --ai --rounds <1/3>\n";

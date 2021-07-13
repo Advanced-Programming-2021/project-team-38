@@ -82,9 +82,11 @@ public class DuelMenu {
                 showHelp();
             else if (command.equals("hand"))
                 duelMenuController.showHand();
+            else if (command.startsWith("card show "))
+                RelatedToMenu.showCard(command.substring(10));
             else
                 throw new InvalidCommand();
-        } catch (NoCardToAttack | ActivateEffectNotSpell | AlreadyInWantedPosition | AlreadyActivatedEffect | NotEnoughTributes | WrongPhaseForAction | CantAttackDirectlyException | UnableToChangePosition | AlreadyDoneAction | NoCardFound | CardAttackedBeforeExeption | BeingFull | InvalidSelection | CantDoActionWithCard | CardCantAttack | InvalidCommand | NoSelectedCard e) {
+        } catch (NoCardToAttack | ActivateEffectNotSpell | AlreadyInWantedPosition | AlreadyActivatedEffect | NotEnoughTributes | WrongPhaseForAction | CantAttackDirectlyException | UnableToChangePosition | AlreadyDoneAction | NoCardFound | CardAttackedBeforeExeption | BeingFull | InvalidSelection | CantDoActionWithCard | CardCantAttack | InvalidCommand | NoSelectedCard | NotExisting e) {
             showException(e);
         }
     }
@@ -102,7 +104,9 @@ public class DuelMenu {
                 "show graveyard\n" +
                 "card show --selected\n" +
                 "surrender\n" +
-                "show board\n");
+                "show board\n" +
+                "hand\n" +
+                "card show <card name>\n");
     }
 
     private static int getNumOfRounds(String command) throws InvalidCommand {
@@ -135,11 +139,6 @@ public class DuelMenu {
 
     public static String askQuestion(String questionToAsk) {
         Print.print(questionToAsk);
-        return scanner.nextLine();
-    }
-
-    public static String askForSth(String wanted) {
-        Print.print(wanted);
         return scanner.nextLine();
     }
 

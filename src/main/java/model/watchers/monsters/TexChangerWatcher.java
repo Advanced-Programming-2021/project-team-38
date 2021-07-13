@@ -56,6 +56,7 @@ public class TexChangerWatcher extends Watcher {
     }
 
     public void summonAppropriateMonsterCard() {
+        roundController.temporaryTurnChange(ownerOfWatcher.ownerOfCard);
         SelectController selectController = new SelectController(new ArrayList<>(Arrays.asList(
                 ZoneName.MY_DECK, ZoneName.HAND, ZoneName.MY_GRAVEYARD)), roundController, ownerOfWatcher.getOwnerOfCard());
 

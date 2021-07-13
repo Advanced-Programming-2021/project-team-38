@@ -21,14 +21,14 @@ public class Menu {
         while (!isProgramEnded) {
             try {
                 Menu.checkMenuCommands();
-            } catch (InvalidCommand | MenuNavigationError | WrongMenu | NeedToLogin | InvalidDeck | InvalidName | InvalidThing | NoActiveDeck | NumOfRounds exception) {
+            } catch (InvalidCommand | MenuNavigationError | WrongMenu | NeedToLogin | InvalidDeck | InvalidName | InvalidThing | NoActiveDeck | NumOfRounds | NotExisting exception) {
                 Print.print(exception.getMessage());
             }
             isProgramEnded = RelatedToMenuController.isProgramEnded();
         }
     }
 
-    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu, NeedToLogin, InvalidDeck, InvalidName, InvalidThing, NoActiveDeck, NumOfRounds {
+    public static void checkMenuCommands() throws InvalidCommand, MenuNavigationError, WrongMenu, NeedToLogin, InvalidDeck, InvalidName, InvalidThing, NoActiveDeck, NumOfRounds, NotExisting {
         String command = scanner.nextLine();
         if (command.startsWith("menu "))
             RelatedToMenu.checkMenuCommands(command.substring(5));
@@ -48,6 +48,8 @@ public class Menu {
             MainMenu.logout();
         else if (command.equals("exit program"))
             LoginMenu.checkMenuCommands(command);
+        else if (command.startsWith("card show "))
+            RelatedToMenu.checkMenuCommands(command);
         else if (command.startsWith("import card")) {
 
         } else
