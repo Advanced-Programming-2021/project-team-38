@@ -140,6 +140,8 @@ public class Board {
                 if (spellTrapCardInUse.getThisCard().equals(card)) return spellTrapCardInUse;
             }
         }
+        if (fieldCell.thisCard == card)
+            return fieldCell;
         return null;
     }
 

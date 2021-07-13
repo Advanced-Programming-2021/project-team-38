@@ -5,6 +5,7 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;

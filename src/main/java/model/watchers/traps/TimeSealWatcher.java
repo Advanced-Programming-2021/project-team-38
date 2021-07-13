@@ -5,6 +5,7 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.Enums.Phase;
 import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 
@@ -34,9 +35,9 @@ public class TimeSealWatcher extends Watcher {
         if (newPhase == Phase.DRAW_RIVAL) {
             if (handleChain()) {
                 DrawPhaseController.canDraw = false;
+                isWatcherActivated = true;
             }
-        }
-        else {
+        } else {
             if (!DrawPhaseController.canDraw) {
                 DrawPhaseController.canDraw = true;
                 trapHasDoneItsEffect();

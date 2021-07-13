@@ -36,7 +36,11 @@ public class BattleController {
         if (canBattleHappen && !attacker.isCellEmpty()) {
             if (preyCard.isCellEmpty() || summonedCardsLength > mainPhase.summonedInThisPhase.size())
                 battlePhaseController.reArrangeBattle(attacker);
-            else run();
+            else {
+                run();
+                attacker.watchByState(CardState.OUR_BATTLE_ENDED);
+                preyCard.watchByState(CardState.OUR_BATTLE_ENDED);
+            }
         } else DuelMenu.showException(new Exception("this battle can't happen"));
     }
 

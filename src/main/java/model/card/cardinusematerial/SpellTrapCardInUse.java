@@ -14,11 +14,13 @@ public class SpellTrapCardInUse extends CardInUse {
     }
 
     public void activateMyEffect() {
-        if (!isFaceUp)  faceUpCard();
         if (thisCard == null) return;
+        faceUpAfterActivation();
         watchByState(CardState.ACTIVE_MY_EFFECT);
-        if (thisCard instanceof SpellTrap) {
-            ((SpellTrap) thisCard).setActivated(true);
-        }
+    }
+
+    public void faceUpAfterActivation() {
+        if (!isFaceUp)  faceUpCard();
+        ((SpellTrap) thisCard).setActivated(true);
     }
 }

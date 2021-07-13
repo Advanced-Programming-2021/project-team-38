@@ -8,6 +8,7 @@ import model.Enums.Phase;
 import model.Player;
 import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
+import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.card.monster.MonsterType;
 import model.card.spelltrap.PreSpellTrapCard;
 import model.watchers.monsters.*;
@@ -85,13 +86,16 @@ public abstract class Watcher implements Comparable {
     protected static boolean addToStack(Watcher watcher) {
         if (!stack.contains(watcher)) {
             if (stack.size() == 0 || stack.get(stack.size() - 1).speed <= watcher.speed) {
-                if (stack.size() != 0 && stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
+                if ((stack.size() != 0 && stack.get(stack.size() - 1).ownerOfWatcher.ownerOfCard != watcher.ownerOfWatcher.ownerOfCard)
+                        || (stack.size() == 0 && watcher.ownerOfWatcher.ownerOfCard != roundController.getCurrentPlayer()
+                        && watcher.ownerOfWatcher.thisCard.preCardInGeneral.getCardType() == CardType.TRAP))
                     roundController.temporaryTurnChange(watcher.ownerOfWatcher.ownerOfCard);
                 if (watcher.ownerOfWatcher.thisCard.preCardInGeneral instanceof PreSpellTrapCard) {
                     PreSpellTrapCard preSpellTrapCard = (PreSpellTrapCard) watcher.ownerOfWatcher.thisCard.preCardInGeneral;
                     if (preSpellTrapCard.getCardType() == CardType.TRAP) {
                         if (roundController.wantToActivateCard(watcher.ownerOfWatcher.thisCard.getName())) {
                             stack.add(watcher);
+                            watcher.trapIsBeingActivated();
                             return true;
                         }
                     } else {
@@ -121,6 +125,10 @@ public abstract class Watcher implements Comparable {
     public void trapHasDoneItsEffect() {
         isWatcherActivated = true;
         ownerOfWatcher.sendToGraveYard();
+    }
+
+    public void trapIsBeingActivated() {
+        ((SpellTrapCardInUse) ownerOfWatcher).faceUpAfterActivation();
     }
 
     public void addWatcherToCardInUseGeneral(CardInUse cardInUse) {

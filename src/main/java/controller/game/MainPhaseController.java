@@ -8,6 +8,7 @@ import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.card.monster.Monster;
 import model.card.spelltrap.CardIcon;
+import model.card.spelltrap.PreSpellTrapCard;
 import model.card.spelltrap.SpellTrap;
 import view.exceptions.*;
 import view.messageviewing.Print;
@@ -112,7 +113,9 @@ public class MainPhaseController {
         new SuccessfulAction("", "set");
     }
 
-    private void setSpellTrap(SpellTrap selectedCard) throws BeingFull {
+    private void setSpellTrap(SpellTrap selectedCard) throws BeingFull, CantDoActionWithCard {
+        if (((PreSpellTrapCard) selectedCard.getPreCardInGeneral()).getIcon() == CardIcon.FIELD)
+            throw new CantDoActionWithCard("set");
         SpellTrapCardInUse spellTrapCardInUse = (SpellTrapCardInUse) player.getBoard().getFirstEmptyCardInUse(false);
         if (spellTrapCardInUse == null) throw new BeingFull("spell card zone");
 
@@ -132,7 +135,11 @@ public class MainPhaseController {
         if (!(selectedCard instanceof SpellTrap)) throw new ActivateEffectNotSpell();
         if (ofCurrentPlayer && player.getHand().doesContainCard(selectedCard)) {
             activateEffectFromHand((SpellTrap) selectedCard);
-        } else activateEffectFromBoard(ofCurrentPlayer);
+        } else {
+            CardInUse cardInUse = this.controller.getSelectedCardInUse();
+            if (cardInUse != null)
+                activateEffectFromBoard(ofCurrentPlayer);
+        }
         controller.updateBoards();
     }
 
@@ -158,9 +165,9 @@ public class MainPhaseController {
             //it is a field spell inside hand and we want to send it to the field zone
             SpellTrapCardInUse fieldCell = player.getBoard().getFieldCell();
             if (fieldCell != null) {
-                fieldCell.resetCell();
-                fieldCell.sendToGraveYard();
-                fieldCell.resetCell();
+                if (fieldCell.thisCard != null)
+                    fieldCell.sendToGraveYard();
+                player.getHand().removeCard(spell);
                 fieldCell.setACardInCell(spell);
                 fieldCell.activateMyEffect();
             }

@@ -84,23 +84,13 @@ public abstract class CardInUse {
     public void watchByState(CardState cardState) {
         DuelMenuController duelMenuController = this.getBoard().getController();
 
-        for (Iterator<Watcher> it = watchersOfCardInUse.iterator(); it.hasNext(); ) {
-            Watcher watcher = it.next();
+        ArrayList<Watcher> copy = new ArrayList<>(watchersOfCardInUse);
+        for (Watcher watcher : copy) {
             if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
                 watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
             else
                 watcher.watch(this, cardState, duelMenuController);
-            if (watcher.isDeleted) {
-                it.remove();
-            }
         }
-//
-//        for (Watcher watcher : watchersOfCardInUse) {
-//            if (watcher.ownerOfWatcher == this && cardState == CardState.ACTIVE_EFFECT)
-//                watcher.watch(this, CardState.ACTIVE_MY_EFFECT, duelMenuController);
-//            else
-//                watcher.watch(this, cardState, duelMenuController);
-//        }
 
     }
 

@@ -300,6 +300,9 @@ public class DuelMenuController {
                 Print.print("You can't view this card!");
                 return;
             }
+            if (roundController.getCurrentPlayer().getHand().doesContainCard(card)){
+                RelatedToMenu.
+            }
             CardInUse cardInUse = roundController.getSelectedCardInUse();
             if (cardInUse == null) throw new NoSelectedCard();
 

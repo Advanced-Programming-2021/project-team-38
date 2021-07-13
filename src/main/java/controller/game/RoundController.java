@@ -50,9 +50,9 @@ public class RoundController {
             throws InvalidDeck, InvalidName, NoActiveDeck {
         this.duelMenuController = duelMenuController;
         currentPlayer = new Player(firstUser, this);
-        currentPlayer.getBoard().setMyPhase(Phase.END_RIVAL);
+        currentPlayer.getBoard().setMyPhase(Phase.DRAW);
         rival = new Player(secondUser, this);
-        rival.getBoard().setMyPhase(Phase.END);
+        rival.getBoard().setMyPhase(Phase.DRAW_RIVAL);
 //        currentPhase = Phase.DRAW;
 //        duelMenuController.setDrawPhase(new DrawPhaseController(this, true));
         this.roundIndex = roundIndex;
