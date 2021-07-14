@@ -22,7 +22,7 @@ public class TorrentialTributeWatcher extends Watcher {
             if (handleChain()) {
                 new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.ALL, Zone.MONSTER).watch(
                         theCard, CardState.TRIGGERED, null);
-                trapHasDoneItsEffect();
+                spellTrapHasDoneItsEffect();
             }
         }
     }

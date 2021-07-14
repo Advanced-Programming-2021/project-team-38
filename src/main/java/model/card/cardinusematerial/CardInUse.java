@@ -75,8 +75,10 @@ public abstract class CardInUse {
 
     public void sendToGraveYard() {
         watchByState(CardState.SENT_TO_GRAVEYARD);
-        board.getGraveYard().addCard(thisCard);
-        System.out.println(thisCard.getName() + " is sent to graveyard");    //TODO remove
+        if (thisCard != null) {
+            board.getGraveYard().addCard(thisCard);
+            System.out.println(thisCard.getName() + " is sent to graveyard");
+        }
         resetCell();
     }
 

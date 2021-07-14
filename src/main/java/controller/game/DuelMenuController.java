@@ -14,6 +14,7 @@ import model.card.monster.Monster;
 import model.card.monster.MonsterManner;
 import model.watchers.Watcher;
 import view.Menus.DuelMenu;
+import view.Menus.RelatedToMenu;
 import view.Print;
 import view.exceptions.*;
 
@@ -301,7 +302,9 @@ public class DuelMenuController {
                 return;
             }
             if (roundController.getCurrentPlayer().getHand().doesContainCard(card)){
-                RelatedToMenu.
+                try {
+                    RelatedToMenu.showCard(card.getName());
+                } catch (NotExisting ignore) {}
             }
             CardInUse cardInUse = roundController.getSelectedCardInUse();
             if (cardInUse == null) throw new NoSelectedCard();
