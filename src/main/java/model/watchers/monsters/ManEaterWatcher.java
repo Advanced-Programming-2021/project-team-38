@@ -22,12 +22,18 @@ public class ManEaterWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.FACE_UP) {
             if (handleChain()) {
-                MonsterCardInUse selected = selectMonsterCardInUse();
-                if (selected != null)
-                    selected.destroyThis();
-                isWatcherActivated = true;
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        MonsterCardInUse selected = selectMonsterCardInUse();
+        if (selected != null)
+            selected.destroyThis();
+        isWatcherActivated = true;
     }
 
     @Override

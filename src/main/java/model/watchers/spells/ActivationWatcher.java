@@ -20,10 +20,16 @@ public class ActivationWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.ACTIVE_MY_EFFECT) {
             if (handleChain()) {
-                upperWatcher.watch(theCard, CardState.TRIGGERED, duelMenuController);
-                isWatcherActivated = true;
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        upperWatcher.watch(theCard, CardState.TRIGGERED, duelMenuController);
+        isWatcherActivated = true;
     }
 
     @Override

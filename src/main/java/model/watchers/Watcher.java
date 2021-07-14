@@ -29,10 +29,11 @@ public abstract class Watcher implements Comparable {
     public ArrayList<CardInUse> amWatching;
     public boolean isWatcherActivated = false;
     public CardInUse ownerOfWatcher;
-    protected static boolean isInChainMode = false;
     public boolean firstOfStack = false;
     public int speed = 1;
     public boolean isDeleted = false;
+    protected DuelMenuController duelMenuController;
+    protected CardInUse theCard;
 
     static {
         allWatchers = new HashMap<>();
@@ -46,6 +47,13 @@ public abstract class Watcher implements Comparable {
     public Watcher(CardInUse ownerOfWatcher, WhoToWatch whoToWatch) {
         this.ownerOfWatcher = ownerOfWatcher;
         this.whoToWatch = whoToWatch;
+    }
+
+    public static void performStack() {
+        while (stack.size() > 0) {
+            Watcher watcher = stack.remove(stack.size() - 1);
+            watcher.doWhatYouShould();
+        }
     }
 
     public abstract void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController);
@@ -73,10 +81,11 @@ public abstract class Watcher implements Comparable {
     }
 
     protected static void emptyStack() {
-        if (stack.size() > 0)
-            stack.remove(stack.size() - 1);
-        else
-            System.out.println("bug bug stack empty");  //TODO remove
+//        if (stack.size() > 0)
+//            stack.remove(stack.size() - 1);
+//        else
+//            System.out.println("bug bug stack empty");  //TODO remove
+        stack = new ArrayList<>();
     }
 
     /*
@@ -114,13 +123,15 @@ public abstract class Watcher implements Comparable {
 
     public boolean handleChain() {
         if (Watcher.addToStack(this)) {
+            if (stack.size() == 1)
+                firstOfStack = true;
             ownerOfWatcher.watchByState(CardState.ACTIVE_EFFECT);
-            emptyStack();
             return true;
         }
-
         return false;
     }
+
+    public void doWhatYouShould() { }
 
     public void spellTrapHasDoneItsEffect() {
         isWatcherActivated = true;

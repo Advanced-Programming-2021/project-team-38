@@ -3,8 +3,6 @@ package model.watchers.traps;
 import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
-import model.card.cardinusematerial.MonsterCardInUse;
-import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
@@ -20,11 +18,17 @@ public class TorrentialTributeWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.SUMMON || cardState == CardState.FLIP_SUMMON) {
             if (handleChain()) {
-                new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.ALL, Zone.MONSTER).watch(
-                        theCard, CardState.TRIGGERED, null);
-                spellTrapHasDoneItsEffect();
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        new DestroyAllWatcher(ownerOfWatcher, WhoToWatch.ALL, Zone.MONSTER).watch(
+                theCard, CardState.TRIGGERED, null);
+        spellTrapHasDoneItsEffect();
     }
 
     @Override

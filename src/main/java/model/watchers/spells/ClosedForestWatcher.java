@@ -1,5 +1,6 @@
 package model.watchers.spells;
 
+import controller.game.DuelMenuController;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.MonsterType;

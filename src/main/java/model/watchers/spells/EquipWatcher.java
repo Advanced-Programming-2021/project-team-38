@@ -8,7 +8,6 @@ import model.card.CardType;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
 import model.card.monster.MonsterType;
-import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
 
@@ -31,8 +30,8 @@ public class EquipWatcher extends SpellsWithActivation {
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.TRIGGERED && guardedCard == null) {
-                selectToWatch();
-                isWatcherActivated = true;
+            selectToWatch();
+            isWatcherActivated = true;
         }
     }
 

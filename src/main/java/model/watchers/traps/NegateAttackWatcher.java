@@ -4,7 +4,6 @@ import controller.game.BattleController;
 import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
-import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
@@ -19,12 +18,18 @@ public class NegateAttackWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.WANT_TO_ATTACK) {
             if (handleChain()) {
-                BattleController battle = duelMenuController.getBattlePhaseController().battleController;
-                battle.canBattleHappen = false;
-                spellTrapHasDoneItsEffect();
-                duelMenuController.nextPhase();
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        BattleController battle = duelMenuController.getBattlePhaseController().battleController;
+        battle.canBattleHappen = false;
+        spellTrapHasDoneItsEffect();
+        duelMenuController.nextPhase();
     }
 
     @Override

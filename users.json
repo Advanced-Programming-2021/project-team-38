@@ -6,22 +6,28 @@
     "score": 1000,
     "cardTreasury": {
       "Yomi Ship": 57,
-      "Horn Imp": 1,
+      "Horn Imp": 4,
       "Trap Hole": 3,
       "Man-Eater Bug": 65,
       "Time Seal": 2,
       "Battle Ox": 3,
-      "Dark Hole": 7,
+      "Texchanger": 3,
+      "Dark Hole": 4,
       "Suijin": 3,
-      "Command Knight": 4,
+      "Advanced Ritual Art": 2,
+      "Command Knight": 6,
       "The Calculator": 4,
-      "Magic Cylinder": 31,
+      "Magic Cylinder": 29,
+      "Mind Crush": 1,
       "Mirror Force": 5,
       "Marshmallon": 1,
+      "Leotron": 5,
+      "Silver Fang": 4,
       "Torrential Tribute": 2,
       "Negate Attack": 3,
-      "Haniwa": 3,
-      "Forest": 1
+      "Haniwa": 5,
+      "Forest": 1,
+      "Crab Turtle": 2
     },
     "decks": [
       {
@@ -30,79 +36,61 @@
           {
             "CLASSNAME": "model.card.monster.PreMonsterCard",
             "INSTANCE": {
-              "level": 4,
-              "defense": 1000,
-              "attack": 1700,
-              "monsterCardType": "NORMAL",
-              "monsterType": "BEAST_WARRIOR",
-              "attribute": "EARTH",
-              "name": "Battle Ox",
-              "cardType": "MONSTER",
-              "description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
-              "price": 2900
-            }
-          },
-          {
-            "CLASSNAME": "model.card.monster.PreMonsterCard",
-            "INSTANCE": {
-              "level": 4,
-              "defense": 1000,
-              "attack": 1700,
-              "monsterCardType": "NORMAL",
-              "monsterType": "BEAST_WARRIOR",
-              "attribute": "EARTH",
-              "name": "Battle Ox",
-              "cardType": "MONSTER",
-              "description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
-              "price": 2900
-            }
-          },
-          {
-            "CLASSNAME": "model.card.monster.PreMonsterCard",
-            "INSTANCE": {
-              "level": 4,
-              "defense": 1000,
-              "attack": 1000,
+              "level": 1,
+              "defense": 100,
+              "attack": 100,
               "monsterCardType": "EFFECT",
-              "monsterType": "WARRIOR",
-              "attribute": "FIRE",
-              "name": "Command Knight",
+              "monsterType": "CYBERSE",
+              "attribute": "DARK",
+              "name": "Texchanger",
               "cardType": "MONSTER",
-              "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
-              "price": 2100
+              "description": "Once per turn, when your monster is targeted for an attack: You can negate that attack, then Special Summon 1 Cyberse Normal Monster from your hand, Deck, or GY.",
+              "price": 200
             }
           },
           {
-            "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
             "INSTANCE": {
-              "status": "UNLIMITED",
-              "icon": "NORMAL",
-              "name": "Trap Hole",
-              "cardType": "TRAP",
-              "description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
-              "price": 2000
+              "level": 2,
+              "defense": 0,
+              "attack": 0,
+              "monsterCardType": "EFFECT",
+              "monsterType": "THUNDER",
+              "attribute": "LIGHT",
+              "name": "The Calculator",
+              "cardType": "MONSTER",
+              "description": "The ATK of this card is the combined Levels of all face-up monsters you control x 300.",
+              "price": 8000
             }
           },
           {
-            "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
             "INSTANCE": {
-              "status": "UNLIMITED",
-              "icon": "NORMAL",
-              "name": "Trap Hole",
-              "cardType": "TRAP",
-              "description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
-              "price": 2000
+              "level": 4,
+              "defense": 0,
+              "attack": 2000,
+              "monsterCardType": "NORMAL",
+              "monsterType": "CYBERSE",
+              "attribute": "EARTH",
+              "name": "Leotron",
+              "cardType": "MONSTER",
+              "description": "A territorial electronic monster that guards its own domain.",
+              "price": 2500
             }
           },
           {
-            "CLASSNAME": "model.card.spelltrap.PreSpellTrapCard",
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
             "INSTANCE": {
-              "status": "UNLIMITED",
-              "icon": "NORMAL",
-              "name": "Mirror Force",
-              "cardType": "TRAP",
-              "description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
-              "price": 2000
+              "level": 1,
+              "defense": 100,
+              "attack": 100,
+              "monsterCardType": "EFFECT",
+              "monsterType": "CYBERSE",
+              "attribute": "DARK",
+              "name": "Texchanger",
+              "cardType": "MONSTER",
+              "description": "Once per turn, when your monster is targeted for an attack: You can negate that attack, then Special Summon 1 Cyberse Normal Monster from your hand, Deck, or GY.",
+              "price": 200
             }
           },
           {
@@ -110,34 +98,48 @@
             "INSTANCE": {
               "level": 4,
               "defense": 1000,
-              "attack": 1000,
-              "monsterCardType": "EFFECT",
-              "monsterType": "WARRIOR",
-              "attribute": "FIRE",
-              "name": "Command Knight",
+              "attack": 1300,
+              "monsterCardType": "NORMAL",
+              "monsterType": "FIEND",
+              "attribute": "DARK",
+              "name": "Horn Imp",
               "cardType": "MONSTER",
-              "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
-              "price": 2100
+              "description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+              "price": 2500
+            }
+          },
+          {
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
+            "INSTANCE": {
+              "level": 4,
+              "defense": 1000,
+              "attack": 1300,
+              "monsterCardType": "NORMAL",
+              "monsterType": "FIEND",
+              "attribute": "DARK",
+              "name": "Horn Imp",
+              "cardType": "MONSTER",
+              "description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+              "price": 2500
+            }
+          },
+          {
+            "CLASSNAME": "model.card.monster.PreMonsterCard",
+            "INSTANCE": {
+              "level": 2,
+              "defense": 500,
+              "attack": 500,
+              "monsterCardType": "NORMAL",
+              "monsterType": "ROCK",
+              "attribute": "EARTH",
+              "name": "Haniwa",
+              "cardType": "MONSTER",
+              "description": "An earthen figure that protects the tomb of an ancient ruler.",
+              "price": 600
             }
           }
         ],
-        "sideCards": [
-          {
-            "CLASSNAME": "model.card.monster.PreMonsterCard",
-            "INSTANCE": {
-              "level": 4,
-              "defense": 1000,
-              "attack": 1000,
-              "monsterCardType": "EFFECT",
-              "monsterType": "WARRIOR",
-              "attribute": "FIRE",
-              "name": "Command Knight",
-              "cardType": "MONSTER",
-              "description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
-              "price": 2100
-            }
-          }
-        ]
+        "sideCards": []
       }
     ],
     "balance": 92300,

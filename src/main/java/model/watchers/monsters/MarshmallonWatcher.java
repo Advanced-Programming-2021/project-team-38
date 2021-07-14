@@ -26,11 +26,17 @@ public class MarshmallonWatcher extends Watcher {
 
         if (cardState == CardState.OUR_BATTLE_ENDED) {
             if (handleChain()) {
-                if (theBattleAgainstMe == duelMenuController.getBattlePhaseController().battleController
-                        && isFaceDownInBattle) {
-                    theBattleAgainstMe.getAttackerBoard().getOwner().decreaseLifePoint(1000);
-                }
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
+        }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        if (theBattleAgainstMe == duelMenuController.getBattlePhaseController().battleController
+                && isFaceDownInBattle) {
+            theBattleAgainstMe.getAttackerBoard().getOwner().decreaseLifePoint(1000);
         }
     }
 

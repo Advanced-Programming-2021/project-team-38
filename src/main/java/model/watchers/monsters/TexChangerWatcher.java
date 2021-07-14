@@ -30,11 +30,19 @@ public class TexChangerWatcher extends Watcher {
     @Override
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
-            if (secondaryWatcher == null) {
-                secondaryWatcher = new MarshmallonHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
-                secondaryWatcher.watch(theCard, cardState, duelMenuController);
-                summonAppropriateMonsterCard();
+            if (handleChain()) {
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
+        }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        if (secondaryWatcher == null) {
+            secondaryWatcher = new MarshmallonHolyWatcher(ownerOfWatcher, WhoToWatch.MINE);
+            secondaryWatcher.watch(theCard, CardState.IS_ATTACKED, duelMenuController);
+            summonAppropriateMonsterCard();
         }
     }
 

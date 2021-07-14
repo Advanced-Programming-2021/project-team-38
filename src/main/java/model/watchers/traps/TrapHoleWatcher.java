@@ -4,7 +4,6 @@ import controller.game.DuelMenuController;
 import model.CardState;
 import model.card.cardinusematerial.CardInUse;
 import model.card.cardinusematerial.MonsterCardInUse;
-import model.card.cardinusematerial.SpellTrapCardInUse;
 import model.watchers.Watcher;
 import model.watchers.WhoToWatch;
 import model.watchers.Zone;
@@ -20,11 +19,17 @@ public class TrapHoleWatcher extends Watcher {
         if (cardState == CardState.SUMMON || cardState == CardState.FLIP_SUMMON) {
             if (cardInUseHasWatcherCondition(theCard)) {
                 if (handleChain()) {
-                    theCard.sendToGraveYard();
-                    spellTrapHasDoneItsEffect();
+                    this.duelMenuController = duelMenuController;
+                    this.theCard = theCard;
                 }
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        theCard.sendToGraveYard();
+        spellTrapHasDoneItsEffect();
     }
 
     @Override

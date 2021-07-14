@@ -23,14 +23,20 @@ public class SuijinWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.IS_ATTACKED) {
             if (handleChain()) {
-                BattleController battle = duelMenuController.getBattlePhaseController().battleController;
-                battle.setAttackerAttack(0);
-                attacker = battle.getAttacker();
-                attackerPoint = attacker.getAttack();
-                attacker.setAttack(0);
-                isWatcherActivated = true;
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        BattleController battle = duelMenuController.getBattlePhaseController().battleController;
+        battle.setAttackerAttack(0);
+        attacker = battle.getAttacker();
+        attackerPoint = attacker.getAttack();
+        attacker.setAttack(0);
+        isWatcherActivated = true;
     }
 
     @Override

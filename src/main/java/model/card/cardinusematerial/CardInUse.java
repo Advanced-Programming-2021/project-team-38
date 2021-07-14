@@ -93,6 +93,13 @@ public abstract class CardInUse {
                 watcher.watch(this, cardState, duelMenuController);
         }
 
+        for (Watcher watcher : copy) {
+            if (watcher.firstOfStack) {
+                watcher.firstOfStack = false;
+                Watcher.performStack();
+            }
+        }
+
     }
 
     public void updateCard() {

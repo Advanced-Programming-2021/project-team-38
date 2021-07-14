@@ -17,9 +17,15 @@ public class MarshmallonHolyWatcher extends Watcher {
     public void watch(CardInUse theCard, CardState cardState, DuelMenuController duelMenuController) {
         if (cardState == CardState.DESTROY) {
             if (handleChain()) {
-                ((MonsterCardInUse) ownerOfWatcher).canBeDestroyed = false;
+                this.duelMenuController = duelMenuController;
+                this.theCard = theCard;
             }
         }
+    }
+
+    @Override
+    public void doWhatYouShould() {
+        ((MonsterCardInUse) ownerOfWatcher).canBeDestroyed = false;
     }
 
     @Override
